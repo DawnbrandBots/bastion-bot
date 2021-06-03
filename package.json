@@ -64,7 +64,6 @@
   },
   "prettier": {
     "printWidth": 120,
-    "useTabs": true,
     "semi": true,
     "singleQuote": false,
     "trailingComma": "none",

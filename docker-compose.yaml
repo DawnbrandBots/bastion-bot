@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  bot:
+    build: .
+    image: ghcr.io/kevinlul/eris-bot-template
+    environment:
+      DEBUG: "*"
+      DISCORD_TOKEN: "${DISCORD_TOKEN}"
+      DISCORD_SHARD: "{{.Task.Slot}}"
+      DISCORD_TOTAL_SHARDS: ${DISCORD_TOTAL_SHARDS}
+    deploy:
+      replicas: ${DISCORD_TOTAL_SHARDS}
+    restart: unless-stopped
+    logging:
+      driver: "${DOCKER_LOG_DRIVER:-journald}"

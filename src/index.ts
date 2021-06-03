@@ -17,7 +17,19 @@ const log = logger.extend("log");
 const warn = logger.extend("warn");
 const error = logger.extend("error");
 
-const bot = new Client(`${process.env.DISCORD_TOKEN}`, { restMode: true });
+const shard = parseInt(`${process.env.DISCORD_SHARD}`) - 1;
+const options = isNaN(shard)
+    ? {}
+    : {
+          firstShardID: shard,
+          lastShardID: shard
+      };
+
+const bot = new Client(`${process.env.DISCORD_TOKEN}`, {
+    restMode: true,
+    maxShards: parseInt(`${process.env.DISCORD_TOTAL_SHARDS}`) || "auto",
+    ...options
+});
 bot.on("warn", (message, shard) => warn(`Shard ${shard}: ${message}`));
 bot.on("error", (message, shard) => error(`Shard ${shard}: ${message}`));
 bot.on("connect", shard => log(`Shard ${shard} connected to Discord`));
