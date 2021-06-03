@@ -67,4 +67,4 @@ jobs:
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           DISCORD_TOTAL_SHARDS: ${{ secrets.DISCORD_TOTAL_SHARDS }}
-        run: docker -H ssh://${{ secrets.DEPLOY_HOST }} stack deploy ${{ secrets.DEPLOY_STACK }} -c <(docker-compose config) --with-registry-auth
+        run: docker -H ssh://${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} stack deploy ${{ secrets.DEPLOY_STACK }} -c <(docker-compose config) --with-registry-auth
