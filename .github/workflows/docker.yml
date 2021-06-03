@@ -57,12 +57,14 @@ jobs:
       - name: Configure SSH
         if: steps.infer.outputs.tag == 'latest'
         run: |
+          mkdir -p ~/.ssh
           echo "${{ secrets.DEPLOY_HOST_KEY }}" >> ~/.ssh/known_hosts
           echo "${{ secrets.DEPLOY_PUBLIC_KEY }}" > ~/.ssh/id_rsa.pub
-          echo "${{ secrets.DEPLOY_SECRET_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.DEPLOY_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod -R g-rwx,o-rwx ~/.ssh
       - name: Deploy to Docker Swarm
         if: steps.infer.outputs.tag == 'latest'
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           DISCORD_TOTAL_SHARDS: ${{ secrets.DISCORD_TOTAL_SHARDS }}
-        run: docker -H ssh://${{ secrets.DEPLOY_HOST }} stack deploy ${{ secrets.DEPLOY_STACK }} -c <(docker-compose config)
+        run: docker -H ssh://${{ secrets.DEPLOY_HOST }} stack deploy ${{ secrets.DEPLOY_STACK }} -c <(docker-compose config) --with-registry-auth
