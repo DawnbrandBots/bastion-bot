@@ -1,0 +1,74 @@
+{
+  "name": "eris-bot-template",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "repository": "https://github.com/kevinlul/eris-bot-template.git",
+  "author": "Kevin Lu",
+  "license": "AGPL-3.0-or-later",
+  "private": true,
+  "scripts": {
+    "start": "node --enable-source-maps --unhandled-rejections=strict dist",
+    "build": "tsc",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+  },
+  "engines": {
+    "node": ">=14.x",
+    "yarn": "1.x"
+  },
+  "dependencies": {
+    "debug": "^4.3.1",
+    "dotenv": "^10.0.0",
+    "eris": "^0.15.1",
+    "supports-color": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.5",
+    "@types/node": "^14.17.2",
+    "@types/ws": "^7.4.4",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.3.0",
+    "prettier": "^2.3.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.2"
+  },
+  "eslintIgnore": [
+    "dist"
+  ],
+  "eslintConfig": {
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "rules": {
+      "@typescript-eslint/explicit-function-return-type": [
+        "warn",
+        {
+          "allowExpressions": true,
+          "allowTypedFunctionExpressions": true,
+          "allowHigherOrderFunctions": true,
+          "allowDirectConstAssertionInArrowFunctions": true,
+          "allowConciseArrowFunctionExpressionsStartingWithVoid": true
+        }
+      ],
+      "prefer-template": "error"
+    }
+  },
+  "prettier": {
+    "printWidth": 120,
+    "useTabs": true,
+    "semi": true,
+    "singleQuote": false,
+    "trailingComma": "none",
+    "bracketSpacing": true,
+    "arrowParens": "avoid"
+  }
+}
