@@ -66,9 +66,6 @@ jobs:
         if: steps.infer.outputs.tag == 'latest'
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          DISCORD_TOTAL_SHARDS: ${{ secrets.DISCORD_TOTAL_SHARDS }}
+          DISCORD_TOTAL_SHARDS: 3
         run: |
-          docker -H ssh://${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} stack deploy ${{ secrets.DEPLOY_STACK }} -c <(docker-compose config) --with-registry-auth
-          # https://engineering.issuu.com/2018/09/12/confident-deployments
-          # https://github.com/docker/cli/issues/373
-          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -uroot issuu/sure-deploy:183 converge --socket /var/run/docker.sock ${{ secrets.DEPLOY_STACK }}
+          docker -H ssh://${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} stack deploy discord-bot -c <(docker-compose config) --prune
