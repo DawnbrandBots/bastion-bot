@@ -1,4 +1,4 @@
-name: Docker-based continuous deployment
+name: Build Docker image and deploy to Swarm
 
 on:
   push:
@@ -9,6 +9,7 @@ on:
     # redundant work since the main workflow already deals with testing builds
     paths:
       - Dockerfile
+      - docker-compose.yaml
       - .github/workflows/docker.yml
 
 jobs:
@@ -54,20 +55,42 @@ jobs:
           pull: true
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
+      - name: Download wait script
+        if: steps.infer.outputs.tag == 'latest'
+        # https://github.com/docker/cli/issues/373
+        # Pinned to the latest version at the time of creation so we can manually verify new versions
+        # More on this in the final workflow step
+        run: |
+          curl -fsSL --remote-name https://raw.githubusercontent.com/sudo-bmitch/docker-stack-wait/16fe400d8bba5b739bc1f28af4f96dd7fa86ac41/docker-stack-wait.sh
+          echo "bbe07ff176af01d402fcc042aa76105f05f1c593feb903e73b7e033021afac3f  docker-stack-wait.sh" | sha256sum --check
+          chmod +x docker-stack-wait.sh
       - name: Configure SSH
         if: steps.infer.outputs.tag == 'latest'
+        # https://docs.docker.com/engine/context/working-with-contexts/
+        # This avoids passing an -H parameter to every Docker CLI call and modifying the wait script
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.DEPLOY_HOST_KEY }}" >> ~/.ssh/known_hosts
           echo "${{ secrets.DEPLOY_PUBLIC_KEY }}" > ~/.ssh/id_rsa.pub
           echo "${{ secrets.DEPLOY_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod -R g-rwx,o-rwx ~/.ssh
+          docker context create deploy-swarm --docker host=ssh://${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} --default-stack-orchestrator=swarm
+          docker context use deploy-swarm
       - name: Deploy to Docker Swarm
         if: steps.infer.outputs.tag == 'latest'
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           DISCORD_TOTAL_SHARDS: 3
         run: |
-          docker -H ssh://${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} stack deploy discord-bot -c <(docker-compose config) --prune --with-registry-auth
-          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} 'echo ${{ secrets.GITHUB_TOKEN }} > ~/token'
-          sleep 120
+          docker stack deploy discord-bot -c <(docker-compose config) --prune --with-registry-auth
+      - name: Wait for Swarm to converge
+        if: steps.infer.outputs.tag == 'latest'
+        # docker stack deploy does not wait for the service to converge. Issuu's sure-deploy doesn't
+        # seem to verify if all replicas are actually running and not preparing, but the previously
+        # downloaded shell script works really well. This keeps the Actions runner online until all
+        # nodes have pulled the new image, so developers can know quicky if a deployment succeeded
+        # by the check status. Also, GITHUB_TOKEN is invalidated when the runner exits, so we need
+        # to stay online for each swarm node to be authorized to pull from a private registry.
+        # Time out after five minutes.
+        run: |
+          ./docker-stack-wait.sh -t 300 discord-bot
