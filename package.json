@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "debug": "^4.3.1",
-    "discord.js": "^13.0.0-dev.fdad14099779e61cb84dcd1cb2497e0e853a6144",
+    "discord.js": "^13.0.0-dev.b15d825bb3acdf432b94d8413a7a964ccc8734bc",
     "dotenv": "^10.0.0",
     "supports-color": "^9.0.1"
   },
