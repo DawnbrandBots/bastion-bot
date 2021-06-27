@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 dotenv.config();
 import debug from "debug";
-import { Client, PossiblyUncachedGuild } from "eris";
+import { Client, ClientOptions, Guild } from "discord.js";
 
-export function serializeServer(server: PossiblyUncachedGuild): string {
+export function serializeServer(server: Guild): string {
     if ("name" in server) {
         const createdAt = new Date(server.createdAt).toISOString();
         return `${server.name} (${server.id}) [${server.memberCount}] ${createdAt} by <@${server.ownerID}>`;
@@ -25,20 +25,25 @@ const options = isNaN(shard)
           lastShardID: shard
       };
 
-const bot = new Client(`${process.env.DISCORD_TOKEN}`, {
-    restMode: true,
-    maxShards: parseInt(`${process.env.DISCORD_TOTAL_SHARDS}`) || "auto",
-    ...options
-});
-bot.on("warn", (message, shard) => warn(`Shard ${shard}: ${message}`));
-bot.on("error", (message, shard) => error(`Shard ${shard}: ${message}`));
+const clientOptions: ClientOptions = {};
+
+if (parseInt(`${process.env.DISCORD_TOTAL_SHARDS}`)) {
+    clientOptions.shardCount = parseInt(`${process.env.DISCORD_TOTAL_SHARDS}`);
+} else {
+    clientOptions.shards = "auto";
+}
+
+const bot = new Client(clientOptions);
+
+bot.on("warn", message => warn(`Shard ${bot.shard}: ${message}`));
+bot.on("error", message => error(`Shard ${bot.shard}: ${message}`));
 bot.on("connect", shard => log(`Shard ${shard} connected to Discord`));
 bot.on("disconnect", () => log("Disconnected from Discord"));
 bot.on("shardReady", shard => log(`Shard ${shard} ready`));
 bot.on("shardDisconnect", shard => log(`Shard ${shard} disconnected`));
 bot.on("guildCreate", guild => log(`Guild create: ${serializeServer(guild)}`));
 bot.on("guildDelete", guild => log(`Guild delete: ${serializeServer(guild)}`));
-bot.on("ready", () => log(`Logged in as ${bot.user.username}#${bot.user.discriminator} - ${bot.user.id}`));
+bot.on("ready", () => log(`Logged in as ${bot.user?.tag} - ${bot.user?.id}`));
 
-bot.connect().catch(error);
-process.once("SIGTERM", () => bot.disconnect({ reconnect: false }));
+bot.login(`${process.env.DISCORD_TOKEN}`).catch(error);
+process.once("SIGTERM", () => bot.destroy());
