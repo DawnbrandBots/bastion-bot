@@ -33,5 +33,23 @@ bot.on("guildCreate", guild => log(`Guild create: ${serializeServer(guild)}`));
 bot.on("guildDelete", guild => log(`Guild delete: ${serializeServer(guild)}`));
 bot.on("ready", () => log(`Logged in as ${bot.user?.tag} - ${bot.user?.id}`));
 
+bot.application?.commands
+    .create({
+        name: "help",
+        description: "Verify the bot is running with a link to the documentation."
+    })
+    .catch(error);
+
+bot.on("interaction", async interaction => {
+    if (!interaction.isCommand()) {
+        return;
+    }
+    if (interaction.commandName === "help") {
+        await interaction.reply(
+            `My documentation can be found at a private GitHub URL.\nRevision: ${process.env.BOT_REVISION}.`
+        );
+    }
+});
+
 bot.login(`${process.env.DISCORD_TOKEN}`).catch(error);
 process.once("SIGTERM", () => bot.destroy());
