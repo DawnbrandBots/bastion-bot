@@ -10,7 +10,7 @@
       "name": "Debug",
       "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}/dist",
-      "runtimeArgs": ["--enable-source-maps", "--unhandled-rejections=strict"],
+      "runtimeArgs": ["--enable-source-maps", "--unhandled-rejections=strict", "-r", "dotenv/config"],
       "args": [],
       "preLaunchTask": "npm: build",
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
