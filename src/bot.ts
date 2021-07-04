@@ -1,5 +1,8 @@
 import debug from "debug";
 import { Client, Guild, Intents } from "discord.js";
+import { HelpCommand } from "./commands/help";
+import { PingCommand } from "./commands/ping";
+import { createMessageListener, InteractionListener } from "./events";
 
 export function serializeServer(server: Guild): string {
     if ("name" in server) {
@@ -42,15 +45,8 @@ bot.once("ready", async () => {
     //log(command);
 });
 
-bot.on("interaction", async interaction => {
-    if (!interaction.isCommand()) {
-        return;
-    }
-    if (interaction.commandName === "help") {
-        await interaction.reply(
-            `My documentation can be found at a private GitHub URL.\nRevision: ${process.env.BOT_REVISION}.`
-        );
-    }
-});
+const interaction = new InteractionListener(log, [new HelpCommand(log), new PingCommand(log)]);
+bot.on("interaction", interaction.run.bind(interaction));
+bot.on("message", createMessageListener(error));
 
 export default bot;
