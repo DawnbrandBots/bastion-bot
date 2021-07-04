@@ -2,6 +2,7 @@ import { Debugger } from "debug";
 import { Interaction } from "discord.js";
 import { Listener } from ".";
 import { Command } from "../Command";
+import { serializeCommand } from "../utils";
 
 export class InteractionListener implements Listener<"interaction"> {
     private commands: Map<string, Command>;
@@ -20,16 +21,7 @@ export class InteractionListener implements Listener<"interaction"> {
         if (!interaction.isCommand()) {
             return;
         }
-        this.log(
-            JSON.stringify({
-                channel: interaction.channel?.id,
-                message: interaction.id,
-                guild: interaction.guild?.id,
-                author: interaction.user.id,
-                id: interaction.commandID,
-                command: interaction.commandName
-            })
-        );
+        this.log(serializeCommand(interaction));
         await this.commands.get(interaction.commandName)?.run(interaction);
     }
 }

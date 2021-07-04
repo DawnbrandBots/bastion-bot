@@ -8,7 +8,7 @@ export class HelpCommand extends Command {
     static override get meta(): ApplicationCommandData {
         return {
             name: "help",
-            description: "Verify the bot is running with a link to the documentation."
+            description: "Learn how to use this bot."
         };
     }
 

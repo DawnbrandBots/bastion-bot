@@ -1,5 +1,6 @@
 import { Debugger } from "debug";
 import { ApplicationCommandData, CommandInteraction } from "discord.js";
+import { serializeCommand } from "./utils";
 
 export abstract class Command {
     static get meta(): ApplicationCommandData {
@@ -43,11 +44,14 @@ export abstract class Command {
      */
     async run(interaction: CommandInteraction): Promise<void> {
         try {
-            this.logger.log(interaction, "attempt");
+            this.logger(serializeCommand(interaction, { event: "attempt", ping: interaction.client.ws.ping }));
             await this.execute(interaction);
-            this.logger.log(interaction, "success");
+            // This latency is incorrect!
+            this.logger(
+                serializeCommand(interaction, { event: "success", latency: Date.now() - interaction.createdTimestamp })
+            );
         } catch (error) {
-            this.logger.log(interaction, error);
+            this.logger(serializeCommand(interaction), error);
             await interaction.followUp("Something went wrong");
         }
     }

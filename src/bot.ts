@@ -1,17 +1,9 @@
 import debug from "debug";
-import { Client, Guild, Intents } from "discord.js";
+import { Client, Intents } from "discord.js";
 import { HelpCommand } from "./commands/help";
 import { PingCommand } from "./commands/ping";
 import { createMessageListener, InteractionListener } from "./events";
-
-export function serializeServer(server: Guild): string {
-    if ("name" in server) {
-        const createdAt = new Date(server.createdAt).toISOString();
-        return `${server.name} (${server.id}) [${server.memberCount}] ${createdAt} by <@${server.ownerID}>`;
-    } else {
-        return `${server.id}`;
-    }
-}
+import { serializeServer } from "./utils";
 
 const logger = debug("bot");
 const log = logger.extend("log");

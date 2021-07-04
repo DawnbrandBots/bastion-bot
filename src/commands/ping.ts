@@ -26,10 +26,15 @@ export class PingCommand extends Command {
     }
 
     protected override async execute(interaction: CommandInteraction): Promise<void> {
-        const response = await interaction.reply(`WebSocket ping: ${interaction.client.ws.ping} ms`);
-        const latency =
-            ("timestamp" in response ? Number(response.timestamp) : response.createdTimestamp) -
-            interaction.createdTimestamp;
-        await interaction.editReply(`${response.content}\nTotal latency: ${latency} ms`);
+        const content = `WebSocket ping: ${interaction.client.ws.ping} ms`;
+        await interaction.reply(content); // Actually returns void
+        const reply = await interaction.fetchReply();
+        if ("createdTimestamp" in reply) {
+            const latency = reply.createdTimestamp - interaction.createdTimestamp;
+            await interaction.editReply(`${content}\nTotal latency: ${latency} ms`);
+        } else {
+            const latency = Number(reply.timestamp) - interaction.createdTimestamp;
+            await interaction.editReply(`${content}\nTotal latency: ${latency} ms\nUnexpected response format`);
+        }
     }
 }
