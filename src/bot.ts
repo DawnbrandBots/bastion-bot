@@ -13,7 +13,14 @@ const error = logger.extend("error");
 const shard = parseInt(`${process.env.DISCORD_SHARD}`) - 1;
 
 const bot = new Client({
-    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+    intents: [
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_MESSAGES,
+        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+        Intents.FLAGS.DIRECT_MESSAGES,
+        Intents.FLAGS.DIRECT_MESSAGE_REACTIONS
+    ],
+    partials: ["CHANNEL"],
     shards: isNaN(shard) ? undefined : shard,
     shardCount: parseInt(`${process.env.DISCORD_TOTAL_SHARDS}`) || undefined
 });
