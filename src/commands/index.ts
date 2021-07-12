@@ -24,6 +24,7 @@ client.application.fetch().then(async application => {
     // Implicitly use DISCORD_TOKEN
     const server = await client.guilds.fetch("381294999729340417");
     server.commands.set(commands);
+    // Global commands can take up to an hour to roll out. Use await client.application?.commands
     const created = await server.commands.fetch();
     debug.log(
         created.map(command => ({

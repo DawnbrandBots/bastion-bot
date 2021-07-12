@@ -8,6 +8,7 @@
   "private": true,
   "scripts": {
     "start": "node --enable-source-maps --unhandled-rejections=strict -r dotenv/config dist",
+    "register": "node --enable-source-maps --unhandled-rejections=strict -r dotenv/config dist/commands",
     "build": "tsc",
     "clean": "tsc --build --clean",
     "test": "jest",

@@ -19,6 +19,15 @@
       "env": {
         "DEBUG_COLORS": "1"
       }
+    },
+    {
+      "type": "node",
+      "name": "Jest",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["test"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
     }
   ]
 }

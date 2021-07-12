@@ -2,7 +2,7 @@ import debug from "debug";
 import { Client, Intents } from "discord.js";
 import { HelpCommand } from "./commands/help";
 import { PingCommand } from "./commands/ping";
-import { createMessageListener, InteractionListener } from "./events";
+import { InteractionListener, MessageListener } from "./events";
 import { serializeServer } from "./utils";
 
 const logger = debug("bot");
@@ -26,19 +26,12 @@ bot.on("guildCreate", guild => log(`Guild create: ${serializeServer(guild)}`));
 bot.on("guildDelete", guild => log(`Guild delete: ${serializeServer(guild)}`));
 bot.on("ready", () => log(`Logged in as ${bot.user?.tag} - ${bot.user?.id}`));
 bot.once("ready", async () => {
-    //const command = await bot.application?.commands.create({
-    //    name: "test",
-    //    description: "Verify the bot is running with a link to the documentation."
-    //});
-    //const command = bot.guilds.cache.get("381294999729340417")?.commands.create({
-    //    name: "help",
-    //    description: "AKDB exclusive"
-    //});
-    //log(command);
+    bot.user?.setActivity("a revolution");
 });
 
 const interaction = new InteractionListener(log, [new HelpCommand(log), new PingCommand(log)]);
 bot.on("interaction", interaction.run.bind(interaction));
-bot.on("message", createMessageListener(error));
+const message = new MessageListener(error);
+bot.on("message", message.run.bind(message));
 
 export default bot;
