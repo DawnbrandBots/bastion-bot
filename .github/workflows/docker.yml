@@ -24,6 +24,8 @@ jobs:
         contains(github.event.head_commit.message, '[skip build]') ||
         contains(github.event.head_commit.message, '[build skip]')
       )
+    outputs:
+      tag: ${{ steps.infer.outputs.tag }}
     steps:
       - uses: actions/checkout@v2
       - uses: docker/setup-buildx-action@v1
@@ -55,8 +57,13 @@ jobs:
           pull: true
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ needs.build.outputs.tag }} == 'latest'
+    steps:
+      - uses: actions/checkout@v2
       - name: Download wait script
-        if: steps.infer.outputs.tag == 'latest'
         # https://github.com/docker/cli/issues/373
         # Pinned to the latest version at the time of creation so we can manually verify new versions
         # More on this in the final workflow step
@@ -65,7 +72,6 @@ jobs:
           echo "bbe07ff176af01d402fcc042aa76105f05f1c593feb903e73b7e033021afac3f  docker-stack-wait.sh" | sha256sum --check
           chmod +x docker-stack-wait.sh
       - name: Configure SSH
-        if: steps.infer.outputs.tag == 'latest'
         # https://docs.docker.com/engine/context/working-with-contexts/
         # This avoids passing an -H parameter to every Docker CLI call and modifying the wait script
         run: |
@@ -77,14 +83,12 @@ jobs:
           docker context create deploy-swarm --docker host=ssh://${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} --default-stack-orchestrator=swarm
           docker context use deploy-swarm
       - name: Deploy to Docker Swarm
-        if: steps.infer.outputs.tag == 'latest'
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           DISCORD_TOTAL_SHARDS: 3
         run: |
           docker stack deploy discord-bot -c <(docker-compose config) --prune --with-registry-auth
       - name: Wait for Swarm to converge
-        if: steps.infer.outputs.tag == 'latest'
         # docker stack deploy does not wait for the service to converge. Issuu's sure-deploy doesn't
         # seem to verify if all replicas are actually running and not preparing, but the previously
         # downloaded shell script works really well. This keeps the Actions runner online until all
