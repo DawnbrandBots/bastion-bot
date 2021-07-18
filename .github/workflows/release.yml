@@ -1,0 +1,18 @@
+name: Release to production
+
+on:
+  workflow_dispatch:
+    inputs:
+      motd:
+        description: "Discord Presence status message or help message"
+        required: false
+        default: ""
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "${{ github.event.inputs.motd }}"
+          echo "${{ github.sha }}"
+          echo "${{ github.ref }}"
