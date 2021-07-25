@@ -64,6 +64,11 @@ jobs:
     if: contains(needs.build.outputs.tags, 'latest')
     steps:
       - uses: actions/checkout@v2
+      - uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Download wait script
         # https://github.com/docker/cli/issues/373
         # Pinned to the latest version at the time of creation so we can manually verify new versions
