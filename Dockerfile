@@ -13,9 +13,8 @@ RUN yarn build
 
 FROM base
 ARG BOT_REVISION
-LABEL org.opencontainers.image.title Eris-TypeScript Discord bot template
+LABEL org.opencontainers.image.title TypeScript Discord bot template
 LABEL org.opencontainers.image.authors bastionbotdev@gmail.com
-LABEL org.opencontainers.image.source https://github.com/kevinlul/eris-bot-template.git
 LABEL org.opencontainers.image.licenses AGPL-3.0-or-later
 LABEL org.opencontainers.image.revision ${BOT_REVISION}
 ENV BOT_REVISION=${BOT_REVISION}
