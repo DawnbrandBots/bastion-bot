@@ -3,7 +3,7 @@ version: "3.9"
 services:
   bot:
     build: .
-    image: ghcr.io/kevinlul/eris-bot-template
+    image: ghcr.io/kevinlul/discord-bot-template
     environment:
       DEBUG: "*"
       DISCORD_TOKEN: "${DISCORD_TOKEN}"
