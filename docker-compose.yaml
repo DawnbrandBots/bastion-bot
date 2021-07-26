@@ -3,7 +3,7 @@ version: "3.9"
 services:
   bot:
     build: .
-    image: ghcr.io/kevinlul/discord-bot-template
+    image: "ghcr.io/kevinlul/discord-bot-template:${DOCKER_TAG:-latest}"
     environment:
       DEBUG: "*"
       DISCORD_TOKEN: "${DISCORD_TOKEN}"
