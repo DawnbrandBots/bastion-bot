@@ -19,12 +19,6 @@ jobs:
         run: |
           SHARDS=$(curl -fsSL https://discord.com/api/gateway/bot -H "Authorization: Bot ${{ secrets.PRODUCTION_DISCORD_TOKEN }}" | jq .shards)
           echo "::set-output name=count::$SHARDS"
-      - uses: docker/metadata-action@v3
-        id: meta
-        with:
-          images: ghcr.io/${{ github.repository }}
-          tags: |
-            type=sha,format=long
       - uses: docker/login-action@v1
         with:
           registry: ghcr.io
@@ -51,7 +45,8 @@ jobs:
           docker context use deploy-swarm
       - name: Deploy to Docker Swarm
         env:
-          DOCKER_TAG: ${{ steps.meta.outputs.tags }}
+          # docker/metadata-action type=sha,format=long
+          DOCKER_TAG: sha-${{ github.sha }}
           DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
           DISCORD_TOTAL_SHARDS: ${{ steps.shards.outputs.count }}
           DOCKER_EXTERNAL_NETWORK: "false"
@@ -68,3 +63,8 @@ jobs:
         # Time out after five minutes.
         run: |
           ./docker-stack-wait.sh -t 300 discord-bot
+      - name: Deploy Slash Commands globally
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        run: |
+          docker run ghcr.io/${{ github.repository }} --deploy-slash

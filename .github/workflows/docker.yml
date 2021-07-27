@@ -104,3 +104,8 @@ jobs:
         # Time out after five minutes.
         run: |
           ./docker-stack-wait.sh -t 300 discord-bot
+      - name: Deploy Slash Commands to AlphaKretin Discord Bots
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        run: |
+          docker run ghcr.io/${{ github.repository }} --deploy-slash 381294999729340417

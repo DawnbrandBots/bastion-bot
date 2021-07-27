@@ -22,4 +22,4 @@ WORKDIR /app
 COPY COPYING .
 COPY --from=build /app/dist .
 USER node
-CMD ["node", "--enable-source-maps", "--unhandled-rejections=strict", "."]
+ENTRYPOINT ["node", "--enable-source-maps", "--unhandled-rejections=strict", "."]
