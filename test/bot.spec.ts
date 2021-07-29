@@ -1,7 +1,7 @@
-import { createBot } from "../src/bot";
+import { BotFactory } from "../src/bot";
 
 describe("Does not crash from socket events", () => {
-    const bot = createBot();
+    const bot = new BotFactory([]).createInstance();
     it("Captures warn events", () => {
         bot.emit("warn", "Sample warning");
     });

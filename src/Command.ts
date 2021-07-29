@@ -1,5 +1,5 @@
-import { Debugger } from "debug";
 import { ApplicationCommandData, CommandInteraction } from "discord.js";
+import { Logger } from "./logger";
 import { serializeCommand } from "./utils";
 
 export abstract class Command {
@@ -25,7 +25,7 @@ export abstract class Command {
         return this.constructor.aliases;
     }
 
-    protected abstract get logger(): Debugger;
+    protected abstract get logger(): Logger;
 
     /**
      * Execute this command in response to a Slash Command. May throw exceptions,
@@ -33,8 +33,9 @@ export abstract class Command {
      * provided to the user.
      *
      * @param interaction
+     * @returns latency metric in milliseconds
      */
-    protected abstract execute(interaction: CommandInteraction): Promise<void>;
+    protected abstract execute(interaction: CommandInteraction): Promise<number>;
 
     /**
      * Run this command in response to user interaction from start to finish.
@@ -44,14 +45,11 @@ export abstract class Command {
      */
     async run(interaction: CommandInteraction): Promise<void> {
         try {
-            this.logger(serializeCommand(interaction, { event: "attempt", ping: interaction.client.ws.ping }));
-            await this.execute(interaction);
-            // This latency is incorrect!
-            this.logger(
-                serializeCommand(interaction, { event: "success", latency: Date.now() - interaction.createdTimestamp })
-            );
+            this.logger.verbose(serializeCommand(interaction, { event: "attempt", ping: interaction.client.ws.ping }));
+            const latency = await this.execute(interaction);
+            this.logger.verbose(serializeCommand(interaction, { event: "success", latency }));
         } catch (error) {
-            this.logger(serializeCommand(interaction), error);
+            this.logger.error(serializeCommand(interaction), error);
             await interaction.followUp("Something went wrong");
         }
     }

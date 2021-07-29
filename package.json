@@ -7,8 +7,8 @@
   "license": "AGPL-3.0-or-later",
   "private": true,
   "scripts": {
-    "start": "node --enable-source-maps --unhandled-rejections=strict -r dotenv/config dist",
-    "register": "node --enable-source-maps --unhandled-rejections=strict -r dotenv/config dist/commands",
+    "start": "node --enable-source-maps --unhandled-rejections=strict -r dotenv/config -r reflect-metadata dist",
+    "register": "node --enable-source-maps --unhandled-rejections=strict -r dotenv/config -r reflect-metadata dist --deploy-slash",
     "build": "tsc",
     "clean": "tsc --build --clean",
     "test": "jest",
@@ -22,12 +22,16 @@
     "debug": "^4.3.1",
     "discord.js": "13.0.0-dev.941cd86.1625141252",
     "dotenv": "^10.0.0",
-    "supports-color": "^9.0.1"
+    "node-fetch": "^2.6.1",
+    "reflect-metadata": "^0.1.13",
+    "supports-color": "^9.0.1",
+    "tsyringe": "^4.6.0"
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
     "@types/jest": "^26.0.23",
     "@types/node": "^14.17.4",
+    "@types/node-fetch": "^2.5.12",
     "@types/ws": "^7.4.4",
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
@@ -44,7 +48,10 @@
     "collectCoverage": true,
     "coverageDirectory": "coverage",
     "coverageProvider": "v8",
-    "preset": "ts-jest"
+    "preset": "ts-jest",
+    "setupFiles": [
+      "reflect-metadata"
+    ]
   },
   "eslintIgnore": [
     "dist"

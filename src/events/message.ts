@@ -1,9 +1,13 @@
-import { Debugger } from "debug";
 import { Message } from "discord.js";
+import { injectable } from "tsyringe";
 import { Listener } from ".";
+import { getLogger } from "../logger";
 
+@injectable()
 export class MessageListener implements Listener<"message"> {
-    constructor(private log: Debugger) {}
+    readonly type = "message";
+
+    #logger = getLogger("events:message");
 
     async run(message: Message): Promise<void> {
         if (message.author.bot || message.reference) {
@@ -11,11 +15,22 @@ export class MessageListener implements Listener<"message"> {
         }
         if (message.client.user && message.mentions.has(message.client.user)) {
             try {
-                const response = await message.reply(`WebSocket ping: ${message.client.ws.ping} ms`);
+                const ping = message.client.ws.ping;
+                const response = await message.reply(`WebSocket ping: ${ping} ms`);
                 const latency = response.createdTimestamp - message.createdTimestamp;
                 await response.edit(`${response.content}\nTotal latency: ${latency} ms`);
+                this.#logger.verbose(
+                    JSON.stringify({
+                        channel: message.channel.id,
+                        message: message.id,
+                        guild: message.guild?.id,
+                        author: message.author.id,
+                        ping,
+                        latency
+                    })
+                );
             } catch (error) {
-                this.log(
+                this.#logger.error(
                     JSON.stringify({
                         channel: message.channel.id,
                         message: message.id,

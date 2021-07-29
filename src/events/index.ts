@@ -1,6 +1,7 @@
 import { ClientEvents } from "discord.js";
 
 export interface Listener<K extends keyof ClientEvents> {
+    readonly type: K;
     run(...args: ClientEvents[K]): Promise<void>;
 }
 

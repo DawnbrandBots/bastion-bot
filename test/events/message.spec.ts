@@ -1,16 +1,16 @@
-import { debug } from "debug";
 import { Message } from "discord.js";
 import { MessageListener } from "../../src/events";
 
 const { Message: MockMessage, MessageMentions } = jest.createMockFromModule("discord.js");
 
 describe("Message event listener", () => {
-    const listener = new MessageListener(debug(""));
+    const listener = new MessageListener();
 
     let message: Message;
     const user = {};
     beforeEach(() => {
         message = new MockMessage();
+        Object.defineProperty(message, "channel", { value: { id: "0" } });
         Object.defineProperty(message, "author", { value: { bot: false } });
         Object.defineProperty(message, "client", {
             value: {
@@ -60,7 +60,6 @@ describe("Message event listener", () => {
         message.reply = jest.fn(() => {
             throw new Error();
         });
-        Object.defineProperty(message, "channel", { value: { id: "0" } });
 
         await listener.run(message);
         expect(message.reply).toHaveBeenCalledTimes(1);

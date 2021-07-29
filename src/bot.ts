@@ -1,46 +1,52 @@
-import debug from "debug";
 import { Client, Intents } from "discord.js";
-import { classes } from "./commands";
-import { InteractionListener, MessageListener } from "./events";
+import { injectable, injectAll } from "tsyringe";
+import { Listener } from "./events";
+import { getLogger } from "./logger";
 import { serializeServer } from "./utils";
 
-export function createBot(): Client {
-    const logger = debug("bot");
-    const log = logger.extend("log");
-    const warn = logger.extend("warn");
-    const error = logger.extend("error");
+@injectable()
+export class BotFactory {
+    // This is not type-safe! TypeScript doesn't support declaring an array of generic
+    // Listeners without a specialization though. This requires an existential type:
+    // https://github.com/microsoft/TypeScript/issues/14466
+    // https://stackoverflow.com/questions/65129070/defining-an-array-of-differing-generic-types-in-typescript
+    // https://stackoverflow.com/questions/292274/what-is-an-existential-type
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    constructor(@injectAll("Listener") private listeners: Listener<any>[]) {}
 
-    const shard = parseInt(`${process.env.DISCORD_SHARD}`) - 1;
+    createInstance(): Client {
+        const logger = getLogger("events");
 
-    const bot = new Client({
-        intents: [
-            Intents.FLAGS.GUILDS,
-            Intents.FLAGS.GUILD_MESSAGES,
-            Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-            Intents.FLAGS.DIRECT_MESSAGES,
-            Intents.FLAGS.DIRECT_MESSAGE_REACTIONS
-        ],
-        partials: ["CHANNEL"],
-        shards: isNaN(shard) ? undefined : shard,
-        shardCount: parseInt(`${process.env.DISCORD_TOTAL_SHARDS}`) || undefined
-    });
+        const shard = parseInt(`${process.env.DISCORD_SHARD}`) - 1;
 
-    bot.on("warn", message => warn(`Shard ${bot.shard}: ${message}`));
-    bot.on("error", message => error(`Shard ${bot.shard}: ${message}`));
-    bot.on("shardReady", shard => log(`Shard ${shard} ready`));
-    bot.on("shardDisconnect", shard => log(`Shard ${shard} disconnected`));
-    bot.on("guildCreate", guild => log(`Guild create: ${serializeServer(guild)}`));
-    bot.on("guildDelete", guild => log(`Guild delete: ${serializeServer(guild)}`));
-    bot.on("ready", () => log(`Logged in as ${bot.user?.tag} - ${bot.user?.id}`));
-    bot.once("ready", async () => {
-        bot.user?.setActivity("a revolution");
-    });
+        const bot = new Client({
+            intents: [
+                Intents.FLAGS.GUILDS,
+                Intents.FLAGS.GUILD_MESSAGES,
+                Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+                Intents.FLAGS.DIRECT_MESSAGES,
+                Intents.FLAGS.DIRECT_MESSAGE_REACTIONS
+            ],
+            partials: ["CHANNEL"],
+            shards: isNaN(shard) ? undefined : shard,
+            shardCount: parseInt(`${process.env.DISCORD_TOTAL_SHARDS}`) || undefined
+        });
 
-    const commands = classes.map(Class => new Class(log));
-    const interaction = new InteractionListener(log, commands);
-    bot.on("interaction", interaction.run.bind(interaction));
-    const message = new MessageListener(error);
-    bot.on("message", message.run.bind(message));
+        bot.on("warn", message => logger.warn(`Shard ${bot.shard}: ${message}`));
+        bot.on("error", message => logger.error(`Shard ${bot.shard}: ${message}`));
+        bot.on("shardReady", shard => logger.notify(`Shard ${shard} ready`));
+        bot.on("shardDisconnect", shard => logger.notify(`Shard ${shard} disconnected`));
+        bot.on("guildCreate", guild => logger.notify(`Guild create: ${serializeServer(guild)}`));
+        bot.on("guildDelete", guild => logger.notify(`Guild delete: ${serializeServer(guild)}`));
+        bot.on("ready", () => logger.notify(`Logged in as ${bot.user?.tag} - ${bot.user?.id}`));
+        bot.once("ready", async () => {
+            bot.user?.setActivity("a revolution");
+        });
 
-    return bot;
+        for (const listener of this.listeners) {
+            bot.on(listener.type, (...args) => listener.run(...args));
+        }
+
+        return bot;
+    }
 }
