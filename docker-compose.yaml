@@ -9,6 +9,9 @@ services:
       DISCORD_TOKEN: "${DISCORD_TOKEN}"
       DISCORD_SHARD: "{{.Task.Slot}}"
       DISCORD_TOTAL_SHARDS: ${DISCORD_TOTAL_SHARDS}
+      BOT_LOGGER_WEBHOOK: "${BOT_LOGGER_WEBHOOK:-}"
+      BOT_PRESENCE: "${BOT_PRESENCE:-}"
+      BOT_MOTD: "${BOT_MOTD:-}"
     deploy:
       replicas: ${DISCORD_TOTAL_SHARDS}
     restart: unless-stopped

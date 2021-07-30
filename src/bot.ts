@@ -40,7 +40,7 @@ export class BotFactory {
         bot.on("guildDelete", guild => logger.notify(`Guild delete: ${serializeServer(guild)}`));
         bot.on("ready", () => logger.notify(`Logged in as ${bot.user?.tag} - ${bot.user?.id}`));
         bot.once("ready", async () => {
-            bot.user?.setActivity("a revolution");
+            bot.user?.setActivity(process.env.BOT_PRESENCE || "a revolution");
         });
 
         for (const listener of this.listeners) {
