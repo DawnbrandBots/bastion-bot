@@ -54,7 +54,7 @@ jobs:
           DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
           DISCORD_TOTAL_SHARDS: ${{ steps.shards.outputs.count }}
           DOCKER_EXTERNAL_NETWORK: "false"
-          BOT_PRESENCE: ${{ github.events.inputs.presence }}
+          BOT_PRESENCE: ${{ github.event.inputs.presence }}
           BOT_MOTD: ${{ github.event.inputs.motd }}
         run: |
           docker stack deploy discord-bot -c <(docker-compose config) --prune --with-registry-auth
