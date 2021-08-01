@@ -1,22 +1,8 @@
 {
-  "compilerOptions": {
-    "target": "es2020",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "lib": ["esnext"],
-    "declaration": false,
-    "strict": true,
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "incremental": true,
-    "rootDir": "./src",
-    "outDir": "./dist"
-  },
-  "include": ["src/**/*.ts"],
-  "compileOnSave": true
+	"extends": "@alphakretin/essentials/tsconfig.json",
+	"include": ["src/**/*.ts"],
+	"compilerOptions": {
+		"rootDir": "./src",
+		"outDir": "./dist"
+	}
 }

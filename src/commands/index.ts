@@ -16,7 +16,8 @@ async function deployCommands(
     commands: ApplicationCommandData[]
 ): Promise<LoggableCommandMetadata[]> {
     await api.commands.set(commands);
-    const created = await api.commands.fetch();
+    // This is a bug in TypeScript failing to resolve the correct overload! TODO report
+    const created =  await ("guild" in api.commands ? api.commands.fetch() : api.commands.fetch());
     return created.map(command => ({
         id: command.id,
         name: command.name,

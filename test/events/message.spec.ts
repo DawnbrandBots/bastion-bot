@@ -34,9 +34,9 @@ describe("Message event listener", () => {
 
     test("ignores replies", async () => {
         message.reference = {
-            guildID: "0",
-            channelID: "1",
-            messageID: "0"
+            guildId: "0",
+            channelId: "1",
+            messageId: "0"
         };
 
         await listener.run(message);

@@ -4,8 +4,8 @@ import { Listener } from ".";
 import { getLogger } from "../logger";
 
 @injectable()
-export class MessageListener implements Listener<"message"> {
-    readonly type = "message";
+export class MessageListener implements Listener<"messageCreate"> {
+    readonly type = "messageCreate";
 
     #logger = getLogger("events:message");
 
