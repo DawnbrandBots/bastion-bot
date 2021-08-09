@@ -21,12 +21,6 @@ export class LinkCommand extends Command {
 	};
 
 	static override get meta(): ApplicationCommandData {
-		const choices = Object.keys(LinkCommand.links).map(k => {
-			return {
-				name: LinkCommand.links[k].name,
-				value: k
-			};
-		});
 		return {
 			name: "link",
 			description: "Display one of several links with useful information.",
@@ -36,7 +30,12 @@ export class LinkCommand extends Command {
 					name: "key",
 					description: "The name of the link you want to display.",
 					required: true,
-					choices
+					choices: Object.keys(LinkCommand.links).map(k => {
+						return {
+							name: LinkCommand.links[k].name,
+							value: k
+						};
+					})
 				}
 			]
 		};
@@ -51,17 +50,16 @@ export class LinkCommand extends Command {
 	}
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
-		const key = interaction.options.getString("key");
-		const content = `WebSocket ping: ${interaction.client.ws.ping} ms`;
+		const key = interaction.options.getString("key", true);
+		const content = LinkCommand.links[key].result;
 		await interaction.reply(content); // Actually returns void
 		const reply = await interaction.fetchReply();
+		// return latency
 		if ("createdTimestamp" in reply) {
 			const latency = reply.createdTimestamp - interaction.createdTimestamp;
-			await interaction.editReply(`${content}\nTotal latency: ${latency} ms`);
 			return latency;
 		} else {
 			const latency = Number(reply.timestamp) - interaction.createdTimestamp;
-			await interaction.editReply(`${content}\nTotal latency: ${latency} ms\nUnexpected response format`);
 			return latency;
 		}
 	}
