@@ -8,8 +8,7 @@ export class LinkCommand extends Command {
 	#logger = getLogger("command:link");
 
 	// can be moved to a more reasonable/configurable place later in branch development
-	// surely can do better on type here
-	static links: { [key: string]: { name: string; result: string } } = {
+	static links: Record<string, { name: string; result: string }> = {
 		lftcg: {
 			name: "TCG Banlist",
 			result: "https://www.yugioh-card.com/en/limited/"
