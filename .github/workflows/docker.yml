@@ -108,4 +108,5 @@ jobs:
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: |
+          docker context use default
           docker run -e DISCORD_TOKEN ghcr.io/${{ github.repository }}:latest --deploy-slash 381294999729340417
