@@ -7,15 +7,18 @@ import { getLogger, Logger } from "../logger";
 export class LinkCommand extends Command {
 	#logger = getLogger("command:link");
 
-	// can be moved to a more reasonable/configurable place later in branch development
 	static links: Record<string, { name: string; result: string }> = {
 		lftcg: {
 			name: "TCG Banlist",
-			result: "https://www.yugioh-card.com/en/limited/"
+			result: "https://www.yugioh-card.com/uk/limited/"
 		},
 		lfocg: {
 			name: "OCG Banlist",
 			result: "https://www.yugioh-card.com/my/event/rules_guides/forbidden_cardlist.php?lang=en"
+		},
+		lfko: {
+			name: "Korean Banlist",
+			result: "http://yugioh.co.kr/site/limit_regulation.php"
 		},
 		dubsum: {
 			name: "Double Summon List",
