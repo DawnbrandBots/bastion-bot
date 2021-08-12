@@ -1,4 +1,4 @@
-ARG NODE_VERSION=14-buster
+ARG NODE_VERSION=16
 FROM node:${NODE_VERSION} as base
 WORKDIR /app
 COPY package*.json yarn.lock ./
