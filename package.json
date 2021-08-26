@@ -1,14 +1,14 @@
 {
-	"name": "discord-bot-template",
+	"name": "bastion-bot",
 	"version": "0.0.1",
 	"main": "dist/index.js",
-	"repository": "https://github.com/kevinlul/discord-bot-template.git",
+	"repository": "https://github.com/DawnbrandBots/bastion-bot.git",
 	"author": "Kevin Lu",
 	"license": "AGPL-3.0-or-later",
 	"private": true,
 	"scripts": {
-		"start": "node --enable-source-maps --unhandled-rejections=strict -r dotenv/config -r reflect-metadata dist",
-		"register": "node --enable-source-maps --unhandled-rejections=strict -r dotenv/config -r reflect-metadata dist --deploy-slash",
+		"start": "node --enable-source-maps -r dotenv/config -r reflect-metadata dist",
+		"register": "node --enable-source-maps -r dotenv/config -r reflect-metadata dist --deploy-slash",
 		"build": "tsc",
 		"clean": "tsc --build --clean",
 		"test": "jest",
@@ -20,7 +20,7 @@
 	},
 	"dependencies": {
 		"debug": "^4.3.2",
-		"discord.js": "^13.0.1",
+		"discord.js": "^13.1.0",
 		"dotenv": "^10.0.0",
 		"node-fetch": "^2.6.1",
 		"reflect-metadata": "^0.1.13",
@@ -30,11 +30,11 @@
 	"devDependencies": {
 		"@alphakretin/essentials": "^1.0.0",
 		"@types/debug": "^4.1.7",
-		"@types/jest": "^27.0.0",
-		"@types/node": "^16.6.0",
+		"@types/jest": "^27.0.1",
+		"@types/node": "^16.7.2",
 		"@types/node-fetch": "^2.5.12",
 		"jest": "^27.0.6",
-		"ts-jest": "^27.0.4"
+		"ts-jest": "^27.0.5"
 	},
 	"jest": {
 		"clearMocks": true,

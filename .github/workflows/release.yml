@@ -72,4 +72,5 @@ jobs:
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: |
+          docker context use default
           docker run -e DISCORD_TOKEN ghcr.io/${{ github.repository }}:sha-${{ github.sha }} --deploy-slash
