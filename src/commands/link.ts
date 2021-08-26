@@ -1,4 +1,4 @@
-import { ApplicationCommandData, CommandInteraction } from "discord.js";
+import { ChatInputApplicationCommandData, CommandInteraction } from "discord.js";
 import { injectable } from "tsyringe";
 import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
@@ -58,7 +58,7 @@ export class LinkCommand extends Command {
 		}
 	};
 
-	static override get meta(): ApplicationCommandData {
+	static override get meta(): ChatInputApplicationCommandData {
 		return {
 			name: "link",
 			description: "Display one of several links with useful information.",
