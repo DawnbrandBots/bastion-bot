@@ -28,7 +28,7 @@
 		"tsyringe": "^4.6.0"
 	},
 	"devDependencies": {
-		"@alphakretin/essentials": "^1.0.0",
+		"@alphakretin/essentials": "^2.0.0",
 		"@types/debug": "^4.1.7",
 		"@types/jest": "^27.0.1",
 		"@types/node": "^16.7.2",
