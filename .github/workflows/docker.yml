@@ -10,6 +10,7 @@ on:
     paths:
       - Dockerfile
       - docker-compose.yaml
+      - docker-staging.yaml
       - .github/workflows/docker.yml
 
 jobs:
