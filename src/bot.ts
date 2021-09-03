@@ -28,7 +28,7 @@ export class BotFactory {
 				Intents.FLAGS.DIRECT_MESSAGE_REACTIONS
 			],
 			partials: ["CHANNEL"],
-			shards: isNaN(shard) ? undefined : shard,
+			shards: `${process.env.DISCORD_TOTAL_SHARDS}` === "auto" ? "auto" : isNaN(shard) ? undefined : shard,
 			shardCount: parseInt(`${process.env.DISCORD_TOTAL_SHARDS}`) || undefined
 		});
 

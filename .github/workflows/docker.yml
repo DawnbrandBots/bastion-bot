@@ -93,7 +93,7 @@ jobs:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           DISCORD_TOTAL_SHARDS: 3
         run: |
-          docker stack deploy discord-bot -c <(docker-compose config) --prune --with-registry-auth
+          docker stack deploy discord-bot -c <(docker-compose -f docker-staging.yaml config) --prune --with-registry-auth
       - name: Wait for Swarm to converge
         # docker stack deploy does not wait for the service to converge. Issuu's sure-deploy doesn't
         # seem to verify if all replicas are actually running and not preparing, but the previously

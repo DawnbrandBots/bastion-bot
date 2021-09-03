@@ -2,19 +2,21 @@ version: "3.9"
 
 services:
   bot:
-    build: .
     image: "ghcr.io/dawnbrandbots/bastion-bot:${DOCKER_TAG:-latest}"
     environment:
       DEBUG: "*"
       DISCORD_TOKEN: "${DISCORD_TOKEN}"
-      DISCORD_TOTAL_SHARDS: auto
+      DISCORD_SHARD: "{{.Task.Slot}}"
+      DISCORD_TOTAL_SHARDS: ${DISCORD_TOTAL_SHARDS}
       BOT_LOGGER_WEBHOOK: "${BOT_LOGGER_WEBHOOK:-}"
       BOT_PRESENCE: "${BOT_PRESENCE:-}"
       BOT_MOTD: "${BOT_MOTD:-}"
+    deploy:
+      replicas: ${DISCORD_TOTAL_SHARDS}
     restart: unless-stopped
     logging:
-      driver: "${DOCKER_LOG_DRIVER:-journald}"
+      driver: journald
 networks:
   default:
-    external: "${DOCKER_EXTERNAL_NETWORK:-true}"
-    name: "${DOCKER_NETWORK:-royal-magical-library_default}"
+    external: true
+    name: royal-magical-library_default

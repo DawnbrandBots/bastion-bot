@@ -1,7 +1,6 @@
 {
 	"name": "bastion-bot",
 	"version": "0.0.1",
-	"main": "dist/index.js",
 	"repository": "https://github.com/DawnbrandBots/bastion-bot.git",
 	"author": "Kevin Lu",
 	"license": "AGPL-3.0-or-later",
