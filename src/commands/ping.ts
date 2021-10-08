@@ -10,7 +10,7 @@ export class PingCommand extends Command {
 	static override get meta(): ChatInputApplicationCommandData {
 		return {
 			name: "ping",
-			description: "Test latency."
+			description: "Test latency to the new bot instance."
 		};
 	}
 
@@ -23,7 +23,7 @@ export class PingCommand extends Command {
 	}
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
-		const content = `WebSocket ping: ${interaction.client.ws.ping} ms`;
+		const content = `Average WebSocket ping (new instance): ${interaction.client.ws.ping} ms`;
 		await interaction.reply(content); // Actually returns void
 		const reply = await interaction.fetchReply();
 		if ("createdTimestamp" in reply) {

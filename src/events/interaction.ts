@@ -6,28 +6,28 @@ import { getLogger } from "../logger";
 import { serializeCommand } from "../utils";
 
 @injectable()
-export class InteractionListener implements Listener<"interaction"> {
-    readonly type = "interaction";
+export class InteractionListener implements Listener<"interactionCreate"> {
+	readonly type = "interactionCreate";
 
-    #logger = getLogger("events:interaction");
+	#logger = getLogger("events:interaction");
 
-    private commands: Map<string, Command>;
+	private commands: Map<string, Command>;
 
-    constructor(@injectAll("Command") commands: Command[]) {
-        this.commands = new Map();
-        for (const command of commands) {
-            this.commands.set(command.meta.name, command);
-            for (const alias of command.aliases) {
-                this.commands.set(alias, command);
-            }
-        }
-    }
+	constructor(@injectAll("Command") commands: Command[]) {
+		this.commands = new Map();
+		for (const command of commands) {
+			this.commands.set(command.meta.name, command);
+			for (const alias of command.aliases) {
+				this.commands.set(alias, command);
+			}
+		}
+	}
 
-    async run(interaction: Interaction): Promise<void> {
-        if (!interaction.isCommand()) {
-            return;
-        }
-        this.#logger.verbose(serializeCommand(interaction));
-        await this.commands.get(interaction.commandName)?.run(interaction);
-    }
+	async run(interaction: Interaction): Promise<void> {
+		if (!interaction.isCommand()) {
+			return;
+		}
+		this.#logger.verbose(serializeCommand(interaction));
+		await this.commands.get(interaction.commandName)?.run(interaction);
+	}
 }

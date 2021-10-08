@@ -1,10 +1,9 @@
 import { ApplicationCommandData, Client, ClientApplication, Guild, Snowflake } from "discord.js";
-import { HelpCommand } from "./help";
-import { PingCommand } from "./ping";
 import { LinkCommand } from "./link";
+import { PingCommand } from "./ping";
 
-export const classes = [HelpCommand, PingCommand, LinkCommand];
-export { HelpCommand, PingCommand, LinkCommand };
+export const classes = [PingCommand, LinkCommand];
+export { PingCommand, LinkCommand };
 
 interface LoggableCommandMetadata {
 	id: Snowflake;
