@@ -42,6 +42,7 @@ jobs:
           # docker/metadata-action type=sha,format=long
           DOCKER_TAG: sha-${{ github.event.inputs.revision || github.sha }}
           DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
+          BOT_LOGGER_WEBHOOK: ${{ secrets.PRODUCTION_LOGGER_WEBHOOK }}
           BOT_PRESENCE: ${{ github.event.inputs.presence }}
           BOT_MOTD: ${{ github.event.inputs.motd }}
           DOCKER_EXTERNAL_NETWORK: "false"
