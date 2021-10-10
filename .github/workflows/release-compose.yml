@@ -11,6 +11,10 @@ on:
         description: "Help message addendum"
         required: false
         default: ""
+      revision:
+        description: "GitHub commit SHA"
+        required: false
+        default: ""
 
 jobs:
   release:
@@ -36,10 +40,11 @@ jobs:
       - name: Deploy with Docker Compose
         env:
           # docker/metadata-action type=sha,format=long
-          DOCKER_TAG: sha-${{ github.sha }}
+          DOCKER_TAG: sha-${{ github.event.inputs.revision || github.sha }}
           DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
           BOT_PRESENCE: ${{ github.event.inputs.presence }}
           BOT_MOTD: ${{ github.event.inputs.motd }}
+          DOCKER_EXTERNAL_NETWORK: "false"
         run: |
           docker-compose pull
           docker-compose up -d
@@ -48,4 +53,4 @@ jobs:
           DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
         run: |
           docker context use default
-          docker run -e DISCORD_TOKEN ghcr.io/dawnbrandbots/bastion-bot:sha-${{ github.sha }} --deploy-slash
+          docker run -e DISCORD_TOKEN ghcr.io/dawnbrandbots/bastion-bot:sha-${{ github.event.inputs.revision || github.sha }} --deploy-slash
