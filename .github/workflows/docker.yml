@@ -110,4 +110,4 @@ jobs:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: |
           docker context use default
-          docker run -e DISCORD_TOKEN ghcr.io/${{ github.repository }}:latest --deploy-slash 381294999729340417
+          docker run -e DISCORD_TOKEN ${{ needs.build.outputs.tags[0] }} --deploy-slash 381294999729340417
