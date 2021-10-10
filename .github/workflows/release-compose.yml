@@ -1,0 +1,51 @@
+name: Release to production (Compose)
+
+on:
+  workflow_dispatch:
+    inputs:
+      presence:
+        description: "Discord Presence status message"
+        required: false
+        default: ""
+      motd:
+        description: "Help message addendum"
+        required: false
+        default: ""
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Configure SSH
+        # https://docs.docker.com/engine/context/working-with-contexts/
+        # This avoids passing an -H parameter to every Docker CLI call and modifying the wait script
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PRODUCTION_HOST_KEY }}" >> ~/.ssh/known_hosts
+          echo "${{ secrets.PRODUCTION_PUBLIC_KEY }}" > ~/.ssh/id_rsa.pub
+          echo "${{ secrets.PRODUCTION_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod -R g-rwx,o-rwx ~/.ssh
+          docker context create deploy-target --docker host=ssh://${{ secrets.PRODUCTION_DEPLOY_USER }}@${{ secrets.PRODUCTION_DEPLOY_HOST }}
+          docker context use deploy-target
+      - name: Deploy with Docker Compose
+        env:
+          # docker/metadata-action type=sha,format=long
+          DOCKER_TAG: sha-${{ github.sha }}
+          DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
+          BOT_PRESENCE: ${{ github.event.inputs.presence }}
+          BOT_MOTD: ${{ github.event.inputs.motd }}
+        run: |
+          docker-compose pull
+          docker-compose up -d
+      - name: Deploy Slash Commands globally
+        env:
+          DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
+        run: |
+          docker context use default
+          docker run -e DISCORD_TOKEN ghcr.io/dawnbrandbots/bastion-bot:sha-${{ github.sha }} --deploy-slash

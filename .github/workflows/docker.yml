@@ -27,6 +27,7 @@ jobs:
       )
     outputs:
       tags: ${{ steps.meta.outputs.tags }}
+      json: ${{ steps.meta.outputs.json }}
     steps:
       - uses: actions/checkout@v2
       - uses: docker/setup-buildx-action@v1
@@ -110,4 +111,4 @@ jobs:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: |
           docker context use default
-          docker run -e DISCORD_TOKEN ${{ needs.build.outputs.tags[0] }} --deploy-slash 381294999729340417
+          docker run -e DISCORD_TOKEN ${{ fromJSON(needs.build.outputs.json).tags[0] }} --deploy-slash 381294999729340417

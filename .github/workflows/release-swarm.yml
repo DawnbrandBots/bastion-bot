@@ -1,4 +1,4 @@
-name: Release to production
+name: Release to production (Swarm)
 
 on:
   workflow_dispatch:
