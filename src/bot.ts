@@ -35,10 +35,8 @@ export class BotFactory {
 		bot.on("warn", message => logger.warn(`Shard ${bot.shard}: ${message}`));
 		bot.on("error", message => logger.error(`Shard ${bot.shard}: ${message}`));
 		bot.on("shardReady", shard => logger.notify(`Shard ${shard} ready`));
-		bot.on("shardReconnecting", shard => logger.notify(`Shard ${shard} reconnecting`));
-		bot.on("shardResume", (shard, replayed) =>
-			logger.notify(`Shard ${shard} resumed: ${replayed} events replayed`)
-		);
+		bot.on("shardReconnecting", shard => logger.info(`Shard ${shard} reconnecting`));
+		bot.on("shardResume", (shard, replayed) => logger.info(`Shard ${shard} resumed: ${replayed} events replayed`));
 		bot.on("shardDisconnect", (event, shard) =>
 			logger.notify(`Shard ${shard} disconnected (${event.code},${event.wasClean}): ${event.reason}`)
 		);
