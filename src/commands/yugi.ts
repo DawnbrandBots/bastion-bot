@@ -10,8 +10,8 @@ export class YugiCommand extends Command {
 
 	static override get meta(): ChatInputApplicationCommandData {
 		return {
-			name: "yugi",
-			description: "Search the Yugipedia for a page and link to it.",
+			name: "yugipedia",
+			description: "Search the Yugipedia wiki for a page and link to it.",
 			options: [
 				{
 					type: "STRING",
@@ -24,7 +24,7 @@ export class YugiCommand extends Command {
 	}
 
 	static override get aliases(): string[] {
-		return ["pedia", "wiki"];
+		return [];
 	}
 
 	protected override get logger(): Logger {
