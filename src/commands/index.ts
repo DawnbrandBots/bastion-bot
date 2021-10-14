@@ -1,7 +1,7 @@
 import { ApplicationCommandData, Client, ClientApplication, Guild, Snowflake } from "discord.js";
 import { LinkCommand } from "./link";
 import { PingCommand } from "./ping";
-import { YugiCommand } from "./yugi";
+import { YugiCommand } from "./yugipedia";
 
 export const classes = [PingCommand, LinkCommand, YugiCommand];
 export { PingCommand, LinkCommand, YugiCommand };
