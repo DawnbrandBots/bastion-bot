@@ -50,7 +50,9 @@ export abstract class Command {
 			this.logger.verbose(serializeCommand(interaction, { event: "success", latency }));
 		} catch (error) {
 			this.logger.error(serializeCommand(interaction), error);
-			await interaction.followUp("Something went wrong");
+			await interaction
+				.followUp("Something went wrong")
+				.catch(e => this.logger.error(serializeCommand(interaction), e));
 		}
 	}
 }
