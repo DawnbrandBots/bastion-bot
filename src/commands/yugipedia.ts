@@ -55,7 +55,7 @@ export class YugiCommand extends Command {
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		const page = interaction.options.getString("page", true);
-		await interaction.reply(`Searching Yugipedia for \`${page}\`...`); // Actually returns void
+		await interaction.reply(`Searching Yugipedia for \`${page}\`…`); // Actually returns void
 		const link = await YugiCommand.getYugipediaPage(page);
 		const content = link || `Could not find a Yugipedia page named \`${page}\`.`; // TODO: externalise error message for translation/non-hardcoding?
 		const reply = await interaction.editReply(content);
