@@ -1,5 +1,6 @@
 import { ChatInputApplicationCommandData, CommandInteraction } from "discord.js";
 import { Logger } from "./logger";
+import { metrics } from "./metrics";
 import { serializeCommand } from "./utils";
 
 export abstract class Command {
@@ -48,6 +49,7 @@ export abstract class Command {
 			this.logger.verbose(serializeCommand(interaction, { event: "attempt", ping: interaction.client.ws.ping }));
 			const latency = await this.execute(interaction);
 			this.logger.verbose(serializeCommand(interaction, { event: "success", latency }));
+			await metrics.writeCommand(interaction);
 		} catch (error) {
 			this.logger.error(serializeCommand(interaction), error);
 			await interaction
