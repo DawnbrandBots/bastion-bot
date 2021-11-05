@@ -1,28 +1,30 @@
-import sqlite from "better-sqlite3";
+import sqlite, { Database, Statement } from "better-sqlite3";
 import * as fs from "fs";
-import { Message, GuildChannel, CommandInteraction } from "discord.js";
+import { CommandInteraction } from "discord.js";
 
 const metricsDbPath = __dirname + "/../stats/stats.db3";
 
 class Metrics {
-	private db: Promise<sqlite.Database>;
+	private db: Database;
+	private commandStatement: Statement;
 	constructor() {
 		this.db = this.getDB();
+		this.commandStatement = this.db.prepare("INSERT INTO commands VALUES(?,?,?,?,?)");
 	}
 
-	private async getDB(): Promise<sqlite.Database> {
+	private getDB(): Database {
 		const init = !fs.existsSync(metricsDbPath); // async version is deprecated
 		const db = sqlite(metricsDbPath);
 		if (init) {
-			const dump = await fs.promises.readFile(__dirname + "/../stats/stats.db3.sql", "utf8");
+			// synchronous fs for one-time init step
+			const dump = fs.readFileSync(__dirname + "/../stats/stats.db3.sql", "utf8");
 			db.exec(dump);
 		}
+		db.pragma("journal_mode = WAL");
 		return db;
 	}
 
 	public async writeCommand(interaction: CommandInteraction): Promise<void> {
-		const db = await this.db;
-		const statement = db.prepare("INSERT INTO commands VALUES(?,?,?,?,?)");
 		// TODO: the choice of properties are inspired by serialiseCommand - is there any way to reuse code here?
 		const channel = interaction.channel?.id;
 		const message = interaction.id;
@@ -30,7 +32,7 @@ class Metrics {
 		const author = interaction.user.id;
 		const id = interaction.commandId;
 		const command = interaction.commandName;
-		statement.run(channel, message, guild, author, id, command);
+		this.commandStatement.run(channel, message, guild, author, id, command);
 	}
 }
 
