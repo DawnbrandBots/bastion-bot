@@ -24,7 +24,7 @@ class Metrics {
 		return db;
 	}
 
-	public async writeCommand(interaction: CommandInteraction): Promise<void> {
+	public writeCommand(interaction: CommandInteraction): void {
 		// TODO: the choice of properties are inspired by serialiseCommand - is there any way to reuse code here?
 		const channel = interaction.channel?.id;
 		const message = interaction.id;
