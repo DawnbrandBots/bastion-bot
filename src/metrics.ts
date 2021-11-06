@@ -1,14 +1,14 @@
 import sqlite, { Database, Statement } from "better-sqlite3";
 import { CommandInteraction } from "discord.js";
 import * as fs from "fs";
-import { injectable } from "tsyringe";
+import { singleton } from "tsyringe";
 
 const metricsDbPath = `${__dirname}/../stats/stats.db3`;
 
-@injectable()
+@singleton()
 export class Metrics {
-	private db: Database;
-	private commandStatement: Statement;
+	private readonly db: Database;
+	private readonly commandStatement: Statement;
 	constructor() {
 		this.db = this.getDB();
 		this.commandStatement = this.db.prepare("INSERT INTO commands VALUES(?,?,?,?,?,?,?)");
@@ -34,5 +34,9 @@ export class Metrics {
 		const command = interaction.commandName;
 		const args = interaction.options.data.join();
 		this.commandStatement.run(id, guild, channel, author, command, args, latency);
+	}
+
+	public destroy(): void {
+		this.db.close();
 	}
 }

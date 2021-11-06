@@ -10,14 +10,17 @@ if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	registerSlashCommands(process.argv[3] as any);
 } else {
-	container.register<Metrics>(Metrics, Metrics);
+	//container.registerSingleton<Metrics>(Metrics);
 	classes.forEach(Class => container.register<Command>("Command", { useClass: Class }));
 	container.register<InteractionListener>("Listener", { useClass: InteractionListener });
 	container.register<MessageListener>("Listener", { useClass: MessageListener });
-	container.register<BotFactory>(BotFactory, { useClass: BotFactory });
+	//container.register<BotFactory>(BotFactory, { useClass: BotFactory });
 
 	const bot = container.resolve(BotFactory).createInstance();
-	process.once("SIGTERM", () => bot.destroy());
+	process.once("SIGTERM", () => {
+		bot.destroy();
+		container.resolve(Metrics).destroy();
+	});
 	// Implicitly use DISCORD_TOKEN
 	bot.login();
 }
