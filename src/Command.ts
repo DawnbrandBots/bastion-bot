@@ -1,9 +1,11 @@
 import { ChatInputApplicationCommandData, CommandInteraction } from "discord.js";
+import { inject } from "tsyringe";
 import { Logger } from "./logger";
-import { metrics } from "./metrics";
+import { Metrics } from "./metrics";
 import { serializeCommand } from "./utils";
 
 export abstract class Command {
+	private metrics: Metrics;
 	static get meta(): ChatInputApplicationCommandData {
 		throw new Error("Not implemented");
 	}
@@ -17,6 +19,9 @@ export abstract class Command {
 
 	// Hack: https://github.com/Microsoft/TypeScript/issues/3841#issuecomment-337560146
 	["constructor"]: typeof Command;
+	constructor(metrics: Metrics) {
+		this.metrics = metrics;
+	}
 
 	get meta(): ChatInputApplicationCommandData {
 		return this.constructor.meta;
@@ -49,7 +54,7 @@ export abstract class Command {
 			this.logger.verbose(serializeCommand(interaction, { event: "attempt", ping: interaction.client.ws.ping }));
 			const latency = await this.execute(interaction);
 			this.logger.verbose(serializeCommand(interaction, { event: "success", latency }));
-			await metrics.writeCommand(interaction);
+			this.metrics.writeCommand(interaction);
 		} catch (error) {
 			this.logger.error(serializeCommand(interaction), error);
 			await interaction

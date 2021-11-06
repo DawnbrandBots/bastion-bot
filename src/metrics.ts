@@ -1,10 +1,12 @@
 import sqlite, { Database, Statement } from "better-sqlite3";
 import * as fs from "fs";
 import { CommandInteraction } from "discord.js";
+import { injectable } from "tsyringe";
 
 const metricsDbPath = __dirname + "/../stats/stats.db3";
 
-class Metrics {
+@injectable()
+export class Metrics {
 	private db: Database;
 	private commandStatement: Statement;
 	constructor() {
@@ -35,5 +37,3 @@ class Metrics {
 		this.commandStatement.run(channel, message, guild, author, id, command);
 	}
 }
-
-export const metrics = new Metrics();
