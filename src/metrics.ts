@@ -1,9 +1,9 @@
 import sqlite, { Database, Statement } from "better-sqlite3";
-import * as fs from "fs";
 import { CommandInteraction } from "discord.js";
+import * as fs from "fs";
 import { injectable } from "tsyringe";
 
-const metricsDbPath = __dirname + "/../stats/stats.db3";
+const metricsDbPath = `${__dirname}/../stats/stats.db3`;
 
 @injectable()
 export class Metrics {
@@ -11,7 +11,7 @@ export class Metrics {
 	private commandStatement: Statement;
 	constructor() {
 		this.db = this.getDB();
-		this.commandStatement = this.db.prepare("INSERT INTO commands VALUES(?,?,?,?,?)");
+		this.commandStatement = this.db.prepare("INSERT INTO commands VALUES(?,?,?,?,?,?)");
 	}
 
 	private getDB(): Database {
@@ -19,7 +19,7 @@ export class Metrics {
 		const db = sqlite(metricsDbPath);
 		if (init) {
 			// synchronous fs for one-time init step
-			const dump = fs.readFileSync(__dirname + "/../stats/stats.db3.sql", "utf8");
+			const dump = fs.readFileSync(`${__dirname}/../stats/stats.db3.sql`, "utf8");
 			db.exec(dump);
 		}
 		db.pragma("journal_mode = WAL");

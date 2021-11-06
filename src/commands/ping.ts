@@ -1,5 +1,5 @@
 import { ChatInputApplicationCommandData, CommandInteraction } from "discord.js";
-import { inject, injectable } from "tsyringe";
+import { injectable } from "tsyringe";
 import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
@@ -8,7 +8,7 @@ import { Metrics } from "../metrics";
 export class PingCommand extends Command {
 	#logger = getLogger("command:ping");
 
-	constructor(@inject(Metrics) metrics: Metrics) {
+	constructor(metrics: Metrics) {
 		super(metrics);
 	}
 

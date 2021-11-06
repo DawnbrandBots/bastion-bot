@@ -1,6 +1,6 @@
 import { ChatInputApplicationCommandData, CommandInteraction } from "discord.js";
 import fetch from "node-fetch";
-import { inject, injectable } from "tsyringe";
+import { injectable } from "tsyringe";
 import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
@@ -9,7 +9,7 @@ import { Metrics } from "../metrics";
 export class YugiCommand extends Command {
 	#logger = getLogger("command:yugi");
 
-	constructor(@inject(Metrics) metrics: Metrics) {
+	constructor(metrics: Metrics) {
 		super(metrics);
 	}
 

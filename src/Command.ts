@@ -1,11 +1,9 @@
 import { ChatInputApplicationCommandData, CommandInteraction } from "discord.js";
-import { inject } from "tsyringe";
 import { Logger } from "./logger";
 import { Metrics } from "./metrics";
 import { serializeCommand } from "./utils";
 
 export abstract class Command {
-	private metrics: Metrics;
 	static get meta(): ChatInputApplicationCommandData {
 		throw new Error("Not implemented");
 	}
@@ -19,9 +17,7 @@ export abstract class Command {
 
 	// Hack: https://github.com/Microsoft/TypeScript/issues/3841#issuecomment-337560146
 	["constructor"]: typeof Command;
-	constructor(metrics: Metrics) {
-		this.metrics = metrics;
-	}
+	constructor(private metrics: Metrics) {}
 
 	get meta(): ChatInputApplicationCommandData {
 		return this.constructor.meta;
