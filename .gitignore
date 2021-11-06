@@ -111,3 +111,7 @@ dist
 
 # Windows
 Thumbs.db
+
+# Metrics databses
+stats/stats.db3*
+!stats/stats.db3.sql
