@@ -11,7 +11,7 @@ export class Metrics {
 	private commandStatement: Statement;
 	constructor() {
 		this.db = this.getDB();
-		this.commandStatement = this.db.prepare("INSERT INTO commands VALUES(?,?,?,?,?,?)");
+		this.commandStatement = this.db.prepare("INSERT INTO commands VALUES(?,?,?,?,?,?,?)");
 	}
 
 	private getDB(): Database {
@@ -26,14 +26,13 @@ export class Metrics {
 		return db;
 	}
 
-	public writeCommand(interaction: CommandInteraction): void {
-		// TODO: the choice of properties are inspired by serialiseCommand - is there any way to reuse code here?
-		const channel = interaction.channel?.id;
-		const message = interaction.id;
+	public writeCommand(interaction: CommandInteraction, latency: number): void {
+		const id = interaction.id;
 		const guild = interaction.guild?.id;
+		const channel = interaction.channel?.id;
 		const author = interaction.user.id;
-		const id = interaction.commandId;
 		const command = interaction.commandName;
-		this.commandStatement.run(channel, message, guild, author, id, command);
+		const args = interaction.options.data.join();
+		this.commandStatement.run(id, guild, channel, author, command, args, latency);
 	}
 }

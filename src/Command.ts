@@ -50,7 +50,7 @@ export abstract class Command {
 			this.logger.verbose(serializeCommand(interaction, { event: "attempt", ping: interaction.client.ws.ping }));
 			const latency = await this.execute(interaction);
 			this.logger.verbose(serializeCommand(interaction, { event: "success", latency }));
-			this.metrics.writeCommand(interaction);
+			this.metrics.writeCommand(interaction, latency);
 		} catch (error) {
 			this.logger.error(serializeCommand(interaction), error);
 			await interaction
