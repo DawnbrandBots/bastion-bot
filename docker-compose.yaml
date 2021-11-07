@@ -11,6 +11,9 @@ services:
       BOT_LOGGER_WEBHOOK: "${BOT_LOGGER_WEBHOOK:-}"
       BOT_PRESENCE: "${BOT_PRESENCE:-}"
       BOT_MOTD: "${BOT_MOTD:-}"
+    volumes:
+      - ${BOT_BIND_MOUNT}:/var/local/bastion
+    command: /var/local/bastion/metrics.db3
     restart: unless-stopped
     logging:
       driver: "${DOCKER_LOG_DRIVER:-journald}"
