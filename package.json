@@ -18,6 +18,7 @@
 		"yarn": "1.22.x"
 	},
 	"dependencies": {
+		"better-sqlite3": "^7.4.4",
 		"debug": "^4.3.2",
 		"discord.js": "~13.1.0",
 		"dotenv": "^10.0.0",
@@ -28,6 +29,7 @@
 	},
 	"devDependencies": {
 		"@alphakretin/essentials": "^2.0.0",
+		"@types/better-sqlite3": "^7.4.1",
 		"@types/debug": "^4.1.7",
 		"@types/jest": "^27.0.1",
 		"@types/node": "^16.7.2",

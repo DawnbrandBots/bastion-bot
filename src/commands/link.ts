@@ -1,11 +1,16 @@
 import { ChatInputApplicationCommandData, CommandInteraction } from "discord.js";
-import { injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
+import { Metrics } from "../metrics";
 
 @injectable()
 export class LinkCommand extends Command {
 	#logger = getLogger("command:link");
+
+	constructor(@inject(Metrics) metrics: Metrics) {
+		super(metrics);
+	}
 
 	static links: Record<string, { name: string; result: string }> = {
 		lftcg: {

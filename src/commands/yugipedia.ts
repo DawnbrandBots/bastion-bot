@@ -3,10 +3,15 @@ import fetch from "node-fetch";
 import { injectable } from "tsyringe";
 import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
+import { Metrics } from "../metrics";
 
 @injectable()
 export class YugiCommand extends Command {
 	#logger = getLogger("command:yugi");
+
+	constructor(metrics: Metrics) {
+		super(metrics);
+	}
 
 	static override get meta(): ChatInputApplicationCommandData {
 		return {

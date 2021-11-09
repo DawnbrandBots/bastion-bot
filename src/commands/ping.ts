@@ -2,10 +2,15 @@ import { ChatInputApplicationCommandData, CommandInteraction } from "discord.js"
 import { injectable } from "tsyringe";
 import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
+import { Metrics } from "../metrics";
 
 @injectable()
 export class PingCommand extends Command {
 	#logger = getLogger("command:ping");
+
+	constructor(metrics: Metrics) {
+		super(metrics);
+	}
 
 	static override get meta(): ChatInputApplicationCommandData {
 		return {

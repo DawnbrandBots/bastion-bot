@@ -1,5 +1,6 @@
 import { ChatInputApplicationCommandData, CommandInteraction } from "discord.js";
 import { Logger } from "./logger";
+import { Metrics } from "./metrics";
 import { serializeCommand } from "./utils";
 
 export abstract class Command {
@@ -16,6 +17,7 @@ export abstract class Command {
 
 	// Hack: https://github.com/Microsoft/TypeScript/issues/3841#issuecomment-337560146
 	["constructor"]: typeof Command;
+	constructor(private metrics: Metrics) {}
 
 	get meta(): ChatInputApplicationCommandData {
 		return this.constructor.meta;
@@ -48,6 +50,7 @@ export abstract class Command {
 			this.logger.verbose(serializeCommand(interaction, { event: "attempt", ping: interaction.client.ws.ping }));
 			const latency = await this.execute(interaction);
 			this.logger.verbose(serializeCommand(interaction, { event: "success", latency }));
+			this.metrics.writeCommand(interaction, latency);
 		} catch (error) {
 			this.logger.error(serializeCommand(interaction), error);
 			await interaction
