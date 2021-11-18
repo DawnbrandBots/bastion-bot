@@ -1,4 +1,4 @@
-# Bastion [<img src="https://img.shields.io/static/v1?label=invite%20to&message=Discord&color=informational&style=for-the-badge" alt="Invite to Discord" align="right" />](https://discord.com/api/oauth2/authorize?client_id=383854640694820865&permissions=378944&scope=bot%20applications.commands)
+# Bastion [<img src="https://img.shields.io/static/v1?label=invite%20to&message=Discord&color=informational&style=for-the-badge" alt="Invite to Discord" align="right" />](https://discord.com/api/oauth2/authorize?client_id=383854640694820865&permissions=274878285888&scope=bot%20applications.commands)
 
 <!-- Unfortunately, GitHub Markdown sanitizes style attributes, so we will have to use a deprecated HTML attribute. -->
 [<img src="https://cdn.discordapp.com/avatars/383854640694820865/fab10204c193d0bc3d48169d11245a1a.png" alt="Bastion avatar" align="right" />](https://yugipedia.com/wiki/Bastion_Misawa)
@@ -24,12 +24,13 @@ as many Bastion commands as possible to the new Slash Command system.
 
 ## Discord permissions
 
-Please make sure you use an [invite link](https://discord.com/api/oauth2/authorize?client_id=383854640694820865&permissions=378944&scope=bot%20applications.commands)
+Please make sure you use an [invite link](https://discord.com/api/oauth2/authorize?client_id=383854640694820865&permissions=274878285888&scope=bot%20applications.commands)
 that automatically grants the following permissions.
 
 - Create slash commands. **If Bastion joined your server after March 22, 2021, and you did not use
 the link above to invite it, you will need to reinvite with the above link.** You do not need to kick the bot.
 - Send Messages
+- Send Messages in Threads
 - Embed Links: Bastion displays card information in a Discord rich embed.
 - Attach Files: Bastion attaches card images for trivia.
 - Read Message History
