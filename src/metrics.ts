@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS "commands" (
 		const channel = interaction.channel?.id;
 		const author = interaction.user.id;
 		const command = interaction.commandName;
-		const args = interaction.options.data.join();
+		const args = interaction.options.data.map(o => `${o.name}: ${o.value}`).join();
 		this.commandStatement.run(id, guild, channel, author, command, args, latency);
 	}
 
