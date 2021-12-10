@@ -17,7 +17,7 @@ export class Metrics {
 		db.exec(`
 CREATE TABLE IF NOT EXISTS "commands" (
 	"id"	TEXT NOT NULL,
-	"guild"	TEXT NOT NULL,
+	"guild"	TEXT,
 	"channel"	TEXT NOT NULL,
 	"author" 	TEXT NOT NULL,
 	"command"	TEXT NOT NULL,
