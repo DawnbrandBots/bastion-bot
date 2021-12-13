@@ -1,10 +1,11 @@
 import { ApplicationCommandData, Client, ClientApplication, Guild, Snowflake } from "discord.js";
+import { DeckCommand } from "./deck";
 import { LinkCommand } from "./link";
 import { PingCommand } from "./ping";
 import { YugiCommand } from "./yugipedia";
 
-export const classes = [PingCommand, LinkCommand, YugiCommand];
-export { PingCommand, LinkCommand, YugiCommand };
+export const classes = [DeckCommand, PingCommand, LinkCommand, YugiCommand];
+export { DeckCommand, PingCommand, LinkCommand, YugiCommand };
 
 interface LoggableCommandMetadata {
 	id: Snowflake;
