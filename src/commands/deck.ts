@@ -16,12 +16,12 @@ export class DeckCommand extends Command {
 	static override get meta(): ChatInputApplicationCommandData {
 		return {
 			name: "deck",
-			description: "Display a summary of a given deck.",
+			description: "Display a deck list from ydke:// format, exported from a number of deck building programs.",
 			options: [
 				{
 					type: "STRING",
 					name: "deck",
-					description: "The YDKE URL of the deck you want to view.",
+					description: "The ydke:// URL of the deck you want to view.",
 					required: true
 				}
 			]
@@ -94,9 +94,8 @@ export class DeckCommand extends Command {
 		const baseUrl = interaction.options.getString("deck", true);
 		const urls = extractURLs(baseUrl);
 		if (urls.length < 1) {
-			// TODO: write a human-readable error message, ideally explaining what and how a YDKE is.
 			await interaction.reply({
-				content: "YDKE Input Error",
+				content: "Error: Must provide a valid ydke:// URL!",
 				ephemeral: true
 			});
 		} else {
