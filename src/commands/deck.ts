@@ -1,7 +1,7 @@
 import { ChatInputApplicationCommandData, CommandInteraction, MessageEmbed } from "discord.js";
 import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
-import { extractURLs, parseURL, TypedDeck } from "ydke";
+import { parseURL, TypedDeck } from "ydke";
 import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
