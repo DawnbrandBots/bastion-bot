@@ -81,7 +81,7 @@ export class DeckCommand extends Command {
 		};
 		// sum up the number of cards in each section for the headings
 		// TODO: get monster/spell/trap counts
-		const sum = (acc: number, cur: number) => acc + cur;
+		const sum = (acc: number, cur: number): number => acc + cur;
 		const sums = {
 			main: Object.values(deckCounts.main).reduce(sum, 0),
 			extra: Object.values(deckCounts.extra).reduce(sum, 0),
