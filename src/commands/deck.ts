@@ -44,23 +44,22 @@ export class DeckCommand extends Command {
 	}
 
 	async generateProfile(deck: TypedDeck): Promise<MessageEmbed> {
+		// use Set to remove duplicates from list of passwords to pass to API
+		const allUniqueCards = [...new Set([...deck.main, ...deck.extra, ...deck.side])];
 		// get names from API
-		const allUniqueNames = new Set([...deck.main, ...deck.extra, ...deck.side]);
 		// TODO: decide if we're making a module for API interaction or using fetch directly in commands
 		const cards: MultiCard[] = await (
-			await fetch(`${process.env.SEARCH_API}/multi?password=${[...allUniqueNames].join(",")}`)
+			await fetch(`${process.env.SEARCH_API}/multi?password=${allUniqueCards.join(",")}`)
 		).json();
-		// we fetch the name before counting because doing this with an array is easier than a record
-		// as such we memoise to avoid duplicate searches
+		// populate the names into a record to be fetched linearly
 		const nameMemo: Record<number, string> = {};
+		cards.forEach((c, i) => {
+			nameMemo[allUniqueCards[i]] = c.name_en;
+		});
+		// apply the names to the record of the deck
 		const getName = (password: number): string => {
 			if (!(password in nameMemo)) {
-				const result = cards.filter(c => c.password === password);
-				if (result.length > 0) {
-					nameMemo[password] = result[0].name_en;
-				} else {
-					nameMemo[password] = password.toString();
-				}
+				nameMemo[password] = password.toString();
 			}
 			return nameMemo[password];
 		};
