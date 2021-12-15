@@ -71,7 +71,7 @@ export class DeckCommand extends Command {
 		};
 		// count the number of each card in the deck
 		const count = (acc: Record<string, number>, val: string): Record<string, number> => {
-			acc[val] = ++acc[val] || 1;
+			acc[val] = acc[val] ? acc[val] + 1 : 1;
 			return acc;
 		};
 		const deckCounts = {
