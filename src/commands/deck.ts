@@ -88,7 +88,7 @@ export class DeckCommand extends Command {
 			side: Object.values(deckCounts.side).reduce(sum, 0)
 		};
 		// print information into embed
-		const printCount = (value: [string, number]): string => `${value[0]}: ${value[1]}`;
+		const printCount = (value: [string, number]): string => `${value[1]} ${value[0]}`;
 		const embed = new MessageEmbed();
 		embed.setTitle("Your Deck");
 		if (sums.main > 0) {
