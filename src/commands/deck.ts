@@ -1,9 +1,16 @@
 import { ChatInputApplicationCommandData, CommandInteraction, MessageEmbed } from "discord.js";
+import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { extractURLs, parseURL, TypedDeck } from "ydke";
 import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
+
+interface MultiCard {
+	kid: number;
+	password: number;
+	name_en: string;
+}
 
 @injectable()
 export class DeckCommand extends Command {
@@ -36,16 +43,26 @@ export class DeckCommand extends Command {
 		return this.#logger;
 	}
 
-	generateProfile(deck: TypedDeck): MessageEmbed {
+	async generateProfile(deck: TypedDeck): Promise<MessageEmbed> {
+		// get names from API
+		const allUniqueNames = new Set([...deck.main, ...deck.extra, ...deck.side]);
+		// TODO: decide if we're making a module for API interaction or using fetch directly in commands
+		const cards: MultiCard[] = await (
+			await fetch(`${process.env.OPENSEARCH_URL}/api/multi?${[...allUniqueNames].join(",")}`)
+		).json();
 		// we fetch the name before counting because doing this with an array is easier than a record
-		// as such we memoise to avoid duplicate calls
+		// as such we memoise to avoid duplicate searches
 		const nameMemo: Record<number, string> = {};
-		const getName = (passcode: number): string => {
-			if (!(passcode in nameMemo)) {
-				// TODO: implement fetching at least name from the API
-				nameMemo[passcode] = passcode.toString();
+		const getName = (password: number): string => {
+			if (!(password in nameMemo)) {
+				const result = cards.filter(c => c.password === password);
+				if (result.length > 0) {
+					nameMemo[password] = result[0].name_en;
+				} else {
+					nameMemo[password] = password.toString();
+				}
 			}
-			return nameMemo[passcode];
+			return nameMemo[password];
 		};
 		const namedDeck = {
 			main: [...deck.main].map(getName),
@@ -100,7 +117,7 @@ export class DeckCommand extends Command {
 			});
 		} else {
 			const deck = parseURL(urls[0]);
-			const content = this.generateProfile(deck);
+			const content = await this.generateProfile(deck);
 			await interaction.reply({ embeds: [content], ephemeral: true }); // Actually returns void
 		}
 		const reply = await interaction.fetchReply();
