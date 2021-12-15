@@ -51,17 +51,19 @@ export class DeckCommand extends Command {
 		const cards: MultiCard[] = await (
 			await fetch(`${process.env.SEARCH_API}/multi?password=${allUniqueCards.join(",")}`)
 		).json();
-		// populate the names into a record to be fetched linearly
-		const nameMemo: Record<number, string> = {};
+		// populate the names into a Map to be fetched linearly
+		const nameMemo: Map<number, string> = new Map<number, string>();
 		cards.forEach((c, i) => {
-			nameMemo[allUniqueCards[i]] = c.name_en;
+			nameMemo.set(c.password, c.name_en);
 		});
 		// apply the names to the record of the deck
 		const getName = (password: number): string => {
-			if (!(password in nameMemo)) {
-				nameMemo[password] = password.toString();
+			// fallback for missing name, though in reality we'd run into an issue in the API first?
+			if (!nameMemo.has(password)) {
+				nameMemo.set(password, password.toString());
 			}
-			return nameMemo[password];
+			// we have verified/ensured its presence
+			return nameMemo.get(password)!;
 		};
 		const namedDeck = {
 			main: [...deck.main].map(getName),
