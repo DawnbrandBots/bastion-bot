@@ -107,18 +107,21 @@ export class DeckCommand extends Command {
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		// NOTE: when we implement reading .ydk files, validate existence of headers/at least one populated section?
-		const baseUrl = interaction.options.getString("deck", true);
-		const urls = extractURLs(baseUrl);
-		if (urls.length < 1) {
+		let deck: TypedDeck;
+		try {
+			deck = parseURL(interaction.options.getString("deck", true));
+		} catch (e) {
+			// TODO: specifically catch error for bad input and respond more clearly?
 			await interaction.reply({
-				content: "Error: Must provide a valid ydke:// URL!",
+				content: (e as Error).message,
 				ephemeral: true
 			});
-		} else {
-			const deck = parseURL(urls[0]);
-			const content = await this.generateProfile(deck);
-			await interaction.reply({ embeds: [content], ephemeral: true }); // Actually returns void
+			// placeholder latency
+			return 0;
 		}
+		const content = await this.generateProfile(deck);
+		await interaction.reply({ embeds: [content], ephemeral: true }); // Actually returns void
+
 		// placeholder latency value
 		return 0;
 		// TODO: update latency calculation since we can't fetch ephemeral replies
