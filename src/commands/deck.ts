@@ -53,18 +53,12 @@ export class DeckCommand extends Command {
 		).json();
 		// populate the names into a Map to be fetched linearly
 		const nameMemo: Map<number, string> = new Map<number, string>();
-		cards.forEach((c, i) => {
+		cards.forEach(c => {
 			nameMemo.set(c.password, c.name_en);
 		});
 		// apply the names to the record of the deck
-		const getName = (password: number): string => {
-			// fallback for missing name, though in reality we'd run into an issue in the API first?
-			if (!nameMemo.has(password)) {
-				nameMemo.set(password, password.toString());
-			}
-			// we have verified/ensured its presence
-			return nameMemo.get(password)!;
-		};
+		// toString is fallback for missing name, though in reality we'd run into an issue in the API first?
+		const getName = (password: number): string => nameMemo.get(password) || password.toString();
 		const namedDeck = {
 			main: [...deck.main].map(getName),
 			extra: [...deck.extra].map(getName),
