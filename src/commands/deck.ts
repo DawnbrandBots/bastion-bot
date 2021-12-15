@@ -48,7 +48,7 @@ export class DeckCommand extends Command {
 		const allUniqueNames = new Set([...deck.main, ...deck.extra, ...deck.side]);
 		// TODO: decide if we're making a module for API interaction or using fetch directly in commands
 		const cards: MultiCard[] = await (
-			await fetch(`${process.env.OPENSEARCH_URL}/api/multi?${[...allUniqueNames].join(",")}`)
+			await fetch(`${process.env.SEARCH_API}/multi?password=${[...allUniqueNames].join(",")}`)
 		).json();
 		// we fetch the name before counting because doing this with an array is easier than a record
 		// as such we memoise to avoid duplicate searches
