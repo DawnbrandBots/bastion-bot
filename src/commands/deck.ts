@@ -120,7 +120,10 @@ export class DeckCommand extends Command {
 			const content = await this.generateProfile(deck);
 			await interaction.reply({ embeds: [content], ephemeral: true }); // Actually returns void
 		}
-		const reply = await interaction.fetchReply();
+		// placeholder latency value
+		return 0;
+		// TODO: update latency calculation since we can't fetch ephemeral replies
+		/*const reply = await interaction.fetchReply();
 		// return latency
 		if ("createdTimestamp" in reply) {
 			const latency = reply.createdTimestamp - interaction.createdTimestamp;
@@ -128,6 +131,6 @@ export class DeckCommand extends Command {
 		} else {
 			const latency = Number(reply.timestamp) - interaction.createdTimestamp;
 			return latency;
-		}
+		}*/
 	}
 }
