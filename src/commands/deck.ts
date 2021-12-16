@@ -6,10 +6,12 @@ import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 
-interface MultiCard {
+interface APICard {
 	kid: number;
 	password: number;
-	name_en: string;
+	en: { name: string };
+	type: string; // Main Deck Category
+	subtype: string; // Extra Deck Category (for our purposes)
 }
 
 @injectable()
@@ -54,20 +56,20 @@ export class DeckCommand extends Command {
 		const allUniqueCards = [...new Set([...deck.main, ...deck.extra, ...deck.side])];
 		// get names from API
 		// TODO: decide if we're making a module for API interaction or using fetch directly in commands
-		const cards: MultiCard[] = await (
+		const cards: APICard[] = await (
 			await fetch(`${process.env.SEARCH_API}/multi?password=${allUniqueCards.join(",")}`)
 		).json();
 		// populate the names into a Map to be fetched linearly
-		const nameMemo: Map<number, string> = new Map<number, string>();
+		const cardMemo: Map<number, APICard> = new Map<number, APICard>();
 		cards.forEach(c => {
 			// in case an API error returns a null response for a card, we don't record its name and a fallback will be triggered later
 			if (c) {
-				nameMemo.set(c.password, c.name_en);
+				cardMemo.set(c.password, c);
 			}
 		});
 		// apply the names to the record of the deck
 		// toString is fallback for missing name, e.g. if an API error returns null
-		const getName = (password: number): string => nameMemo.get(password) || password.toString();
+		const getName = (password: number): string => cardMemo.get(password)?.en.name || password.toString();
 		const namedDeck = {
 			main: [...deck.main].map(getName),
 			extra: [...deck.extra].map(getName),
@@ -84,28 +86,77 @@ export class DeckCommand extends Command {
 			side: namedDeck.side.reduce(count, {})
 		};
 		// sum up the number of cards in each section for the headings
-		// TODO: get monster/spell/trap counts
+		// we do this seperately from the some of the below to not assume a card fits in exactly one of the given categories
 		const sum = (acc: number, cur: number): number => acc + cur;
 		const sums = {
 			main: Object.values(deckCounts.main).reduce(sum, 0),
 			extra: Object.values(deckCounts.extra).reduce(sum, 0),
 			side: Object.values(deckCounts.side).reduce(sum, 0)
 		};
+		// count the number of each meaningful card type in the deck
+		const typeCount =
+			(types: string[], field: "type" | "subtype") => (acc: Record<string, number>, val: number) => {
+				const card = cardMemo.get(val);
+				if (card) {
+					for (const type of types) {
+						if (card[field] === type) {
+							acc[type] = acc[type] ? acc[type] + 1 : 1;
+						}
+					}
+				}
+				return acc;
+			};
+		const mainTypes = ["Monster", "Spell", "Trap"];
+		const extraTypes = ["Fusion", "Synchro", "Xyz", "Link"];
+		const typeCounts = {
+			main: [...deck.main].reduce(typeCount(mainTypes, "type"), {}),
+			extra: [...deck.extra].reduce(typeCount(extraTypes, "subtype"), {}),
+			side: [...deck.side].reduce(typeCount(mainTypes, "type"), {})
+		};
 		// print information into embed
 		const printCount = (value: [string, number]): string => `${value[1]} ${value[0]}`;
+		const plurals: Record<string, string> = {
+			Monster: "Monsters",
+			Spell: "Spells",
+			Trap: "Traps",
+			Fusion: "Fusions",
+			Synchro: "Synchros",
+			Xyz: "Xyz",
+			Link: "Links"
+		};
+		const printTypeCount =
+			(field: "main" | "extra" | "side") =>
+			(type: string): string | undefined => {
+				const count = typeCounts[field][type];
+				if (count > 0) {
+					return `${count} ${count > 1 ? plurals[type] : type}`;
+				}
+			};
 		const embed = new MessageEmbed();
 		embed.setTitle("Your Deck");
 		if (sums.main > 0) {
 			const content = Object.entries(deckCounts.main).map(printCount).join("\n");
-			embed.addField(`Main Deck (${sums.main} cards)`, content);
+			const headerParts = mainTypes.map(printTypeCount("main")).filter(t => !!t);
+			embed.addField(
+				`Main Deck (${sums.main} cards${headerParts.length > 0 ? ` - ${headerParts.join(", ")}` : ""})`,
+				content
+			);
 		}
 		if (sums.extra > 0) {
 			const content = Object.entries(deckCounts.extra).map(printCount).join("\n");
-			embed.addField(`Extra Deck (${sums.extra} cards)`, content);
+			const headerParts = extraTypes.map(printTypeCount("extra")).filter(t => !!t);
+			embed.addField(
+				`Extra Deck (${sums.extra} cards${headerParts.length > 0 ? ` - ${headerParts.join(", ")}` : ""})`,
+				content
+			);
 		}
 		if (sums.side > 0) {
 			const content = Object.entries(deckCounts.side).map(printCount).join("\n");
-			embed.addField(`Side Deck (${sums.side} cards)`, content);
+			const headerParts = mainTypes.map(printTypeCount("side")).filter(t => !!t);
+			embed.addField(
+				`Side Deck (${sums.side} cards${headerParts.length > 0 ? ` - ${headerParts.join(", ")}` : ""})`,
+				content
+			);
 		}
 		return embed;
 	}
@@ -126,7 +177,12 @@ export class DeckCommand extends Command {
 		}
 		const isPublic = interaction.options.getBoolean("public", false) || false;
 		const content = await this.generateProfile(deck);
-		await interaction.reply({ embeds: [content], ephemeral: !isPublic }); // Actually returns void
+		content.setColor(16747347);
+		const test = new MessageEmbed();
+		test.setTitle("test");
+		test.addField("test", "test");
+		test.setColor(1941108);
+		await interaction.reply({ embeds: [content, test], ephemeral: !isPublic }); // Actually returns void
 
 		// placeholder latency value
 		return 0;
