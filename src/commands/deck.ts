@@ -177,12 +177,7 @@ export class DeckCommand extends Command {
 		}
 		const isPublic = interaction.options.getBoolean("public", false) || false;
 		const content = await this.generateProfile(deck);
-		content.setColor(16747347);
-		const test = new MessageEmbed();
-		test.setTitle("test");
-		test.addField("test", "test");
-		test.setColor(1941108);
-		await interaction.reply({ embeds: [content, test], ephemeral: !isPublic }); // Actually returns void
+		await interaction.reply({ embeds: [content], ephemeral: !isPublic }); // Actually returns void
 
 		// placeholder latency value
 		return 0;
