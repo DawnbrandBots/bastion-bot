@@ -30,6 +30,12 @@ export class DeckCommand extends Command {
 					name: "deck",
 					description: "The ydke:// URL of the deck you want to view.",
 					required: true
+				},
+				{
+					type: "BOOLEAN",
+					name: "public",
+					description: "Whether to display the deck details publicly in chat. This is false by default.",
+					required: false
 				}
 			]
 		};
@@ -115,8 +121,9 @@ export class DeckCommand extends Command {
 			// placeholder latency
 			return 0;
 		}
+		const isPublic = interaction.options.getBoolean("public", false) || false;
 		const content = await this.generateProfile(deck);
-		await interaction.reply({ embeds: [content], ephemeral: true }); // Actually returns void
+		await interaction.reply({ embeds: [content], ephemeral: !isPublic }); // Actually returns void
 
 		// placeholder latency value
 		return 0;
