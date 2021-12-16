@@ -60,10 +60,13 @@ export class DeckCommand extends Command {
 		// populate the names into a Map to be fetched linearly
 		const nameMemo: Map<number, string> = new Map<number, string>();
 		cards.forEach(c => {
-			nameMemo.set(c.password, c.name_en);
+			// in case an API error returns a null response for a card, we don't record its name and a fallback will be triggered later
+			if (c) {
+				nameMemo.set(c.password, c.name_en);
+			}
 		});
 		// apply the names to the record of the deck
-		// toString is fallback for missing name, though in reality we'd run into an issue in the API first?
+		// toString is fallback for missing name, e.g. if an API error returns null
 		const getName = (password: number): string => nameMemo.get(password) || password.toString();
 		const namedDeck = {
 			main: [...deck.main].map(getName),
