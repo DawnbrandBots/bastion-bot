@@ -58,7 +58,7 @@ export class DeckCommand extends Command {
 		return this.#logger;
 	}
 
-	async generateProfile(deck: TypedDeck, isInline: boolean = true): Promise<MessageEmbed> {
+	async generateProfile(deck: TypedDeck, isInline = true): Promise<MessageEmbed> {
 		// use Set to remove duplicates from list of passwords to pass to API
 		const allUniqueCards = [...new Set([...deck.main, ...deck.extra, ...deck.side])];
 		// get names from API
