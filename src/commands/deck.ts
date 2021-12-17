@@ -38,6 +38,13 @@ export class DeckCommand extends Command {
 					name: "public",
 					description: "Whether to display the deck details publicly in chat. This is false by default.",
 					required: false
+				},
+				{
+					type: "BOOLEAN",
+					name: "stacked",
+					description:
+						"Whether to display the Main, Side and Extra deck as one stacked column instead of side-by-side. This is false by default.",
+					required: false
 				}
 			]
 		};
@@ -51,7 +58,7 @@ export class DeckCommand extends Command {
 		return this.#logger;
 	}
 
-	async generateProfile(deck: TypedDeck): Promise<MessageEmbed> {
+	async generateProfile(deck: TypedDeck, isInline: boolean = true): Promise<MessageEmbed> {
 		// use Set to remove duplicates from list of passwords to pass to API
 		const allUniqueCards = [...new Set([...deck.main, ...deck.extra, ...deck.side])];
 		// get names from API
@@ -139,7 +146,8 @@ export class DeckCommand extends Command {
 			const headerParts = mainTypes.map(printTypeCount("main")).filter(t => !!t);
 			embed.addField(
 				`Main Deck (${sums.main} cards${headerParts.length > 0 ? ` - ${headerParts.join(", ")}` : ""})`,
-				content
+				content,
+				isInline
 			);
 		}
 		if (sums.extra > 0) {
@@ -147,7 +155,8 @@ export class DeckCommand extends Command {
 			const headerParts = extraTypes.map(printTypeCount("extra")).filter(t => !!t);
 			embed.addField(
 				`Extra Deck (${sums.extra} cards${headerParts.length > 0 ? ` - ${headerParts.join(", ")}` : ""})`,
-				content
+				content,
+				isInline
 			);
 		}
 		if (sums.side > 0) {
@@ -155,7 +164,8 @@ export class DeckCommand extends Command {
 			const headerParts = mainTypes.map(printTypeCount("side")).filter(t => !!t);
 			embed.addField(
 				`Side Deck (${sums.side} cards${headerParts.length > 0 ? ` - ${headerParts.join(", ")}` : ""})`,
-				content
+				content,
+				isInline
 			);
 		}
 		return embed;
@@ -175,8 +185,9 @@ export class DeckCommand extends Command {
 			// placeholder latency
 			return 0;
 		}
-		const isPublic = interaction.options.getBoolean("public", false) || false;
-		const content = await this.generateProfile(deck);
+		const isPublic = !!interaction.options.getBoolean("public", false);
+		const isStacked = !!interaction.options.getBoolean("stacked", false);
+		const content = await this.generateProfile(deck, !isStacked);
 		await interaction.reply({ embeds: [content], ephemeral: !isPublic }); // Actually returns void
 
 		// placeholder latency value
