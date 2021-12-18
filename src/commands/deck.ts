@@ -43,7 +43,7 @@ export class DeckCommand extends Command {
 					type: "BOOLEAN",
 					name: "stacked",
 					description:
-						"Whether to display the Main, Side and Extra deck as one stacked column instead of side-by-side. This is false by default.",
+						"Whether to display the deck sections as one stacked column. This is false (side-by-side) by default.",
 					required: false
 				}
 			]
