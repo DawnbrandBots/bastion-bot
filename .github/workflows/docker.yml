@@ -93,6 +93,7 @@ jobs:
       - name: Deploy to Docker Swarm
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          SEARCH_API: ${{ secrets.SEARCH_API }}
           DISCORD_TOTAL_SHARDS: 1
         run: |
           docker stack deploy discord-bot -c <(docker-compose -f docker-staging.yaml config) --prune --with-registry-auth

@@ -52,6 +52,7 @@ jobs:
           # docker/metadata-action type=sha,format=long
           DOCKER_TAG: sha-${{ github.sha }}
           DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
+          SEARCH_API: ${{ secrets.SEARCH_API }}
           DISCORD_TOTAL_SHARDS: ${{ steps.shards.outputs.count }}
           DOCKER_EXTERNAL_NETWORK: "false"
           BOT_PRESENCE: ${{ github.event.inputs.presence }}
