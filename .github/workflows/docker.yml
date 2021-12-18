@@ -93,7 +93,7 @@ jobs:
       - name: Deploy to Docker Swarm
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          DISCORD_TOTAL_SHARDS: 3
+          DISCORD_TOTAL_SHARDS: 1
         run: |
           docker stack deploy discord-bot -c <(docker-compose -f docker-staging.yaml config) --prune --with-registry-auth
       - name: Wait for Swarm to converge
