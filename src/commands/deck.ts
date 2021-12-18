@@ -185,6 +185,12 @@ export class DeckCommand extends Command {
 			// placeholder latency
 			return 0;
 		}
+		// return error on empty deck
+		if (deck.main.length + deck.extra.length + deck.side.length < 1) {
+			await interaction.reply({ content: `Error: Your deck is empty.`, ephemeral: true });
+			// placeholder latency
+			return 0;
+		}
 		const isPublic = !!interaction.options.getBoolean("public", false);
 		const isStacked = !!interaction.options.getBoolean("stacked", false);
 		const content = await this.generateProfile(deck, !isStacked);
