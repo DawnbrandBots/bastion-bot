@@ -1,30 +1,20 @@
-import { ChatInputApplicationCommandData, CommandInteraction } from "discord.js";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
+import { CommandInteraction } from "discord.js";
 import { Logger } from "./logger";
 import { Metrics } from "./metrics";
 import { serializeCommand } from "./utils";
 
 export abstract class Command {
-	static get meta(): ChatInputApplicationCommandData {
+	static get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		throw new Error("Not implemented");
-	}
-
-	/**
-	 * Any alternative names for this command
-	 */
-	static get aliases(): string[] {
-		return [];
 	}
 
 	// Hack: https://github.com/Microsoft/TypeScript/issues/3841#issuecomment-337560146
 	["constructor"]: typeof Command;
 	constructor(private metrics: Metrics) {}
 
-	get meta(): ChatInputApplicationCommandData {
+	get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		return this.constructor.meta;
-	}
-
-	get aliases(): string[] {
-		return this.constructor.aliases;
 	}
 
 	protected abstract get logger(): Logger;

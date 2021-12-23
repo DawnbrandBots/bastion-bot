@@ -1,4 +1,6 @@
-import { ChatInputApplicationCommandData, CommandInteraction } from "discord.js";
+import { SlashCommandBuilder } from "@discordjs/builders";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
+import { CommandInteraction } from "discord.js";
 import fetch from "node-fetch";
 import { injectable } from "tsyringe";
 import { Command } from "../Command";
@@ -13,23 +15,17 @@ export class YugiCommand extends Command {
 		super(metrics);
 	}
 
-	static override get meta(): ChatInputApplicationCommandData {
-		return {
-			name: "yugipedia",
-			description: "Search the Yugipedia wiki for a page and link to it.",
-			options: [
-				{
-					type: "STRING",
-					name: "page",
-					description: "The name of the Yugipedia page you want to search for.",
-					required: true
-				}
-			]
-		};
-	}
-
-	static override get aliases(): string[] {
-		return [];
+	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
+		return new SlashCommandBuilder()
+			.setName("yugipedia")
+			.setDescription("Search the Yugipedia wiki for a page and link to it.")
+			.addStringOption(option =>
+				option
+					.setName("page")
+					.setDescription("The name of the Yugipedia page you want to search for.")
+					.setRequired(true)
+			)
+			.toJSON();
 	}
 
 	protected override get logger(): Logger {

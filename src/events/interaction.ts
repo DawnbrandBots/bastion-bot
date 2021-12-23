@@ -17,9 +17,6 @@ export class InteractionListener implements Listener<"interactionCreate"> {
 		this.commands = new Map();
 		for (const command of commands) {
 			this.commands.set(command.meta.name, command);
-			for (const alias of command.aliases) {
-				this.commands.set(alias, command);
-			}
 		}
 	}
 

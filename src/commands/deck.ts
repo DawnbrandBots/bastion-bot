@@ -1,4 +1,6 @@
-import { ChatInputApplicationCommandData, CommandInteraction, MessageEmbed } from "discord.js";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
+import { CommandInteraction, MessageEmbed } from "discord.js";
+import { ApplicationCommandOptionTypes } from "discord.js/typings/enums";
 import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { parseURL, TypedDeck } from "ydke";
@@ -22,25 +24,25 @@ export class DeckCommand extends Command {
 		super(metrics);
 	}
 
-	static override get meta(): ChatInputApplicationCommandData {
+	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		return {
 			name: "deck",
 			description: "Display a deck list from ydke:// format, exported from a number of deck building programs.",
 			options: [
 				{
-					type: "STRING",
+					type: ApplicationCommandOptionTypes.STRING.valueOf(),
 					name: "deck",
 					description: "The ydke:// URL of the deck you want to view.",
 					required: true
 				},
 				{
-					type: "BOOLEAN",
+					type: ApplicationCommandOptionTypes.BOOLEAN.valueOf(),
 					name: "public",
 					description: "Whether to display the deck details publicly in chat. This is false by default.",
 					required: false
 				},
 				{
-					type: "BOOLEAN",
+					type: ApplicationCommandOptionTypes.BOOLEAN.valueOf(),
 					name: "stacked",
 					description:
 						"Whether to display the deck sections as one stacked column. This is false (side-by-side) by default.",
@@ -48,10 +50,6 @@ export class DeckCommand extends Command {
 				}
 			]
 		};
-	}
-
-	static override get aliases(): string[] {
-		return [];
 	}
 
 	protected override get logger(): Logger {
