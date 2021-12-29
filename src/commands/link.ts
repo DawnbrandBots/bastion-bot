@@ -1,4 +1,6 @@
-import { ChatInputApplicationCommandData, CommandInteraction } from "discord.js";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
+import { CommandInteraction } from "discord.js";
+import { ApplicationCommandOptionTypes } from "discord.js/typings/enums";
 import { inject, injectable } from "tsyringe";
 import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
@@ -63,13 +65,13 @@ export class LinkCommand extends Command {
 		}
 	};
 
-	static override get meta(): ChatInputApplicationCommandData {
+	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		return {
 			name: "link",
 			description: "Display one of several links with useful information.",
 			options: [
 				{
-					type: "STRING",
+					type: ApplicationCommandOptionTypes.STRING.valueOf(),
 					name: "key",
 					description: "The name of the link you want to display.",
 					required: true,
@@ -82,10 +84,6 @@ export class LinkCommand extends Command {
 				}
 			]
 		};
-	}
-
-	static override get aliases(): string[] {
-		return [];
 	}
 
 	protected override get logger(): Logger {

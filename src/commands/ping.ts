@@ -1,4 +1,6 @@
-import { ChatInputApplicationCommandData, CommandInteraction } from "discord.js";
+import { SlashCommandBuilder } from "@discordjs/builders";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
+import { CommandInteraction } from "discord.js";
 import { injectable } from "tsyringe";
 import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
@@ -12,15 +14,11 @@ export class PingCommand extends Command {
 		super(metrics);
 	}
 
-	static override get meta(): ChatInputApplicationCommandData {
-		return {
-			name: "ping",
-			description: "Test latency to the new bot instance."
-		};
-	}
-
-	static override get aliases(): string[] {
-		return ["pong"];
+	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
+		return new SlashCommandBuilder()
+			.setName("ping")
+			.setDescription("Test latency to the new bot instance.")
+			.toJSON();
 	}
 
 	protected override get logger(): Logger {

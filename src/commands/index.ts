@@ -1,4 +1,6 @@
-import { ApplicationCommandData, Client, ClientApplication, Guild, Snowflake } from "discord.js";
+import { REST } from "@discordjs/rest";
+import { APIUser, Routes } from "discord-api-types/v9";
+import { ApplicationCommandData, ClientApplication, Guild, Snowflake } from "discord.js";
 import { DeckCommand } from "./deck";
 import { LinkCommand } from "./link";
 import { PingCommand } from "./ping";
@@ -32,34 +34,24 @@ async function deployCommands(
 // Otherwise, global commands can take up to an hour to roll out.
 export async function registerSlashCommands(guild?: `${bigint}`): Promise<void> {
 	// Duplicate command metadata if they register any aliases
-	const commands = classes
-		.map(command =>
-			command.aliases
-				.map(alias => ({
-					...command.meta,
-					name: alias,
-					description: `Alias for \`${command.meta.name}\`. ${command.meta.description}`
-				}))
-				.concat(command.meta)
-		)
-		.flat();
+	const commands = classes.map(command => command.meta);
 	console.log("Generated command metadata:");
 	console.log(commands);
-	// Create a client object just to interact with the API
-	const client = new Client({ intents: [] });
-	// Because we're not using the object as intended to log into the gateway, we must manually
-	// create this object so that we can use its interface to call the Discord Slash Commands API
-	client.application = new ClientApplication(client, {});
-	// Implicitly use DISCORD_TOKEN
-	const application = await client.application.fetch();
-	console.log(application.id);
-	console.log(application.name);
-	console.log(application.description);
+
+	// The default version is 9, but we'll be explicit in case unexpected version bumps happen
+	const api = new REST({ version: "9" }).setToken(`${process.env.DISCORD_TOKEN}`);
+
 	// Server commands deploy instantly, but global commands may take up to an hour to roll out
-	const created =
+	const botUser = (await api.get(Routes.user())) as APIUser;
+	console.log(botUser.id);
+	console.log(`${botUser.username}#${botUser.discriminator}`);
+
+	const created = await api.put(
 		guild === undefined
-			? await deployCommands(application, commands)
-			: await deployCommands(await client.guilds.fetch(guild), commands);
+			? Routes.applicationCommands(botUser.id)
+			: Routes.applicationGuildCommands(botUser.id, guild),
+		{ body: commands }
+	);
 	console.log("Created Slash Commands:");
 	console.log(created);
 }
