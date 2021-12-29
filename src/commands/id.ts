@@ -1,6 +1,7 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction, MessageEmbed } from "discord.js";
+import fetch from "node-fetch";
 import { injectable } from "tsyringe";
 import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
@@ -63,7 +64,7 @@ export class IdCommand extends Command {
 		const card = await this.getCard(type, input);
 		if (!card) {
 			// TODO: include properly-named type in this message
-			await interaction.reply(`Could not find a card matching \`${input}\`!`);
+			await interaction.reply({ content: `Could not find a card matching \`${input}\`!`, ephemeral: true });
 		} else {
 			const embed = new MessageEmbed()
 				.setTitle(card?.en.name)
