@@ -8,7 +8,8 @@ import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 
-interface APICard {
+// TODO: move somewhere central?
+export interface APICard {
 	kid: number;
 	password: number;
 	en: { name: string };
