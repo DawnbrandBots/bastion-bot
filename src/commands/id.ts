@@ -22,18 +22,18 @@ export class IdCommand extends Command {
 			.setDescription("Identify a card by password, Konami ID, or name.")
 			.addStringOption(
 				new SlashCommandStringOption()
-					.setName("type")
-					.setDescription("Whether you're searching by password, Konami ID, or name.")
-					.setRequired(true) // TODO: make optional and infer if missing
-					.addChoice("Password", "password")
-					.addChoice("Konami ID", "kid")
-					.addChoice("Name", "name")
-			)
-			.addStringOption(
-				new SlashCommandStringOption()
 					.setName("input")
 					.setDescription("The password, Konami ID, or name you're searching by.")
 					.setRequired(true)
+			)
+			.addStringOption(
+				new SlashCommandStringOption()
+					.setName("type")
+					.setDescription("Whether you're searching by password, Konami ID, or name.")
+					.setRequired(false)
+					.addChoice("Password", "password")
+					.addChoice("Konami ID", "kid")
+					.addChoice("Name", "name")
 			)
 			.toJSON();
 	}
@@ -59,8 +59,25 @@ export class IdCommand extends Command {
 	}
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
-		const type = interaction.options.getString("type", true) as "password" | "kid" | "name";
-		const input = interaction.options.getString("input", true);
+		let type = interaction.options.getString("type", false) as "password" | "kid" | "name" | undefined;
+		let input = interaction.options.getString("input", true);
+		if (!type) {
+			if (parseInt(input).toString() === input) {
+				// if its all digits, treat as password.
+				type = "password";
+			} else if (input.startsWith("#")) {
+				// initial # indicates KID, as long as the rest is digits
+				const kid = input.slice(1);
+				if (parseInt(kid).toString() === kid) {
+					type = "kid";
+					input = kid;
+				} else {
+					type = "name";
+				}
+			} else {
+				type = "name";
+			}
+		}
 		const card = await this.getCard(type, input);
 		if (!card) {
 			// TODO: include properly-named type in this message
