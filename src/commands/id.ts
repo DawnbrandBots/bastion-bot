@@ -44,6 +44,7 @@ export class IdCommand extends Command {
 
 	async getCard(type: "password" | "kid" | "name", input: string): Promise<APICard | undefined> {
 		let url = `${process.env.SEARCH_API}`; // treated as string instead of string? without forbidden non-null check
+		input = encodeURIComponent(input);
 		if (type === "password") {
 			url += `/card/password/${input}`;
 		} else if (type === "kid") {
