@@ -1,12 +1,13 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
+import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction, MessageEmbed } from "discord.js";
 import fetch from "node-fetch";
 import { injectable } from "tsyringe";
 import { Command } from "../Command";
+import { CardSchema } from "../definitions";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { APICard } from "./deck";
 
 @injectable()
 export class IdCommand extends Command {
@@ -42,7 +43,7 @@ export class IdCommand extends Command {
 		return this.#logger;
 	}
 
-	async getCard(type: "password" | "kid" | "name", input: string): Promise<APICard | undefined> {
+	async getCard(type: "password" | "kid" | "name", input: string): Promise<Static<typeof CardSchema> | undefined> {
 		let url = `${process.env.SEARCH_API}`; // treated as string instead of string? without forbidden non-null check
 		input = encodeURIComponent(input);
 		if (type === "password") {
@@ -92,8 +93,8 @@ export class IdCommand extends Command {
 		} else {
 			const embed = new MessageEmbed()
 				.setTitle(card?.en.name)
-				.addField("Password", card.password.toString(), true)
-				.addField("Konami ID", card.kid.toString(), true);
+				.addField("Password", `${card.password}`, true)
+				.addField("Konami ID", `${card.kid}`, true);
 			// TODO: decide on ephemerality
 			await interaction.reply({ embeds: [embed], ephemeral: true }); // Actually returns void
 		}
