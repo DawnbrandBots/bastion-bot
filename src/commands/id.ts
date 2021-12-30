@@ -62,13 +62,14 @@ export class IdCommand extends Command {
 		let type = interaction.options.getString("type", false) as "password" | "kid" | "name" | undefined;
 		let input = interaction.options.getString("input", true);
 		if (!type) {
-			if (parseInt(input).toString() === input) {
+			// handle edge case for specific bad input
+			if (parseInt(input).toString() === input && input !== "NaN") {
 				// if its all digits, treat as password.
 				type = "password";
 			} else if (input.startsWith("#")) {
 				// initial # indicates KID, as long as the rest is digits
 				const kid = input.slice(1);
-				if (parseInt(kid).toString() === kid) {
+				if (parseInt(kid).toString() === kid && kid !== "NaN") {
 					type = "kid";
 					input = kid;
 				} else {
