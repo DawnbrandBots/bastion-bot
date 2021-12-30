@@ -53,10 +53,15 @@ export class IdCommand extends Command {
 			url += `/search?name=${input}`;
 		}
 		const response = await fetch(url);
-		if (response.status === 404) {
+		// 400: Bad syntax, 404: Not found
+		if (response.status === 400 || response.status === 404) {
 			return undefined;
 		}
-		return await response.json();
+		// 200: OK
+		if (response.status === 200) {
+			return await response.json();
+		}
+		throw new Error((await response.json()).message);
 	}
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
