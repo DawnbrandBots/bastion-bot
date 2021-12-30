@@ -5,10 +5,11 @@ import { DeckCommand } from "./deck";
 import { IdCommand } from "./id";
 import { LinkCommand } from "./link";
 import { PingCommand } from "./ping";
+import { SearchCommand } from "./search";
 import { YugiCommand } from "./yugipedia";
 
-export const classes = [DeckCommand, PingCommand, LinkCommand, YugiCommand, IdCommand];
-export { DeckCommand, PingCommand, LinkCommand, YugiCommand, IdCommand };
+export const classes = [DeckCommand, PingCommand, LinkCommand, YugiCommand, IdCommand, SearchCommand];
+export { DeckCommand, PingCommand, LinkCommand, YugiCommand, IdCommand, SearchCommand };
 
 interface LoggableCommandMetadata {
 	id: Snowflake;
