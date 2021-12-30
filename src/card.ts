@@ -1,4 +1,6 @@
+import { Static } from "@sinclair/typebox";
 import { MessageEmbed } from "discord.js";
+import { CardSchema } from "./definitions";
 
 const colours = {
 	"0x4000": 0x8d8693,
@@ -73,10 +75,11 @@ const icons = {
 	}
 };
 
-export function embed(): MessageEmbed {
+export function embed(card: Static<typeof CardSchema>): MessageEmbed {
 	return new MessageEmbed()
 		.setColor(colours["0x10"])
-		.setTitle("name with hyperlink")
+		.setTitle(card.name)
+		.setURL("hyperlink")
 		.setDescription("stats with hyperlinks")
 		.setThumbnail("https://pic")
 		.setFooter("password+KID")
