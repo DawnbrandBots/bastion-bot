@@ -2,12 +2,13 @@ import { REST } from "@discordjs/rest";
 import { APIUser, Routes } from "discord-api-types/v9";
 import { ApplicationCommandData, ClientApplication, Guild, Snowflake } from "discord.js";
 import { DeckCommand } from "./deck";
+import { IdCommand } from "./id";
 import { LinkCommand } from "./link";
 import { PingCommand } from "./ping";
 import { YugiCommand } from "./yugipedia";
 
-export const classes = [DeckCommand, PingCommand, LinkCommand, YugiCommand];
-export { DeckCommand, PingCommand, LinkCommand, YugiCommand };
+export const classes = [DeckCommand, PingCommand, LinkCommand, YugiCommand, IdCommand];
+export { DeckCommand, PingCommand, LinkCommand, YugiCommand, IdCommand };
 
 interface LoggableCommandMetadata {
 	id: Snowflake;
