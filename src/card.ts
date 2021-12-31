@@ -105,11 +105,7 @@ export function createCardEmbed(
 
 	// TODO: expand with hyperlinks
 	if (card.type === "Monster") {
-		if (card.scale === undefined) {
-			embed.setColor(Colour[card.subtype ?? "Orange"]);
-		} else {
-			embed.setColor(Colour.Spell);
-		}
+		embed.setColor(Colour[card.subtype ?? "Orange"]);
 
 		// TODO: amend typeline when we get the real string or array and localize
 		let description =
@@ -140,7 +136,7 @@ export function createCardEmbed(
 			embed.addField("Pendulum Effect", card[lang]?.pendulum || card.en.pendulum || "\u200b");
 
 			const addon = new MessageEmbed()
-				.setColor(Colour[card.subtype ?? "Orange"])
+				.setColor(Colour.Spell)
 				.addField("Card Text", card[lang]?.description || card.en.description)
 				// TODO: randomize and show by chance
 				.addField(
