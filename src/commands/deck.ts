@@ -57,6 +57,26 @@ export class DeckCommand extends Command {
 		return this.#logger;
 	}
 
+	splitText(outString: string, cap = 1024): string[] {
+		const outStrings: string[] = [];
+		while (outString.length > cap) {
+			let index = outString.slice(0, cap).lastIndexOf("\n");
+			if (index === -1 || index >= cap) {
+				index = outString.slice(0, cap).lastIndexOf(".");
+				if (index === -1 || index >= cap) {
+					index = outString.slice(0, cap).lastIndexOf(" ");
+					if (index === -1 || index >= cap) {
+						index = cap - 1;
+					}
+				}
+			}
+			outStrings.push(outString.slice(0, index + 1));
+			outString = outString.slice(index + 1);
+		}
+		outStrings.push(outString);
+		return outStrings;
+	}
+
 	async generateProfile(deck: TypedDeck, isInline = true): Promise<MessageEmbed> {
 		// use Set to remove duplicates from list of passwords to pass to API
 		const allUniqueCards = [...new Set([...deck.main, ...deck.extra, ...deck.side])];
@@ -142,30 +162,42 @@ export class DeckCommand extends Command {
 		embed.setTitle("Your Deck");
 		if (sums.main > 0) {
 			const content = Object.entries(deckCounts.main).map(printCount).join("\n");
+			const [first, ...rest] = this.splitText(content);
 			const headerParts = mainTypes.map(printTypeCount("main")).filter(t => !!t);
 			embed.addField(
 				`Main Deck (${sums.main} cards${headerParts.length > 0 ? ` - ${headerParts.join(", ")}` : ""})`,
-				content,
+				first,
 				isInline
 			);
+			for (const part of rest) {
+				embed.addField("Main Deck (continued)", part, isInline);
+			}
 		}
 		if (sums.extra > 0) {
 			const content = Object.entries(deckCounts.extra).map(printCount).join("\n");
+			const [first, ...rest] = this.splitText(content);
 			const headerParts = extraTypes.map(printTypeCount("extra")).filter(t => !!t);
 			embed.addField(
 				`Extra Deck (${sums.extra} cards${headerParts.length > 0 ? ` - ${headerParts.join(", ")}` : ""})`,
-				content,
+				first,
 				isInline
 			);
+			for (const part of rest) {
+				embed.addField("Extra Deck (continued)", part, isInline);
+			}
 		}
 		if (sums.side > 0) {
 			const content = Object.entries(deckCounts.side).map(printCount).join("\n");
+			const [first, ...rest] = this.splitText(content);
 			const headerParts = mainTypes.map(printTypeCount("side")).filter(t => !!t);
 			embed.addField(
 				`Side Deck (${sums.side} cards${headerParts.length > 0 ? ` - ${headerParts.join(", ")}` : ""})`,
-				content,
+				first,
 				isInline
 			);
+			for (const part of rest) {
+				embed.addField("Side Deck (continued)", part, isInline);
+			}
 		}
 		return embed;
 	}
