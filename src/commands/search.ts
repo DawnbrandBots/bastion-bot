@@ -9,7 +9,7 @@ import { Command } from "../Command";
 import { CardSchema } from "../definitions";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { addNotice } from "../utils";
+import { addFunding, addNotice } from "../utils";
 
 @injectable()
 export class SearchCommand extends Command {
@@ -106,7 +106,7 @@ export class SearchCommand extends Command {
 		} else {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			let embeds = createCardEmbed(card, interaction.options.getString("lang", true) as any);
-			embeds = addNotice(embeds);
+			embeds = addFunding(addNotice(embeds));
 			await interaction.reply({ embeds }); // Actually returns void
 		}
 		const reply = await interaction.fetchReply();

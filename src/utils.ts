@@ -34,3 +34,35 @@ export function addNotice(embeds: MessageEmbed | MessageEmbed[]): MessageEmbed[]
 	]);
 	return embeds;
 }
+
+const messages = [
+	"Please consider supporting us!",
+	"Help keep Bastion online!",
+	"Please help keep Bastion online!",
+	"We need your support! Bastion has mostly been funded out-of-pocket for years.",
+	"Was Bastion helpful? Consider supporting us!",
+	"Was Bastion helpful? We need your support!",
+	"Did you find Bastion useful? Consider supporting us!",
+	"Did you find Bastion useful? Help keep it online!",
+	"Did you find Bastion useful? We need your support!",
+	"Enjoy Bastion? Help keep it online!",
+	"Enjoy Bastion? Consider supporting us!",
+	"Found what you were looking for? Consider supporting us!",
+	"Bastion has mostly been funded out-of-pocket for years. Help keep it online!"
+];
+
+// Has a random chance of adding a funding notice
+export function addFunding(embeds: MessageEmbed | MessageEmbed[]): MessageEmbed[] {
+	if (!Array.isArray(embeds)) {
+		embeds = [embeds];
+	}
+	if (Math.random() < 0.25) {
+		embeds[embeds.length - 1].addFields([
+			{
+				name: messages[Math.floor(Math.random() * messages.length)],
+				value: "<:patreon:895892186841890816> [https://www.patreon.com/alphakretinbots](https://www.patreon.com/alphakretinbots)"
+			}
+		]);
+	}
+	return embeds;
+}

@@ -130,11 +130,6 @@ export function createCardEmbed(
 			const addon = new MessageEmbed()
 				.setColor(Colour.Spell)
 				.addField("Card Text", card[lang]?.description || card.en.description)
-				// TODO: randomize and show by chance
-				.addField(
-					"Was Bastion helpful? Consider supporting us!",
-					"<:patreon:895892186841890816> [https://www.patreon.com/alphakretinbots](https://www.patreon.com/alphakretinbots)"
-				)
 				// one or both may be null to due data corruption or prereleases
 				.setFooter({ text: `Password: ${card.password} | Konami ID #${card.kid}` });
 
@@ -156,12 +151,6 @@ export function createCardEmbed(
 
 	// one or both may be null to due data corruption or prereleases
 	embed.setFooter({ text: `Password: ${card.password} | Konami ID #${card.kid}` });
-
-	// TODO: randomize and show by chance
-	embed.addField(
-		"Was Bastion helpful? Consider supporting us!",
-		"<:patreon:895892186841890816> [https://www.patreon.com/alphakretinbots](https://www.patreon.com/alphakretinbots)"
-	);
 
 	return [embed];
 }
