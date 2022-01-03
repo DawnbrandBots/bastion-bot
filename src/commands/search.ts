@@ -1,18 +1,19 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
-import { CommandInteraction, MessageEmbed } from "discord.js";
+import { CommandInteraction } from "discord.js";
 import fetch from "node-fetch";
 import { injectable } from "tsyringe";
+import { createCardEmbed } from "../card";
 import { Command } from "../Command";
 import { CardSchema } from "../definitions";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { addNotice } from "../utils";
+import { addFunding, addNotice } from "../utils";
 
 @injectable()
-export class IdCommand extends Command {
-	#logger = getLogger("command:id");
+export class SearchCommand extends Command {
+	#logger = getLogger("command:search");
 
 	constructor(metrics: Metrics) {
 		super(metrics);
@@ -20,13 +21,24 @@ export class IdCommand extends Command {
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		return new SlashCommandBuilder()
-			.setName("id")
-			.setDescription("Identify a card by password, Konami ID, or name.")
+			.setName("search")
+			.setDescription("Find all information on a card!")
 			.addStringOption(
 				new SlashCommandStringOption()
 					.setName("input")
 					.setDescription("The password, Konami ID, or name you're searching by.")
 					.setRequired(true)
+			)
+			.addStringOption(
+				new SlashCommandStringOption()
+					.setName("lang")
+					.setDescription("The query and result language.")
+					.setRequired(true)
+					.addChoice("English", "en")
+					.addChoice("Français", "fr")
+					.addChoice("Deutsch", "de")
+					.addChoice("Italiano", "it")
+					.addChoice("Português", "pt")
 			)
 			.addStringOption(
 				new SlashCommandStringOption()
@@ -92,12 +104,10 @@ export class IdCommand extends Command {
 			// TODO: include properly-named type in this message
 			await interaction.reply({ content: `Could not find a card matching \`${input}\`!`, ephemeral: true });
 		} else {
-			const embed = new MessageEmbed()
-				.setTitle(card?.en.name)
-				.addField("Password", `${card.password}`, true)
-				.addField("Konami ID", `${card.kid}`, true);
-			// TODO: decide on ephemerality
-			await interaction.reply({ embeds: addNotice(embed), ephemeral: true }); // Actually returns void
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			let embeds = createCardEmbed(card, interaction.options.getString("lang", true) as any);
+			embeds = addFunding(addNotice(embeds));
+			await interaction.reply({ embeds }); // Actually returns void
 		}
 		const reply = await interaction.fetchReply();
 		if ("createdTimestamp" in reply) {

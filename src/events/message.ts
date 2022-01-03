@@ -16,7 +16,10 @@ export class MessageListener implements Listener<"messageCreate"> {
 :green_circle: Licence: [GNU AGPL 3.0+](https://choosealicense.com/licenses/agpl-3.0/).
 :money_mouth: Prices from https://yugiohprices.com
 :placard: Bastion Misawa is a character from [Yu-Gi-Oh! GX](https://yugipedia.com/wiki/Bastion_Misawa).
-[<:patreon:895892186841890816> Support us](https://www.patreon.com/alphakretinbots) and help keep the bot online!
+
+**Bastion has mostly been funded out-of-pocket for years.**
+<:patreon:895892186841890816> Support us [on Patreon](https://www.patreon.com/alphakretinbots) and help keep the bot online!
+<:kofi:927373724959789096> Ko-fi also works for [one-time donations](https://ko-fi.com/dawnbrandbots).
 
 :tools: An update is being worked on and rolling out slowly. Features will be handled by a new bot instance through Slash Commands concurrently with the old bot.
 `,

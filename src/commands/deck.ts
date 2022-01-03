@@ -1,3 +1,4 @@
+import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction, MessageEmbed } from "discord.js";
 import { ApplicationCommandOptionTypes } from "discord.js/typings/enums";
@@ -5,17 +6,10 @@ import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { parseURL, TypedDeck } from "ydke";
 import { Command } from "../Command";
+import { CardSchema } from "../definitions";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-
-// TODO: move somewhere central?
-export interface APICard {
-	kid: number;
-	password: number;
-	en: { name: string };
-	type: string; // Main Deck Category
-	subtype: string; // Extra Deck Category (for our purposes)
-}
+import { addNotice } from "../utils";
 
 @injectable()
 export class DeckCommand extends Command {
@@ -82,11 +76,11 @@ export class DeckCommand extends Command {
 		const allUniqueCards = [...new Set([...deck.main, ...deck.extra, ...deck.side])];
 		// get names from API
 		// TODO: decide if we're making a module for API interaction or using fetch directly in commands
-		const cards: APICard[] = await (
+		const cards: Static<typeof CardSchema>[] = await (
 			await fetch(`${process.env.SEARCH_API}/multi?password=${allUniqueCards.join(",")}`)
 		).json();
 		// populate the names into a Map to be fetched linearly
-		const cardMemo: Map<number, APICard> = new Map<number, APICard>();
+		const cardMemo: Map<number, Static<typeof CardSchema>> = new Map<number, Static<typeof CardSchema>>();
 		cards.forEach(c => {
 			// in case an API error returns a null response for a card, we don't record its name and a fallback will be triggered later
 			if (c) {
@@ -225,7 +219,7 @@ export class DeckCommand extends Command {
 		const isPublic = !!interaction.options.getBoolean("public", false);
 		const isStacked = !!interaction.options.getBoolean("stacked", false);
 		const content = await this.generateProfile(deck, !isStacked);
-		await interaction.reply({ embeds: [content], ephemeral: !isPublic }); // Actually returns void
+		await interaction.reply({ embeds: addNotice(content), ephemeral: !isPublic }); // Actually returns void
 
 		// placeholder latency value
 		return 0;
