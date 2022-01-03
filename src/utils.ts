@@ -50,7 +50,7 @@ const messages = [
 ];
 
 // Has a random chance of adding a funding notice
-export function addFunding(embeds: MessageEmbed | MessageEmbed[], chance = 1): MessageEmbed[] {
+export function addFunding(embeds: MessageEmbed | MessageEmbed[], chance = 0.25): MessageEmbed[] {
 	if (!Array.isArray(embeds)) {
 		embeds = [embeds];
 	}
