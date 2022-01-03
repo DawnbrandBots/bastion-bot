@@ -54,6 +54,7 @@ jobs:
       - name: Deploy Slash Commands globally
         env:
           DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
+          IMAGE_HOST: ${{ secrets.IMAGE_HOST }}
         run: |
           docker context use default
           docker run -e DISCORD_TOKEN ghcr.io/dawnbrandbots/bastion-bot:sha-${{ github.event.inputs.revision || github.sha }} --deploy-slash
