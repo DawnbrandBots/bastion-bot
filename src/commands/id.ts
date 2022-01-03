@@ -8,6 +8,7 @@ import { Command } from "../Command";
 import { CardSchema } from "../definitions";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
+import { addNotice } from "../utils";
 
 @injectable()
 export class IdCommand extends Command {
@@ -96,7 +97,7 @@ export class IdCommand extends Command {
 				.addField("Password", `${card.password}`, true)
 				.addField("Konami ID", `${card.kid}`, true);
 			// TODO: decide on ephemerality
-			await interaction.reply({ embeds: [embed], ephemeral: true }); // Actually returns void
+			await interaction.reply({ embeds: addNotice(embed), ephemeral: true }); // Actually returns void
 		}
 		const reply = await interaction.fetchReply();
 		if ("createdTimestamp" in reply) {

@@ -9,6 +9,7 @@ import { Command } from "../Command";
 import { CardSchema } from "../definitions";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
+import { addNotice } from "../utils";
 
 @injectable()
 export class DeckCommand extends Command {
@@ -186,7 +187,7 @@ export class DeckCommand extends Command {
 		const isPublic = !!interaction.options.getBoolean("public", false);
 		const isStacked = !!interaction.options.getBoolean("stacked", false);
 		const content = await this.generateProfile(deck, !isStacked);
-		await interaction.reply({ embeds: [content], ephemeral: !isPublic }); // Actually returns void
+		await interaction.reply({ embeds: addNotice(content), ephemeral: !isPublic }); // Actually returns void
 
 		// placeholder latency value
 		return 0;
