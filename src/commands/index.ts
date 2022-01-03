@@ -5,10 +5,19 @@ import { IdCommand } from "./id";
 import { LinkCommand } from "./link";
 import { PingCommand } from "./ping";
 import { SearchCommand } from "./search";
+import { YGOPRODECKCommand } from "./ygoprodeck";
 import { YugiCommand } from "./yugipedia";
 
-export const classes = [DeckCommand, PingCommand, LinkCommand, YugiCommand, IdCommand, SearchCommand];
-export { DeckCommand, PingCommand, LinkCommand, YugiCommand, IdCommand, SearchCommand };
+export const classes = [
+	DeckCommand,
+	PingCommand,
+	LinkCommand,
+	YugiCommand,
+	IdCommand,
+	SearchCommand,
+	YGOPRODECKCommand
+];
+export { DeckCommand, PingCommand, LinkCommand, YugiCommand, IdCommand, SearchCommand, YGOPRODECKCommand };
 
 // Register Slash Commands on CI
 // Specify the guild snowflake to instantly deploy commands on the specified server.
