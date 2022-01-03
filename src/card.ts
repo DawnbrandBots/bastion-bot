@@ -85,14 +85,6 @@ const LinkArrow: Record<string, string> = {
 	"Top-Right": "↗"
 };
 
-// TODO: update with proper type of arrows when ready
-function formatArrows(arrows: string[]): string {
-	return arrows
-		.map(arrow => LinkArrow[arrow])
-		.filter(arrow => !!arrow)
-		.join("");
-}
-
 export function createCardEmbed(
 	card: Static<typeof CardSchema>,
 	lang: "en" | "fr" | "de" | "it" | "pt"
@@ -115,7 +107,7 @@ export function createCardEmbed(
 		if (card.subtype === "Xyz") {
 			description += `**Rank**: ${Icon.Rank} ${card.rank} **ATK**: ${card.atk} **DEF**: ${card.def}`;
 		} else if (card.subtype === "Link") {
-			const arrows = formatArrows(card.arrows);
+			const arrows = card.arrows.join("");
 			description += `**Link Rating**: ${card.link} **ATK**: ${card.atk} **Link Arrows**: ${arrows}`;
 		} else {
 			description += `**Level**: ${Icon.Level} ${card.level} **ATK**: ${card.atk} **DEF**: ${card.def}`;
