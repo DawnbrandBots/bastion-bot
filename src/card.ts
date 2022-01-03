@@ -73,18 +73,6 @@ const Icon = {
 	Rank: "<:rank:602707927114973185>"
 };
 
-// TODO: move into API
-const LinkArrow: Record<string, string> = {
-	"Bottom-Left": "↙",
-	Bottom: "⬇",
-	"Bottom-Right": "↘",
-	Left: "⬅",
-	Right: "➡",
-	"Top-Left": "↖",
-	Top: "⬆",
-	"Top-Right": "↗"
-};
-
 export function createCardEmbed(
 	card: Static<typeof CardSchema>,
 	lang: "en" | "fr" | "de" | "it" | "pt"
