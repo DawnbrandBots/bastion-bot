@@ -58,7 +58,7 @@ Please use Australian English spellings.
 
 ## Licence
 
-Copyright © 2021 Luna Brand, Kevin Lu.
+Copyright © 2021–2022 Luna Brand, Kevin Lu.
 See [COPYING](https://github.com/DawnbrandBots/bastion-bot/blob/master/COPYING) for more details.
 
 ```
