@@ -96,6 +96,7 @@ jobs:
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           SEARCH_API: ${{ secrets.SEARCH_API }}
+          IMAGE_HOST: ${{ secrets.IMAGE_HOST }}
           DISCORD_TOTAL_SHARDS: 1
         run: |
           docker stack deploy discord-bot -c <(docker-compose -f docker-staging.yaml config) --prune --with-registry-auth
@@ -112,7 +113,6 @@ jobs:
       - name: Deploy Slash Commands to AlphaKretin Discord Bots
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          IMAGE_HOST: ${{ secrets.IMAGE_HOST }}
         run: |
           docker context use default
           docker run -e DISCORD_TOKEN ${{ fromJSON(needs.build.outputs.json).tags[0] }} --deploy-slash 381294999729340417
