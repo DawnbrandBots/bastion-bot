@@ -59,8 +59,8 @@ export function addFunding(embeds: MessageEmbed | MessageEmbed[], chance = 0.25)
 			{
 				name: messages[Math.floor(Math.random() * messages.length)],
 				value: `
-[<:patreon:895892186841890816> https://www.patreon.com/alphakretinbots](https://www.patreon.com/alphakretinbots)
-[<:kofi:927373724959789096> https://ko-fi.com/dawnbrandbots](https://ko-fi.com/dawnbrandbots)
+<:patreon:895892186841890816> [https://www.patreon.com/alphakretinbots](https://www.patreon.com/alphakretinbots)
+<:kofi:927373724959789096> [https://ko-fi.com/dawnbrandbots](https://ko-fi.com/dawnbrandbots)
 `
 			}
 		]);
