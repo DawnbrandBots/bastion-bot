@@ -3,6 +3,9 @@
 	"version": "0.0.1",
 	"repository": "https://github.com/DawnbrandBots/bastion-bot.git",
 	"author": "Kevin Lu",
+	"contributors": [
+		"Luna Brand"
+	],
 	"license": "AGPL-3.0-or-later",
 	"private": true,
 	"scripts": {
