@@ -17,7 +17,7 @@ Name | Link | Description
 TCG Banlist | https://www.yugioh-card.com/uk/limited/ | The Yu-Gi-Oh! Trading Card Game Forbidden and Limited list.
 OCG Banlist | https://www.yugioh-card.com/my/event/rules_guides/forbidden_cardlist.php?lang=en | The Yu-Gi-Oh! Official Card Game Forbidden and Limited list.
 Korean Banlist | http://yugioh.co.kr/site/limit_regulation.php | The Forbidden and Limited list used in the Korean region.
-Double Summon List | https://ygorganization.com/doublesummonlist/" | An educational article on the YGOrganization about different types of Double Summon effects.
+Double Summon List | https://ygorganization.com/doublesummonlist/ | An educational article on the YGOrganization about different types of Double Summon effects.
 Forgetting | https://ygorganization.com/learnrulingspart13/ | An educational article on the YGOrganization about the "forgetting" mechanic.
 Damage Step | https://www.yugioh-card.com/uk/gameplay/damage.html, http://yugipedia.com/wiki/Damage_Step#Cards_and_effects_that_can_be_activated | The official breakdown of the rules for the different substeps of the Damage Step, as well as a Yugipedia article detailing the rules for what cards can be activated during the damage step.
 Link Summons | https://cdn.discordapp.com/attachments/377682286394736650/690868673157791774/unknown.png | A screenshot of the official rulebook that clarifies the rules regarding materials for Link Summons.
