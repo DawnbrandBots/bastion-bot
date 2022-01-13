@@ -1,6 +1,6 @@
 # `/yugipedia` command
 
-Search the Yugipedia for a page! _This command is in development._
+Search the Yugipedia for a page!
 
 ## Parameters
 
