@@ -35,4 +35,4 @@ Duplicate cards in the deck are compressed into one line, counting how many time
 
 ## Next steps
 
-See #22.
+See [#22](https://github.com/DawnbrandBots/bastion-bot/issues/22).
