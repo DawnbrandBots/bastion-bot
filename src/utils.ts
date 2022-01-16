@@ -1,4 +1,4 @@
-import { CommandInteraction, Guild, MessageEmbed } from "discord.js";
+import { CacheType, CommandInteraction, Guild, GuildCacheMessage, MessageEmbed } from "discord.js";
 
 export function serializeServer(server: Guild): string {
 	if ("name" in server) {
@@ -66,4 +66,40 @@ export function addFunding(embeds: MessageEmbed | MessageEmbed[], chance = 0.25)
 		]);
 	}
 	return embeds;
+}
+
+/**
+ * Compute the interval from command invocation to response for a command based
+ * on the reply timestamp. Do not use when the reply must be edited to be considered
+ * complete, such as when using deferReply.
+ *
+ * @param reply The canonical reply to a Slash Command invocation.
+ * @param interaction The triggering command interaction.
+ * @returns latency in milliseconds
+ */
+export function replyLatency(reply: GuildCacheMessage<CacheType>, interaction: CommandInteraction): number {
+	if ("createdTimestamp" in reply) {
+		return reply.createdTimestamp - interaction.createdTimestamp;
+	} else {
+		// This should never happen, as Bastion must be a member of its servers.
+		return -1;
+	}
+}
+
+/**
+ * Compute the itnerval from command invocation to response last edited for a command.
+ * Do not use if the response is never edited, or when deferReply is used, since
+ * editedTimestamp will be null.
+ *
+ * @param reply The canonical reply to a Slash Command invocation that has been edited, excluding deferReply.
+ * @param interaction The triggering command interaction.
+ * @returns latency in milliseconds
+ */
+export function editLatency(reply: GuildCacheMessage<CacheType>, interaction: CommandInteraction): number {
+	if ("editedTimestamp" in reply && reply.editedTimestamp !== null) {
+		return reply.editedTimestamp - interaction.createdTimestamp;
+	} else {
+		// This should never happen, as Bastion must be a member of its servers.
+		return -1;
+	}
 }

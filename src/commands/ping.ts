@@ -27,15 +27,15 @@ export class PingCommand extends Command {
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		const content = `Average WebSocket ping (new instance): ${interaction.client.ws.ping} ms`;
-		await interaction.reply(content); // Actually returns void
-		const reply = await interaction.fetchReply();
+		const reply = await interaction.reply({ content, fetchReply: true });
 		if ("createdTimestamp" in reply) {
 			const latency = reply.createdTimestamp - interaction.createdTimestamp;
 			await interaction.editReply(`${content}\nTotal latency: ${latency} ms`);
 			return latency;
 		} else {
+			// This should never happen, as Bastion must be a member of its servers and also we are not using deferReply
 			const latency = Number(reply.timestamp) - interaction.createdTimestamp;
-			await interaction.editReply(`${content}\nTotal latency: ${latency} ms\nUnexpected response format`);
+			await interaction.editReply(`${content}\nTotal latency: ${latency} ms\nThis should never been seen.`);
 			return latency;
 		}
 	}

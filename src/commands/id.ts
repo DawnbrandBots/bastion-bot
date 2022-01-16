@@ -87,25 +87,23 @@ export class IdCommand extends Command {
 				type = "name";
 			}
 		}
+		await interaction.deferReply({ ephemeral: true });
 		const card = await this.getCard(type, input);
+		let end: number;
 		if (!card) {
+			end = Date.now();
 			// TODO: include properly-named type in this message
-			await interaction.reply({ content: `Could not find a card matching \`${input}\`!`, ephemeral: true });
+			await interaction.editReply({ content: `Could not find a card matching \`${input}\`!` });
 		} else {
 			const embed = new MessageEmbed()
 				.setTitle(card?.en.name)
 				.addField("Password", `${card.password}`, true)
 				.addField("Konami ID", `${card.kid}`, true);
-			// TODO: decide on ephemerality
-			await interaction.reply({ embeds: addNotice(embed), ephemeral: true }); // Actually returns void
+			end = Date.now();
+			await interaction.editReply({ embeds: addNotice(embed) });
 		}
-		const reply = await interaction.fetchReply();
-		if ("createdTimestamp" in reply) {
-			const latency = reply.createdTimestamp - interaction.createdTimestamp;
-			return latency;
-		} else {
-			const latency = Number(reply.timestamp) - interaction.createdTimestamp;
-			return latency;
-		}
+		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
+		const latency = end - interaction.createdTimestamp;
+		return latency;
 	}
 }

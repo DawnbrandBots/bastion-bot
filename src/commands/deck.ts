@@ -9,7 +9,7 @@ import { Command } from "../Command";
 import { CardSchema } from "../definitions";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { addNotice } from "../utils";
+import { addNotice, replyLatency } from "../utils";
 
 @injectable()
 export class DeckCommand extends Command {
@@ -203,35 +203,30 @@ export class DeckCommand extends Command {
 			deck = parseURL(interaction.options.getString("deck", true));
 		} catch (e) {
 			// TODO: specifically catch error for bad input and respond more clearly?
-			await interaction.reply({
+			const reply = await interaction.reply({
 				content: (e as Error).message,
-				ephemeral: true
+				ephemeral: true,
+				fetchReply: true
 			});
-			// placeholder latency
-			return 0;
+			return replyLatency(reply, interaction);
 		}
 		// return error on empty deck
 		if (deck.main.length + deck.extra.length + deck.side.length < 1) {
-			await interaction.reply({ content: `Error: Your deck is empty.`, ephemeral: true });
-			// placeholder latency
-			return 0;
+			const reply = await interaction.reply({
+				content: `Error: Your deck is empty.`,
+				ephemeral: true,
+				fetchReply: true
+			});
+			return replyLatency(reply, interaction);
 		}
 		const isPublic = !!interaction.options.getBoolean("public", false);
 		const isStacked = !!interaction.options.getBoolean("stacked", false);
+		await interaction.deferReply({ ephemeral: !isPublic });
 		const content = await this.generateProfile(deck, !isStacked);
-		await interaction.reply({ embeds: addNotice(content), ephemeral: !isPublic }); // Actually returns void
-
-		// placeholder latency value
-		return 0;
-		// TODO: update latency calculation since we can't fetch ephemeral replies
-		/*const reply = await interaction.fetchReply();
-		// return latency
-		if ("createdTimestamp" in reply) {
-			const latency = reply.createdTimestamp - interaction.createdTimestamp;
-			return latency;
-		} else {
-			const latency = Number(reply.timestamp) - interaction.createdTimestamp;
-			return latency;
-		}*/
+		const end = Date.now();
+		await interaction.editReply({ embeds: addNotice(content) });
+		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
+		const latency = end - interaction.createdTimestamp;
+		return latency;
 	}
 }

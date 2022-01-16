@@ -6,6 +6,7 @@ import { injectable } from "tsyringe";
 import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
+import { editLatency } from "../utils";
 
 @injectable()
 export class YugiCommand extends Command {
@@ -56,17 +57,10 @@ export class YugiCommand extends Command {
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		const page = interaction.options.getString("page", true);
-		await interaction.reply(`Searching Yugipedia for \`${page}\`…`); // Actually returns void
+		await interaction.reply(`Searching Yugipedia for \`${page}\`…`);
 		const link = await YugiCommand.getYugipediaPage(page);
 		const content = link || `Could not find a Yugipedia page named \`${page}\`.`; // TODO: externalise error message for translation/non-hardcoding?
 		const reply = await interaction.editReply(content);
-		// return latency
-		if ("createdTimestamp" in reply) {
-			const latency = reply.createdTimestamp - interaction.createdTimestamp;
-			return latency;
-		} else {
-			const latency = Number(reply.timestamp) - interaction.createdTimestamp;
-			return latency;
-		}
+		return editLatency(reply, interaction);
 	}
 }
