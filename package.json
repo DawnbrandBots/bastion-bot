@@ -29,7 +29,7 @@
 		"dotenv": "^10.0.0",
 		"node-fetch": "^2.6.1",
 		"reflect-metadata": "^0.1.13",
-		"supports-color": "^9.0.2",
+		"supports-color": "^9.2.1",
 		"tsyringe": "^4.6.0",
 		"ydke": "^1.1.0"
 	},
