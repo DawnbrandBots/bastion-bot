@@ -37,7 +37,7 @@
 		"@alphakretin/essentials": "^2.0.0",
 		"@types/better-sqlite3": "^7.4.1",
 		"@types/debug": "^4.1.7",
-		"@types/jest": "^27.0.1",
+		"@types/jest": "^27.4.0",
 		"@types/node": "^16.7.2",
 		"@types/node-fetch": "^2.5.12",
 		"jest": "^27.0.6",
