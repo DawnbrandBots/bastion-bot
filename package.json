@@ -23,25 +23,25 @@
 	"dependencies": {
 		"@discordjs/rest": "^0.2.0-canary.0",
 		"@sinclair/typebox": "^0.23.2",
-		"better-sqlite3": "^7.4.4",
-		"debug": "^4.3.2",
-		"discord.js": "^13.5.0",
-		"dotenv": "^10.0.0",
-		"node-fetch": "^2.6.1",
+		"better-sqlite3": "^7.4.6",
+		"debug": "^4.3.3",
+		"discord.js": "^13.6.0",
+		"dotenv": "^12.0.3",
+		"node-fetch": "^2.6.6",
 		"reflect-metadata": "^0.1.13",
-		"supports-color": "^9.0.2",
+		"supports-color": "^9.2.1",
 		"tsyringe": "^4.6.0",
 		"ydke": "^1.1.0"
 	},
 	"devDependencies": {
-		"@alphakretin/essentials": "^2.0.0",
-		"@types/better-sqlite3": "^7.4.1",
+		"@alphakretin/essentials": "^3.0.0",
+		"@types/better-sqlite3": "^7.4.2",
 		"@types/debug": "^4.1.7",
-		"@types/jest": "^27.0.1",
-		"@types/node": "^16.7.2",
+		"@types/jest": "^27.4.0",
+		"@types/node": "^16.11.9",
 		"@types/node-fetch": "^2.5.12",
-		"jest": "^27.0.6",
-		"ts-jest": "^27.0.5"
+		"jest": "^27.4.7",
+		"ts-jest": "^27.1.3"
 	},
 	"jest": {
 		"clearMocks": true,
