@@ -5,6 +5,7 @@ import { inject, injectable } from "tsyringe";
 import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
+import { replyLatency } from "../utils";
 
 @injectable()
 export class LinkCommand extends Command {
@@ -93,15 +94,7 @@ export class LinkCommand extends Command {
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		const key = interaction.options.getString("key", true);
 		const content = LinkCommand.links[key].result;
-		await interaction.reply(content); // Actually returns void
-		const reply = await interaction.fetchReply();
-		// return latency
-		if ("createdTimestamp" in reply) {
-			const latency = reply.createdTimestamp - interaction.createdTimestamp;
-			return latency;
-		} else {
-			const latency = Number(reply.timestamp) - interaction.createdTimestamp;
-			return latency;
-		}
+		const reply = await interaction.reply({ content, fetchReply: true });
+		return replyLatency(reply, interaction);
 	}
 }

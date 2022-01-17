@@ -27,9 +27,9 @@ If `type` is unspecified, infers the type of `input` using these rules:
 In the first two cases, a direct lookup of the card is performed using that password or Konami ID.
 In the latter case, an English-language fuzzy search is performed on the English card name.
 
-If no match is found, an ephemeral reply informs only the caller. Otherwise, the card information is
-presented publicly in Discord embeds, using the requested `lang`, falling back to English if not
-available. The following information is displayed:
+The public reply will either be a no-match message or the card information presented in
+Discord embeds, using the requested `lang`, falling back to English if not available.
+The following information is displayed:
 
 - card name, hyperlinked to the [YGOPRODECK](https://db.ygoprodeck.com/) data source
 - frameless card artwork, if available

@@ -6,6 +6,7 @@ import { injectable } from "tsyringe";
 import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
+import { editLatency } from "../utils";
 
 @injectable()
 export class YGOPRODECKCommand extends Command {
@@ -45,16 +46,9 @@ export class YGOPRODECKCommand extends Command {
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		const term = interaction.options.getString("term", true);
-		await interaction.reply(`Searching YGOPRODECK for \`${term}\`…`); // Actually returns void
+		await interaction.reply(`Searching YGOPRODECK for \`${term}\`…`);
 		const result = await this.search(term);
 		const reply = await interaction.editReply(result);
-		// return latency
-		if ("createdTimestamp" in reply) {
-			const latency = reply.createdTimestamp - interaction.createdTimestamp;
-			return latency;
-		} else {
-			const latency = Number(reply.timestamp) - interaction.createdTimestamp;
-			return latency;
-		}
+		return editLatency(reply, interaction);
 	}
 }
