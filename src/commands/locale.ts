@@ -66,10 +66,20 @@ export class LocaleCommand extends Command {
 			} else {
 				const scope = interaction.options.getString("scope");
 				if (scope === "channel") {
-					content = `Locale for current channel ${interaction.channel} overridden with ${locale}. Server-wide setting is ${interaction.guildLocale}.`;
+					if (interaction.memberPermissions?.has("MANAGE_CHANNELS")) {
+						content = `Locale for current channel ${interaction.channel} overridden with ${locale}. Server-wide setting is ${interaction.guildLocale}.`;
+					} else {
+						content =
+							"Sorry, you must have the Manage Channel permission in this channel. If you think this is an error, contact your server admin or report a bug.";
+					}
 				} else {
 					// server-wide
-					content = `Locale for this server overriden with ${locale}. Server-wide default for community servers is ${interaction.guildLocale}.`;
+					if (interaction.memberPermissions?.has("MANAGE_GUILD")) {
+						content = `Locale for this server overriden with ${locale}. Server-wide default for community servers is ${interaction.guildLocale}.`;
+					} else {
+						content =
+							"Sorry, you must have the Manage Server permission to do this. If you think this is an error, contact your server admin or report a bug.";
+					}
 				}
 			}
 		}
