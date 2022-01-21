@@ -16,6 +16,11 @@ export interface LocaleProvider {
 	setForChannel(id: Snowflake, set: Locale): Promise<void>;
 }
 
+/**
+ * Implementation in two SQLite tables in the same database. With sufficient
+ * scale, this would need to be periodically cleaned as guilds and channels are
+ * removed, especially with threads, if they are also stored here.
+ */
 @singleton()
 export class SQLiteLocaleProvider implements LocaleProvider {
 	private readonly db: Database;

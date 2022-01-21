@@ -1,8 +1,9 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
-import { injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 import { Command } from "../Command";
+import { LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { replyLatency } from "../utils";
@@ -10,9 +11,11 @@ import { replyLatency } from "../utils";
 @injectable()
 export class LocaleCommand extends Command {
 	#logger = getLogger("command:locale");
+	#locales: LocaleProvider;
 
-	constructor(metrics: Metrics) {
+	constructor(metrics: Metrics, @inject("LocaleProvider") locales: LocaleProvider) {
 		super(metrics);
+		this.#locales = locales;
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
@@ -56,7 +59,28 @@ export class LocaleCommand extends Command {
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		let content: string;
 		if (interaction.options.getSubcommand() === "get") {
-			content = `Your locale: ${interaction.locale}\nServer locale: ${interaction.guildLocale}`;
+			if (interaction.inGuild()) {
+				// For threads, use the parent channel instead
+				const channelOverride = await this.#locales.channel(
+					interaction.channel?.parentId ?? interaction.channelId
+				);
+				const guildOverride = await this.#locales.guild(interaction.guildId);
+				content = "";
+				if (channelOverride) {
+					content += `Locale override for this channel: ${channelOverride}\n`;
+				}
+				if (guildOverride) {
+					content += `Locale override for this server: ${guildOverride}\n`;
+				}
+				content += `Discord Community locale for this server: ${interaction.guildLocale}`;
+			} else {
+				const override = await this.#locales.channel(interaction.channelId);
+				if (override) {
+					content = `Locale override for this direct message: ${override}\nYour Discord locale: ${interaction.locale}`;
+				} else {
+					content = `Your Discord locale: ${interaction.locale}`;
+				}
+			}
 		} else {
 			// subcommand set
 			const locale = interaction.options.getString("locale");
@@ -85,7 +109,7 @@ export class LocaleCommand extends Command {
 		}
 		const reply = await interaction.reply({
 			content,
-			ephemeral: true,
+			//ephemeral: true,
 			fetchReply: true
 		});
 		return replyLatency(reply, interaction);
