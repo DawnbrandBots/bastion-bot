@@ -40,27 +40,27 @@ export class SQLiteLocaleProvider implements LocaleProvider {
 		db.pragma("journal_mode = WAL");
 		db.exec(`
 CREATE TABLE IF NOT EXISTS "guilds" (
-	"id"	TEXT NOT NULL,
+	"id"	INTEGER NOT NULL,
 	"locale"	TEXT NOT NULL,
 	PRIMARY KEY("id")
 );
 CREATE TABLE IF NOT EXISTS "channels" (
-	"id"	TEXT NOT NULL,
+	"id"	INTEGER NOT NULL,
 	"locale"	TEXT NOT NULL,
 	PRIMARY KEY("id")
 );`);
 		return db;
 	}
 
-	public async guild(id: string): Promise<Locale> {
+	public async guild(id: Snowflake): Promise<Locale> {
 		return this.readGuild.get(id)?.locale || null;
 	}
 
-	public async channel(id: string): Promise<Locale> {
+	public async channel(id: Snowflake): Promise<Locale> {
 		return this.readChannel.get(id)?.locale || null;
 	}
 
-	public async setForGuild(id: string, set: Locale): Promise<void> {
+	public async setForGuild(id: Snowflake, set: Locale): Promise<void> {
 		if (set !== null) {
 			this.writeGuild.run(id, set);
 		} else {
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS "channels" (
 		}
 	}
 
-	public async setForChannel(id: string, set: Locale): Promise<void> {
+	public async setForChannel(id: Snowflake, set: Locale): Promise<void> {
 		if (set !== null) {
 			this.writeChannel.run(id, set);
 		} else {
