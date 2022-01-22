@@ -93,10 +93,7 @@ export class LocaleCommand extends Command {
 		} else {
 			// subcommand set
 			const locale = interaction.options.getString("locale", true);
-			if (!interaction.inGuild()) {
-				// direct message, ignore scope
-				content = `Locale for this direct message overridden with ${locale}. Your Discord setting is ${interaction.locale}.`;
-			} else {
+			if (interaction.inGuild()) {
 				const scope = interaction.options.getString("scope", true);
 				if (scope === "channel") {
 					if (interaction.memberPermissions.has("MANAGE_CHANNELS")) {
@@ -132,6 +129,15 @@ export class LocaleCommand extends Command {
 						content =
 							"Sorry, you must have the Manage Server permission to do this. If you think this is an error, contact your server admin or report a bug.";
 					}
+				}
+			} else {
+				// direct message, ignore scope
+				if (locale !== "default") {
+					await this.#locales.setForChannel(interaction.channelId, locale);
+					content = `Locale for this direct message overridden with ${locale}. Your Discord setting is ${interaction.locale}.`;
+				} else {
+					await this.#locales.setForChannel(interaction.channelId, null);
+					content = `Locale for this direct message reset to Discord default. Your Discord setting is ${interaction.locale}.`;
 				}
 			}
 		}
