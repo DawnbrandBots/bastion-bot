@@ -42,6 +42,7 @@ export class LocaleCommand extends Command {
 							.setName("locale")
 							.setDescription("The new default language to use in this channel or server.")
 							.setRequired(true)
+							.addChoice("Discord default", "default")
 							.addChoice("English", "en")
 							.addChoice("Français", "fr")
 							.addChoice("Deutsch", "de")
@@ -83,15 +84,33 @@ export class LocaleCommand extends Command {
 			}
 		} else {
 			// subcommand set
-			const locale = interaction.options.getString("locale");
+			const locale = interaction.options.getString("locale", true);
 			if (!interaction.inGuild()) {
 				// direct message, ignore scope
 				content = `Locale for this direct message overridden with ${locale}. Your Discord setting is ${interaction.locale}.`;
 			} else {
-				const scope = interaction.options.getString("scope");
+				const scope = interaction.options.getString("scope", true);
 				if (scope === "channel") {
 					if (interaction.memberPermissions.has("MANAGE_CHANNELS")) {
-						content = `Locale for current channel ${interaction.channel} overridden with ${locale}. Server-wide setting is ${interaction.guildLocale}.`;
+						if (locale !== "default") {
+							await this.#locales.setForChannel(
+								interaction.channel?.parentId ?? interaction.channelId,
+								locale
+							);
+							content = `Locale for current channel ${
+								interaction.channel?.parent || interaction.channel
+							} overridden with ${locale}.`;
+						} else {
+							await this.#locales.setForChannel(interaction.channelId, null);
+							content = `Locale for current channel ${
+								interaction.channel?.parent || interaction.channel
+							} reset to server default.`;
+						}
+						const guildOverride = await this.#locales.guild(interaction.guildId);
+						if (guildOverride) {
+							content += `\nServer-wide locale override: ${guildOverride}`;
+						}
+						content += `\nDiscord Community locale for this server: ${interaction.guildLocale}`;
 					} else {
 						content =
 							"Sorry, you must have the Manage Channel permission in this channel. If you think this is an error, contact your server admin or report a bug.";
@@ -99,7 +118,14 @@ export class LocaleCommand extends Command {
 				} else {
 					// server-wide
 					if (interaction.memberPermissions.has("MANAGE_GUILD")) {
-						content = `Locale for this server overriden with ${locale}. Server-wide default for community servers is ${interaction.guildLocale}.`;
+						if (locale !== "default") {
+							await this.#locales.setForGuild(interaction.guildId, locale);
+							content = `Locale for this server overriden with ${locale}.`;
+						} else {
+							await this.#locales.setForGuild(interaction.guildId, null);
+							content = `Locale for this server reset to Discord Community default.`;
+						}
+						content += `\nServer-wide default for community servers is ${interaction.guildLocale}.`;
 					} else {
 						content =
 							"Sorry, you must have the Manage Server permission to do this. If you think this is an error, contact your server admin or report a bug.";
