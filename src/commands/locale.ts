@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
+import { RESTPostAPIApplicationCommandsJSONBody, Snowflake } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { Command } from "../Command";
@@ -57,14 +57,22 @@ export class LocaleCommand extends Command {
 		return this.#logger;
 	}
 
+	/**
+	 * channel.parentId may refer to a category or a text channel. Return the parent text channel
+	 * for threads only, and the current channel otherwise.
+	 *
+	 * @param interaction
+	 * @returns The channel snowflake to use for setting locale
+	 */
+	private getChannel(interaction: CommandInteraction): Snowflake {
+		return (interaction.channel?.isThread() && interaction.channel.parentId) || interaction.channelId;
+	}
+
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		let content: string;
 		if (interaction.options.getSubcommand() === "get") {
 			if (interaction.inGuild()) {
-				// For threads, use the parent channel instead
-				const channelOverride = await this.#locales.channel(
-					interaction.channel?.parentId ?? interaction.channelId
-				);
+				const channelOverride = await this.#locales.channel(this.getChannel(interaction));
 				const guildOverride = await this.#locales.guild(interaction.guildId);
 				content = "";
 				if (channelOverride) {
@@ -92,19 +100,13 @@ export class LocaleCommand extends Command {
 				const scope = interaction.options.getString("scope", true);
 				if (scope === "channel") {
 					if (interaction.memberPermissions.has("MANAGE_CHANNELS")) {
+						const channel = this.getChannel(interaction);
 						if (locale !== "default") {
-							await this.#locales.setForChannel(
-								interaction.channel?.parentId ?? interaction.channelId,
-								locale
-							);
-							content = `Locale for current channel ${
-								interaction.channel?.parent || interaction.channel
-							} overridden with ${locale}.`;
+							await this.#locales.setForChannel(channel, locale);
+							content = `Locale for current channel <#${channel}> overridden with ${locale}.`;
 						} else {
-							await this.#locales.setForChannel(interaction.channelId, null);
-							content = `Locale for current channel ${
-								interaction.channel?.parent || interaction.channel
-							} reset to server default.`;
+							await this.#locales.setForChannel(channel, null);
+							content = `Locale for current channel <#${channel}> reset to server default.`;
 						}
 						const guildOverride = await this.#locales.guild(interaction.guildId);
 						if (guildOverride) {
