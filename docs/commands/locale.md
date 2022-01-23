@@ -8,11 +8,11 @@ still handled by the old instance will not be affected.
 
 ## Definitions
 
-**Locale**: a parameter affecting _localization_, such as what language and dialect are used,
+**Locale**: a parameter affecting _localisation_, such as what language and dialect are used,
 and how time and numbers should be formatted. The set of locales supported by Discord happens
-to be a superset of the official localizations of _Yu-Gi-Oh!_.
+to be a superset of the official localisations of _Yu-Gi-Oh!_.
 
-## General bot localization behaviour
+## General bot localisation behaviour
 
 In direct messages, Bastion will try to use the user's display locale as reported by Discord,
 which should be the display language of the client. This can be overridden by the user
@@ -62,7 +62,7 @@ is applied to the direct message, or reset to the user's display locale.
 
 In servers, the caller must have the Manage Channel permission for the current channel if
 `scope` is "channel", or the Manage Server permission if `scope` in "server". Bastion will
-reply with the missing permission if missing. Otherwise, if authorized, the specified
+reply with the missing permission if missing. Otherwise, if authorised, the specified
 `locale` override is applied to the specified `scope`, or reset for the specified `scope`.
 
 ## Next steps
