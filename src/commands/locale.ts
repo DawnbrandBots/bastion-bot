@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { RESTPostAPIApplicationCommandsJSONBody, Snowflake } from "discord-api-types/v9";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { Command } from "../Command";
@@ -57,22 +57,11 @@ export class LocaleCommand extends Command {
 		return this.#logger;
 	}
 
-	/**
-	 * channel.parentId may refer to a category or a text channel. Return the parent text channel
-	 * for threads only, and the current channel otherwise.
-	 *
-	 * @param interaction
-	 * @returns The channel snowflake to use for setting locale
-	 */
-	private getChannel(interaction: CommandInteraction): Snowflake {
-		return (interaction.channel?.isThread() && interaction.channel.parentId) || interaction.channelId;
-	}
-
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		let content: string;
 		if (interaction.options.getSubcommand() === "get") {
 			if (interaction.inGuild()) {
-				const channelOverride = await this.#locales.channel(this.getChannel(interaction));
+				const channelOverride = await this.#locales.channel(this.#locales.getChannel(interaction));
 				const guildOverride = await this.#locales.guild(interaction.guildId);
 				content = "";
 				if (channelOverride) {
@@ -97,7 +86,7 @@ export class LocaleCommand extends Command {
 				const scope = interaction.options.getString("scope", true);
 				if (scope === "channel") {
 					if (interaction.memberPermissions.has("MANAGE_CHANNELS")) {
-						const channel = this.getChannel(interaction);
+						const channel = this.#locales.getChannel(interaction);
 						if (locale !== "default") {
 							await this.#locales.setForChannel(channel, locale);
 							content = `Locale for current channel <#${channel}> overridden with ${locale}.`;

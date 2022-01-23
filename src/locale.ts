@@ -1,19 +1,57 @@
 import sqlite, { Database, Statement } from "better-sqlite3";
-import { Snowflake } from "discord.js";
+import { CommandInteraction, Snowflake } from "discord.js";
 import { inject, singleton } from "tsyringe";
 
-export type Locale = string | null;
+export type Locale = string;
 
 /**
  * Abstract persistent store for locale overrides. We need this if we switch to
  * multiprocess sharding in the future and demand is high, since SQLite cannot
  * handle concurrent writes. Promise?
  */
-export interface LocaleProvider {
-	guild(id: Snowflake): Promise<Locale>;
-	channel(id: Snowflake): Promise<Locale>;
-	setForGuild(id: Snowflake, set: Locale): Promise<void>;
-	setForChannel(id: Snowflake, set: Locale): Promise<void>;
+export abstract class LocaleProvider {
+	abstract guild(id: Snowflake): Promise<Locale | null>;
+	abstract channel(id: Snowflake): Promise<Locale | null>;
+	abstract setForGuild(id: Snowflake, set: Locale | null): Promise<void>;
+	abstract setForChannel(id: Snowflake, set: Locale | null): Promise<void>;
+
+	/**
+	 * channel.parentId may refer to a category or a text channel. Return the parent text channel
+	 * for threads only, and the current channel otherwise.
+	 *
+	 * @param interaction
+	 * @returns The channel snowflake to use for setting locale
+	 */
+	getChannel(interaction: CommandInteraction): Snowflake {
+		return (interaction.channel?.isThread() && interaction.channel.parentId) || interaction.channelId;
+	}
+
+	async get(interaction: CommandInteraction): Promise<Locale> {
+		if (interaction.inGuild()) {
+			return (
+				(await this.channel(
+					(interaction.channel?.isThread() && interaction.channel.parentId) || interaction.channelId
+				)) ??
+				(await this.guild(interaction.guildId)) ??
+				this.filter(interaction.guildLocale)
+			);
+		} else {
+			return (await this.channel(interaction.channelId)) ?? this.filter(interaction.locale);
+		}
+	}
+
+	/**
+	 * Process Discord-provided locales into simple ISO 639-1 codes that we support.
+	 * @param discordLocale
+	 */
+	private filter(discordLocale: string): Locale {
+		const locale = discordLocale.split("-")[0];
+		if (["en", "fr", "de", "it", "pt"].includes(locale)) {
+			return locale;
+		} else {
+			return "en";
+		}
+	}
 }
 
 /**
@@ -22,7 +60,7 @@ export interface LocaleProvider {
  * removed, especially with threads, if they are also stored here.
  */
 @singleton()
-export class SQLiteLocaleProvider implements LocaleProvider {
+export class SQLiteLocaleProvider extends LocaleProvider {
 	private readonly db: Database;
 	private readonly readGuild: Statement;
 	private readonly writeGuild: Statement;
@@ -31,6 +69,7 @@ export class SQLiteLocaleProvider implements LocaleProvider {
 	private readonly writeChannel: Statement;
 	private readonly deleteChannel: Statement;
 	constructor(@inject("localeDb") file: string) {
+		super();
 		this.db = this.getDB(file);
 		this.readGuild = this.db.prepare("SELECT locale FROM guilds WHERE id = ?");
 		this.writeGuild = this.db.prepare("REPLACE INTO guilds VALUES(?,?)");
