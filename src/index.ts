@@ -5,6 +5,7 @@ import { BotFactory } from "./bot";
 import { Command } from "./Command";
 import { classes, registerSlashCommands } from "./commands";
 import { InteractionListener, MessageListener } from "./events";
+import { LocaleProvider, SQLiteLocaleProvider } from "./locale";
 import { getLogger } from "./logger";
 import { Metrics } from "./metrics";
 
@@ -13,12 +14,26 @@ if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	registerSlashCommands(process.argv[3] as any);
 } else {
-	const metricsDb = process.argv[2] || path.join(os.tmpdir(), "bastion-metrics.db3");
-	getLogger("index").info(`Storing metrics in ${metricsDb}`);
+	const logger = getLogger("index");
+
+	const metricsDb = process.argv[2]
+		? path.join(process.argv[2], "metrics.db3")
+		: path.join(os.tmpdir(), "bastion-metrics.db3");
+	logger.info(`Storing metrics in ${metricsDb}`);
 	container.register<string>("metricsDb", {
 		useValue: metricsDb
 	});
+
+	const localeDb = process.argv[2]
+		? path.join(process.argv[2], "locales.db3")
+		: path.join(os.tmpdir(), "bastion-locales.db3");
+	logger.info(`Storing locales in ${localeDb}`);
+	container.register<string>("localeDb", {
+		useValue: localeDb
+	});
+
 	//container.registerSingleton<Metrics>(Metrics);
+	container.registerSingleton<LocaleProvider>("LocaleProvider", SQLiteLocaleProvider);
 	classes.forEach(Class => container.register<Command>("Command", { useClass: Class }));
 	container.register<InteractionListener>("Listener", { useClass: InteractionListener });
 	container.register<MessageListener>("Listener", { useClass: MessageListener });
@@ -28,6 +43,7 @@ if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 	process.once("SIGTERM", () => {
 		bot.destroy();
 		container.resolve(Metrics).destroy();
+		container.resolve(SQLiteLocaleProvider).destroy();
 	});
 	// Implicitly use DISCORD_TOKEN
 	bot.login();

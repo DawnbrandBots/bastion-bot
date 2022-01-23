@@ -3,6 +3,7 @@ import { APIUser, Routes } from "discord-api-types/v9";
 import { DeckCommand } from "./deck";
 import { IdCommand } from "./id";
 import { LinkCommand } from "./link";
+import { LocaleCommand } from "./locale";
 import { PingCommand } from "./ping";
 import { SearchCommand } from "./search";
 import { YGOPRODECKCommand } from "./ygoprodeck";
@@ -15,9 +16,19 @@ export const classes = [
 	YugiCommand,
 	IdCommand,
 	SearchCommand,
-	YGOPRODECKCommand
+	YGOPRODECKCommand,
+	LocaleCommand
 ];
-export { DeckCommand, PingCommand, LinkCommand, YugiCommand, IdCommand, SearchCommand, YGOPRODECKCommand };
+export {
+	DeckCommand,
+	PingCommand,
+	LinkCommand,
+	YugiCommand,
+	IdCommand,
+	SearchCommand,
+	YGOPRODECKCommand,
+	LocaleCommand
+};
 
 // Register Slash Commands on CI
 // Specify the guild snowflake to instantly deploy commands on the specified server.
