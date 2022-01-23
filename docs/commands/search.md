@@ -13,7 +13,7 @@ Find all information on a card! _This command is in development._
 Name | Required? | Description | Type
 --- | --- | --- | ---
 `input` | ✔ | The password, Konami ID, or name you're searching by. | text
-`lang` | ✔ | The query and result language. | one of "en", "fr", "de", "it", "pt"
+`lang` | ❌ | The result language. | one of "en", "fr", "de", "it", "pt"
 `type` | ❌ | Whether you're searching by password, Konami ID, or name. | one of "password", "kid", "name"
 
 ## Current behaviour
@@ -28,7 +28,10 @@ In the first two cases, a direct lookup of the card is performed using that pass
 In the latter case, an English-language fuzzy search is performed on the English card name.
 
 The public reply will either be a no-match message or the card information presented in
-Discord embeds, using the requested `lang`, falling back to English if not available.
+Discord embeds. This will be in the requested `lang` if specified, otherwise using the
+locale for the channel or server per [Bastion's locale setting](/docs/command/locale.md),
+and falling back to English if not available.
+
 The following information is displayed:
 
 - card name, hyperlinked to the [YGOPRODECK](https://db.ygoprodeck.com/) data source
@@ -62,7 +65,6 @@ In no particular order:
 - handle alternative artworks
 - add support for more languages (Spanish, Japanese, Korean, Chinese)
 - localize labels used in the embed
-- set default language per server or per channel, including direct messages
 - add a button to pull up more matches like the old `.match` or `.search`
 - depending on how alternative artworks are handled, add a button to display those too
 - support simple queries on other card properties
