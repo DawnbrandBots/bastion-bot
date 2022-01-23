@@ -15,7 +15,7 @@ services:
       BOT_MOTD: "${BOT_MOTD:-}"
     volumes:
       - ${BOT_BIND_MOUNT}:/var/local/bastion
-    command: /var/local/bastion/metrics.db3
+    command: /var/local/bastion
     restart: unless-stopped
     logging:
       driver: "${DOCKER_LOG_DRIVER:-journald}"
