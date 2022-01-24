@@ -3,10 +3,11 @@ import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
 import fetch from "node-fetch";
-import { injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 import { createCardEmbed } from "../card";
 import { Command } from "../Command";
 import { CardSchema } from "../definitions";
+import { LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { addFunding, addNotice } from "../utils";
@@ -15,7 +16,7 @@ import { addFunding, addNotice } from "../utils";
 export class SearchCommand extends Command {
 	#logger = getLogger("command:search");
 
-	constructor(metrics: Metrics) {
+	constructor(metrics: Metrics, @inject("LocaleProvider") private locales: LocaleProvider) {
 		super(metrics);
 	}
 
@@ -32,8 +33,8 @@ export class SearchCommand extends Command {
 			.addStringOption(
 				new SlashCommandStringOption()
 					.setName("lang")
-					.setDescription("The query and result language.")
-					.setRequired(true)
+					.setDescription("The result language.")
+					.setRequired(false)
 					.addChoice("English", "en")
 					.addChoice("Français", "fr")
 					.addChoice("Deutsch", "de")
@@ -107,8 +108,9 @@ export class SearchCommand extends Command {
 			// TODO: include properly-named type in this message
 			await interaction.editReply({ content: `Could not find a card matching \`${input}\`!` });
 		} else {
+			const lang = interaction.options.getString("lang") ?? (await this.locales.get(interaction));
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			let embeds = createCardEmbed(card, interaction.options.getString("lang", true) as any);
+			let embeds = createCardEmbed(card, lang as any);
 			embeds = addFunding(addNotice(embeds));
 			end = Date.now();
 			await interaction.editReply({ embeds }); // Actually returns void
