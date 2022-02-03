@@ -4,6 +4,7 @@ import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction, MessageEmbed } from "discord.js";
 import fetch from "node-fetch";
 import { injectable } from "tsyringe";
+import { getCard } from "../card";
 import { Command } from "../Command";
 import { CardSchema } from "../definitions";
 import { getLogger, Logger } from "../logger";
@@ -44,28 +45,6 @@ export class IdCommand extends Command {
 		return this.#logger;
 	}
 
-	async getCard(type: "password" | "kid" | "name", input: string): Promise<Static<typeof CardSchema> | undefined> {
-		let url = `${process.env.SEARCH_API}`; // treated as string instead of string? without forbidden non-null check
-		input = encodeURIComponent(input);
-		if (type === "password") {
-			url += `/card/password/${input}`;
-		} else if (type === "kid") {
-			url += `/card/kid/${input}`;
-		} else {
-			url += `/search?name=${input}`;
-		}
-		const response = await fetch(url);
-		// 400: Bad syntax, 404: Not found
-		if (response.status === 400 || response.status === 404) {
-			return undefined;
-		}
-		// 200: OK
-		if (response.status === 200) {
-			return await response.json();
-		}
-		throw new Error((await response.json()).message);
-	}
-
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		let type = interaction.options.getString("type", false) as "password" | "kid" | "name" | undefined;
 		let input = interaction.options.getString("input", true);
@@ -88,7 +67,7 @@ export class IdCommand extends Command {
 			}
 		}
 		await interaction.deferReply({ ephemeral: true });
-		const card = await this.getCard(type, input);
+		const card = await getCard(type, input);
 		let end: number;
 		if (!card) {
 			end = Date.now();
