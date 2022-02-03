@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
-import { CommandInteraction, FileOptions } from "discord.js";
+import { CommandInteraction } from "discord.js";
 import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { getCard, inferInputType } from "../card";
@@ -45,17 +45,16 @@ export class ArtCommand extends Command {
 		return this.#logger;
 	}
 
-	async getArt(card: Static<typeof CardSchema>): Promise<FileOptions | undefined> {
+	async getArt(card: Static<typeof CardSchema>): Promise<string | undefined> {
 		const artUrl = `${process.env.IMAGE_HOST}/${card.password}.png`;
-		const response = await fetch(artUrl);
+		const response = await fetch(artUrl, { method: "HEAD" });
 		// 400: Bad syntax, 404: Not found
 		if (response.status === 400 || response.status === 404) {
 			return undefined;
 		}
 		// 200: OK
 		if (response.status === 200) {
-			const art = await response.buffer();
-			return { attachment: art };
+			return artUrl;
 		}
 		throw new Error((await response.json()).message);
 	}
@@ -72,11 +71,11 @@ export class ArtCommand extends Command {
 			// TODO: include properly-named type in this message
 			await interaction.editReply({ content: `Could not find a card matching \`${input}\`!` });
 		} else {
-			const artFile = await this.getArt(card);
+			const artUrl = await this.getArt(card);
 			end = Date.now();
-			if (artFile) {
-				// TODO: display name along with art?
-				await interaction.editReply({ files: [artFile] }); // Actually returns void
+			if (artUrl) {
+				// expected embedding of image from URL
+				await interaction.editReply(artUrl); // Actually returns void
 			} else {
 				const lang = (await this.locales.get(interaction)) as "en" | "fr" | "de" | "it" | "pt";
 				await interaction.editReply({ content: `Could not find art for \`${card[lang]?.name || card.kid}\`!` });
