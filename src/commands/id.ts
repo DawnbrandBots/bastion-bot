@@ -1,12 +1,9 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
-import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction, MessageEmbed } from "discord.js";
-import fetch from "node-fetch";
 import { injectable } from "tsyringe";
-import { getCard } from "../card";
+import { getCard, inferInputType } from "../card";
 import { Command } from "../Command";
-import { CardSchema } from "../definitions";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { addNotice } from "../utils";
@@ -48,24 +45,7 @@ export class IdCommand extends Command {
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		let type = interaction.options.getString("type", false) as "password" | "kid" | "name" | undefined;
 		let input = interaction.options.getString("input", true);
-		if (!type) {
-			// handle edge case for specific bad input
-			if (parseInt(input).toString() === input && input !== "NaN") {
-				// if its all digits, treat as password.
-				type = "password";
-			} else if (input.startsWith("#")) {
-				// initial # indicates KID, as long as the rest is digits
-				const kid = input.slice(1);
-				if (parseInt(kid).toString() === kid && kid !== "NaN") {
-					type = "kid";
-					input = kid;
-				} else {
-					type = "name";
-				}
-			} else {
-				type = "name";
-			}
-		}
+		[type, input] = inferInputType(type, input);
 		await interaction.deferReply({ ephemeral: true });
 		const card = await getCard(type, input);
 		let end: number;

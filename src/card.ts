@@ -167,3 +167,27 @@ export function createCardEmbed(
 
 	return [embed];
 }
+
+export function inferInputType(
+	type: "password" | "kid" | "name" | undefined,
+	input: string
+): ["password" | "kid" | "name", string] {
+	if (type) {
+		return [type, input];
+	}
+	// handle edge case for specific bad input
+	if (parseInt(input).toString() === input && input !== "NaN") {
+		// if its all digits, treat as password.
+		return ["password", input];
+	} else if (input.startsWith("#")) {
+		// initial # indicates KID, as long as the rest is digits
+		const kid = input.slice(1);
+		if (parseInt(kid).toString() === kid && kid !== "NaN") {
+			return ["kid", kid];
+		} else {
+			return ["name", input];
+		}
+	} else {
+		return ["name", input];
+	}
+}
