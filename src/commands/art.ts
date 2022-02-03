@@ -78,8 +78,8 @@ export class ArtCommand extends Command {
 				// TODO: display name along with art?
 				await interaction.editReply({ files: [artFile] }); // Actually returns void
 			} else {
-				// TODO: do we include a lang parameter just for this niche error message?
-				await interaction.editReply({ content: `Could not find art for \`${card.en.name}\`!` });
+				const lang = (await this.locales.get(interaction)) as "en" | "fr" | "de" | "it" | "pt";
+				await interaction.editReply({ content: `Could not find art for \`${card[lang]?.name || card.kid}\`!` });
 			}
 		}
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
