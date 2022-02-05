@@ -1,5 +1,6 @@
 import { Static } from "@sinclair/typebox";
 import { MessageEmbed } from "discord.js";
+import fetch from "node-fetch";
 import { CardSchema } from "./definitions";
 
 const Colour = {
@@ -84,7 +85,7 @@ export async function getCard(
 	} else if (type === "kid") {
 		url += `/card/kid/${input}`;
 	} else {
-		url += `/art?name=${input}`;
+		url += `/search?name=${input}`;
 	}
 	const response = await fetch(url);
 	// 400: Bad syntax, 404: Not found
