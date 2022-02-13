@@ -1,5 +1,6 @@
 import { REST } from "@discordjs/rest";
 import { APIUser, Routes } from "discord-api-types/v9";
+import { ArtCommand } from "./art";
 import { DeckCommand } from "./deck";
 import { IdCommand } from "./id";
 import { LinkCommand } from "./link";
@@ -17,7 +18,8 @@ export const classes = [
 	IdCommand,
 	SearchCommand,
 	YGOPRODECKCommand,
-	LocaleCommand
+	LocaleCommand,
+	ArtCommand
 ];
 export {
 	DeckCommand,
@@ -27,7 +29,8 @@ export {
 	IdCommand,
 	SearchCommand,
 	YGOPRODECKCommand,
-	LocaleCommand
+	LocaleCommand,
+	ArtCommand
 };
 
 // Register Slash Commands on CI

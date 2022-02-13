@@ -1,17 +1,19 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
+import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
+import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
-import { createCardEmbed, getCard, inferInputType } from "../card";
+import { getCard, inferInputType } from "../card";
 import { Command } from "../Command";
+import { CardSchema } from "../definitions";
 import { LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { addFunding, addNotice } from "../utils";
 
 @injectable()
-export class SearchCommand extends Command {
-	#logger = getLogger("command:search");
+export class ArtCommand extends Command {
+	#logger = getLogger("command:art");
 
 	constructor(metrics: Metrics, @inject("LocaleProvider") private locales: LocaleProvider) {
 		super(metrics);
@@ -19,24 +21,13 @@ export class SearchCommand extends Command {
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		return new SlashCommandBuilder()
-			.setName("search")
-			.setDescription("Find all information on a card!")
+			.setName("art")
+			.setDescription("Display the art for a card!")
 			.addStringOption(
 				new SlashCommandStringOption()
 					.setName("input")
-					.setDescription("The password, Konami ID, or name you're searching by.")
+					.setDescription("The password, Konami ID, or name to search for a card.")
 					.setRequired(true)
-			)
-			.addStringOption(
-				new SlashCommandStringOption()
-					.setName("lang")
-					.setDescription("The result language.")
-					.setRequired(false)
-					.addChoice("English", "en")
-					.addChoice("Français", "fr")
-					.addChoice("Deutsch", "de")
-					.addChoice("Italiano", "it")
-					.addChoice("Português", "pt")
 			)
 			.addStringOption(
 				new SlashCommandStringOption()
@@ -54,6 +45,20 @@ export class SearchCommand extends Command {
 		return this.#logger;
 	}
 
+	async getArt(card: Static<typeof CardSchema>): Promise<string | undefined> {
+		const artUrl = `${process.env.IMAGE_HOST}/${card.password}.png`;
+		const response = await fetch(artUrl, { method: "HEAD" });
+		// 400: Bad syntax, 404: Not found
+		if (response.status === 400 || response.status === 404) {
+			return undefined;
+		}
+		// 200: OK
+		if (response.status === 200) {
+			return artUrl;
+		}
+		throw new Error((await response.json()).message);
+	}
+
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		let type = interaction.options.getString("type", false) as "password" | "kid" | "name" | undefined;
 		let input = interaction.options.getString("input", true);
@@ -66,12 +71,15 @@ export class SearchCommand extends Command {
 			// TODO: include properly-named type in this message
 			await interaction.editReply({ content: `Could not find a card matching \`${input}\`!` });
 		} else {
-			const lang = interaction.options.getString("lang") ?? (await this.locales.get(interaction));
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			let embeds = createCardEmbed(card, lang as any);
-			embeds = addFunding(addNotice(embeds));
+			const artUrl = await this.getArt(card);
 			end = Date.now();
-			await interaction.editReply({ embeds }); // Actually returns void
+			if (artUrl) {
+				// expected embedding of image from URL
+				await interaction.editReply(artUrl); // Actually returns void
+			} else {
+				const lang = (await this.locales.get(interaction)) as "en" | "fr" | "de" | "it" | "pt";
+				await interaction.editReply({ content: `Could not find art for \`${card[lang]?.name || card.kid}\`!` });
+			}
 		}
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
 		const latency = end - interaction.createdTimestamp;

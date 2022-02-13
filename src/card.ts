@@ -1,5 +1,6 @@
 import { Static } from "@sinclair/typebox";
 import { MessageEmbed } from "discord.js";
+import fetch from "node-fetch";
 import { CardSchema } from "./definitions";
 
 const Colour = {
@@ -73,6 +74,31 @@ const Icon = {
 	Rank: "<:rank:602707927114973185>"
 };
 
+export async function getCard(
+	type: "password" | "kid" | "name",
+	input: string
+): Promise<Static<typeof CardSchema> | undefined> {
+	let url = `${process.env.SEARCH_API}`; // treated as string instead of string? without forbidden non-null check
+	input = encodeURIComponent(input);
+	if (type === "password") {
+		url += `/card/password/${input}`;
+	} else if (type === "kid") {
+		url += `/card/kid/${input}`;
+	} else {
+		url += `/search?name=${input}`;
+	}
+	const response = await fetch(url);
+	// 400: Bad syntax, 404: Not found
+	if (response.status === 400 || response.status === 404) {
+		return undefined;
+	}
+	// 200: OK
+	if (response.status === 200) {
+		return await response.json();
+	}
+	throw new Error((await response.json()).message);
+}
+
 export function createCardEmbed(
 	card: Static<typeof CardSchema>,
 	lang: "en" | "fr" | "de" | "it" | "pt"
@@ -141,4 +167,28 @@ export function createCardEmbed(
 	embed.setFooter({ text: `Password: ${card.password} | Konami ID #${card.kid}` });
 
 	return [embed];
+}
+
+export function inferInputType(
+	type: "password" | "kid" | "name" | undefined,
+	input: string
+): ["password" | "kid" | "name", string] {
+	if (type) {
+		return [type, input];
+	}
+	// handle edge case for specific bad input
+	if (parseInt(input).toString() === input && input !== "NaN") {
+		// if its all digits, treat as password.
+		return ["password", input];
+	} else if (input.startsWith("#")) {
+		// initial # indicates KID, as long as the rest is digits
+		const kid = input.slice(1);
+		if (parseInt(kid).toString() === kid && kid !== "NaN") {
+			return ["kid", kid];
+		} else {
+			return ["name", input];
+		}
+	} else {
+		return ["name", input];
+	}
 }
