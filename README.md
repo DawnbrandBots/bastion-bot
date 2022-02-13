@@ -56,6 +56,10 @@ It uses [Discord.js](https://discord.js.org/) to talk to Discord.
 
 Please use Australian English spellings.
 
+## Privacy
+
+See [PRIVACY.md](https://github.com/DawnbrandBots/bastion-bot/blob/master/PRIVACY.md) for Bastion's Privacy Policy.
+
 ## Licence
 
 Copyright © 2021–2022 Luna Brand, Kevin Lu.
