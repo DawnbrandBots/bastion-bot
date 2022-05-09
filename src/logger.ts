@@ -1,40 +1,23 @@
-import debug, { Debug } from "debug";
-import fetch, { FetchError, Request } from "node-fetch";
 import util from "util";
+import debug, { Debug } from "debug";
+import { WebhookClient } from "discord.js";
 
-const global = debug("bot");
+const global = debug("emcee");
+
+const webhook = process.env.BOT_LOGGER_WEBHOOK ? new WebhookClient({ url: process.env.BOT_LOGGER_WEBHOOK }) : null;
 
 function withWebhook(log: debug.Debugger): Debug["log"] {
-	if (process.env.BOT_LOGGER_WEBHOOK) {
+	if (webhook) {
 		return function (...args: Parameters<debug.Debugger>) {
 			log(...args);
-			const request = new Request(`${process.env.BOT_LOGGER_WEBHOOK}?wait=true`, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
+			webhook
+				.send({
 					username: log.namespace,
 					content: util.format(...args),
-					allowed_mentions: { parse: [] }
-				})
-			});
-			fetch(request)
-				.then(async response => {
-					if (!response.ok) {
-						log(`Failed to notify webhook, retrying... ${response.status}: ${await response.text()}`);
-						throw new Error();
-					}
+					allowedMentions: { parse: [] }
 				})
 				.catch(error => {
-					if (error instanceof FetchError) {
-						log("Failed to notify webhook, retrying...", error);
-					}
-					fetch(request)
-						.then(async response => {
-							if (!response.ok) {
-								log(`${response.status} ${response.statusText}: ${await response.text()}`);
-							}
-						})
-						.catch(error => log(error));
+					log("Failed to notify webhook.", error);
 				});
 		};
 	} else {
