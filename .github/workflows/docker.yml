@@ -29,7 +29,7 @@ jobs:
       tags: ${{ steps.meta.outputs.tags }}
       json: ${{ steps.meta.outputs.json }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
       - uses: docker/setup-buildx-action@v1
@@ -67,7 +67,7 @@ jobs:
     needs: build
     if: contains(needs.build.outputs.tags, 'latest')
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: docker/login-action@v1
         with:
           registry: ghcr.io
