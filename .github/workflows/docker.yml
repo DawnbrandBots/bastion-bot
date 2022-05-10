@@ -25,6 +25,9 @@ jobs:
         contains(github.event.head_commit.message, '[skip build]') ||
         contains(github.event.head_commit.message, '[build skip]')
       )
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
     outputs:
       tags: ${{ steps.meta.outputs.tags }}
       json: ${{ steps.meta.outputs.json }}
