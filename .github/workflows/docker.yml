@@ -47,7 +47,7 @@ jobs:
           tags: |
             type=ref,event=tag
             type=sha,format=long
-      - uses: docker/login-action@v1
+      - uses: docker/login-action@v2
         if: github.event_name == 'push'
         with:
           registry: ghcr.io
@@ -68,7 +68,7 @@ jobs:
     if: contains(needs.build.outputs.tags, 'latest')
     steps:
       - uses: actions/checkout@v3
-      - uses: docker/login-action@v1
+      - uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
