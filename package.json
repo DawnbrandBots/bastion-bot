@@ -23,7 +23,7 @@
 	"dependencies": {
 		"@discordjs/rest": "^0.4.1",
 		"@sinclair/typebox": "^0.23.5",
-		"better-sqlite3": "^7.5.1",
+		"better-sqlite3": "^7.5.3",
 		"debug": "^4.3.4",
 		"discord.js": "^13.6.0",
 		"dotenv": "^16.0.1",
