@@ -7,7 +7,7 @@ import { Command } from "../Command";
 import { LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { addFunding, addNotice } from "../utils";
+import { addFunding, addNotice, searchQueryTypeStringOption } from "../utils";
 
 @injectable()
 export class SearchCommand extends Command {
@@ -32,21 +32,15 @@ export class SearchCommand extends Command {
 					.setName("lang")
 					.setDescription("The result language.")
 					.setRequired(false)
-					.addChoice("English", "en")
-					.addChoice("Français", "fr")
-					.addChoice("Deutsch", "de")
-					.addChoice("Italiano", "it")
-					.addChoice("Português", "pt")
+					.addChoices(
+						{ name: "English", value: "en" },
+						{ name: "Français", value: "fr" },
+						{ name: "Deutsch", value: "de" },
+						{ name: "Italiano", value: "it" },
+						{ name: "Português", value: "pt" }
+					)
 			)
-			.addStringOption(
-				new SlashCommandStringOption()
-					.setName("type")
-					.setDescription("Whether you're searching by password, Konami ID, or name.")
-					.setRequired(false)
-					.addChoice("Password", "password")
-					.addChoice("Konami ID", "kid")
-					.addChoice("Name", "name")
-			)
+			.addStringOption(searchQueryTypeStringOption)
 			.toJSON();
 	}
 

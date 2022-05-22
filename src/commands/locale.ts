@@ -31,10 +31,7 @@ export class LocaleCommand extends Command {
 						option
 							.setName("scope")
 							.setDescription("Edit just this channel or the whole server?")
-							.addChoices([
-								["channel", "channel"],
-								["server", "server"]
-							])
+							.addChoices({ name: "channel", value: "channel" }, { name: "server", value: "server" })
 							.setRequired(true)
 					)
 					.addStringOption(option =>
@@ -42,12 +39,14 @@ export class LocaleCommand extends Command {
 							.setName("locale")
 							.setDescription("The new default language to use in this channel or server.")
 							.setRequired(true)
-							.addChoice("Discord default", "default")
-							.addChoice("English", "en")
-							.addChoice("Français", "fr")
-							.addChoice("Deutsch", "de")
-							.addChoice("Italiano", "it")
-							.addChoice("Português", "pt")
+							.addChoices(
+								{ name: "Discord default", value: "default" },
+								{ name: "English", value: "en" },
+								{ name: "Français", value: "fr" },
+								{ name: "Deutsch", value: "de" },
+								{ name: "Italiano", value: "it" },
+								{ name: "Português", value: "pt" }
+							)
 					)
 			)
 			.toJSON();

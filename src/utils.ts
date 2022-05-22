@@ -1,3 +1,4 @@
+import { SlashCommandStringOption } from "@discordjs/builders";
 import { CacheType, CommandInteraction, Guild, GuildCacheMessage, MessageEmbed } from "discord.js";
 
 export function serializeServer(server: Guild): string {
@@ -87,7 +88,7 @@ export function replyLatency(reply: GuildCacheMessage<CacheType>, interaction: C
 }
 
 /**
- * Compute the itnerval from command invocation to response last edited for a command.
+ * Compute the interval from command invocation to response last edited for a command.
  * Do not use if the response is never edited, or when deferReply is used, since
  * editedTimestamp will be null.
  *
@@ -103,3 +104,18 @@ export function editLatency(reply: GuildCacheMessage<CacheType>, interaction: Co
 		return -1;
 	}
 }
+
+// Locating this here is tentative and this format for translations is experimental
+export const searchQueryTypeStringOption = new SlashCommandStringOption()
+	.setName("type")
+	.setDescription("Whether you're searching by password, Konami ID, or name.")
+	.setRequired(false)
+	.addChoices(
+		{ value: "password", name: "Password", name_localizations: { "zh-CN": "密码", "zh-TW": "密码" } },
+		{
+			value: "kid",
+			name: "Konami ID",
+			name_localizations: { "zh-CN": "科乐美官方数据库编号", "zh-TW": "科樂美官方數據庫編號" }
+		},
+		{ value: "name", name: "Name", name_localizations: { "zh-CN": "名", "zh-TW": "名" } }
+	);

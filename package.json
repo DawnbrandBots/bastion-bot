@@ -23,9 +23,9 @@
 	"dependencies": {
 		"@discordjs/rest": "^0.4.1",
 		"@sinclair/typebox": "^0.23.5",
-		"better-sqlite3": "^7.5.1",
+		"better-sqlite3": "^7.5.3",
 		"debug": "^4.3.4",
-		"discord.js": "^13.6.0",
+		"discord.js": "^13.7.0",
 		"dotenv": "^16.0.1",
 		"node-fetch": "^2.6.7",
 		"reflect-metadata": "^0.1.13",
@@ -38,13 +38,13 @@
 		"@types/better-sqlite3": "^7.5.0",
 		"@types/debug": "^4.1.7",
 		"@types/jest": "^27.5.1",
-		"@types/node": "^16.11.35",
+		"@types/node": "^16.11.36",
 		"@types/node-fetch": "^2.6.1",
 		"jest": "^28.1.0",
 		"ts-jest": "^28.0.2"
 	},
 	"resolutions": {
-		"@types/node": "^16.11.35"
+		"@types/node": "^16.11.36"
 	},
 	"jest": {
 		"clearMocks": true,

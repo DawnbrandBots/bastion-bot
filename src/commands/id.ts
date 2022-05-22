@@ -6,7 +6,7 @@ import { getCard, inferInputType } from "../card";
 import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { addNotice } from "../utils";
+import { addNotice, searchQueryTypeStringOption } from "../utils";
 
 @injectable()
 export class IdCommand extends Command {
@@ -26,15 +26,7 @@ export class IdCommand extends Command {
 					.setDescription("The password, Konami ID, or name you're searching by.")
 					.setRequired(true)
 			)
-			.addStringOption(
-				new SlashCommandStringOption()
-					.setName("type")
-					.setDescription("Whether you're searching by password, Konami ID, or name.")
-					.setRequired(false)
-					.addChoice("Password", "password")
-					.addChoice("Konami ID", "kid")
-					.addChoice("Name", "name")
-			)
+			.addStringOption(searchQueryTypeStringOption)
 			.toJSON();
 	}
 

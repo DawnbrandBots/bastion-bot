@@ -10,6 +10,7 @@ import { CardSchema } from "../definitions";
 import { LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
+import { searchQueryTypeStringOption } from "../utils";
 
 @injectable()
 export class ArtCommand extends Command {
@@ -29,15 +30,7 @@ export class ArtCommand extends Command {
 					.setDescription("The password, Konami ID, or name to search for a card.")
 					.setRequired(true)
 			)
-			.addStringOption(
-				new SlashCommandStringOption()
-					.setName("type")
-					.setDescription("Whether you're searching by password, Konami ID, or name.")
-					.setRequired(false)
-					.addChoice("Password", "password")
-					.addChoice("Konami ID", "kid")
-					.addChoice("Name", "name")
-			)
+			.addStringOption(searchQueryTypeStringOption)
 			.toJSON();
 	}
 
