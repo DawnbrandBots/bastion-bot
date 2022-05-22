@@ -21,13 +21,18 @@ export class ArtCommand extends Command {
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
+		// This location for translations is experimental
 		return new SlashCommandBuilder()
 			.setName("art")
+			.setNameLocalization("zh-CN", "卡图")
 			.setDescription("Display the art for a card!")
+			.setDescriptionLocalization("zh-CN", "显示卡片图。")
 			.addStringOption(
 				new SlashCommandStringOption()
 					.setName("input")
+					.setNameLocalization("zh-CN", "输入")
 					.setDescription("The password, Konami ID, or name to search for a card.")
+					.setDescriptionLocalization("zh-CN", "以卡密、官方编号、卡名搜寻卡片。")
 					.setRequired(true)
 			)
 			.addStringOption(searchQueryTypeStringOption)

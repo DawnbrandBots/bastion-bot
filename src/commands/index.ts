@@ -40,7 +40,7 @@ export async function registerSlashCommands(guild?: `${bigint}`): Promise<void> 
 	// Duplicate command metadata if they register any aliases
 	const commands = classes.map(command => command.meta);
 	console.log("Generated command metadata:");
-	console.log(commands);
+	console.log(JSON.stringify(commands, null, 4));
 
 	// The default version is 9, but we'll be explicit in case unexpected version bumps happen
 	const api = new REST({ version: "9" }).setToken(`${process.env.DISCORD_TOKEN}`);
@@ -57,5 +57,5 @@ export async function registerSlashCommands(guild?: `${bigint}`): Promise<void> 
 		{ body: commands }
 	);
 	console.log("Created Slash Commands:");
-	console.log(created);
+	console.log(JSON.stringify(created, null, 4));
 }
