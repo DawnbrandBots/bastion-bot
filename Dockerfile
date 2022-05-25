@@ -21,5 +21,6 @@ ENV BOT_REVISION=${BOT_REVISION}
 WORKDIR /app
 COPY COPYING .
 COPY --from=build /app/dist .
+COPY --from=build /app/translations translations
 USER node
 ENTRYPOINT ["node", "--enable-source-maps", "-r", "reflect-metadata", "."]
