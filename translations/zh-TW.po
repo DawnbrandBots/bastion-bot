@@ -1,0 +1,16 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Plural-Forms: nplurals = 1; plural = 0;\n"
+"Language: zh-TW\n"
+"mime-version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src\commands\art.ts:72
+#, javascript-format
+msgid "Could not find a card matching `${ input }`!"
+msgstr "查無此卡：`${ input }`"
+
+#: src\commands\art.ts:83
+msgid "Could not find art for `${ name }`!"
+msgstr "沒找到`${ name }`的圖片"
