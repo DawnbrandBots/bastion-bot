@@ -41,7 +41,7 @@
 		"@types/node": "^16.11.36",
 		"@types/node-fetch": "^2.6.1",
 		"jest": "^28.1.0",
-		"ts-jest": "^28.0.2"
+		"ts-jest": "^28.0.3"
 	},
 	"resolutions": {
 		"@types/node": "^16.11.36"
