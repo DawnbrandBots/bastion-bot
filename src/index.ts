@@ -1,6 +1,9 @@
+import fs from "fs";
+import { po } from "gettext-parser";
 import os from "os";
 import path from "path";
 import { container } from "tsyringe";
+import { addLocale } from "ttag";
 import { BotFactory } from "./bot";
 import { Command } from "./Command";
 import { classes, registerSlashCommands } from "./commands";
@@ -31,6 +34,15 @@ if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 	container.register<string>("localeDb", {
 		useValue: localeDb
 	});
+
+	for (const file of fs.readdirSync("./translations", { withFileTypes: true })) {
+		if (file.isFile() && file.name.endsWith(".po")) {
+			const jsonpo = po.parse(fs.readFileSync(`./translations/${file.name}`));
+			const locale = file.name.split(".po")[0];
+			addLocale(locale, jsonpo);
+			logger.info(`Loaded translations for locale ${locale}`);
+		}
+	}
 
 	//container.registerSingleton<Metrics>(Metrics);
 	container.registerSingleton<LocaleProvider>("LocaleProvider", SQLiteLocaleProvider);

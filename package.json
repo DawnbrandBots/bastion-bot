@@ -31,20 +31,51 @@
 		"reflect-metadata": "^0.1.13",
 		"supports-color": "^9.2.2",
 		"tsyringe": "^4.7.0",
+		"ttag": "^1.7.24",
 		"ydke": "^1.1.0"
 	},
 	"devDependencies": {
 		"@alphakretin/essentials": "^4.0.0",
 		"@types/better-sqlite3": "^7.5.0",
 		"@types/debug": "^4.1.7",
-		"@types/jest": "^27.5.1",
+		"@types/gettext-parser": "^4.0.1",
+		"@types/jest": "^28.1.0",
 		"@types/node": "^16.11.36",
 		"@types/node-fetch": "^2.6.1",
 		"jest": "^28.1.0",
-		"ts-jest": "^28.0.3"
+		"ts-jest": "^28.0.3",
+		"ttag-cli": "^1.9.3"
 	},
 	"resolutions": {
 		"@types/node": "^16.11.36"
+	},
+	"babel": {
+		"plugins": [
+			[
+				"@babel/plugin-proposal-decorators",
+				{
+					"legacy": true
+				}
+			],
+			[
+				"@babel/plugin-proposal-class-properties",
+				{
+					"loose": true
+				}
+			],
+			[
+				"@babel/plugin-proposal-private-property-in-object",
+				{
+					"loose": true
+				}
+			],
+			[
+				"@babel/plugin-proposal-private-methods",
+				{
+					"loose": true
+				}
+			]
+		]
 	},
 	"jest": {
 		"clearMocks": true,

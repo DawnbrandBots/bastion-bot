@@ -4,6 +4,7 @@ import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
 import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
+import { t, useLocale } from "ttag";
 import { getCard, inferInputType } from "../card";
 import { Command } from "../Command";
 import { CardSchema } from "../definitions";
@@ -67,7 +68,8 @@ export class ArtCommand extends Command {
 		if (!card) {
 			end = Date.now();
 			// TODO: include properly-named type in this message
-			await interaction.editReply({ content: `Could not find a card matching \`${input}\`!` });
+			useLocale(interaction.locale);
+			await interaction.editReply({ content: t`Could not find a card matching \`${input}\`!` });
 		} else {
 			const artUrl = await this.getArt(card);
 			end = Date.now();
@@ -76,7 +78,9 @@ export class ArtCommand extends Command {
 				await interaction.editReply(artUrl); // Actually returns void
 			} else {
 				const lang = (await this.locales.get(interaction)) as "en" | "fr" | "de" | "it" | "pt";
-				await interaction.editReply({ content: `Could not find art for \`${card[lang]?.name || card.kid}\`!` });
+				const name = card[lang]?.name || card.kid;
+				useLocale(interaction.locale);
+				await interaction.editReply({ content: t`Could not find art for \`${name}\`!` });
 			}
 		}
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
