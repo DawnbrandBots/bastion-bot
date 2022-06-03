@@ -22,6 +22,7 @@ export class MessageListener implements Listener<"messageCreate"> {
 <:kofi:927373724959789096> Ko-fi also works for [one-time donations](https://ko-fi.com/dawnbrandbots).
 
 :tools: An update is being worked on and rolling out slowly. Features will be handled by a new bot instance through Slash Commands concurrently with the old bot.
+/art, /deck, /id, and /search have been temporarily disabled due to an AWS issue.
 `,
 		color: "YELLOW",
 		author: {

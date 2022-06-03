@@ -30,7 +30,7 @@
 		"node-fetch": "^2.6.7",
 		"reflect-metadata": "^0.1.13",
 		"supports-color": "^9.2.2",
-		"tsyringe": "^4.6.0",
+		"tsyringe": "^4.7.0",
 		"ttag": "^1.7.24",
 		"ydke": "^1.1.0"
 	},
@@ -39,11 +39,11 @@
 		"@types/better-sqlite3": "^7.5.0",
 		"@types/debug": "^4.1.7",
 		"@types/gettext-parser": "^4.0.1",
-		"@types/jest": "^27.5.1",
+		"@types/jest": "^28.1.0",
 		"@types/node": "^16.11.36",
 		"@types/node-fetch": "^2.6.1",
 		"jest": "^28.1.0",
-		"ts-jest": "^28.0.2",
+		"ts-jest": "^28.0.3",
 		"ttag-cli": "^1.9.3"
 	},
 	"resolutions": {
