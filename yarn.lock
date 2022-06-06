@@ -5006,10 +5006,10 @@ tsyringe@^4.7.0:
   dependencies:
     tslib "^1.9.3"
 
-ttag-cli@^1.9.3:
-  version "1.9.3"
-  resolved "https://registry.yarnpkg.com/ttag-cli/-/ttag-cli-1.9.3.tgz#8b1a440ada66aabdd55ef2acff6540991dc77806"
-  integrity sha512-eWyuE7BM/zz8h2OXVP0R11DCKY+FUJhymqhsDHA1u4b2LdxOiyfd1MzcmbtswUIxqPlmwujmI0pgIoLcktC/6A==
+ttag-cli@^1.9.4:
+  version "1.9.4"
+  resolved "https://registry.yarnpkg.com/ttag-cli/-/ttag-cli-1.9.4.tgz#8a03b57df4b1859750203ff7a8334092d790e961"
+  integrity sha512-jsjYPGuoj/lfSqdQw85c7sTOP7axV/SslglJzxj6yYILKRUmhKYJzQmlhEm0JLfzQlKohKy3trXdHSvqiCWWnA==
   dependencies:
     "@babel/core" "^7.12.3"
     "@babel/generator" "^7.12.5"
