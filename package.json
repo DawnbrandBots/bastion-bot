@@ -43,7 +43,7 @@
 		"@types/node": "^16.11.36",
 		"@types/node-fetch": "^2.6.1",
 		"jest": "^28.1.0",
-		"ts-jest": "^28.0.3",
+		"ts-jest": "^28.0.4",
 		"ttag-cli": "^1.9.4"
 	},
 	"resolutions": {
