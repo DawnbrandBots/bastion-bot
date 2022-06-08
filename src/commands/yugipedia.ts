@@ -1,9 +1,9 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
-import fetch from "node-fetch";
 import { injectable } from "tsyringe";
 import { Command } from "../Command";
+import fetch from "../fetch";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { editLatency } from "../utils";

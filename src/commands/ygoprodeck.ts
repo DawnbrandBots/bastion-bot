@@ -1,9 +1,9 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
-import fetch from "node-fetch";
 import { injectable } from "tsyringe";
 import { Command } from "../Command";
+import fetch from "../fetch";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { editLatency } from "../utils";
@@ -36,7 +36,7 @@ export class YGOPRODECKCommand extends Command {
 	private async search(term: string): Promise<string> {
 		const url = new URL("https://db.ygoprodeck.com/carddbsearch_name.php");
 		url.searchParams.set("term", term);
-		const response = await (await fetch(url)).json();
+		const response = await (await fetch(url.href)).json();
 		if ("error" in response) {
 			return response.error;
 		} else {

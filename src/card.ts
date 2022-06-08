@@ -1,7 +1,7 @@
 import { Static } from "@sinclair/typebox";
 import { MessageEmbed } from "discord.js";
-import fetch from "node-fetch";
 import { CardSchema } from "./definitions";
+import fetch from "./fetch";
 
 const Colour = {
 	Token: 0x8d8693,
