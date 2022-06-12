@@ -39,7 +39,10 @@ export class MessageListener implements Listener<"messageCreate"> {
 		if (message.author.bot || message.reference) {
 			return;
 		}
-		if (message.client.user && message.mentions.has(message.client.user, { ignoreEveryone: true })) {
+		if (
+			message.client.user &&
+			message.mentions.has(message.client.user, { ignoreEveryone: true, ignoreRoles: true })
+		) {
 			try {
 				const ping = message.client.ws.ping;
 				const response = await message.reply({
