@@ -46,7 +46,7 @@ export class LinkCommand extends Command {
 		},
 		fetc: {
 			name: "Fast Effect Timing Chart",
-			result: "https://img.yugioh-card.com/en/gameplay/images/T-Flowchart_EN-US.jpg"
+			result: "https://img.yugioh-card.com/en/wp-content/uploads/2021/05/T-Flowchart_EN-US.jpg"
 		},
 		sumneg: {
 			name: "Summon Negation Timing",
