@@ -2,7 +2,7 @@ import util from "util";
 import debug, { Debug } from "debug";
 import { WebhookClient } from "discord.js";
 
-const global = debug("emcee");
+const global = debug("bot");
 
 const webhook = process.env.BOT_LOGGER_WEBHOOK ? new WebhookClient({ url: process.env.BOT_LOGGER_WEBHOOK }) : null;
 
