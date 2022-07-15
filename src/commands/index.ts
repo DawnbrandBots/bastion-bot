@@ -11,15 +11,15 @@ import { YGOPRODECKCommand } from "./ygoprodeck";
 import { YugiCommand } from "./yugipedia";
 
 export const classes = [
-	// DeckCommand,
+	DeckCommand,
 	PingCommand,
 	LinkCommand,
 	YugiCommand,
-	// IdCommand,
-	// SearchCommand,
+	IdCommand,
+	SearchCommand,
 	YGOPRODECKCommand,
-	LocaleCommand
-	// ArtCommand
+	LocaleCommand,
+	ArtCommand
 ];
 export {
 	DeckCommand,
