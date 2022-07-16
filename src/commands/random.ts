@@ -1,0 +1,59 @@
+import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
+import { CommandInteraction } from "discord.js";
+import fetch from "node-fetch";
+import { inject, injectable } from "tsyringe";
+import { createCardEmbed } from "../card";
+import { Command } from "../Command";
+import { LocaleProvider } from "../locale";
+import { getLogger, Logger } from "../logger";
+import { Metrics } from "../metrics";
+import { addFunding, addNotice } from "../utils";
+
+@injectable()
+export class RandomCommand extends Command {
+	#logger = getLogger("command:random");
+
+	constructor(metrics: Metrics, @inject("LocaleProvider") private locales: LocaleProvider) {
+		super(metrics);
+	}
+
+	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
+		return new SlashCommandBuilder()
+			.setName("random")
+			.setDescription("Get a random Yu-Gi-Oh! card.")
+			.addStringOption(
+				new SlashCommandStringOption()
+					.setName("lang")
+					.setDescription("The result language.")
+					.setRequired(false)
+					.addChoices(
+						{ name: "English", value: "en" },
+						{ name: "Français", value: "fr" },
+						{ name: "Deutsch", value: "de" },
+						{ name: "Italiano", value: "it" },
+						{ name: "Português", value: "pt" }
+					)
+			)
+			.toJSON();
+	}
+
+	protected override get logger(): Logger {
+		return this.#logger;
+	}
+
+	protected override async execute(interaction: CommandInteraction): Promise<number> {
+		await interaction.deferReply();
+		const response = await fetch(`${process.env.SEARCH_API}/random`);
+		const cards = await response.json();
+		const lang = interaction.options.getString("lang") ?? (await this.locales.get(interaction));
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		let embeds = createCardEmbed(cards[0], lang as any);
+		embeds = addFunding(addNotice(embeds));
+		const end = Date.now();
+		await interaction.editReply({ embeds }); // Actually returns void
+		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
+		const latency = end - interaction.createdTimestamp;
+		return latency;
+	}
+}
