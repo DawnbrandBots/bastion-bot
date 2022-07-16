@@ -6,6 +6,7 @@ import { IdCommand } from "./id";
 import { LinkCommand } from "./link";
 import { LocaleCommand } from "./locale";
 import { PingCommand } from "./ping";
+import { RandomCommand } from "./random";
 import { SearchCommand } from "./search";
 import { YGOPRODECKCommand } from "./ygoprodeck";
 import { YugiCommand } from "./yugipedia";
@@ -19,7 +20,8 @@ export const classes = [
 	SearchCommand,
 	YGOPRODECKCommand,
 	LocaleCommand,
-	ArtCommand
+	ArtCommand,
+	RandomCommand
 ];
 export {
 	DeckCommand,
@@ -30,7 +32,8 @@ export {
 	SearchCommand,
 	YGOPRODECKCommand,
 	LocaleCommand,
-	ArtCommand
+	ArtCommand,
+	RandomCommand
 };
 
 // Register Slash Commands on CI
