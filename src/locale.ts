@@ -2,7 +2,17 @@ import sqlite, { Database, Statement } from "better-sqlite3";
 import { CommandInteraction, Snowflake } from "discord.js";
 import { inject, singleton } from "tsyringe";
 
-export type Locale = string;
+type ArrayElement<T> = T extends readonly (infer U)[] ? U : never;
+
+export const LOCALE_CHOICES = [
+	{ name: "English", value: "en" },
+	{ name: "Français", value: "fr" },
+	{ name: "Deutsch", value: "de" },
+	{ name: "Italiano", value: "it" },
+	{ name: "Português", value: "pt" }
+] as const;
+export const LOCALES = LOCALE_CHOICES.map(c => c.value);
+export type Locale = ArrayElement<typeof LOCALES>;
 
 /**
  * Abstract persistent store for locale overrides. We need this if we switch to
@@ -40,13 +50,24 @@ export abstract class LocaleProvider {
 		}
 	}
 
+	private isLocale(candidate: string): candidate is Locale {
+		// https://github.com/microsoft/TypeScript/issues/26255
+		// https://github.com/microsoft/TypeScript/issues/31018
+		const locales: readonly string[] = LOCALES;
+		return locales.includes(candidate);
+	}
 	/**
-	 * Process Discord-provided locales into simple ISO 639-1 codes that we support.
+	 * Convert Discord-provided locales into the relevant ones that we support.
+	 * This may simplify to ISO 639-1 codes (e.g. English locales) or fall back
+	 * to English altogether.
 	 * @param discordLocale
 	 */
 	private filter(discordLocale: string): Locale {
+		if (this.isLocale(discordLocale)) {
+			return discordLocale;
+		}
 		const locale = discordLocale.split("-")[0];
-		if (["en", "fr", "de", "it", "pt"].includes(locale)) {
+		if (this.isLocale(locale)) {
 			return locale;
 		} else {
 			return "en";
@@ -96,11 +117,11 @@ CREATE TABLE IF NOT EXISTS "channels" (
 		return db;
 	}
 
-	public async guild(id: Snowflake): Promise<Locale> {
+	public async guild(id: Snowflake): Promise<Locale | null> {
 		return this.readGuild.get(id)?.locale || null;
 	}
 
-	public async channel(id: Snowflake): Promise<Locale> {
+	public async channel(id: Snowflake): Promise<Locale | null> {
 		return this.readChannel.get(id)?.locale || null;
 	}
 

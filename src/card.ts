@@ -3,6 +3,7 @@ import { MessageEmbed } from "discord.js";
 import fetch from "node-fetch";
 import { t, useLocale } from "ttag";
 import { CardSchema } from "./definitions";
+import { Locale } from "./locale";
 
 const Colour = {
 	Token: 0x8d8693,
@@ -100,10 +101,7 @@ export async function getCard(
 	throw new Error((await response.json()).message);
 }
 
-export function createCardEmbed(
-	card: Static<typeof CardSchema>,
-	lang: "en" | "fr" | "de" | "it" | "pt"
-): MessageEmbed[] {
+export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): MessageEmbed[] {
 	useLocale(lang);
 
 	// TODO: localize labels based on language

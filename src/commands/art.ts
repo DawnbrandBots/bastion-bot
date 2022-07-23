@@ -81,7 +81,7 @@ export class ArtCommand extends Command {
 				// expected embedding of image from URL
 				await interaction.editReply(artUrl); // Actually returns void
 			} else {
-				const lang = (await this.locales.get(interaction)) as "en" | "fr" | "de" | "it" | "pt";
+				const lang = await this.locales.get(interaction);
 				const name = card[lang]?.name || card.kid;
 				useLocale(interaction.locale);
 				await interaction.editReply({ content: t`Could not find art for \`${name}\`!` });

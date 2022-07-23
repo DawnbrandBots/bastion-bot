@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
+import { SlashCommandBuilder } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
 import fetch from "node-fetch";
@@ -8,7 +8,7 @@ import { Command } from "../Command";
 import { LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { addFunding, addNotice } from "../utils";
+import { addFunding, addNotice, resultLangStringOption } from "../utils";
 
 @injectable()
 export class RandomCommand extends Command {
@@ -22,19 +22,7 @@ export class RandomCommand extends Command {
 		return new SlashCommandBuilder()
 			.setName("random")
 			.setDescription("Get a random Yu-Gi-Oh! card.")
-			.addStringOption(
-				new SlashCommandStringOption()
-					.setName("lang")
-					.setDescription("The result language.")
-					.setRequired(false)
-					.addChoices(
-						{ name: "English", value: "en" },
-						{ name: "Français", value: "fr" },
-						{ name: "Deutsch", value: "de" },
-						{ name: "Italiano", value: "it" },
-						{ name: "Português", value: "pt" }
-					)
-			)
+			.addStringOption(resultLangStringOption)
 			.toJSON();
 	}
 

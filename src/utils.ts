@@ -1,5 +1,6 @@
 import { SlashCommandStringOption } from "@discordjs/builders";
 import { CacheType, CommandInteraction, Guild, GuildCacheMessage, MessageEmbed } from "discord.js";
+import { LOCALE_CHOICES } from "./locale";
 
 export function serializeServer(server: Guild): string {
 	if ("name" in server) {
@@ -119,3 +120,9 @@ export const searchQueryTypeStringOption = new SlashCommandStringOption()
 		},
 		{ value: "name", name: "Name", name_localizations: { "zh-CN": "名", "zh-TW": "名" } }
 	);
+
+export const resultLangStringOption = new SlashCommandStringOption()
+	.setName("lang")
+	.setDescription("The result language.")
+	.setRequired(false)
+	.addChoices(...LOCALE_CHOICES);

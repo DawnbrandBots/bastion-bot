@@ -3,7 +3,7 @@ import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { Command } from "../Command";
-import { LocaleProvider } from "../locale";
+import { Locale, LocaleProvider, LOCALE_CHOICES } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { replyLatency } from "../utils";
@@ -39,14 +39,7 @@ export class LocaleCommand extends Command {
 							.setName("locale")
 							.setDescription("The new default language to use in this channel or server.")
 							.setRequired(true)
-							.addChoices(
-								{ name: "Discord default", value: "default" },
-								{ name: "English", value: "en" },
-								{ name: "Français", value: "fr" },
-								{ name: "Deutsch", value: "de" },
-								{ name: "Italiano", value: "it" },
-								{ name: "Português", value: "pt" }
-							)
+							.addChoices({ name: "Discord default", value: "default" }, ...LOCALE_CHOICES)
 					)
 			)
 			.toJSON();
@@ -80,7 +73,7 @@ export class LocaleCommand extends Command {
 			}
 		} else {
 			// subcommand set
-			const locale = interaction.options.getString("locale", true);
+			const locale = interaction.options.getString("locale", true) as Locale | "default";
 			if (interaction.inGuild()) {
 				const scope = interaction.options.getString("scope", true);
 				if (scope === "channel") {
