@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 import { Static } from "@sinclair/typebox";
-import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
+import { LocaleString, RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
 import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
@@ -22,22 +22,26 @@ export class ArtCommand extends Command {
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
-		// This location for translations is experimental
-		return new SlashCommandBuilder()
-			.setName("art")
-			.setNameLocalization("zh-CN", "卡图")
-			.setDescription("Display the art for a card!")
-			.setDescriptionLocalization("zh-CN", "显示卡片图。")
-			.addStringOption(
-				new SlashCommandStringOption()
-					.setName("input")
-					.setNameLocalization("zh-CN", "输入")
-					.setDescription("The password, Konami ID, or name to search for a card.")
-					.setDescriptionLocalization("zh-CN", "以卡密、官方编号、卡名搜寻卡片。")
-					.setRequired(true)
-			)
-			.addStringOption(searchQueryTypeStringOption)
-			.toJSON();
+		const builder = new SlashCommandBuilder().setName("art").setDescription("Display the art for a card!");
+
+		const option = new SlashCommandStringOption()
+			.setName("input")
+			.setDescription("The password, Konami ID, or name to search for a card.")
+			.setRequired(true);
+
+		for (const locale of ["zh-CN"] as LocaleString[]) {
+			useLocale(locale);
+			builder
+				.setNameLocalization(locale, t`art`)
+				.setDescriptionLocalization(locale, t`Display the art for a card!`);
+			option
+				.setNameLocalization(locale, t`input`)
+				.setDescriptionLocalization(locale, t`The password, Konami ID, or name to search for a card.`);
+		}
+
+		builder.addStringOption(option).addStringOption(searchQueryTypeStringOption);
+
+		return builder.toJSON();
 	}
 
 	protected override get logger(): Logger {

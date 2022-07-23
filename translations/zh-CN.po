@@ -6,12 +6,12 @@ msgstr ""
 "mime-version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src\commands\art.ts:72
+#: src\commands\art.ts:90
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr "查无此卡：`${ input }`"
 
-#: src\commands\art.ts:83
+#: src\commands\art.ts:101
 msgid "Could not find art for `${ name }`!"
 msgstr "没找到`${ name }`的卡图！"
 
@@ -59,9 +59,7 @@ msgstr ""
 msgid ""
 "**Link Rating**: ${ card.link } **ATK**: ${ card.atk } **Link Arrows**: ${ "
 "arrows }"
-msgstr ""
-"**连接数值**: ${ card.link } **攻击力**: ${ card.atk } **连接标记**: ${ "
-"arrows }"
+msgstr "**连接数值**: ${ card.link } **攻击力**: ${ card.atk } **连接标记**: ${ arrows }"
 
 #: src\card.ts:131
 #, javascript-format
@@ -69,8 +67,8 @@ msgid ""
 "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
 "${ card.def }"
 msgstr ""
-"**等级**: ${ Icon.Level } ${ card.level } **攻击力**: ${ card.atk } **守备力**: "
-"${ card.def }"
+"**等级**: ${ Icon.Level } ${ card.level } **攻击力**: ${ card.atk } **守备力**: ${ "
+"card.def }"
 
 #: src\card.ts:136
 #, javascript-format
@@ -80,3 +78,19 @@ msgid ""
 msgstr ""
 "**灵摆刻度**: ${ Icon.LeftScale }${ card.scale }/${ card.scale }${ "
 "Icon.RightScale }"
+
+#: src\commands\art.ts:35
+msgid "art"
+msgstr "卡图"
+
+#: src\commands\art.ts:36
+msgid "Display the art for a card!"
+msgstr "显示卡片图。"
+
+#: src\commands\art.ts:38
+msgid "input"
+msgstr "输入"
+
+#: src\commands\art.ts:39
+msgid "The password, Konami ID, or name to search for a card."
+msgstr "以卡密、官方编号、卡名搜寻卡片。"
