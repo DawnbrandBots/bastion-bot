@@ -1,6 +1,7 @@
 import { Static } from "@sinclair/typebox";
 import { MessageEmbed } from "discord.js";
 import fetch from "node-fetch";
+import { t, useLocale } from "ttag";
 import { CardSchema } from "./definitions";
 
 const Colour = {
@@ -103,6 +104,8 @@ export function createCardEmbed(
 	card: Static<typeof CardSchema>,
 	lang: "en" | "fr" | "de" | "it" | "pt"
 ): MessageEmbed[] {
+	useLocale(lang);
+
 	// TODO: localize labels based on language
 	const embed = new MessageEmbed()
 		.setTitle(card[lang]?.name || card.en.name)
@@ -114,38 +117,40 @@ export function createCardEmbed(
 		embed.setColor(Colour[card.subtype ?? "Orange"]);
 
 		// TODO: amend typeline when we get the real string or array and localize
-		let description =
-			`**Type**: ${RaceIcon[card.race]} ${card.race} | ${card.typeline}\n` +
-			`**Attribute**: ${AttributeIcon[card.attribute]} ${card.attribute}\n`;
+		let description = t`**Type**: ${RaceIcon[card.race]} ${card.race} | ${card.typeline}`;
+		description += "\n";
+		description += t`**Attribute**: ${AttributeIcon[card.attribute]} ${card.attribute}`;
+		description += "\n";
 
 		if (card.subtype === "Xyz") {
-			description += `**Rank**: ${Icon.Rank} ${card.rank} **ATK**: ${card.atk} **DEF**: ${card.def}`;
+			description += t`**Rank**: ${Icon.Rank} ${card.rank} **ATK**: ${card.atk} **DEF**: ${card.def}`;
 		} else if (card.subtype === "Link") {
 			const arrows = card.arrows.join("");
-			description += `**Link Rating**: ${card.link} **ATK**: ${card.atk} **Link Arrows**: ${arrows}`;
+			description += t`**Link Rating**: ${card.link} **ATK**: ${card.atk} **Link Arrows**: ${arrows}`;
 		} else {
-			description += `**Level**: ${Icon.Level} ${card.level} **ATK**: ${card.atk} **DEF**: ${card.def}`;
+			description += t`**Level**: ${Icon.Level} ${card.level} **ATK**: ${card.atk} **DEF**: ${card.def}`;
 		}
 
 		if (card.scale !== undefined) {
-			description += ` **Pendulum Scale**: ${Icon.LeftScale}${card.scale}/${card.scale}${Icon.RightScale}`;
+			description += " ";
+			description += t`**Pendulum Scale**: ${Icon.LeftScale}${card.scale}/${card.scale}${Icon.RightScale}`;
 		}
 
 		embed.setDescription(description);
 
 		if (card.scale === undefined) {
-			embed.addField("Card Text", card[lang]?.description || card.en.description);
+			embed.addField(t`Card Text`, card[lang]?.description || card.en.description);
 
 			// common return
 		} else {
 			// Discord cannot take just a blank or spaces, but this zero-width space works
-			embed.addField("Pendulum Effect", card[lang]?.pendulum || card.en.pendulum || "\u200b");
+			embed.addField(t`Pendulum Effect`, card[lang]?.pendulum || card.en.pendulum || "\u200b");
 
 			const addon = new MessageEmbed()
 				.setColor(Colour.Spell)
-				.addField("Card Text", card[lang]?.description || card.en.description)
+				.addField(t`Card Text`, card[lang]?.description || card.en.description)
 				// one or both may be null to due data corruption or prereleases
-				.setFooter({ text: `Password: ${card.password} | Konami ID #${card.kid}` });
+				.setFooter({ text: t`Password: ${card.password} | Konami ID #${card.kid}` });
 
 			return [embed, addon];
 		}
@@ -160,11 +165,11 @@ export function createCardEmbed(
 		description += `**${card.subtype} ${card.type}**`;
 		embed.setDescription(description);
 
-		embed.addField("Card Effect", card[lang]?.description || card.en.description);
+		embed.addField(t`Card Effect`, card[lang]?.description || card.en.description);
 	}
 
 	// one or both may be null to due data corruption or prereleases
-	embed.setFooter({ text: `Password: ${card.password} | Konami ID #${card.kid}` });
+	embed.setFooter({ text: t`Password: ${card.password} | Konami ID #${card.kid}` });
 
 	return [embed];
 }
