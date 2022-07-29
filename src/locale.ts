@@ -6,10 +6,15 @@ type ArrayElement<T> = T extends readonly (infer U)[] ? U : never;
 
 export const LOCALE_CHOICES = [
 	{ name: "English", value: "en" },
+	{ name: "Español", value: "es" },
 	{ name: "Français", value: "fr" },
 	{ name: "Deutsch", value: "de" },
 	{ name: "Italiano", value: "it" },
-	{ name: "Português", value: "pt" }
+	{ name: "Português", value: "pt" },
+	{ name: "日本語", value: "ja" },
+	{ name: "한국어", value: "ko" },
+	{ name: "简体中文", value: "zh-CN" },
+	{ name: "繁體中文", value: "zh-TW" }
 ] as const;
 export const LOCALES = LOCALE_CHOICES.map(c => c.value);
 export type Locale = ArrayElement<typeof LOCALES>;

@@ -7,7 +7,7 @@ import { inject, injectable } from "tsyringe";
 import { t, useLocale } from "ttag";
 import { getCard, inferInputType } from "../card";
 import { Command } from "../Command";
-import { CardSchema } from "../definitions";
+import { CardSchema } from "../definitions/yaml-yugi";
 import { LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
@@ -82,7 +82,7 @@ export class ArtCommand extends Command {
 				await interaction.editReply(artUrl); // Actually returns void
 			} else {
 				const lang = await this.locales.get(interaction);
-				const name = card[lang]?.name || card.kid;
+				const name = card.name[lang] || card.konami_id;
 				useLocale(interaction.locale);
 				await interaction.editReply({ content: t`Could not find art for \`${name}\`!` });
 			}

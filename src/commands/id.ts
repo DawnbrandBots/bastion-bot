@@ -47,9 +47,9 @@ export class IdCommand extends Command {
 			await interaction.editReply({ content: `Could not find a card matching \`${input}\`!` });
 		} else {
 			const embed = new MessageEmbed()
-				.setTitle(card?.en.name)
+				.setTitle(`${card.name.en}`)
 				.addField("Password", `${card.password}`, true)
-				.addField("Konami ID", `${card.kid}`, true);
+				.addField("Konami ID", `${card.konami_id}`, true);
 			end = Date.now();
 			await interaction.editReply({ embeds: addNotice(embed) });
 		}

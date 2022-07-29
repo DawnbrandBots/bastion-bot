@@ -1,9 +1,12 @@
 import { Static } from "@sinclair/typebox";
 import { MessageEmbed } from "discord.js";
 import fetch from "node-fetch";
-import { t, useLocale } from "ttag";
-import { CardSchema } from "./definitions";
+import { gettext as _, t, useLocale } from "ttag";
+import { CardSchema } from "./definitions/yaml-yugi";
 import { Locale } from "./locale";
+
+// Avoids ttag-cli picking up calls with dynamic strings and breaking
+const gettext = _;
 
 const Colour = {
 	Token: 0x8d8693,
@@ -29,7 +32,7 @@ const RaceIcon = {
 	Aqua: "<:Aqua:602707887931785238>",
 	Pyro: "<:Pyro:602707925793767427>",
 	Rock: "<:Rock:602707926213460010>",
-	"Winged Beast": "<:WingedBeast:602707926464987138>",
+	[t`Winged Beast`]: "<:WingedBeast:602707926464987138>",
 	Plant: "<:Plant:602707792138076186>",
 	Insect: "<:Insect:602707926146088960>",
 	Thunder: "<:Thunder:602707927484203013>",
@@ -78,9 +81,10 @@ const Icon = {
 
 export async function getCard(
 	type: "password" | "kid" | "name",
-	input: string
+	input: string,
+	lang?: Locale
 ): Promise<Static<typeof CardSchema> | undefined> {
-	let url = `${process.env.SEARCH_API}`; // treated as string instead of string? without forbidden non-null check
+	let url = `${process.env.SEARCH_API}/yaml-yugi`; // treated as string instead of string? without forbidden non-null check
 	input = encodeURIComponent(input);
 	if (type === "password") {
 		url += `/card/password/${input}`;
@@ -88,6 +92,9 @@ export async function getCard(
 		url += `/card/kid/${input}`;
 	} else {
 		url += `/search?name=${input}`;
+		if (lang) {
+			url += `&lang=${lang}`;
+		}
 	}
 	const response = await fetch(url);
 	// 400: Bad syntax, 404: Not found
@@ -102,72 +109,85 @@ export async function getCard(
 }
 
 export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): MessageEmbed[] {
-	useLocale(lang);
+	useLocale("zh-CN");
 
 	// TODO: localize labels based on language
 	const embed = new MessageEmbed()
-		.setTitle(card[lang]?.name || card.en.name)
+		.setTitle(card.name[lang] || `${card.name.en}`)
 		.setURL(`https://db.ygoprodeck.com/card/?search=${card.password}`)
 		.setThumbnail(`${process.env.IMAGE_HOST}/${card.password}.png`);
 
 	// TODO: expand with hyperlinks
-	if (card.type === "Monster") {
-		embed.setColor(Colour[card.subtype ?? "Orange"]);
+	if (card.card_type === "Monster") {
+		embed.setColor(
+			Colour[
+				(() => {
+					const types = ["Normal", "Ritual", "Fusion", "Synchro", "Xyz", "Link"] as const;
+					for (const type of types) {
+						if (card.monster_type_line.includes(type)) {
+							return type;
+						}
+					}
+					return "Orange";
+				})()
+			]
+		);
 
+		const race = card.monster_type_line.split(" /")[0];
 		// TODO: amend typeline when we get the real string or array and localize
-		let description = t`**Type**: ${RaceIcon[card.race]} ${card.race} | ${card.typeline}`;
+		let description = t`**Type**: ${RaceIcon[race]} ${card.monster_type_line}`;
 		description += "\n";
 		description += t`**Attribute**: ${AttributeIcon[card.attribute]} ${card.attribute}`;
 		description += "\n";
 
-		if (card.subtype === "Xyz") {
+		if ("rank" in card) {
 			description += t`**Rank**: ${Icon.Rank} ${card.rank} **ATK**: ${card.atk} **DEF**: ${card.def}`;
-		} else if (card.subtype === "Link") {
-			const arrows = card.arrows.join("");
-			description += t`**Link Rating**: ${card.link} **ATK**: ${card.atk} **Link Arrows**: ${arrows}`;
+		} else if ("link_arrows" in card) {
+			const arrows = card.link_arrows.join("");
+			description += t`**Link Rating**: ${card.link_arrows.length} **ATK**: ${card.atk} **Link Arrows**: ${arrows}`;
 		} else {
 			description += t`**Level**: ${Icon.Level} ${card.level} **ATK**: ${card.atk} **DEF**: ${card.def}`;
 		}
 
-		if (card.scale !== undefined) {
+		if (card.pendulum_scale !== undefined) {
 			description += " ";
-			description += t`**Pendulum Scale**: ${Icon.LeftScale}${card.scale}/${card.scale}${Icon.RightScale}`;
+			description += t`**Pendulum Scale**: ${Icon.LeftScale}${card.pendulum_scale}/${card.pendulum_scale}${Icon.RightScale}`;
 		}
 
 		embed.setDescription(description);
 
-		if (card.scale === undefined) {
-			embed.addField(t`Card Text`, card[lang]?.description || card.en.description);
+		if (card.pendulum_effect === undefined) {
+			embed.addField(t`Card Text`, card.text[lang] || `${card.text.en}`);
 
 			// common return
 		} else {
 			// Discord cannot take just a blank or spaces, but this zero-width space works
-			embed.addField(t`Pendulum Effect`, card[lang]?.pendulum || card.en.pendulum || "\u200b");
+			embed.addField("Pendulum Effect", card.pendulum_effect[lang] || card.pendulum_effect.en || "\u200b");
 
 			const addon = new MessageEmbed()
 				.setColor(Colour.Spell)
-				.addField(t`Card Text`, card[lang]?.description || card.en.description)
+				.addField(t`Card Text`, card.text[lang] || `${card.text.en}`)
 				// one or both may be null to due data corruption or prereleases
-				.setFooter({ text: t`Password: ${card.password} | Konami ID #${card.kid}` });
+				.setFooter({ text: t`Password: ${card.password} | Konami ID #${card.konami_id}` });
 
 			return [embed, addon];
 		}
 	} else {
-		embed.setColor(Colour[card.type]);
+		embed.setColor(Colour[card.card_type]);
 
-		let description = Icon[card.type];
-		const subtype = card.subtype;
+		let description = Icon[card.card_type];
+		const subtype = card.property;
 		if (subtype !== "Normal" && subtype in Icon) {
 			description += ` ${Icon[subtype]}`;
 		}
-		description += `**${card.subtype} ${card.type}**`;
+		description += `**${card.property} ${card.card_type}**`;
 		embed.setDescription(description);
 
-		embed.addField(t`Card Effect`, card[lang]?.description || card.en.description);
+		embed.addField(t`Card Effect`, card.text[lang] || `${card.text.en}`);
 	}
 
 	// one or both may be null to due data corruption or prereleases
-	embed.setFooter({ text: t`Password: ${card.password} | Konami ID #${card.kid}` });
+	embed.setFooter({ text: t`Password: ${card.password} | Konami ID #${card.konami_id}` });
 
 	return [embed];
 }
