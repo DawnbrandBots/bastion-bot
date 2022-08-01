@@ -109,12 +109,13 @@ export async function getCard(
 }
 
 export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): MessageEmbed[] {
-	useLocale("zh-CN");
+	useLocale(lang);
 
 	// TODO: localize labels based on language
 	const embed = new MessageEmbed()
 		.setTitle(card.name[lang] || `${card.name.en}`)
-		.setURL(`https://db.ygoprodeck.com/card/?search=${card.password}`)
+		.setURL(`https://db.ygoprodeck.com/card/?search=${card.password}&utm_source=bastion`)
+		.setURL(`https://yugipedia.com/wiki/${card.konami_id}?utm_source=bastion`)
 		.setThumbnail(`${process.env.IMAGE_HOST}/${card.password}.png`);
 
 	// TODO: expand with hyperlinks

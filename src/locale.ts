@@ -42,7 +42,16 @@ export abstract class LocaleProvider {
 	}
 
 	async get(interaction: CommandInteraction): Promise<Locale> {
+		const lang = interaction.options.getString("lang");
+		if (lang) {
+			// We could verify with this.filter, but that unnecessarily checks through
+			// the entire list when we know that this entire codebase should use
+			// resultLangStringOption if it has a lang option to a command.
+			return lang as Locale;
+		}
 		if (interaction.inGuild()) {
+			// Channel settings override server-wide settings override Discord-reported
+			// server locale. Threads are treated as an extension of their parent channel.
 			return (
 				(await this.channel(
 					(interaction.channel?.isThread() && interaction.channel.parentId) || interaction.channelId
@@ -51,6 +60,8 @@ export abstract class LocaleProvider {
 				this.filter(interaction.guildLocale)
 			);
 		} else {
+			// In direct messages, it is safe to use the user's Discord-reported locale
+			// without breaching privacy. Further support configuring the locale in the DM.
 			return (await this.channel(interaction.channelId)) ?? this.filter(interaction.locale);
 		}
 	}
