@@ -1,4 +1,5 @@
 import sqlite, { Database, Statement } from "better-sqlite3";
+import { Locale as DiscordLocale } from "discord-api-types/v9";
 import { CommandInteraction, Snowflake } from "discord.js";
 import { inject, singleton } from "tsyringe";
 
@@ -18,6 +19,17 @@ export const LOCALE_CHOICES = [
 ] as const;
 export const LOCALES = LOCALE_CHOICES.map(c => c.value);
 export type Locale = ArrayElement<typeof LOCALES>;
+export const COMMAND_LOCALIZATIONS = [
+	{ gettext: "es", discord: DiscordLocale.SpanishES },
+	{ gettext: "fr", discord: DiscordLocale.French },
+	{ gettext: "de", discord: DiscordLocale.German },
+	{ gettext: "it", discord: DiscordLocale.Italian },
+	{ gettext: "pt", discord: DiscordLocale.PortugueseBR },
+	{ gettext: "ja", discord: DiscordLocale.Japanese },
+	{ gettext: "ko", discord: DiscordLocale.Korean },
+	{ gettext: "zh-CN", discord: DiscordLocale.ChineseCN },
+	{ gettext: "zh-TW", discord: DiscordLocale.ChineseTW }
+] as const;
 
 /**
  * Abstract persistent store for locale overrides. We need this if we switch to
