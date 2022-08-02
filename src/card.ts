@@ -1,5 +1,6 @@
 import { Static } from "@sinclair/typebox";
 import { CommandInteraction, MessageEmbed } from "discord.js";
+import { parseDocument } from "htmlparser2";
 import fetch from "node-fetch";
 import { c, t, useLocale } from "ttag";
 import { CardSchema } from "./definitions/yaml-yugi";
@@ -146,11 +147,87 @@ export async function getCard(
 	throw new Error((await response.json()).message);
 }
 
+function parseAndExpandRuby(html: string): [string, string] {
+	let rubyless = "";
+	let rubyonly = "";
+	const doc = parseDocument(html);
+	for (const element of doc.children) {
+		if (element.type === "text") {
+			rubyless += element.data;
+			rubyonly += element.data;
+		} else if (element.type === "tag" && element.name === "ruby") {
+			if (element.children.length === 2) {
+				// Note <rb> deprecated, to be removed from the input
+				const [rb, rt] = element.children;
+				if (
+					rb.type === "tag" &&
+					rb.name === "rb" &&
+					rt.type === "tag" &&
+					rt.name === "rt" &&
+					rb.children.length === 1 &&
+					rb.children[0].type === "text" &&
+					rt.children.length === 1 &&
+					rt.children[0].type === "text"
+				) {
+					rubyless += rb.children[0].data;
+					rubyonly += rt.children[0].data;
+				}
+			}
+		}
+	}
+	return [rubyless, rubyonly];
+}
+
+function formatOCGNumbering(text: string): string {
+	// Insert newlines before Unicode circled numbers
+	return text.replaceAll(/[\u{2460}-\u{2473}]/gu, "\n$&").trimStart();
+	// Note: inserts an extra newline after the materials line, should correct
+}
+
+function formatCardName(card: Static<typeof CardSchema>, lang: Locale): string {
+	const name = card.name[lang]; // TypeScript cannot narrow typing on this without the variable
+	if ((lang === "ja" || lang === "ko") && name?.includes("<ruby>")) {
+		const [rubyless, rubyonly] = parseAndExpandRuby(name);
+		return `${rubyless}（${rubyonly}）`;
+	}
+	return name || `${card.name.en}`;
+}
+
+function formatCardText(text: Static<typeof CardSchema>["text"], lang: Locale): string {
+	if (lang === "ja" || lang === "ko" || lang === "zh-CN" || lang === "zh-TW") {
+		let str = text[lang]; // TypeScript cannot narrow typing on this without the variable
+		if (str) {
+			if (str.includes("<ruby>")) {
+				str = parseAndExpandRuby(str)[0]; // strip for main text
+			}
+			return formatOCGNumbering(str);
+		}
+		return `${text.en}`;
+	}
+	return text[lang] || `${text.en}`;
+}
+
+// TODO: refactor to not duplicate
+function formatPendulumEffect(text: Static<typeof CardSchema>["text"], lang: Locale): string {
+	// Discord cannot take just a blank or spaces, but this zero-width space works
+	if (lang === "ja" || lang === "ko" || lang === "zh-CN" || lang === "zh-TW") {
+		let str = text[lang]; // TypeScript cannot narrow typing on this without the variable
+		if (str) {
+			if (str.includes("<ruby>")) {
+				str = parseAndExpandRuby(str)[0]; // strip for main text
+			}
+			return formatOCGNumbering(str);
+		}
+		return text.en || "\u200b";
+	}
+	return text[lang] || text.en || "\u200b";
+}
+
 export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): MessageEmbed[] {
 	useLocale(lang);
 
 	const embed = new MessageEmbed()
-		.setTitle(card.name[lang] || `${card.name.en}`)
+		.setTitle(formatCardName(card, lang))
 		// .setURL(`https://db.ygoprodeck.com/card/?search=${card.password}&utm_source=bastion`)
 		.setURL(`https://yugipedia.com/wiki/${card.konami_id}?utm_source=bastion`)
 		.setThumbnail(`${process.env.IMAGE_HOST}/${card.password}.png`);
@@ -199,19 +276,18 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 		embed.setDescription(description);
 
 		if (card.pendulum_effect === undefined) {
-			embed.addFields({ name: c("card-embed").t`Card Text`, value: card.text[lang] || `${card.text.en}` });
+			embed.addFields({ name: c("card-embed").t`Card Text`, value: formatCardText(card.text, lang) });
 
 			// return path shared with Spells and Traps
 		} else {
 			embed.addFields({
 				name: c("card-embed").t`Pendulum Effect`,
-				// Discord cannot take just a blank or spaces, but this zero-width space works
-				value: card.pendulum_effect[lang] || card.pendulum_effect.en || "\u200b"
+				value: formatPendulumEffect(card.pendulum_effect, lang)
 			});
 
 			const addon = new MessageEmbed()
 				.setColor(Colour.Spell)
-				.addFields({ name: c("card-embed").t`Card Text`, value: card.text[lang] || `${card.text.en}` })
+				.addFields({ name: c("card-embed").t`Card Text`, value: formatCardText(card.text, lang) })
 				// one or both may be null to due data corruption or prereleases
 				.setFooter({ text: t`Password: ${card.password} | Konami ID #${card.konami_id}` });
 
@@ -225,7 +301,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 		const localizedProperty = rc("spell-trap-property").gettext(`${card.property} ${card.card_type}`);
 		embed.setDescription(`${Icon[card.card_type]} ${localizedProperty} ${Icon[card.property]}`);
 
-		embed.addFields({ name: c("card-embed").t`Card Effect`, value: card.text[lang] || `${card.text.en}` });
+		embed.addFields({ name: c("card-embed").t`Card Effect`, value: formatCardText(card.text, lang) });
 	}
 
 	// one or both may be null to due data corruption or prereleases

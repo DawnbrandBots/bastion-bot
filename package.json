@@ -28,6 +28,7 @@
 		"discord.js": "^13.9.2",
 		"dotenv": "^16.0.1",
 		"gettext-parser": "^5.1.2",
+		"htmlparser2": "^8.0.1",
 		"node-fetch": "^2.6.7",
 		"reflect-metadata": "^0.1.13",
 		"supports-color": "^9.2.2",
