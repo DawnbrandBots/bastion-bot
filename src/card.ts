@@ -1,12 +1,23 @@
 import { Static } from "@sinclair/typebox";
 import { MessageEmbed } from "discord.js";
 import fetch from "node-fetch";
-import { gettext as _, t, useLocale } from "ttag";
+import { c, t, useLocale } from "ttag";
 import { CardSchema } from "./definitions/yaml-yugi";
 import { Locale } from "./locale";
 
-// Avoids ttag-cli picking up calls with dynamic strings and breaking
-const gettext = _;
+/**
+ * There's some neat hacks in this file to achieve dynamic localization at
+ * runtime while continuing to use the static gettext localization system that
+ * ttag provides.
+ *
+ * First, write out and annotate all the terms that we would possibly need to
+ * use at runtime, for ttag-cli to collect for translators. This can pull double
+ * duty (RaceIcon, AttributeIcon), since at import time, the locale is default.
+ *
+ * Then, at runtime, use the following reassigned import instead to hide the
+ * dynamic calls from ttag-cli and prevent it from complaining and breaking.
+ */
+const rc = c;
 
 const Colour = {
 	Token: 0x8d8693,
@@ -22,50 +33,76 @@ const Colour = {
 	Orange: 0xff8b53
 };
 
+c("monster-type-race").t`Normal`;
+c("monster-type-race").t`Effect`;
+c("monster-type-race").t`Pendulum`;
+c("monster-type-race").t`Ritual`;
+c("monster-type-race").t`Fusion`;
+c("monster-type-race").t`Synchro`;
+c("monster-type-race").t`Xyz`;
+c("monster-type-race").t`Link`;
+c("monster-type-race").t`Tuner`;
+c("monster-type-race").t`Flip`;
+c("monster-type-race").t`Toon`;
+c("monster-type-race").t`Spirit`;
+c("monster-type-race").t`Union`;
+c("monster-type-race").t`Gemini`;
+c("spell-trap-property").t`Normal Spell`;
+c("spell-trap-property").t`Continuous Spell`;
+c("spell-trap-property").t`Equip Spell`;
+c("spell-trap-property").t`Quick-Play Spell`;
+c("spell-trap-property").t`Field Spell`;
+c("spell-trap-property").t`Ritual Spell`;
+c("spell-trap-property").t`Normal Trap`;
+c("spell-trap-property").t`Continuous Trap`;
+c("spell-trap-property").t`Counter Trap`;
+
 const RaceIcon = {
-	Warrior: "<:Warrior:602707927224025118>",
-	Spellcaster: "<:Spellcaster:602707926834085888>",
-	Fairy: "<:Fairy:602707926200614912>",
-	Fiend: "<:Fiend:602707926850732035>",
-	Zombie: "<:Zombie:602707927102390292>",
-	Machine: "<:Machine:602707926733291521>",
-	Aqua: "<:Aqua:602707887931785238>",
-	Pyro: "<:Pyro:602707925793767427>",
-	Rock: "<:Rock:602707926213460010>",
-	[t`Winged Beast`]: "<:WingedBeast:602707926464987138>",
-	Plant: "<:Plant:602707792138076186>",
-	Insect: "<:Insect:602707926146088960>",
-	Thunder: "<:Thunder:602707927484203013>",
-	Dragon: "<:Dragon:602707926901325834>",
-	Beast: "<:Beast:602707889018372109>",
-	"Beast-Warrior": "<:BeastWarrior:602707890171543593>",
-	Dinosaur: "<:Dinosaur:602713887141527563>",
-	Fish: "<:Fish:602707925877915659>",
-	"Sea Serpent": "<:SeaSerpent:602707926288826378>",
-	Reptile: "<:Reptile:602707927219830784>",
-	Psychic: "<:Psychic:602707926767108129>",
-	"Divine-Beast": "<:DivineBeast:602707925730852874>",
-	"Creator-God": "<:CreatorGod:602707927219961866>", // TODO: should not be hyphenated
-	Wyrm: "<:Wyrm:602707927068835884>",
-	Cyberse: "<:Cyberse:602707927421157376>"
+	[c("monster-type-race").t`Warrior`]: "<:Warrior:602707927224025118>",
+	[c("monster-type-race").t`Spellcaster`]: "<:Spellcaster:602707926834085888>",
+	[c("monster-type-race").t`Fairy`]: "<:Fairy:602707926200614912>",
+	[c("monster-type-race").t`Fiend`]: "<:Fiend:602707926850732035>",
+	[c("monster-type-race").t`Zombie`]: "<:Zombie:602707927102390292>",
+	[c("monster-type-race").t`Machine`]: "<:Machine:602707926733291521>",
+	[c("monster-type-race").t`Aqua`]: "<:Aqua:602707887931785238>",
+	[c("monster-type-race").t`Pyro`]: "<:Pyro:602707925793767427>",
+	[c("monster-type-race").t`Rock`]: "<:Rock:602707926213460010>",
+	[c("monster-type-race").t`Winged Beast`]: "<:WingedBeast:602707926464987138>",
+	[c("monster-type-race").t`Plant`]: "<:Plant:602707792138076186>",
+	[c("monster-type-race").t`Insect`]: "<:Insect:602707926146088960>",
+	[c("monster-type-race").t`Thunder`]: "<:Thunder:602707927484203013>",
+	[c("monster-type-race").t`Dragon`]: "<:Dragon:602707926901325834>",
+	[c("monster-type-race").t`Beast`]: "<:Beast:602707889018372109>",
+	[c("monster-type-race").t`Beast-Warrior`]: "<:BeastWarrior:602707890171543593>",
+	[c("monster-type-race").t`Dinosaur`]: "<:Dinosaur:602713887141527563>",
+	[c("monster-type-race").t`Fish`]: "<:Fish:602707925877915659>",
+	[c("monster-type-race").t`Sea Serpent`]: "<:SeaSerpent:602707926288826378>",
+	[c("monster-type-race").t`Reptile`]: "<:Reptile:602707927219830784>",
+	[c("monster-type-race").t`Psychic`]: "<:Psychic:602707926767108129>",
+	[c("monster-type-race").t`Divine-Beast`]: "<:DivineBeast:602707925730852874>",
+	[c("monster-type-race").t`Creator God`]: "<:CreatorGod:602707927219961866>",
+	[c("monster-type-race").t`Wyrm`]: "<:Wyrm:602707927068835884>",
+	[c("monster-type-race").t`Cyberse`]: "<:Cyberse:602707927421157376>"
 	//Yokai: "<:Yokai:602707927932993546>",
 	//Charisma: "<:Charisma:602707891530629130>"
 };
 
 const AttributeIcon = {
-	EARTH: "<:EARTH:602707925726658570>",
-	WATER: "<:WATER:602707927341596691>",
-	FIRE: "<:FIRE:602707928255954963>",
-	WIND: "<:WIND:602707926771171348>",
-	LIGHT: "<:LIGHT:602707926183968768>",
-	DARK: "<:DARK:602707926792273920>",
-	DIVINE: "<:DIVINE:602707926594879498>",
-	LAUGH: "<:LAUGH:602719132567207938>"
+	[c("attribute").t`EARTH`]: "<:EARTH:602707925726658570>",
+	[c("attribute").t`WATER`]: "<:WATER:602707927341596691>",
+	[c("attribute").t`FIRE`]: "<:FIRE:602707928255954963>",
+	[c("attribute").t`WIND`]: "<:WIND:602707926771171348>",
+	[c("attribute").t`LIGHT`]: "<:LIGHT:602707926183968768>",
+	[c("attribute").t`DARK`]: "<:DARK:602707926792273920>",
+	[c("attribute").t`DIVINE`]: "<:DIVINE:602707926594879498>"
+	//LAUGH: "<:LAUGH:602719132567207938>"
 };
 
 const Icon = {
 	Spell: "<:SPELL:623021653580054538>",
 	Trap: "<:TRAP:623021653810741258> ",
+	// Property icons of Spells/Traps
+	Normal: "", // Only appears in some video games, not on physical cards
 	Ritual: "<:Ritual:602707927274487838>",
 	"Quick-Play": "<:QuickPlay:602707927073030150> ",
 	Continuous: "<:Continuous:602707892507770891>",
@@ -73,6 +110,7 @@ const Icon = {
 	Field: "<:FIELD:602707926834216963> ",
 	Counter: "<:Counter:602707928075599872>",
 	//Link: "<:LinkSpell:602707598164099104>",
+	// Monster values
 	LeftScale: "<:ScaleLeft:602710168337121290>",
 	RightScale: "<:ScaleRight:602710170430210048>",
 	Level: "<:level:602707925949087760>",
@@ -111,10 +149,9 @@ export async function getCard(
 export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): MessageEmbed[] {
 	useLocale(lang);
 
-	// TODO: localize labels based on language
 	const embed = new MessageEmbed()
 		.setTitle(card.name[lang] || `${card.name.en}`)
-		.setURL(`https://db.ygoprodeck.com/card/?search=${card.password}&utm_source=bastion`)
+		// .setURL(`https://db.ygoprodeck.com/card/?search=${card.password}&utm_source=bastion`)
 		.setURL(`https://yugipedia.com/wiki/${card.konami_id}?utm_source=bastion`)
 		.setThumbnail(`${process.env.IMAGE_HOST}/${card.password}.png`);
 
@@ -135,10 +172,14 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 		);
 
 		const race = card.monster_type_line.split(" /")[0];
-		// TODO: amend typeline when we get the real string or array and localize
-		let description = t`**Type**: ${RaceIcon[race]} ${card.monster_type_line}`;
+		const localizedMonsterTypeLine = card.monster_type_line
+			.split(" / ")
+			.map(s => rc("monster-type-race").gettext(s))
+			.join(" / ");
+		const localizedAttribute = rc("attribute").gettext(card.attribute);
+		let description = t`**Type**: ${RaceIcon[race]} ${localizedMonsterTypeLine}`;
 		description += "\n";
-		description += t`**Attribute**: ${AttributeIcon[card.attribute]} ${card.attribute}`;
+		description += t`**Attribute**: ${AttributeIcon[card.attribute]} ${localizedAttribute}`;
 		description += "\n";
 
 		if ("rank" in card) {
@@ -158,33 +199,33 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 		embed.setDescription(description);
 
 		if (card.pendulum_effect === undefined) {
-			embed.addField(t`Card Text`, card.text[lang] || `${card.text.en}`);
+			embed.addFields({ name: c("card-embed").t`Card Text`, value: card.text[lang] || `${card.text.en}` });
 
-			// common return
+			// return path shared with Spells and Traps
 		} else {
-			// Discord cannot take just a blank or spaces, but this zero-width space works
-			embed.addField("Pendulum Effect", card.pendulum_effect[lang] || card.pendulum_effect.en || "\u200b");
+			embed.addFields({
+				name: c("card-embed").t`Pendulum Effect`,
+				// Discord cannot take just a blank or spaces, but this zero-width space works
+				value: card.pendulum_effect[lang] || card.pendulum_effect.en || "\u200b"
+			});
 
 			const addon = new MessageEmbed()
 				.setColor(Colour.Spell)
-				.addField(t`Card Text`, card.text[lang] || `${card.text.en}`)
+				.addFields({ name: c("card-embed").t`Card Text`, value: card.text[lang] || `${card.text.en}` })
 				// one or both may be null to due data corruption or prereleases
 				.setFooter({ text: t`Password: ${card.password} | Konami ID #${card.konami_id}` });
 
+			// exclusive Pendulum return path
 			return [embed, addon];
 		}
 	} else {
+		// Spells and Traps
 		embed.setColor(Colour[card.card_type]);
 
-		let description = Icon[card.card_type];
-		const subtype = card.property;
-		if (subtype !== "Normal" && subtype in Icon) {
-			description += ` ${Icon[subtype]}`;
-		}
-		description += `**${card.property} ${card.card_type}**`;
-		embed.setDescription(description);
+		const localizedProperty = rc("spell-trap-property").gettext(`${card.property} ${card.card_type}`);
+		embed.setDescription(`${Icon[card.card_type]} ${localizedProperty} ${Icon[card.property]}`);
 
-		embed.addField(t`Card Effect`, card.text[lang] || `${card.text.en}`);
+		embed.addFields({ name: c("card-embed").t`Card Effect`, value: card.text[lang] || `${card.text.en}` });
 	}
 
 	// one or both may be null to due data corruption or prereleases
