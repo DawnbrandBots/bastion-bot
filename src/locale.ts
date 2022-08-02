@@ -1,4 +1,5 @@
 import sqlite, { Database, Statement } from "better-sqlite3";
+import { Locale as DiscordLocale } from "discord-api-types/v9";
 import { CommandInteraction, Snowflake } from "discord.js";
 import { inject, singleton } from "tsyringe";
 
@@ -6,13 +7,29 @@ type ArrayElement<T> = T extends readonly (infer U)[] ? U : never;
 
 export const LOCALE_CHOICES = [
 	{ name: "English", value: "en" },
+	{ name: "Español", value: "es" },
 	{ name: "Français", value: "fr" },
 	{ name: "Deutsch", value: "de" },
 	{ name: "Italiano", value: "it" },
-	{ name: "Português", value: "pt" }
+	{ name: "Português", value: "pt" },
+	{ name: "日本語", value: "ja" },
+	{ name: "한국어", value: "ko" },
+	{ name: "简体中文", value: "zh-CN" },
+	{ name: "繁體中文", value: "zh-TW" }
 ] as const;
 export const LOCALES = LOCALE_CHOICES.map(c => c.value);
 export type Locale = ArrayElement<typeof LOCALES>;
+export const COMMAND_LOCALIZATIONS = [
+	{ gettext: "es", discord: DiscordLocale.SpanishES },
+	{ gettext: "fr", discord: DiscordLocale.French },
+	{ gettext: "de", discord: DiscordLocale.German },
+	{ gettext: "it", discord: DiscordLocale.Italian },
+	{ gettext: "pt", discord: DiscordLocale.PortugueseBR },
+	{ gettext: "ja", discord: DiscordLocale.Japanese },
+	{ gettext: "ko", discord: DiscordLocale.Korean },
+	{ gettext: "zh-CN", discord: DiscordLocale.ChineseCN },
+	{ gettext: "zh-TW", discord: DiscordLocale.ChineseTW }
+] as const;
 
 /**
  * Abstract persistent store for locale overrides. We need this if we switch to
@@ -37,7 +54,16 @@ export abstract class LocaleProvider {
 	}
 
 	async get(interaction: CommandInteraction): Promise<Locale> {
+		const lang = interaction.options.getString("lang");
+		if (lang) {
+			// We could verify with this.filter, but that unnecessarily checks through
+			// the entire list when we know that this entire codebase should use
+			// resultLangStringOption if it has a lang option to a command.
+			return lang as Locale;
+		}
 		if (interaction.inGuild()) {
+			// Channel settings override server-wide settings override Discord-reported
+			// server locale. Threads are treated as an extension of their parent channel.
 			return (
 				(await this.channel(
 					(interaction.channel?.isThread() && interaction.channel.parentId) || interaction.channelId
@@ -46,6 +72,8 @@ export abstract class LocaleProvider {
 				this.filter(interaction.guildLocale)
 			);
 		} else {
+			// In direct messages, it is safe to use the user's Discord-reported locale
+			// without breaching privacy. Further support configuring the locale in the DM.
 			return (await this.channel(interaction.channelId)) ?? this.filter(interaction.locale);
 		}
 	}

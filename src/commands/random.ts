@@ -32,11 +32,10 @@ export class RandomCommand extends Command {
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		await interaction.deferReply();
-		const response = await fetch(`${process.env.SEARCH_API}/random`);
+		const response = await fetch(`${process.env.SEARCH_API}/yaml-yugi/random`);
 		const cards = await response.json();
-		const lang = interaction.options.getString("lang") ?? (await this.locales.get(interaction));
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		let embeds = createCardEmbed(cards[0], lang as any);
+		const lang = await this.locales.get(interaction);
+		let embeds = createCardEmbed(cards[0], lang);
 		embeds = addFunding(addNotice(embeds));
 		const end = Date.now();
 		await interaction.editReply({ embeds }); // Actually returns void

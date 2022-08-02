@@ -22,10 +22,10 @@
 	},
 	"dependencies": {
 		"@discordjs/rest": "^1.0.1",
-		"@sinclair/typebox": "^0.23.5",
+		"@sinclair/typebox": "^0.24.25",
 		"better-sqlite3": "^7.6.2",
 		"debug": "^4.3.4",
-		"discord.js": "^13.8.1",
+		"discord.js": "^13.9.2",
 		"dotenv": "^16.0.1",
 		"gettext-parser": "^5.1.2",
 		"node-fetch": "^2.6.7",
@@ -48,7 +48,7 @@
 		"ttag-cli": "^1.10.1"
 	},
 	"resolutions": {
-		"@types/node": "^16.11.36"
+		"@types/node": "^16.11.47"
 	},
 	"babel": {
 		"plugins": [

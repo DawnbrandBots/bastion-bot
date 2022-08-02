@@ -37,20 +37,17 @@ export class SearchCommand extends Command {
 	}
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
-		let type = interaction.options.getString("type", false) as "password" | "kid" | "name" | undefined;
-		let input = interaction.options.getString("input", true);
-		[type, input] = inferInputType(type, input);
+		const [type, input] = inferInputType(interaction);
+		const lang = await this.locales.get(interaction);
 		await interaction.deferReply();
-		const card = await getCard(type, input);
+		const card = await getCard(type, input, lang);
 		let end: number;
 		if (!card) {
 			end = Date.now();
 			// TODO: include properly-named type in this message
 			await interaction.editReply({ content: `Could not find a card matching \`${input}\`!` });
 		} else {
-			const lang = interaction.options.getString("lang") ?? (await this.locales.get(interaction));
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			let embeds = createCardEmbed(card, lang as any);
+			let embeds = createCardEmbed(card, lang);
 			embeds = addFunding(addNotice(embeds));
 			end = Date.now();
 			await interaction.editReply({ embeds }); // Actually returns void

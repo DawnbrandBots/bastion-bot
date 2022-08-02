@@ -35,9 +35,7 @@ export class IdCommand extends Command {
 	}
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
-		let type = interaction.options.getString("type", false) as "password" | "kid" | "name" | undefined;
-		let input = interaction.options.getString("input", true);
-		[type, input] = inferInputType(type, input);
+		const [type, input] = inferInputType(interaction);
 		await interaction.deferReply({ ephemeral: true });
 		const card = await getCard(type, input);
 		let end: number;
@@ -47,9 +45,9 @@ export class IdCommand extends Command {
 			await interaction.editReply({ content: `Could not find a card matching \`${input}\`!` });
 		} else {
 			const embed = new MessageEmbed()
-				.setTitle(card?.en.name)
+				.setTitle(`${card.name.en}`)
 				.addField("Password", `${card.password}`, true)
-				.addField("Konami ID", `${card.kid}`, true);
+				.addField("Konami ID", `${card.konami_id}`, true);
 			end = Date.now();
 			await interaction.editReply({ embeds: addNotice(embed) });
 		}
