@@ -1,9 +1,11 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
+import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
 import fetch from "node-fetch";
-import { injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
+import { c, t, useLocale } from "ttag";
 import { Command } from "../Command";
+import { COMMAND_LOCALIZATIONS, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { editLatency } from "../utils";
@@ -12,21 +14,39 @@ import { editLatency } from "../utils";
 export class YugiCommand extends Command {
 	#logger = getLogger("command:yugi");
 
-	constructor(metrics: Metrics) {
+	constructor(metrics: Metrics, @inject("LocaleProvider") private locales: LocaleProvider) {
 		super(metrics);
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
-		return new SlashCommandBuilder()
+		const builder = new SlashCommandBuilder()
 			.setName("yugipedia")
-			.setDescription("Search the Yugipedia wiki for a page and link to it.")
-			.addStringOption(option =>
-				option
-					.setName("page")
-					.setDescription("The name of the Yugipedia page you want to search for.")
-					.setRequired(true)
-			)
-			.toJSON();
+			.setDescription("Search the Yugipedia wiki for a page and link to it.");
+
+		const option = new SlashCommandStringOption()
+			.setName("page")
+			.setDescription("The name of the Yugipedia page you want to search for.")
+			.setRequired(true);
+
+		for (const { gettext, discord } of COMMAND_LOCALIZATIONS) {
+			useLocale(gettext);
+			builder
+				.setNameLocalization(discord, c("command-name").t`yugipedia`)
+				.setDescriptionLocalization(
+					discord,
+					c("command-description").t`Search the Yugipedia wiki for a page and link to it.`
+				);
+			option
+				.setNameLocalization(discord, c("command-option").t`page`)
+				.setDescriptionLocalization(
+					discord,
+					c("command-option-description").t`The name of the Yugipedia page you want to search for.`
+				);
+		}
+
+		builder.addStringOption(option);
+
+		return builder.toJSON();
 	}
 
 	protected override get logger(): Logger {
@@ -57,9 +77,12 @@ export class YugiCommand extends Command {
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		const page = interaction.options.getString("page", true);
-		await interaction.reply(`Searching Yugipedia for \`${page}\`…`);
+		const lang = await this.locales.get(interaction);
+		useLocale(lang);
+		await interaction.reply(t`Searching Yugipedia for \`${page}\`…`);
 		const link = await YugiCommand.getYugipediaPage(page);
-		const content = link || `Could not find a Yugipedia page named \`${page}\`.`; // TODO: externalise error message for translation/non-hardcoding?
+		useLocale(lang);
+		const content = link || t`Could not find a Yugipedia page named \`${page}\`.`;
 		const reply = await interaction.editReply(content);
 		return editLatency(reply, interaction);
 	}
