@@ -1,5 +1,5 @@
 import { Static } from "@sinclair/typebox";
-import { MessageEmbed } from "discord.js";
+import { CommandInteraction, MessageEmbed } from "discord.js";
 import fetch from "node-fetch";
 import { c, t, useLocale } from "ttag";
 import { CardSchema } from "./definitions/yaml-yugi";
@@ -234,12 +234,13 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 	return [embed];
 }
 
-export function inferInputType(
-	type: "password" | "kid" | "name" | undefined,
-	input: string
-): ["password" | "kid" | "name", string] {
+type InputType = "password" | "kid" | "name";
+
+export function inferInputType(interaction: CommandInteraction): [InputType, string] {
+	const type = interaction.options.getString("type", false);
+	const input = interaction.options.getString("input", true);
 	if (type) {
-		return [type, input];
+		return [type as InputType, input];
 	}
 	// handle edge case for specific bad input
 	if (parseInt(input).toString() === input && input !== "NaN") {

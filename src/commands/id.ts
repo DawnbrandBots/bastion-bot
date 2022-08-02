@@ -35,9 +35,7 @@ export class IdCommand extends Command {
 	}
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
-		let type = interaction.options.getString("type", false) as "password" | "kid" | "name" | undefined;
-		let input = interaction.options.getString("input", true);
-		[type, input] = inferInputType(type, input);
+		const [type, input] = inferInputType(interaction);
 		await interaction.deferReply({ ephemeral: true });
 		const card = await getCard(type, input);
 		let end: number;

@@ -66,10 +66,8 @@ export class ArtCommand extends Command {
 	}
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
-		let type = interaction.options.getString("type", false) as "password" | "kid" | "name" | undefined;
-		let input = interaction.options.getString("input", true);
+		const [type, input] = inferInputType(interaction);
 		const lang = await this.locales.get(interaction);
-		[type, input] = inferInputType(type, input);
 		await interaction.deferReply();
 		const card = await getCard(type, input, lang);
 		let end: number;
