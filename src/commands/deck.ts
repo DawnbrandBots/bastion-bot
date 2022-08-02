@@ -1,5 +1,5 @@
 // import { Static } from "@sinclair/typebox";
-// import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
+// import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 // import { CommandInteraction, MessageEmbed } from "discord.js";
 // import { ApplicationCommandOptionTypes } from "discord.js/typings/enums";
 // import fetch from "node-fetch";

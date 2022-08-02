@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
-import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { CommandInteraction, MessageEmbed } from "discord.js";
 import { injectable } from "tsyringe";
 import { getCard, inferInputType } from "../card";

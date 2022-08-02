@@ -1,5 +1,5 @@
 import sqlite, { Database, Statement } from "better-sqlite3";
-import { Locale as DiscordLocale } from "discord-api-types/v9";
+import { Locale as DiscordLocale } from "discord-api-types/v10";
 import { CommandInteraction, Snowflake } from "discord.js";
 import { inject, singleton } from "tsyringe";
 
