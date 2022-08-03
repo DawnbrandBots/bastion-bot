@@ -190,6 +190,15 @@ function formatCardName(card: Static<typeof CardSchema>, lang: Locale): string {
 function formatOCGNumbering(text: string): string {
 	// Insert newlines before Unicode circled numbers followed by colon if missing
 	return text.replaceAll(/([^\n])([\u{2460}-\u{2473}][:：])/gu, "$1\n$2").trimStart();
+	// Generic test case:
+	// - PSY-Framegear Gamma
+	// Test case for numbering as the first character:
+	// - Assault Blackwing - Kunai the Drizzle
+	// Test cases with HOPT conditions:
+	// - Windwitch - Crystal Bell
+	// Test cases for numbering immediately after the materials line:
+	// - D/D/D Wave Oblivion King Caesar Ragnarok
+	// - Number 86
 }
 
 function formatCardText(text: Static<typeof CardSchema>["text"], lang: Locale): string {
@@ -216,6 +225,17 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 		.setURL(`https://yugipedia.com/wiki/${card.konami_id}?utm_source=bastion`)
 		.setThumbnail(`${process.env.IMAGE_HOST}/${card.password}.png`);
 
+	let description = "";
+	if (lang === "ja") {
+		if (card.name.ja_romaji) {
+			description = `**Rōmaji**: ${card.name.ja_romaji}\n`;
+		}
+	} else if (lang === "ko") {
+		if (card.name.ko_rr) {
+			description = `**RR**: ${card.name.ko_rr}\n`;
+		}
+	}
+
 	// TODO: expand with hyperlinks
 	if (card.card_type === "Monster") {
 		embed.setColor(
@@ -238,7 +258,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 			.map(s => rc("monster-type-race").gettext(s))
 			.join(" / ");
 		const localizedAttribute = rc("attribute").gettext(card.attribute);
-		let description = t`**Type**: ${RaceIcon[race]} ${localizedMonsterTypeLine}`;
+		description += t`**Type**: ${RaceIcon[race]} ${localizedMonsterTypeLine}`;
 		description += "\n";
 		description += t`**Attribute**: ${AttributeIcon[card.attribute]} ${localizedAttribute}`;
 		description += "\n";
@@ -283,7 +303,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 		embed.setColor(Colour[card.card_type]);
 
 		const localizedProperty = rc("spell-trap-property").gettext(`${card.property} ${card.card_type}`);
-		embed.setDescription(`${Icon[card.card_type]} ${localizedProperty} ${Icon[card.property]}`);
+		embed.setDescription(`${description}${Icon[card.card_type]} ${localizedProperty} ${Icon[card.property]}`);
 
 		embed.addFields({ name: c("card-embed").t`Card Effect`, value: formatCardText(card.text, lang) });
 	}
