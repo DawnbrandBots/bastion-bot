@@ -179,7 +179,7 @@ msgstr "이 서버의 로케일이 재정의되었습니다. ${ locale }."
 
 #: src\commands\locale.ts:111
 msgid "Locale for this server reset to Discord Community default."
-msgstr "이 서버의 지역이 디스코드 커뮤니티 기본값으로 재설정됩니다."
+msgstr "이 서버의 로케일이 디스코드 커뮤니티 기본값으로 재설정됩니다."
 
 #: src\commands\locale.ts:114
 #, javascript-format
