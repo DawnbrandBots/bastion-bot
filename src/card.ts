@@ -178,12 +178,6 @@ function parseAndExpandRuby(html: string): [string, string] {
 	return [rubyless, rubyonly];
 }
 
-function formatOCGNumbering(text: string): string {
-	// Insert newlines before Unicode circled numbers
-	return text.replaceAll(/[\u{2460}-\u{2473}]/gu, "\n$&").trimStart();
-	// Note: inserts an extra newline after the materials line, should correct
-}
-
 function formatCardName(card: Static<typeof CardSchema>, lang: Locale): string {
 	const name = card.name[lang]; // TypeScript cannot narrow typing on this without the variable
 	if ((lang === "ja" || lang === "ko") && name?.includes("<ruby>")) {
@@ -193,22 +187,12 @@ function formatCardName(card: Static<typeof CardSchema>, lang: Locale): string {
 	return name || `${card.name.en}`;
 }
 
-function formatCardText(text: Static<typeof CardSchema>["text"], lang: Locale): string {
-	if (lang === "ja" || lang === "ko" || lang === "zh-CN" || lang === "zh-TW") {
-		let str = text[lang]; // TypeScript cannot narrow typing on this without the variable
-		if (str) {
-			if (str.includes("<ruby>")) {
-				str = parseAndExpandRuby(str)[0]; // strip for main text
-			}
-			return formatOCGNumbering(str);
-		}
-		return `${text.en}`;
-	}
-	return text[lang] || `${text.en}`;
+function formatOCGNumbering(text: string): string {
+	// Insert newlines before Unicode circled numbers followed by colon if missing
+	return text.replaceAll(/([^\n])([\u{2460}-\u{2473}][:：])/gu, "$1\n$2").trimStart();
 }
 
-// TODO: refactor to not duplicate
-function formatPendulumEffect(text: Static<typeof CardSchema>["text"], lang: Locale): string {
+function formatCardText(text: Static<typeof CardSchema>["text"], lang: Locale): string {
 	// Discord cannot take just a blank or spaces, but this zero-width space works
 	if (lang === "ja" || lang === "ko" || lang === "zh-CN" || lang === "zh-TW") {
 		let str = text[lang]; // TypeScript cannot narrow typing on this without the variable
@@ -282,7 +266,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 		} else {
 			embed.addFields({
 				name: c("card-embed").t`Pendulum Effect`,
-				value: formatPendulumEffect(card.pendulum_effect, lang)
+				value: formatCardText(card.pendulum_effect, lang)
 			});
 
 			const addon = new MessageEmbed()
