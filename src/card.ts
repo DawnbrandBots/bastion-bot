@@ -219,11 +219,23 @@ function formatCardText(text: Static<typeof CardSchema>["text"], lang: Locale): 
 export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): MessageEmbed[] {
 	useLocale(lang);
 
+	const yugipedia = `https://yugipedia.com/wiki/${card.konami_id}?utm_source=bastion`;
+	const ygoprodeckTerm = card.password ?? encodeURIComponent(`${card.name.en}`);
+	const ygoprodeck = `https://db.ygoprodeck.com/card/?search=${ygoprodeckTerm}&utm_source=bastion`;
+	// Official database, does not work for zh locales
+	const official = `https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&request_locale=${lang}&cid=${card.konami_id}`;
+	const rulings = `https://www.db.yugioh-card.com/yugiohdb/faq_search.action?ope=4&request_locale=ja&cid=${card.konami_id}`;
+
 	const embed = new MessageEmbed()
 		.setTitle(formatCardName(card, lang))
-		// .setURL(`https://db.ygoprodeck.com/card/?search=${card.password}&utm_source=bastion`)
-		.setURL(`https://yugipedia.com/wiki/${card.konami_id}?utm_source=bastion`)
+		// TODO: update when we start doing cards without Konami IDs
+		.setURL(yugipedia)
 		.setThumbnail(`${process.env.IMAGE_HOST}/${card.password}.png`);
+
+	const links = {
+		name: t`:link: Links`,
+		value: t`[Official Konami DB](${official}) | [OCG Rulings](${rulings}) | [Yugipedia](${yugipedia}) | [YGOPRODECK](${ygoprodeck})`
+	};
 
 	let description = "";
 	if (lang === "ja") {
@@ -292,6 +304,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 			const addon = new MessageEmbed()
 				.setColor(Colour.Spell)
 				.addFields({ name: c("card-embed").t`Card Text`, value: formatCardText(card.text, lang) })
+				.addFields(links)
 				// one or both may be null to due data corruption or prereleases
 				.setFooter({ text: t`Password: ${card.password} | Konami ID #${card.konami_id}` });
 
@@ -308,6 +321,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 		embed.addFields({ name: c("card-embed").t`Card Effect`, value: formatCardText(card.text, lang) });
 	}
 
+	embed.addFields(links);
 	// one or both may be null to due data corruption or prereleases
 	embed.setFooter({ text: t`Password: ${card.password} | Konami ID #${card.konami_id}` });
 
