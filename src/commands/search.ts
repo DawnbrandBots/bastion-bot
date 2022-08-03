@@ -4,10 +4,10 @@ import { CommandInteraction } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { createCardEmbed, getCard, inferInputType } from "../card";
 import { Command } from "../Command";
-import { LocaleProvider } from "../locale";
+import { LocaleProvider, resultLangStringOption } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { addFunding, addNotice, resultLangStringOption, searchQueryTypeStringOption } from "../utils";
+import { addFunding, addNotice, searchQueryTypeStringOption } from "../utils";
 
 @injectable()
 export class SearchCommand extends Command {

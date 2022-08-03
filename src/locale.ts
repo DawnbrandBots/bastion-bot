@@ -1,7 +1,9 @@
+import { SlashCommandStringOption } from "@discordjs/builders";
 import sqlite, { Database, Statement } from "better-sqlite3";
 import { Locale as DiscordLocale } from "discord-api-types/v9";
 import { CommandInteraction, Snowflake } from "discord.js";
 import { inject, singleton } from "tsyringe";
+import { c, useLocale } from "ttag";
 
 type ArrayElement<T> = T extends readonly (infer U)[] ? U : never;
 
@@ -31,6 +33,26 @@ export const COMMAND_LOCALIZATIONS = [
 	{ gettext: "zh-TW", discord: DiscordLocale.ChineseTW }
 ] as const;
 
+export const resultLangStringOption = (() => {
+	const option = new SlashCommandStringOption()
+		.setName("result-language")
+		.setDescription("The output language for the card embed.")
+		.setRequired(false)
+		.addChoices(...LOCALE_CHOICES);
+
+	for (const { gettext, discord } of COMMAND_LOCALIZATIONS) {
+		useLocale(gettext);
+		option
+			.setNameLocalization(discord, c("command-option").t`result-language`)
+			.setDescriptionLocalization(
+				discord,
+				c("command-option-description").t`The output language for the card embed.`
+			);
+	}
+
+	return option;
+})();
+
 /**
  * Abstract persistent store for locale overrides. We need this if we switch to
  * multiprocess sharding in the future and demand is high, since SQLite cannot
@@ -54,7 +76,7 @@ export abstract class LocaleProvider {
 	}
 
 	async get(interaction: CommandInteraction): Promise<Locale> {
-		const lang = interaction.options.getString("lang");
+		const lang = interaction.options.getString("result-language");
 		if (lang) {
 			// We could verify with this.filter, but that unnecessarily checks through
 			// the entire list when we know that this entire codebase should use

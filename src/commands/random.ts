@@ -5,10 +5,10 @@ import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { createCardEmbed } from "../card";
 import { Command } from "../Command";
-import { LocaleProvider } from "../locale";
+import { LocaleProvider, resultLangStringOption } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { addFunding, addNotice, resultLangStringOption } from "../utils";
+import { addFunding, addNotice } from "../utils";
 
 @injectable()
 export class RandomCommand extends Command {
