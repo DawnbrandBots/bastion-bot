@@ -4,7 +4,7 @@ import { CommandInteraction } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { createCardEmbed, getCard, inferInputType } from "../card";
 import { Command } from "../Command";
-import { LocaleProvider, resultLangStringOption } from "../locale";
+import { inputLangStringOption, Locale, LocaleProvider, resultLangStringOption } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { addFunding, addNotice, searchQueryTypeStringOption } from "../utils";
@@ -27,6 +27,7 @@ export class SearchCommand extends Command {
 					.setDescription("The password, Konami ID, or name you're searching by.")
 					.setRequired(true)
 			)
+			.addStringOption(inputLangStringOption)
 			.addStringOption(resultLangStringOption)
 			.addStringOption(searchQueryTypeStringOption)
 			.toJSON();
@@ -38,16 +39,17 @@ export class SearchCommand extends Command {
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		const [type, input] = inferInputType(interaction);
-		const lang = await this.locales.get(interaction);
+		const resultLanguage = await this.locales.get(interaction);
+		const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
 		await interaction.deferReply();
-		const card = await getCard(type, input, lang);
+		const card = await getCard(type, input, inputLanguage);
 		let end: number;
 		if (!card) {
 			end = Date.now();
 			// TODO: include properly-named type in this message
 			await interaction.editReply({ content: `Could not find a card matching \`${input}\`!` });
 		} else {
-			let embeds = createCardEmbed(card, lang);
+			let embeds = createCardEmbed(card, resultLanguage);
 			embeds = addFunding(addNotice(embeds));
 			end = Date.now();
 			await interaction.editReply({ embeds }); // Actually returns void

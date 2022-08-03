@@ -36,7 +36,7 @@ export const COMMAND_LOCALIZATIONS = [
 export const resultLangStringOption = (() => {
 	const option = new SlashCommandStringOption()
 		.setName("result-language")
-		.setDescription("The output language for the card embed.")
+		.setDescription("The output language for the card embed, overriding other settings.")
 		.setRequired(false)
 		.addChoices(...LOCALE_CHOICES);
 
@@ -46,7 +46,27 @@ export const resultLangStringOption = (() => {
 			.setNameLocalization(discord, c("command-option").t`result-language`)
 			.setDescriptionLocalization(
 				discord,
-				c("command-option-description").t`The output language for the card embed.`
+				c("command-option-description").t`The output language for the card embed, overriding other settings.`
+			);
+	}
+
+	return option;
+})();
+
+export const inputLangStringOption = (() => {
+	const option = new SlashCommandStringOption()
+		.setName("input-language")
+		.setDescription("The language to search in, defaulting to the result language.")
+		.setRequired(false)
+		.addChoices(...LOCALE_CHOICES);
+
+	for (const { gettext, discord } of COMMAND_LOCALIZATIONS) {
+		useLocale(gettext);
+		option
+			.setNameLocalization(discord, c("command-option").t`input-language`)
+			.setDescriptionLocalization(
+				discord,
+				c("command-option-description").t`The language to search in, defaulting to the result language.`
 			);
 	}
 

@@ -8,7 +8,7 @@ import { c, t, useLocale } from "ttag";
 import { getCard, inferInputType } from "../card";
 import { Command } from "../Command";
 import { CardSchema } from "../definitions/yaml-yugi";
-import { COMMAND_LOCALIZATIONS, LocaleProvider } from "../locale";
+import { COMMAND_LOCALIZATIONS, inputLangStringOption, Locale, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { searchQueryTypeStringOption } from "../utils";
@@ -42,7 +42,10 @@ export class ArtCommand extends Command {
 				);
 		}
 
-		builder.addStringOption(option).addStringOption(searchQueryTypeStringOption);
+		builder
+			.addStringOption(option)
+			.addStringOption(inputLangStringOption)
+			.addStringOption(searchQueryTypeStringOption);
 
 		return builder.toJSON();
 	}
@@ -67,13 +70,14 @@ export class ArtCommand extends Command {
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		const [type, input] = inferInputType(interaction);
-		const lang = await this.locales.get(interaction);
+		const resultLanguage = await this.locales.get(interaction);
+		const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
 		await interaction.deferReply();
-		const card = await getCard(type, input, lang);
+		const card = await getCard(type, input, inputLanguage);
 		let end: number;
 		if (!card) {
 			end = Date.now();
-			useLocale(lang);
+			useLocale(resultLanguage);
 			await interaction.editReply({ content: t`Could not find a card matching \`${input}\`!` });
 		} else {
 			const artUrl = await this.getArt(card);
@@ -82,8 +86,8 @@ export class ArtCommand extends Command {
 				// expected embedding of image from URL
 				await interaction.editReply(artUrl); // Actually returns void
 			} else {
-				const name = card.name[lang] || card.konami_id;
-				useLocale(lang);
+				const name = card.name[resultLanguage] || card.konami_id;
+				useLocale(resultLanguage);
 				await interaction.editReply({ content: t`Could not find art for \`${name}\`!` });
 			}
 		}

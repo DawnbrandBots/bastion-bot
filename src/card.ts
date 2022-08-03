@@ -58,6 +58,9 @@ c("spell-trap-property").t`Normal Trap`;
 c("spell-trap-property").t`Continuous Trap`;
 c("spell-trap-property").t`Counter Trap`;
 
+// Guarantee default locale at import time since the resulting strings matter.
+useLocale("en");
+
 const RaceIcon = {
 	[c("monster-type-race").t`Warrior`]: "<:Warrior:602707927224025118>",
 	[c("monster-type-race").t`Spellcaster`]: "<:Spellcaster:602707926834085888>",

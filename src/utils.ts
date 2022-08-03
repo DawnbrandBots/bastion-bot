@@ -1,6 +1,6 @@
 import { SlashCommandStringOption } from "@discordjs/builders";
 import { CacheType, CommandInteraction, Guild, GuildCacheMessage, MessageEmbed } from "discord.js";
-import { gettext, t } from "ttag";
+import { gettext, t, useLocale } from "ttag";
 
 export function serializeServer(server: Guild): string {
 	if ("name" in server) {
@@ -37,6 +37,10 @@ export function addNotice(embeds: MessageEmbed | MessageEmbed[]): MessageEmbed[]
 	return embeds;
 }
 
+// Guarantee default locale at import time since the resulting strings matter.
+// This could be buried in addFunding but then we would have to localise all
+// strings every time when only one gets used.
+useLocale("en");
 const messages = [
 	t`Please consider supporting us!`,
 	t`Help keep Bastion online!`,
