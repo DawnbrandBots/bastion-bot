@@ -228,303 +228,303 @@ msgstr ""
 #: src\card.ts:37
 msgctxt "monster-type-race"
 msgid "Normal"
-msgstr ""
+msgstr "일반"
 
 #: src\card.ts:38
 msgctxt "monster-type-race"
 msgid "Effect"
-msgstr ""
+msgstr "효과"
 
 #: src\card.ts:39
 msgctxt "monster-type-race"
 msgid "Pendulum"
-msgstr ""
+msgstr "펜듈럼"
 
 #: src\card.ts:40
 msgctxt "monster-type-race"
 msgid "Ritual"
-msgstr ""
+msgstr "의식"
 
 #: src\card.ts:41
 msgctxt "monster-type-race"
 msgid "Fusion"
-msgstr ""
+msgstr "융합"
 
 #: src\card.ts:42
 msgctxt "monster-type-race"
 msgid "Synchro"
-msgstr ""
+msgstr "싱크로"
 
 #: src\card.ts:43
 msgctxt "monster-type-race"
 msgid "Xyz"
-msgstr ""
+msgstr "엑시즈"
 
 #: src\card.ts:44
 msgctxt "monster-type-race"
 msgid "Link"
-msgstr ""
+msgstr "링크"
 
 #: src\card.ts:45
 msgctxt "monster-type-race"
 msgid "Tuner"
-msgstr ""
+msgstr "튜너"
 
 #: src\card.ts:46
 msgctxt "monster-type-race"
 msgid "Flip"
-msgstr ""
+msgstr "리버스"
 
 #: src\card.ts:47
 msgctxt "monster-type-race"
 msgid "Toon"
-msgstr ""
+msgstr "툰"
 
 #: src\card.ts:48
 msgctxt "monster-type-race"
 msgid "Spirit"
-msgstr ""
+msgstr "스피릿"
 
 #: src\card.ts:49
 msgctxt "monster-type-race"
 msgid "Union"
-msgstr ""
+msgstr "유니온"
 
 #: src\card.ts:50
 msgctxt "monster-type-race"
 msgid "Gemini"
-msgstr ""
+msgstr "듀얼"
 
 #: src\card.ts:65
 msgctxt "monster-type-race"
 msgid "Warrior"
-msgstr ""
+msgstr "전사족"
 
 #: src\card.ts:66
 msgctxt "monster-type-race"
 msgid "Spellcaster"
-msgstr ""
+msgstr "마법사족"
 
 #: src\card.ts:67
 msgctxt "monster-type-race"
 msgid "Fairy"
-msgstr ""
+msgstr "천사족"
 
 #: src\card.ts:68
 msgctxt "monster-type-race"
 msgid "Fiend"
-msgstr ""
+msgstr "악마족"
 
 #: src\card.ts:69
 msgctxt "monster-type-race"
 msgid "Zombie"
-msgstr ""
+msgstr "언데드족"
 
 #: src\card.ts:70
 msgctxt "monster-type-race"
 msgid "Machine"
-msgstr ""
+msgstr "기계족"
 
 #: src\card.ts:71
 msgctxt "monster-type-race"
 msgid "Aqua"
-msgstr ""
+msgstr "물족"
 
 #: src\card.ts:72
 msgctxt "monster-type-race"
 msgid "Pyro"
-msgstr ""
+msgstr "화염족"
 
 #: src\card.ts:73
 msgctxt "monster-type-race"
 msgid "Rock"
-msgstr ""
+msgstr "암석족"
 
 #: src\card.ts:74
 msgctxt "monster-type-race"
 msgid "Winged Beast"
-msgstr ""
+msgstr "비행야수족"
 
 #: src\card.ts:75
 msgctxt "monster-type-race"
 msgid "Plant"
-msgstr ""
+msgstr "식물족"
 
 #: src\card.ts:76
 msgctxt "monster-type-race"
 msgid "Insect"
-msgstr ""
+msgstr "곤충족"
 
 #: src\card.ts:77
 msgctxt "monster-type-race"
 msgid "Thunder"
-msgstr ""
+msgstr "번개족"
 
 #: src\card.ts:78
 msgctxt "monster-type-race"
 msgid "Dragon"
-msgstr ""
+msgstr "드래곤족"
 
 #: src\card.ts:79
 msgctxt "monster-type-race"
 msgid "Beast"
-msgstr ""
+msgstr "야수족"
 
 #: src\card.ts:80
 msgctxt "monster-type-race"
 msgid "Beast-Warrior"
-msgstr ""
+msgstr "야수전사족"
 
 #: src\card.ts:81
 msgctxt "monster-type-race"
 msgid "Dinosaur"
-msgstr ""
+msgstr "공룡족"
 
 #: src\card.ts:82
 msgctxt "monster-type-race"
 msgid "Fish"
-msgstr ""
+msgstr "어류족"
 
 #: src\card.ts:83
 msgctxt "monster-type-race"
 msgid "Sea Serpent"
-msgstr ""
+msgstr "해룡족"
 
 #: src\card.ts:84
 msgctxt "monster-type-race"
 msgid "Reptile"
-msgstr ""
+msgstr "파충류족"
 
 #: src\card.ts:85
 msgctxt "monster-type-race"
 msgid "Psychic"
-msgstr ""
+msgstr "사이킥족"
 
 #: src\card.ts:86
 msgctxt "monster-type-race"
 msgid "Divine-Beast"
-msgstr ""
+msgstr "환신야수족"
 
 #: src\card.ts:87
 msgctxt "monster-type-race"
 msgid "Creator God"
-msgstr ""
+msgstr "창조신족"
 
 #: src\card.ts:88
 msgctxt "monster-type-race"
 msgid "Wyrm"
-msgstr ""
+msgstr "환룡족"
 
 #: src\card.ts:89
 msgctxt "monster-type-race"
 msgid "Cyberse"
-msgstr ""
+msgstr "사이버스족"
 
 #: src\card.ts:51
 msgctxt "spell-trap-property"
 msgid "Normal Spell"
-msgstr ""
+msgstr "일반 마법"
 
 #: src\card.ts:52
 msgctxt "spell-trap-property"
 msgid "Continuous Spell"
-msgstr ""
+msgstr "지속 마법"
 
 #: src\card.ts:53
 msgctxt "spell-trap-property"
 msgid "Equip Spell"
-msgstr ""
+msgstr "장착 마법"
 
 #: src\card.ts:54
 msgctxt "spell-trap-property"
 msgid "Quick-Play Spell"
-msgstr ""
+msgstr "속공 마법"
 
 #: src\card.ts:55
 msgctxt "spell-trap-property"
 msgid "Field Spell"
-msgstr ""
+msgstr "필드 마법"
 
 #: src\card.ts:56
 msgctxt "spell-trap-property"
 msgid "Ritual Spell"
-msgstr ""
+msgstr "의식 마법"
 
 #: src\card.ts:57
 msgctxt "spell-trap-property"
 msgid "Normal Trap"
-msgstr ""
+msgstr "일반 함정"
 
 #: src\card.ts:58
 msgctxt "spell-trap-property"
 msgid "Continuous Trap"
-msgstr ""
+msgstr "지속 함정"
 
 #: src\card.ts:59
 msgctxt "spell-trap-property"
 msgid "Counter Trap"
-msgstr ""
+msgstr "카운터 함정"
 
 #: src\card.ts:95
 msgctxt "attribute"
 msgid "EARTH"
-msgstr ""
+msgstr "땅"
 
 #: src\card.ts:96
 msgctxt "attribute"
 msgid "WATER"
-msgstr ""
+msgstr "물"
 
 #: src\card.ts:97
 msgctxt "attribute"
 msgid "FIRE"
-msgstr ""
+msgstr "화염"
 
 #: src\card.ts:98
 msgctxt "attribute"
 msgid "WIND"
-msgstr ""
+msgstr "바람"
 
 #: src\card.ts:99
 msgctxt "attribute"
 msgid "LIGHT"
-msgstr ""
+msgstr "빛"
 
 #: src\card.ts:100
 msgctxt "attribute"
 msgid "DARK"
-msgstr ""
+msgstr "어둠"
 
 #: src\card.ts:101
 msgctxt "attribute"
 msgid "DIVINE"
-msgstr ""
+msgstr "신"
 
 #: src\card.ts:298
 #: src\card.ts:309
 msgctxt "card-embed"
 msgid "Card Text"
-msgstr ""
+msgstr "카드 텍스트"
 
 #: src\card.ts:303
 msgctxt "card-embed"
 msgid "Pendulum Effect"
-msgstr ""
+msgstr "펜듈럼 효과"
 
 #: src\card.ts:324
 msgctxt "card-embed"
 msgid "Card Effect"
-msgstr ""
+msgstr "카드 효과"
 
 #: src\locale.ts:46
 msgctxt "command-option"
 msgid "result-language"
-msgstr ""
+msgstr "출력 언어"
 
 #: src\locale.ts:66
 msgctxt "command-option"
 msgid "input-language"
-msgstr ""
+msgstr "입력 언어"
 
 #: src\commands\art.ts:38
 msgctxt "command-option"
@@ -569,39 +569,39 @@ msgstr ""
 #: src\commands\art.ts:35
 msgctxt "command-name"
 msgid "art"
-msgstr ""
+msgstr "일러스트"
 
 #: src\commands\ping.ts:27
 msgctxt "command-name"
 msgid "ping"
-msgstr ""
+msgstr "핑"
 
 #: src\commands\ygoprodeck.ts:34
 msgctxt "command-name"
 msgid "ygoprodeck"
-msgstr ""
+msgstr "YGOPRODECK 검색"
 
 #: src\commands\yugipedia.ts:34
 msgctxt "command-name"
 msgid "yugipedia"
-msgstr ""
+msgstr "Yugipedia 검색"
 
 #: src\commands\art.ts:36
 msgctxt "command-description"
 msgid "Display the art for a card!"
-msgstr ""
+msgstr "카드의 일러스트를 표시합니다."
 
 #: src\commands\ping.ts:28
 msgctxt "command-description"
 msgid "Test latency to the new bot instance."
-msgstr ""
+msgstr "새로운 봇 인스턴스의 지연 시간을 테스트합니다."
 
 #: src\commands\ygoprodeck.ts:35
 msgctxt "command-description"
 msgid "Search the YGOPRODECK card database."
-msgstr ""
+msgstr "YGOPRODECK에서 검색합니다."
 
 #: src\commands\yugipedia.ts:37
 msgctxt "command-description"
 msgid "Search the Yugipedia wiki for a page and link to it."
-msgstr ""
+msgstr "Yugipedia에서 검색하고 링크를 출력합니다."
