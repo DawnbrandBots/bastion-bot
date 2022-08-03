@@ -1,5 +1,6 @@
 import { SlashCommandStringOption } from "@discordjs/builders";
 import { CacheType, CommandInteraction, Guild, GuildCacheMessage, MessageEmbed } from "discord.js";
+import { gettext, t } from "ttag";
 import { LOCALE_CHOICES } from "./locale";
 
 export function serializeServer(server: Guild): string {
@@ -30,26 +31,29 @@ export function addNotice(embeds: MessageEmbed | MessageEmbed[]): MessageEmbed[]
 	}
 	embeds[embeds.length - 1].addFields([
 		{
-			name: ":tools: This command is in development.",
-			value: ":incoming_envelope: Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!"
+			name: t`:tools: This command is in development.`,
+			value: t`:incoming_envelope: Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!`
 		}
 	]);
 	return embeds;
 }
 
 const messages = [
-	"Please consider supporting us!",
-	"Help keep Bastion online!",
-	"Please help keep Bastion online!",
-	"Was Bastion helpful? Consider supporting us!",
-	"Was Bastion helpful? We need your support!",
-	"Did you find Bastion useful? Consider supporting us!",
-	"Did you find Bastion useful? Help keep it online!",
-	"Did you find Bastion useful? We need your support!",
-	"Enjoy Bastion? Help keep it online!",
-	"Enjoy Bastion? Consider supporting us!",
-	"Found what you were looking for? Consider supporting us!"
+	t`Please consider supporting us!`,
+	t`Help keep Bastion online!`,
+	t`Please help keep Bastion online!`,
+	t`Was Bastion helpful? Consider supporting us!`,
+	t`Was Bastion helpful? We need your support!`,
+	t`Did you find Bastion useful? Consider supporting us!`,
+	t`Did you find Bastion useful? Help keep it online!`,
+	t`Did you find Bastion useful? We need your support!`,
+	t`Enjoy Bastion? Help keep it online!`,
+	t`Enjoy Bastion? Consider supporting us!`,
+	t`Found what you were looking for? Consider supporting us!`
 ];
+
+// Same hack as in card.ts
+const rt = gettext;
 
 // Has a random chance of adding a funding notice
 export function addFunding(embeds: MessageEmbed | MessageEmbed[], chance = 0.25): MessageEmbed[] {
@@ -59,7 +63,7 @@ export function addFunding(embeds: MessageEmbed | MessageEmbed[], chance = 0.25)
 	if (Math.random() < chance) {
 		embeds[embeds.length - 1].addFields([
 			{
-				name: messages[Math.floor(Math.random() * messages.length)],
+				name: rt(messages[Math.floor(Math.random() * messages.length)]),
 				value: `
 <:patreon:895892186841890816> [https://www.patreon.com/alphakretinbots](https://www.patreon.com/alphakretinbots)
 <:kofi:927373724959789096> [https://ko-fi.com/dawnbrandbots](https://ko-fi.com/dawnbrandbots)
