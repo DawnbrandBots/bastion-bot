@@ -3,50 +3,30 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals = 1; plural = 0;\n"
 "Language: zh-CN\n"
-"mime-version: 1.0\n"
+"MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src\commands\art.ts:76
+#: src\card.ts:239
+msgid ":link: Links"
+msgstr ":link: 链接"
+
+#: src\card.ts:240
 #, javascript-format
-msgid "Could not find a card matching `${ input }`!"
-msgstr "查无此卡：`${ input }`"
+msgid ""
+"[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
+"[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
+msgstr ""
 
-#: src\commands\art.ts:87
-msgid "Could not find art for `${ name }`!"
-msgstr "没找到`${ name }`的卡图！"
+#: src\card.ts:276
+msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
+msgstr "**种族**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:144
-#: src\card.ts:153
-msgid "Card Text"
-msgstr "卡片文本"
-
-#: src\card.ts:149
-#. Discord cannot take just a blank or spaces, but this zero-width space works
-msgid "Pendulum Effect"
-msgstr "灵摆效果"
-
-#: src\card.ts:155
-#: src\card.ts:174
+#: src\card.ts:278
 #, javascript-format
-msgid "Password: ${ card.password } | Konami ID #${ card.kid }"
-msgstr "卡片密码: ${ card.password } | 官方编号#${ card.kid }"
+msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
+msgstr "**属性**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
-#: src\card.ts:170
-msgid "Card Effect"
-msgstr "卡片效果"
-
-#: src\card.ts:122
-#. TODO: amend typeline when we get the real string or array and localize
-#, javascript-format
-msgid "**Type**: ${ RaceIcon[card.race] } ${ race } | ${ card.typeline }"
-msgstr "**种族**: ${ RaceIcon[card.race] } ${ race } | ${ card.typeline }"
-
-#: src\card.ts:124
-#, javascript-format
-msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ card.attribute }"
-msgstr "**属性**: ${ AttributeIcon[card.attribute] } ${ card.attribute }"
-
-#: src\card.ts:128
+#: src\card.ts:282
 #, javascript-format
 msgid ""
 "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
@@ -55,14 +35,15 @@ msgstr ""
 "**阶级**: ${ Icon.Rank } ${ card.rank } **攻击力**: ${ card.atk } **守备力**: ${ "
 "card.def }"
 
-#: src\card.ts:131
-msgid ""
-"**Link Rating**: ${ card.link } **ATK**: ${ card.atk } **Link Arrows**: ${ "
-"arrows }"
-msgstr "**连接数值**: ${ card.link } **攻击力**: ${ card.atk } **连接标记**: ${ arrows }"
-
-#: src\card.ts:133
+#: src\card.ts:285
 #, javascript-format
+msgid ""
+"**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
+"Arrows**: ${ arrows }"
+msgstr ""
+"**连接数值**: ${ card.link_arrows.length } **攻击力**: ${ card.atk } **连接标记**: ${ arrows }"
+
+#: src\card.ts:287
 msgid ""
 "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
 "${ card.def }"
@@ -70,31 +51,564 @@ msgstr ""
 "**等级**: ${ Icon.Level } ${ card.level } **攻击力**: ${ card.atk } **守备力**: ${ "
 "card.def }"
 
-#: src\card.ts:138
+#: src\card.ts:292
 #, javascript-format
 msgid ""
-"**Pendulum Scale**: ${ Icon.LeftScale }${ card.scale }/${ card.scale }${ "
-"Icon.RightScale }"
+"**Pendulum Scale**: ${ Icon.LeftScale }${ card.pendulum_scale }/${ "
+"card.pendulum_scale }${ Icon.RightScale }"
 msgstr ""
 "**灵摆刻度**: ${ Icon.LeftScale }${ card.scale }/${ card.scale }${ "
 "Icon.RightScale }"
 
-#: src\commands\art.ts:35
-msgid "art"
-msgstr "卡图"
+#: src\card.ts:312
+#: src\card.ts:329
+#, javascript-format
+msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
+msgstr "卡片密码: ${ card.password } | 官方编号${ card.konami_id }"
 
-#: src\commands\art.ts:36
-msgid "Display the art for a card!"
-msgstr "显示卡片图。"
+#: src\utils.ts:33
+msgid ":tools: This command is in development."
+msgstr ""
+
+#: src\utils.ts:34
+msgid ""
+":incoming_envelope: Please send feedback to [our issue "
+"tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support "
+"server](https://discord.gg/4aFuPyuE96)!"
+msgstr ""
+
+#: src\utils.ts:45
+msgid "Please consider supporting us!"
+msgstr ""
+
+#: src\utils.ts:46
+msgid "Help keep Bastion online!"
+msgstr ""
+
+#: src\utils.ts:47
+msgid "Please help keep Bastion online!"
+msgstr ""
+
+#: src\utils.ts:48
+msgid "Was Bastion helpful? Consider supporting us!"
+msgstr ""
+
+#: src\utils.ts:49
+msgid "Was Bastion helpful? We need your support!"
+msgstr ""
+
+#: src\utils.ts:50
+msgid "Did you find Bastion useful? Consider supporting us!"
+msgstr ""
+
+#: src\utils.ts:51
+msgid "Did you find Bastion useful? Help keep it online!"
+msgstr ""
+
+#: src\utils.ts:52
+msgid "Did you find Bastion useful? We need your support!"
+msgstr ""
+
+#: src\utils.ts:53
+msgid "Enjoy Bastion? Help keep it online!"
+msgstr ""
+
+#: src\utils.ts:54
+msgid "Enjoy Bastion? Consider supporting us!"
+msgstr ""
+
+#: src\utils.ts:55
+msgid "Found what you were looking for? Consider supporting us!"
+msgstr ""
+
+#: src\commands\art.ts:81
+#, javascript-format
+msgid "Could not find a card matching `${ input }`!"
+msgstr "查无此卡：`${ input }`"
+
+#: src\commands\art.ts:91
+msgid "Could not find art for `${ name }`!"
+msgstr "没找到`${ name }`的卡图！"
+
+#: src\commands\locale.ts:62
+#, javascript-format
+msgid "Locale override for this channel: ${ channelOverride }"
+msgstr ""
+
+#: src\commands\locale.ts:66
+msgid "Locale override for this server: ${ guildOverride }"
+msgstr ""
+
+#: src\commands\locale.ts:69
+#: src\commands\locale.ts:99
+#, javascript-format
+msgid "Discord Community locale for this server: ${ interaction.guildLocale }"
+msgstr ""
+
+#: src\commands\locale.ts:73
+msgid "Locale override for this direct message: ${ override }"
+msgstr ""
+
+#: src\commands\locale.ts:76
+#, javascript-format
+msgid "Your Discord locale: ${ interaction.locale }"
+msgstr ""
+
+#: src\commands\locale.ts:88
+#, javascript-format
+msgid "Locale for current channel <#${ channel }> overridden with ${ locale }."
+msgstr ""
+
+#: src\commands\locale.ts:91
+msgid "Locale for current channel <#${ channel }> reset to server default."
+msgstr ""
+
+#: src\commands\locale.ts:96
+#, javascript-format
+msgid "Server-wide locale override: ${ _guildOverride }"
+msgstr ""
+
+#: src\commands\locale.ts:101
+msgid ""
+"Sorry, you must have the Manage Channel permission in this channel. If you "
+"think this is an error, contact your server admin or report a bug."
+msgstr ""
+
+#: src\commands\locale.ts:108
+#, javascript-format
+msgid "Locale for this server overriden with ${ locale }."
+msgstr ""
+
+#: src\commands\locale.ts:111
+msgid "Locale for this server reset to Discord Community default."
+msgstr ""
+
+#: src\commands\locale.ts:114
+#, javascript-format
+msgid "Server-wide default for community servers is ${ interaction.guildLocale }."
+msgstr ""
+
+#: src\commands\locale.ts:116
+msgid ""
+"Sorry, you must have the Manage Server permission to do this. If you think "
+"this is an error, contact your server admin or report a bug."
+msgstr ""
+
+#: src\commands\locale.ts:123
+#, javascript-format
+msgid ""
+"Locale for this direct message overridden with ${ locale }. Your Discord "
+"setting is ${ interaction.locale }."
+msgstr ""
+
+#: src\commands\locale.ts:126
+#, javascript-format
+msgid ""
+"Locale for this direct message reset to Discord default. Your Discord "
+"setting is ${ interaction.locale }."
+msgstr ""
+
+#: src\commands\ping.ts:41
+msgid "Average WebSocket ping (new instance): ${ interaction.client.ws.ping } ms"
+msgstr ""
+
+#: src\commands\ping.ts:46
+#, javascript-format
+msgid "Total latency: ${ latency } ms"
+msgstr ""
+
+#: src\commands\ygoprodeck.ts:68
+#, javascript-format
+msgid "Searching YGOPRODECK for `${ term }`…"
+msgstr ""
+
+#: src\commands\yugipedia.ts:82
+#, javascript-format
+msgid "Searching Yugipedia for `${ page }`…"
+msgstr ""
+
+#: src\commands\yugipedia.ts:85
+#, javascript-format
+msgid "Could not find a Yugipedia page named `${ page }`."
+msgstr ""
+
+#: src\card.ts:37
+msgctxt "monster-type-race"
+msgid "Normal"
+msgstr ""
+
+#: src\card.ts:38
+msgctxt "monster-type-race"
+msgid "Effect"
+msgstr ""
+
+#: src\card.ts:39
+msgctxt "monster-type-race"
+msgid "Pendulum"
+msgstr ""
+
+#: src\card.ts:40
+msgctxt "monster-type-race"
+msgid "Ritual"
+msgstr ""
+
+#: src\card.ts:41
+msgctxt "monster-type-race"
+msgid "Fusion"
+msgstr ""
+
+#: src\card.ts:42
+msgctxt "monster-type-race"
+msgid "Synchro"
+msgstr ""
+
+#: src\card.ts:43
+msgctxt "monster-type-race"
+msgid "Xyz"
+msgstr ""
+
+#: src\card.ts:44
+msgctxt "monster-type-race"
+msgid "Link"
+msgstr ""
+
+#: src\card.ts:45
+msgctxt "monster-type-race"
+msgid "Tuner"
+msgstr ""
+
+#: src\card.ts:46
+msgctxt "monster-type-race"
+msgid "Flip"
+msgstr ""
+
+#: src\card.ts:47
+msgctxt "monster-type-race"
+msgid "Toon"
+msgstr ""
+
+#: src\card.ts:48
+msgctxt "monster-type-race"
+msgid "Spirit"
+msgstr ""
+
+#: src\card.ts:49
+msgctxt "monster-type-race"
+msgid "Union"
+msgstr ""
+
+#: src\card.ts:50
+msgctxt "monster-type-race"
+msgid "Gemini"
+msgstr ""
+
+#: src\card.ts:65
+msgctxt "monster-type-race"
+msgid "Warrior"
+msgstr ""
+
+#: src\card.ts:66
+msgctxt "monster-type-race"
+msgid "Spellcaster"
+msgstr ""
+
+#: src\card.ts:67
+msgctxt "monster-type-race"
+msgid "Fairy"
+msgstr ""
+
+#: src\card.ts:68
+msgctxt "monster-type-race"
+msgid "Fiend"
+msgstr ""
+
+#: src\card.ts:69
+msgctxt "monster-type-race"
+msgid "Zombie"
+msgstr ""
+
+#: src\card.ts:70
+msgctxt "monster-type-race"
+msgid "Machine"
+msgstr ""
+
+#: src\card.ts:71
+msgctxt "monster-type-race"
+msgid "Aqua"
+msgstr ""
+
+#: src\card.ts:72
+msgctxt "monster-type-race"
+msgid "Pyro"
+msgstr ""
+
+#: src\card.ts:73
+msgctxt "monster-type-race"
+msgid "Rock"
+msgstr ""
+
+#: src\card.ts:74
+msgctxt "monster-type-race"
+msgid "Winged Beast"
+msgstr ""
+
+#: src\card.ts:75
+msgctxt "monster-type-race"
+msgid "Plant"
+msgstr ""
+
+#: src\card.ts:76
+msgctxt "monster-type-race"
+msgid "Insect"
+msgstr ""
+
+#: src\card.ts:77
+msgctxt "monster-type-race"
+msgid "Thunder"
+msgstr ""
+
+#: src\card.ts:78
+msgctxt "monster-type-race"
+msgid "Dragon"
+msgstr ""
+
+#: src\card.ts:79
+msgctxt "monster-type-race"
+msgid "Beast"
+msgstr ""
+
+#: src\card.ts:80
+msgctxt "monster-type-race"
+msgid "Beast-Warrior"
+msgstr ""
+
+#: src\card.ts:81
+msgctxt "monster-type-race"
+msgid "Dinosaur"
+msgstr ""
+
+#: src\card.ts:82
+msgctxt "monster-type-race"
+msgid "Fish"
+msgstr ""
+
+#: src\card.ts:83
+msgctxt "monster-type-race"
+msgid "Sea Serpent"
+msgstr ""
+
+#: src\card.ts:84
+msgctxt "monster-type-race"
+msgid "Reptile"
+msgstr ""
+
+#: src\card.ts:85
+msgctxt "monster-type-race"
+msgid "Psychic"
+msgstr ""
+
+#: src\card.ts:86
+msgctxt "monster-type-race"
+msgid "Divine-Beast"
+msgstr ""
+
+#: src\card.ts:87
+msgctxt "monster-type-race"
+msgid "Creator God"
+msgstr ""
+
+#: src\card.ts:88
+msgctxt "monster-type-race"
+msgid "Wyrm"
+msgstr ""
+
+#: src\card.ts:89
+msgctxt "monster-type-race"
+msgid "Cyberse"
+msgstr ""
+
+#: src\card.ts:51
+msgctxt "spell-trap-property"
+msgid "Normal Spell"
+msgstr ""
+
+#: src\card.ts:52
+msgctxt "spell-trap-property"
+msgid "Continuous Spell"
+msgstr ""
+
+#: src\card.ts:53
+msgctxt "spell-trap-property"
+msgid "Equip Spell"
+msgstr ""
+
+#: src\card.ts:54
+msgctxt "spell-trap-property"
+msgid "Quick-Play Spell"
+msgstr ""
+
+#: src\card.ts:55
+msgctxt "spell-trap-property"
+msgid "Field Spell"
+msgstr ""
+
+#: src\card.ts:56
+msgctxt "spell-trap-property"
+msgid "Ritual Spell"
+msgstr ""
+
+#: src\card.ts:57
+msgctxt "spell-trap-property"
+msgid "Normal Trap"
+msgstr ""
+
+#: src\card.ts:58
+msgctxt "spell-trap-property"
+msgid "Continuous Trap"
+msgstr ""
+
+#: src\card.ts:59
+msgctxt "spell-trap-property"
+msgid "Counter Trap"
+msgstr ""
+
+#: src\card.ts:95
+msgctxt "attribute"
+msgid "EARTH"
+msgstr ""
+
+#: src\card.ts:96
+msgctxt "attribute"
+msgid "WATER"
+msgstr ""
+
+#: src\card.ts:97
+msgctxt "attribute"
+msgid "FIRE"
+msgstr ""
+
+#: src\card.ts:98
+msgctxt "attribute"
+msgid "WIND"
+msgstr ""
+
+#: src\card.ts:99
+msgctxt "attribute"
+msgid "LIGHT"
+msgstr ""
+
+#: src\card.ts:100
+msgctxt "attribute"
+msgid "DARK"
+msgstr ""
+
+#: src\card.ts:101
+msgctxt "attribute"
+msgid "DIVINE"
+msgstr ""
+
+#: src\card.ts:298
+#: src\card.ts:309
+msgctxt "card-embed"
+msgid "Card Text"
+msgstr "卡片文本"
+
+#: src\card.ts:303
+msgctxt "card-embed"
+msgid "Pendulum Effect"
+msgstr "灵摆效果"
+
+#: src\card.ts:324
+msgctxt "card-embed"
+msgid "Card Effect"
+msgstr "卡片效果"
+
+#: src\locale.ts:46
+msgctxt "command-option"
+msgid "result-language"
+msgstr ""
+
+#: src\locale.ts:66
+msgctxt "command-option"
+msgid "input-language"
+msgstr ""
 
 #: src\commands\art.ts:38
+msgctxt "command-option"
 msgid "input"
 msgstr "输入"
 
-#: src\commands\art.ts:39
+#: src\commands\ygoprodeck.ts:37
+msgctxt "command-option"
+msgid "term"
+msgstr ""
+
+#: src\commands\yugipedia.ts:40
+msgctxt "command-option"
+msgid "page"
+msgstr ""
+
+#: src\locale.ts:49
+msgctxt "command-option-description"
+msgid "The output language for the card embed, overriding other settings."
+msgstr ""
+
+#: src\locale.ts:69
+msgctxt "command-option-description"
+msgid "The language to search in, defaulting to the result language."
+msgstr ""
+
+#: src\commands\art.ts:41
+msgctxt "command-option-description"
 msgid "The password, Konami ID, or name to search for a card."
 msgstr "以卡密、官方编号、卡名搜寻卡片。"
 
-#: src\card.ts:35
-msgid "Winged Beast"
+#: src\commands\ygoprodeck.ts:40
+msgctxt "command-option-description"
+msgid "The name or password of the card you're looking for."
+msgstr ""
+
+#: src\commands\yugipedia.ts:43
+msgctxt "command-option-description"
+msgid "The name of the Yugipedia page you want to search for."
+msgstr ""
+
+#: src\commands\art.ts:35
+msgctxt "command-name"
+msgid "art"
+msgstr "卡图"
+
+#: src\commands\ping.ts:27
+msgctxt "command-name"
+msgid "ping"
+msgstr ""
+
+#: src\commands\ygoprodeck.ts:34
+msgctxt "command-name"
+msgid "ygoprodeck"
+msgstr ""
+
+#: src\commands\yugipedia.ts:34
+msgctxt "command-name"
+msgid "yugipedia"
+msgstr ""
+
+#: src\commands\art.ts:36
+msgctxt "command-description"
+msgid "Display the art for a card!"
+msgstr "显示卡片图。"
+
+#: src\commands\ping.ts:28
+msgctxt "command-description"
+msgid "Test latency to the new bot instance."
+msgstr ""
+
+#: src\commands\ygoprodeck.ts:35
+msgctxt "command-description"
+msgid "Search the YGOPRODECK card database."
+msgstr ""
+
+#: src\commands\yugipedia.ts:37
+msgctxt "command-description"
+msgid "Search the Yugipedia wiki for a page and link to it."
 msgstr ""

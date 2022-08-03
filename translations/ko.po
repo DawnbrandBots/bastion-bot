@@ -2,13 +2,13 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals = 1; plural = 0;\n"
-"Language: zh-TW\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src\card.ts:239
 msgid ":link: Links"
-msgstr "鏈接"
+msgstr ""
 
 #: src\card.ts:240
 #, javascript-format
@@ -19,12 +19,12 @@ msgstr ""
 
 #: src\card.ts:276
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
-msgstr "**種族**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
+msgstr ""
 
 #: src\card.ts:278
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
-msgstr "**屬性**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
+msgstr ""
 
 #: src\card.ts:282
 #, javascript-format
@@ -32,8 +32,6 @@ msgid ""
 "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
 "card.def }"
 msgstr ""
-"**階級**: ${ Icon.Rank } ${ card.rank } **攻擊力**: ${ card.atk } **守備力**: ${ "
-"card.def }"
 
 #: src\card.ts:285
 #, javascript-format
@@ -41,15 +39,12 @@ msgid ""
 "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
 "Arrows**: ${ arrows }"
 msgstr ""
-"**連接數值**: ${ card.link_arrows.length } **攻擊力**: ${ card.atk } **連接標記**: ${ arrows }"
 
 #: src\card.ts:287
 msgid ""
 "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
 "${ card.def }"
 msgstr ""
-"**等級**: ${ Icon.Level } ${ card.level } **攻擊力**: ${ card.atk } **守備力**: ${ "
-"card.def }"
 
 #: src\card.ts:292
 #, javascript-format
@@ -57,14 +52,12 @@ msgid ""
 "**Pendulum Scale**: ${ Icon.LeftScale }${ card.pendulum_scale }/${ "
 "card.pendulum_scale }${ Icon.RightScale }"
 msgstr ""
-"**靈擺刻度**: ${ Icon.LeftScale }${ card.scale }/${ card.scale }${ "
-"Icon.RightScale }"
 
 #: src\card.ts:312
 #: src\card.ts:329
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
-msgstr "卡片密碼: ${ card.password } | 官方編號${ card.konami_id }"
+msgstr ""
 
 #: src\utils.ts:33
 msgid ":tools: This command is in development."
@@ -124,11 +117,11 @@ msgstr ""
 #: src\commands\art.ts:81
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
-msgstr "查無此卡：`${ input }`"
+msgstr ""
 
 #: src\commands\art.ts:91
 msgid "Could not find art for `${ name }`!"
-msgstr "沒找到`${ name }`的卡圖！"
+msgstr ""
 
 #: src\commands\locale.ts:62
 #, javascript-format
@@ -511,17 +504,17 @@ msgstr ""
 #: src\card.ts:309
 msgctxt "card-embed"
 msgid "Card Text"
-msgstr "卡片文本"
+msgstr ""
 
 #: src\card.ts:303
 msgctxt "card-embed"
 msgid "Pendulum Effect"
-msgstr "靈擺效果"
+msgstr ""
 
 #: src\card.ts:324
 msgctxt "card-embed"
 msgid "Card Effect"
-msgstr "卡片效果"
+msgstr ""
 
 #: src\locale.ts:46
 msgctxt "command-option"
@@ -536,7 +529,7 @@ msgstr ""
 #: src\commands\art.ts:38
 msgctxt "command-option"
 msgid "input"
-msgstr "輸入"
+msgstr ""
 
 #: src\commands\ygoprodeck.ts:37
 msgctxt "command-option"
@@ -561,7 +554,7 @@ msgstr ""
 #: src\commands\art.ts:41
 msgctxt "command-option-description"
 msgid "The password, Konami ID, or name to search for a card."
-msgstr "以卡密、官方編號、卡名搜尋卡片。"
+msgstr ""
 
 #: src\commands\ygoprodeck.ts:40
 msgctxt "command-option-description"
@@ -576,7 +569,7 @@ msgstr ""
 #: src\commands\art.ts:35
 msgctxt "command-name"
 msgid "art"
-msgstr "卡圖"
+msgstr ""
 
 #: src\commands\ping.ts:27
 msgctxt "command-name"
@@ -596,7 +589,7 @@ msgstr ""
 #: src\commands\art.ts:36
 msgctxt "command-description"
 msgid "Display the art for a card!"
-msgstr "顯示卡片圖。"
+msgstr ""
 
 #: src\commands\ping.ts:28
 msgctxt "command-description"
