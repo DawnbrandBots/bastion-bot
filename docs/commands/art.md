@@ -13,9 +13,13 @@ Diosplay the art for a card! _This command is in development._
 Name | Required? | Description | Type
 --- | --- | --- | ---
 `input` | ✔ | The password, Konami ID, or name you're searching by. | text
+`input-language` | ❌ | The language to search in. | one of the [supported locales](./locale.md#parameters)
 `type` | ❌ | Whether you're searching by password, Konami ID, or name. | one of "password", "kid", "name"
 
 ## Current behaviour
+
+If `input-language` is unspecified, it is assumed to be the setting for the
+channel or server per [Bastion's locale setting](./locale.md).
 
 If `type` is unspecified, infers the type of `input` using these rules:
 
@@ -24,7 +28,7 @@ If `type` is unspecified, infers the type of `input` using these rules:
 - anything else is treated as a name
 
 In the first two cases, a direct lookup of the card is performed using that password or Konami ID.
-In the latter case, an English-language fuzzy search is performed on the English card name.
+In the latter case, an fuzzy search is performed with the provided `input` in the `input-language`.
 
 The public reply will either be a no-match message or a URL for an image of the card artwork, with the expectation that Discord automatically embeds this.
 
@@ -38,6 +42,5 @@ The public reply will either be a no-match message or a URL for an image of the 
 In no particular order:
 
 - fix issues described in limitations
-- support non-English searches
 - handle alternative artworks
 - depending on how alternative artworks are handled, add a button to display those too

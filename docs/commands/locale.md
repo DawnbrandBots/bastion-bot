@@ -41,19 +41,17 @@ Name | Required? | Description | Type
 
 Choices for `locale`:
 
-- Discord default
+- Discord default (unset the override, not actually a locale)
 - English
+- Español (Spanish)
 - Français (French)
 - Deutsch (German)
 - Italiano (Italian)
 - Português (Portuguese)
-
-To be added:
-
-- Español (Spanish)
 - 日本語 (Japanese)
 - 한국어 (Korean)
 - 简体中文 (Simplified Chinese)
+- 繁體中文 (Traditional Chinese)
 
 ### Current behaviour
 
