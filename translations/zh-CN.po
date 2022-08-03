@@ -235,52 +235,52 @@ msgstr ""
 #: src\card.ts:37
 msgctxt "monster-type-race"
 msgid "Normal"
-msgstr ""
+msgstr "通常"
 
 #: src\card.ts:38
 msgctxt "monster-type-race"
 msgid "Effect"
-msgstr ""
+msgstr "效果"
 
 #: src\card.ts:39
 msgctxt "monster-type-race"
 msgid "Pendulum"
-msgstr ""
+msgstr "灵摆"
 
 #: src\card.ts:40
 msgctxt "monster-type-race"
 msgid "Ritual"
-msgstr ""
+msgstr "仪式"
 
 #: src\card.ts:41
 msgctxt "monster-type-race"
 msgid "Fusion"
-msgstr ""
+msgstr "融合"
 
 #: src\card.ts:42
 msgctxt "monster-type-race"
 msgid "Synchro"
-msgstr ""
+msgstr "同步"
 
 #: src\card.ts:43
 msgctxt "monster-type-race"
 msgid "Xyz"
-msgstr ""
+msgstr "超量"
 
 #: src\card.ts:44
 msgctxt "monster-type-race"
 msgid "Link"
-msgstr ""
+msgstr "连接"
 
 #: src\card.ts:45
 msgctxt "monster-type-race"
 msgid "Tuner"
-msgstr ""
+msgstr "协调"
 
 #: src\card.ts:46
 msgctxt "monster-type-race"
 msgid "Flip"
-msgstr ""
+msgstr "反转"
 
 #: src\card.ts:47
 msgctxt "monster-type-race"
@@ -305,7 +305,7 @@ msgstr ""
 #: src\card.ts:65
 msgctxt "monster-type-race"
 msgid "Warrior"
-msgstr ""
+msgstr "战士"
 
 #: src\card.ts:66
 msgctxt "monster-type-race"
@@ -315,17 +315,17 @@ msgstr ""
 #: src\card.ts:67
 msgctxt "monster-type-race"
 msgid "Fairy"
-msgstr ""
+msgstr "天使"
 
 #: src\card.ts:68
 msgctxt "monster-type-race"
 msgid "Fiend"
-msgstr ""
+msgstr "恶魔"
 
 #: src\card.ts:69
 msgctxt "monster-type-race"
 msgid "Zombie"
-msgstr ""
+msgstr "不死"
 
 #: src\card.ts:70
 msgctxt "monster-type-race"
@@ -410,12 +410,12 @@ msgstr ""
 #: src\card.ts:86
 msgctxt "monster-type-race"
 msgid "Divine-Beast"
-msgstr ""
+msgstr "幻神兽"
 
 #: src\card.ts:87
 msgctxt "monster-type-race"
 msgid "Creator God"
-msgstr ""
+msgstr "创造神"
 
 #: src\card.ts:88
 msgctxt "monster-type-race"
@@ -475,37 +475,37 @@ msgstr ""
 #: src\card.ts:95
 msgctxt "attribute"
 msgid "EARTH"
-msgstr ""
+msgstr "地"
 
 #: src\card.ts:96
 msgctxt "attribute"
 msgid "WATER"
-msgstr ""
+msgstr "水"
 
 #: src\card.ts:97
 msgctxt "attribute"
 msgid "FIRE"
-msgstr ""
+msgstr "炎"
 
 #: src\card.ts:98
 msgctxt "attribute"
 msgid "WIND"
-msgstr ""
+msgstr "风"
 
 #: src\card.ts:99
 msgctxt "attribute"
 msgid "LIGHT"
-msgstr ""
+msgstr "光"
 
 #: src\card.ts:100
 msgctxt "attribute"
 msgid "DARK"
-msgstr ""
+msgstr "暗"
 
 #: src\card.ts:101
 msgctxt "attribute"
 msgid "DIVINE"
-msgstr ""
+msgstr "神"
 
 #: src\card.ts:298
 #: src\card.ts:309
