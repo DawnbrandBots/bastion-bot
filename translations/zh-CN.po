@@ -285,192 +285,192 @@ msgstr "反转"
 #: src\card.ts:47
 msgctxt "monster-type-race"
 msgid "Toon"
-msgstr ""
+msgstr "卡通"
 
 #: src\card.ts:48
 msgctxt "monster-type-race"
 msgid "Spirit"
-msgstr ""
+msgstr "灵魂"
 
 #: src\card.ts:49
 msgctxt "monster-type-race"
 msgid "Union"
-msgstr ""
+msgstr "同盟"
 
 #: src\card.ts:50
 msgctxt "monster-type-race"
 msgid "Gemini"
-msgstr ""
+msgstr "双重"
 
 #: src\card.ts:65
 msgctxt "monster-type-race"
 msgid "Warrior"
-msgstr "战士"
+msgstr "战士族"
 
 #: src\card.ts:66
 msgctxt "monster-type-race"
 msgid "Spellcaster"
-msgstr ""
+msgstr "魔法师族"
 
 #: src\card.ts:67
 msgctxt "monster-type-race"
 msgid "Fairy"
-msgstr "天使"
+msgstr "天使族"
 
 #: src\card.ts:68
 msgctxt "monster-type-race"
 msgid "Fiend"
-msgstr "恶魔"
+msgstr "恶魔族"
 
 #: src\card.ts:69
 msgctxt "monster-type-race"
 msgid "Zombie"
-msgstr "不死"
+msgstr "不死族"
 
 #: src\card.ts:70
 msgctxt "monster-type-race"
 msgid "Machine"
-msgstr ""
+msgstr "机械族"
 
 #: src\card.ts:71
 msgctxt "monster-type-race"
 msgid "Aqua"
-msgstr ""
+msgstr "水族"
 
 #: src\card.ts:72
 msgctxt "monster-type-race"
 msgid "Pyro"
-msgstr ""
+msgstr "炎族"
 
 #: src\card.ts:73
 msgctxt "monster-type-race"
 msgid "Rock"
-msgstr ""
+msgstr "岩石族"
 
 #: src\card.ts:74
 msgctxt "monster-type-race"
 msgid "Winged Beast"
-msgstr ""
+msgstr "鸟兽族"
 
 #: src\card.ts:75
 msgctxt "monster-type-race"
 msgid "Plant"
-msgstr ""
+msgstr "植物族"
 
 #: src\card.ts:76
 msgctxt "monster-type-race"
 msgid "Insect"
-msgstr ""
+msgstr "昆虫族"
 
 #: src\card.ts:77
 msgctxt "monster-type-race"
 msgid "Thunder"
-msgstr ""
+msgstr "雷族"
 
 #: src\card.ts:78
 msgctxt "monster-type-race"
 msgid "Dragon"
-msgstr ""
+msgstr "龙族"
 
 #: src\card.ts:79
 msgctxt "monster-type-race"
 msgid "Beast"
-msgstr ""
+msgstr "兽族"
 
 #: src\card.ts:80
 msgctxt "monster-type-race"
 msgid "Beast-Warrior"
-msgstr ""
+msgstr "兽战士族"
 
 #: src\card.ts:81
 msgctxt "monster-type-race"
 msgid "Dinosaur"
-msgstr ""
+msgstr "恐龙族"
 
 #: src\card.ts:82
 msgctxt "monster-type-race"
 msgid "Fish"
-msgstr ""
+msgstr "鱼族"
 
 #: src\card.ts:83
 msgctxt "monster-type-race"
 msgid "Sea Serpent"
-msgstr ""
+msgstr "海龙族"
 
 #: src\card.ts:84
 msgctxt "monster-type-race"
 msgid "Reptile"
-msgstr ""
+msgstr "爬虫族"
 
 #: src\card.ts:85
 msgctxt "monster-type-race"
 msgid "Psychic"
-msgstr ""
+msgstr "念动力族"
 
 #: src\card.ts:86
 msgctxt "monster-type-race"
 msgid "Divine-Beast"
-msgstr "幻神兽"
+msgstr "幻神兽族"
 
 #: src\card.ts:87
 msgctxt "monster-type-race"
 msgid "Creator God"
-msgstr "创造神"
+msgstr "创造神族"
 
 #: src\card.ts:88
 msgctxt "monster-type-race"
 msgid "Wyrm"
-msgstr ""
+msgstr "幻龙族"
 
 #: src\card.ts:89
 msgctxt "monster-type-race"
 msgid "Cyberse"
-msgstr ""
+msgstr "电子界族"
 
 #: src\card.ts:51
 msgctxt "spell-trap-property"
 msgid "Normal Spell"
-msgstr ""
+msgstr "通常魔法"
 
 #: src\card.ts:52
 msgctxt "spell-trap-property"
 msgid "Continuous Spell"
-msgstr ""
+msgstr "永续魔法"
 
 #: src\card.ts:53
 msgctxt "spell-trap-property"
 msgid "Equip Spell"
-msgstr ""
+msgstr "装备魔法"
 
 #: src\card.ts:54
 msgctxt "spell-trap-property"
 msgid "Quick-Play Spell"
-msgstr ""
+msgstr "速攻魔法"
 
 #: src\card.ts:55
 msgctxt "spell-trap-property"
 msgid "Field Spell"
-msgstr ""
+msgstr "场地魔法"
 
 #: src\card.ts:56
 msgctxt "spell-trap-property"
 msgid "Ritual Spell"
-msgstr ""
+msgstr "仪式魔法"
 
 #: src\card.ts:57
 msgctxt "spell-trap-property"
 msgid "Normal Trap"
-msgstr ""
+msgstr "通常陷阱"
 
 #: src\card.ts:58
 msgctxt "spell-trap-property"
 msgid "Continuous Trap"
-msgstr ""
+msgstr "永续陷阱"
 
 #: src\card.ts:59
 msgctxt "spell-trap-property"
 msgid "Counter Trap"
-msgstr ""
+msgstr "反击陷阱"
 
 #: src\card.ts:95
 msgctxt "attribute"
@@ -566,7 +566,7 @@ msgstr "以卡密、官方编号、卡名搜寻卡片。"
 #: src\commands\ygoprodeck.ts:40
 msgctxt "command-option-description"
 msgid "The name or password of the card you're looking for."
-msgstr ""
+msgstr "你想要查询的卡名或卡密"
 
 #: src\commands\yugipedia.ts:43
 msgctxt "command-option-description"
