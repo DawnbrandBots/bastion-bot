@@ -179,7 +179,7 @@ msgid ""
 "think this is an error, contact your server admin or report a bug."
 msgstr ""
 "죄송합니다. 이 작업을 수행하려면 서버 관리 권한이 있어야 합니다. "
-"오류입니다. 서버 관리자에게 문의하거나 버그를 신고합니다."
+"오류라고 생각된다면, 서버 관리자에게 문의하거나 버그를 신고하시길 바랍니다."
 
 #: src\commands\locale.ts:108
 #, javascript-format
@@ -201,7 +201,7 @@ msgid ""
 "this is an error, contact your server admin or report a bug."
 msgstr ""
 "죄송합니다. 이 작업을 수행하려면 서버 관리 권한이 있어야 합니다. "
-"오류입니다. 서버 관리자에게 문의하거나 버그를 신고합니다."
+"오류라고 생각된다면, 서버 관리자에게 문의하거나 버그를 신고하시길 바랍니다."
 
 #: src\commands\locale.ts:123
 #, javascript-format
