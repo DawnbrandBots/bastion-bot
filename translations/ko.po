@@ -209,6 +209,8 @@ msgid ""
 "Locale for this direct message overridden with ${ locale }. Your Discord "
 "setting is ${ interaction.locale }."
 msgstr ""
+"해당 다이렉트 메시지의 로케일이 ${ locale }로 재정의되었습니다. 당신의 디스코드 "
+"설정은 ${ interaction.locale } 입니다."
 
 #: src\commands\locale.ts:126
 #, javascript-format
@@ -216,15 +218,17 @@ msgid ""
 "Locale for this direct message reset to Discord default. Your Discord "
 "setting is ${ interaction.locale }."
 msgstr ""
+"해당 다이렉트 메시지의 로케일은 디스코드 기본값으로 초기화됩니다. 당신의 디스코드 "
+"설정은 ${ interaction.locale } 입니다."
 
 #: src\commands\ping.ts:41
 msgid "Average WebSocket ping (new instance): ${ interaction.client.ws.ping } ms"
-msgstr ""
+msgstr "평균 WebSocket 핑 (새로운 인스턴스): ${ interaction.client.ws.ping } ms"
 
 #: src\commands\ping.ts:46
 #, javascript-format
 msgid "Total latency: ${ latency } ms"
-msgstr ""
+msgstr "총 지연 시간: ${ latency } ms"
 
 #: src\commands\ygoprodeck.ts:68
 #, javascript-format
@@ -595,12 +599,12 @@ msgstr "핑"
 #: src\commands\ygoprodeck.ts:34
 msgctxt "command-name"
 msgid "ygoprodeck"
-msgstr ""
+msgstr "YGOPRODECK"
 
 #: src\commands\yugipedia.ts:34
 msgctxt "command-name"
 msgid "yugipedia"
-msgstr ""
+msgstr "Yugipedia"
 
 #: src\commands\art.ts:36
 msgctxt "command-description"
