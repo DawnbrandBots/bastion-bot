@@ -66,7 +66,7 @@ msgstr ""
 #: src\card.ts:329
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
-msgstr "카드 코드: ${ card.password } | 코나미 ID #${ card.konami_id }"
+msgstr "패스워드: ${ card.password } | 코나미 ID #${ card.konami_id }"
 
 #: src\utils.ts:33
 msgid ":tools: This command is in development."
@@ -84,7 +84,7 @@ msgstr ""
 
 #: src\utils.ts:45
 msgid "Please consider supporting us!"
-msgstr "저희를 응원해 주세요!"
+msgstr "저희를 지원해 주세요!"
 
 #: src\utils.ts:46
 msgid "Help keep Bastion online!"
@@ -92,39 +92,39 @@ msgstr "Bastion의 온라인 유지에 도움이 됩니다!"
 
 #: src\utils.ts:47
 msgid "Please help keep Bastion online!"
-msgstr "Bastion을 계속 사용할 수 있도록 도와주세요!"
+msgstr "저희가 Bastion을 온라인 상태로 유지하는 것을 도와 주세요!"
 
 #: src\utils.ts:48
 msgid "Was Bastion helpful? Consider supporting us!"
-msgstr "Bastion이 도움이 되었나요? 저희를 응원해 주세요!"
+msgstr "Bastion이 도움이 되었나요? 저희를 지원해 주세요!"
 
 #: src\utils.ts:49
 msgid "Was Bastion helpful? We need your support!"
-msgstr "Bastion이 도움이 되었나요? 여러분의 도움이 필요해요!"
+msgstr "Bastion이 도움이 되었나요? 여러분의 지원이 필요해요!"
 
 #: src\utils.ts:50
 msgid "Did you find Bastion useful? Consider supporting us!"
-msgstr "Bastion이 유용하다고 생각했나요? 저희를 응원해 주세요!"
+msgstr "Bastion이 유용하다고 생각했나요? 저희를 지원해 주시는 건 어떤가요?"
 
 #: src\utils.ts:51
 msgid "Did you find Bastion useful? Help keep it online!"
-msgstr "Bastion이 유용하다고 생각했나요? 온라인 유지에 도움이 됩니다!"
+msgstr "Bastion이 유용하다고 생각했나요? 온라인 상태로 유지하는 것을 도와 주세요!"
 
 #: src\utils.ts:52
 msgid "Did you find Bastion useful? We need your support!"
-msgstr "Bastion이 유용하다고 생각했나요? 여러분의 도움이 필요해요!"
+msgstr "Bastion이 유용하다고 생각했나요? 여러분의 지원이 필요해요!"
 
 #: src\utils.ts:53
 msgid "Enjoy Bastion? Help keep it online!"
-msgstr "Bastion을 즐기나요? 온라인 유지에 도움이 됩니다!"
+msgstr "Bastion을 잘 사용하고 계신가요? 온라인 상태로 유지하는 것을 도와 주세요!"
 
 #: src\utils.ts:54
 msgid "Enjoy Bastion? Consider supporting us!"
-msgstr "Bastion을 즐기나요? 저희를 응원해 주세요!"
+msgstr "Bastion을 잘 사용하고 계신가요? 저희를 지원해 주시는 건 어떤가요?"
 
 #: src\utils.ts:55
 msgid "Found what you were looking for? Consider supporting us!"
-msgstr "찾고 있던 것을 찾았나요? 저희를 응원해 주세요!"
+msgstr "찾으시려던 것을 찾으셨나요? 저희를 지원해 주시는 건 어떤가요?"
 
 #: src\commands\art.ts:81
 #, javascript-format
@@ -179,7 +179,7 @@ msgid ""
 "think this is an error, contact your server admin or report a bug."
 msgstr ""
 "죄송합니다. 이 작업을 수행하려면 서버 관리 권한이 있어야 합니다. "
-"오류라고 생각된다면, 서버 관리자에게 문의하거나 버그를 신고하시길 바랍니다."
+"이 메시지가 잘못 출력되었다면, 서버 관리자에게 문의하시거나 버그를 신고해 주세요."
 
 #: src\commands\locale.ts:108
 #, javascript-format
@@ -201,7 +201,7 @@ msgid ""
 "this is an error, contact your server admin or report a bug."
 msgstr ""
 "죄송합니다. 이 작업을 수행하려면 서버 관리 권한이 있어야 합니다. "
-"오류라고 생각된다면, 서버 관리자에게 문의하거나 버그를 신고하시길 바랍니다."
+"이 메시지가 잘못 출력되었다면, 서버 관리자에게 문의하시거나 버그를 신고해 주세요."
 
 #: src\commands\locale.ts:123
 #, javascript-format
@@ -535,12 +535,12 @@ msgstr "카드 효과"
 #: src\locale.ts:46
 msgctxt "command-option"
 msgid "result-language"
-msgstr "출력언어"
+msgstr "출력 언어"
 
 #: src\locale.ts:66
 msgctxt "command-option"
 msgid "input-language"
-msgstr "입력언어"
+msgstr "입력 언어"
 
 #: src\commands\art.ts:38
 msgctxt "command-option"
@@ -570,12 +570,12 @@ msgstr "검색할 언어로, 기본적으로 출력 언어로 설정됩니다."
 #: src\commands\art.ts:41
 msgctxt "command-option-description"
 msgid "The password, Konami ID, or name to search for a card."
-msgstr "카드를 검색할 카드 코드, 코나미 ID, 또는 이름입니다."
+msgstr "패스워드, 코나미 ID, 또는 카드명으로 카드를 검색할 수 있습니다."
 
 #: src\commands\ygoprodeck.ts:40
 msgctxt "command-option-description"
 msgid "The name or password of the card you're looking for."
-msgstr "찾고 있는 카드의 이름 또는 카드 코드입니다."
+msgstr "찾으시는 카드의 이름 또는 패스워드입니다."
 
 #: src\commands\yugipedia.ts:43
 msgctxt "command-option-description"
