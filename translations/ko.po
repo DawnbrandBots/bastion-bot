@@ -53,7 +53,8 @@ msgstr "**레벨**: ${ Icon.Level } ${ card.level } **공격력**: ${ card.atk }
 msgid ""
 "**Pendulum Scale**: ${ Icon.LeftScale }${ card.pendulum_scale }/${ "
 "card.pendulum_scale }${ Icon.RightScale }"
-msgstr "**펜듈럼 스케일**: ${ Icon.LeftScale }${ card.pendulum_scale }/${ "
+msgstr ""
+"**펜듈럼 스케일**: ${ Icon.LeftScale }${ card.pendulum_scale }/${ "
 "card.pendulum_scale }${ Icon.RightScale }"
 
 #: src\card.ts:312
@@ -72,6 +73,9 @@ msgid ""
 "tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support "
 "server](https://discord.gg/4aFuPyuE96)!"
 msgstr ""
+":incoming_envelope: [문제 "
+"추적기](https://github.com/DawnbrandBots/bastion-bot) 또는 [지원 "
+"서버](https://discord.gg/4aFuPyuE96)로 피드백을 보내주십시오!"
 
 #: src\utils.ts:45
 msgid "Please consider supporting us!"
@@ -526,12 +530,12 @@ msgstr "카드 효과"
 #: src\locale.ts:46
 msgctxt "command-option"
 msgid "result-language"
-msgstr ""
+msgstr "결과언어"
 
 #: src\locale.ts:66
 msgctxt "command-option"
 msgid "input-language"
-msgstr ""
+msgstr "출력언어"
 
 #: src\commands\art.ts:38
 msgctxt "command-option"
