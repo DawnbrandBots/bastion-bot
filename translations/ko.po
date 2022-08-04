@@ -6,29 +6,29 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src\card.ts:239
+#: src\card.ts:235
 msgid ":link: Links"
 msgstr ":link: 링크"
 
-#: src\card.ts:240
+#: src\card.ts:236
 #, javascript-format
 msgid ""
 "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
 "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
-"[공식 코나미 DB](${ official }) | [OCG 규칙](${ rulings }) | "
-"[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
+"[공식 코나미 DB](${ official }) | [OCG 규칙](${ rulings }) | [Yugipedia](${ "
+"yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
-#: src\card.ts:276
+#: src\card.ts:272
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 msgstr "**종족**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:278
+#: src\card.ts:274
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 msgstr "**속성**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
-#: src\card.ts:282
+#: src\card.ts:278
 #, javascript-format
 msgid ""
 "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
@@ -37,33 +37,30 @@ msgstr ""
 "**랭크**: ${ Icon.Rank } ${ card.rank } **공격력**: ${ card.atk } **수비력**: ${ "
 "card.def }"
 
-#: src\card.ts:285
+#: src\card.ts:281
 #, javascript-format
 msgid ""
 "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
 "Arrows**: ${ arrows }"
 msgstr ""
-"**LINK**: ${ card.link_arrows.length } **공격력**: ${ card.atk } **링크 마커**: ${ arrows }"
+"**LINK**: ${ card.link_arrows.length } **공격력**: ${ card.atk } **링크 마커**: ${ "
+"arrows }"
 
-#: src\card.ts:287
+#: src\card.ts:283
 msgid ""
 "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
 "${ card.def }"
 msgstr ""
-"**레벨**: ${ Icon.Level } ${ card.level } **공격력**: ${ card.atk } **수비력**: "
-"${ card.def }"
+"**레벨**: ${ Icon.Level } ${ card.level } **공격력**: ${ card.atk } **수비력**: ${ "
+"card.def }"
 
-#: src\card.ts:292
+#: src\card.ts:290
 #, javascript-format
-msgid ""
-"**Pendulum Scale**: ${ Icon.LeftScale }${ card.pendulum_scale }/${ "
-"card.pendulum_scale }${ Icon.RightScale }"
-msgstr ""
-"**펜듈럼 스케일**: ${ Icon.LeftScale }${ card.pendulum_scale }/${ "
-"card.pendulum_scale }${ Icon.RightScale }"
+msgid "**Pendulum Scale**: ${ formattedScale }"
+msgstr "**펜듈럼 스케일**: ${ formattedScale }"
 
-#: src\card.ts:312
-#: src\card.ts:329
+#: src\card.ts:310
+#: src\card.ts:327
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
 msgstr "패스워드: ${ card.password } | 코나미 ID #${ card.konami_id }"
@@ -78,9 +75,8 @@ msgid ""
 "tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support "
 "server](https://discord.gg/4aFuPyuE96)!"
 msgstr ""
-":incoming_envelope: [문제 "
-"추적기](https://github.com/DawnbrandBots/bastion-bot) 또는 [지원 "
-"서버](https://discord.gg/4aFuPyuE96)로 피드백을 보내주십시오!"
+":incoming_envelope: [문제 추적기](https://github.com/DawnbrandBots/bastion-bot) "
+"또는 [지원 서버](https://discord.gg/4aFuPyuE96)로 피드백을 보내주십시오!"
 
 #: src\utils.ts:45
 msgid "Please consider supporting us!"
@@ -178,8 +174,8 @@ msgid ""
 "Sorry, you must have the Manage Channel permission in this channel. If you "
 "think this is an error, contact your server admin or report a bug."
 msgstr ""
-"죄송합니다. 이 작업을 수행하려면 서버 관리 권한이 있어야 합니다. "
-"이 메시지가 잘못 출력되었다면, 서버 관리자에게 문의하시거나 버그를 신고해 주세요."
+"죄송합니다. 이 작업을 수행하려면 서버 관리 권한이 있어야 합니다. 이 메시지가 잘못 출력되었다면, 서버 관리자에게 문의하시거나 버그를 "
+"신고해 주세요."
 
 #: src\commands\locale.ts:108
 #, javascript-format
@@ -200,8 +196,8 @@ msgid ""
 "Sorry, you must have the Manage Server permission to do this. If you think "
 "this is an error, contact your server admin or report a bug."
 msgstr ""
-"죄송합니다. 이 작업을 수행하려면 서버 관리 권한이 있어야 합니다. "
-"이 메시지가 잘못 출력되었다면, 서버 관리자에게 문의하시거나 버그를 신고해 주세요."
+"죄송합니다. 이 작업을 수행하려면 서버 관리 권한이 있어야 합니다. 이 메시지가 잘못 출력되었다면, 서버 관리자에게 문의하시거나 버그를 "
+"신고해 주세요."
 
 #: src\commands\locale.ts:123
 #, javascript-format
@@ -209,8 +205,8 @@ msgid ""
 "Locale for this direct message overridden with ${ locale }. Your Discord "
 "setting is ${ interaction.locale }."
 msgstr ""
-"해당 다이렉트 메시지의 로케일이 ${ locale }로 재정의되었습니다. 당신의 디스코드 "
-"설정은 ${ interaction.locale } 입니다."
+"해당 다이렉트 메시지의 로케일이 ${ locale }로 재정의되었습니다. 당신의 디스코드 설정은 ${ interaction.locale "
+"} 입니다."
 
 #: src\commands\locale.ts:126
 #, javascript-format
@@ -218,8 +214,8 @@ msgid ""
 "Locale for this direct message reset to Discord default. Your Discord "
 "setting is ${ interaction.locale }."
 msgstr ""
-"해당 다이렉트 메시지의 로케일은 디스코드 기본값으로 초기화됩니다. 당신의 디스코드 "
-"설정은 ${ interaction.locale } 입니다."
+"해당 다이렉트 메시지의 로케일은 디스코드 기본값으로 초기화됩니다. 당신의 디스코드 설정은 ${ interaction.locale } "
+"입니다."
 
 #: src\commands\ping.ts:41
 msgid "Average WebSocket ping (new instance): ${ interaction.client.ws.ping } ms"
@@ -520,18 +516,18 @@ msgctxt "attribute"
 msgid "DIVINE"
 msgstr "신"
 
-#: src\card.ts:298
-#: src\card.ts:309
+#: src\card.ts:296
+#: src\card.ts:307
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "카드 텍스트"
 
-#: src\card.ts:303
+#: src\card.ts:301
 msgctxt "card-embed"
 msgid "Pendulum Effect"
 msgstr "펜듈럼 효과"
 
-#: src\card.ts:324
+#: src\card.ts:322
 msgctxt "card-embed"
 msgid "Card Effect"
 msgstr "카드 효과"
@@ -539,12 +535,12 @@ msgstr "카드 효과"
 #: src\locale.ts:46
 msgctxt "command-option"
 msgid "result-language"
-msgstr "출력 언어"
+msgstr "출력언어"
 
 #: src\locale.ts:66
 msgctxt "command-option"
 msgid "input-language"
-msgstr "입력 언어"
+msgstr "입력언어"
 
 #: src\commands\art.ts:38
 msgctxt "command-option"
@@ -599,12 +595,12 @@ msgstr "핑"
 #: src\commands\ygoprodeck.ts:34
 msgctxt "command-name"
 msgid "ygoprodeck"
-msgstr "YGOPRODECK"
+msgstr ""
 
 #: src\commands\yugipedia.ts:34
 msgctxt "command-name"
 msgid "yugipedia"
-msgstr "Yugipedia"
+msgstr ""
 
 #: src\commands\art.ts:36
 msgctxt "command-description"

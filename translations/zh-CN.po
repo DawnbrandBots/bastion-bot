@@ -6,27 +6,27 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src\card.ts:239
+#: src\card.ts:235
 msgid ":link: Links"
 msgstr ":link: 链接"
 
-#: src\card.ts:240
+#: src\card.ts:236
 #, javascript-format
 msgid ""
 "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
 "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
 
-#: src\card.ts:276
+#: src\card.ts:272
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 msgstr "**种族**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:278
+#: src\card.ts:274
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 msgstr "**属性**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
-#: src\card.ts:282
+#: src\card.ts:278
 #, javascript-format
 msgid ""
 "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
@@ -35,15 +35,16 @@ msgstr ""
 "**阶级**: ${ Icon.Rank } ${ card.rank } **攻击力**: ${ card.atk } **守备力**: ${ "
 "card.def }"
 
-#: src\card.ts:285
+#: src\card.ts:281
 #, javascript-format
 msgid ""
 "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
 "Arrows**: ${ arrows }"
 msgstr ""
-"**连接数值**: ${ card.link_arrows.length } **攻击力**: ${ card.atk } **连接标记**: ${ arrows }"
+"**连接数值**: ${ card.link_arrows.length } **攻击力**: ${ card.atk } **连接标记**: ${ "
+"arrows }"
 
-#: src\card.ts:287
+#: src\card.ts:283
 msgid ""
 "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
 "${ card.def }"
@@ -51,17 +52,13 @@ msgstr ""
 "**等级**: ${ Icon.Level } ${ card.level } **攻击力**: ${ card.atk } **守备力**: ${ "
 "card.def }"
 
-#: src\card.ts:292
+#: src\card.ts:290
 #, javascript-format
-msgid ""
-"**Pendulum Scale**: ${ Icon.LeftScale }${ card.pendulum_scale }/${ "
-"card.pendulum_scale }${ Icon.RightScale }"
-msgstr ""
-"**灵摆刻度**: ${ Icon.LeftScale }${ card.scale }/${ card.scale }${ "
-"Icon.RightScale }"
+msgid "**Pendulum Scale**: ${ formattedScale }"
+msgstr "**灵摆刻度**: ${ formattedScale }"
 
-#: src\card.ts:312
-#: src\card.ts:329
+#: src\card.ts:310
+#: src\card.ts:327
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
 msgstr "卡片密码: ${ card.password } | 官方编号${ card.konami_id }"
@@ -507,18 +504,18 @@ msgctxt "attribute"
 msgid "DIVINE"
 msgstr "神"
 
-#: src\card.ts:298
-#: src\card.ts:309
+#: src\card.ts:296
+#: src\card.ts:307
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "卡片文本"
 
-#: src\card.ts:303
+#: src\card.ts:301
 msgctxt "card-embed"
 msgid "Pendulum Effect"
 msgstr "灵摆效果"
 
-#: src\card.ts:324
+#: src\card.ts:322
 msgctxt "card-embed"
 msgid "Card Effect"
 msgstr "卡片效果"

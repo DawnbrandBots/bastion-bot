@@ -284,8 +284,10 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 		}
 
 		if (card.pendulum_scale !== undefined) {
+			// https://github.com/ttag-org/ttag/issues/249
+			const formattedScale = `${Icon.LeftScale}${card.pendulum_scale}/${card.pendulum_scale}${Icon.RightScale}`;
 			description += " ";
-			description += t`**Pendulum Scale**: ${Icon.LeftScale}${card.pendulum_scale}/${card.pendulum_scale}${Icon.RightScale}`;
+			description += t`**Pendulum Scale**: ${formattedScale}`;
 		}
 
 		embed.setDescription(description);
