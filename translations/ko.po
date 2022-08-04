@@ -526,12 +526,12 @@ msgstr "카드 효과"
 #: src\locale.ts:46
 msgctxt "command-option"
 msgid "result-language"
-msgstr "결과-언어"
+msgstr "출력 언어"
 
 #: src\locale.ts:66
 msgctxt "command-option"
 msgid "input-language"
-msgstr "입력-"
+msgstr "입력 언어"
 
 #: src\commands\art.ts:38
 msgctxt "command-option"
@@ -556,7 +556,7 @@ msgstr "다른 설정을 재정의하는 카드 임베드의 출력 언어입니
 #: src\locale.ts:69
 msgctxt "command-option-description"
 msgid "The language to search in, defaulting to the result language."
-msgstr "검색할 언어로, 기본적으로 결과 언어로 설정됩니다."
+msgstr "검색할 언어로, 기본적으로 출력 언어로 설정됩니다."
 
 #: src\commands\art.ts:41
 msgctxt "command-option-description"
@@ -576,7 +576,7 @@ msgstr "검색할 Yugipedia 페이지의 이름입니다."
 #: src\commands\art.ts:35
 msgctxt "command-name"
 msgid "art"
-msgstr "이미지"
+msgstr "일러스트"
 
 #: src\commands\ping.ts:27
 msgctxt "command-name"
@@ -596,19 +596,19 @@ msgstr ""
 #: src\commands\art.ts:36
 msgctxt "command-description"
 msgid "Display the art for a card!"
-msgstr "카드 이미지 표시!"
+msgstr "카드의 일러스트를 표시합니다."
 
 #: src\commands\ping.ts:28
 msgctxt "command-description"
 msgid "Test latency to the new bot instance."
-msgstr "새로운 봇 인스턴스에 대한 지연 시간을 테스트합니다."
+msgstr "새로운 봇 인스턴스의 지연 시간을 테스트합니다."
 
 #: src\commands\ygoprodeck.ts:35
 msgctxt "command-description"
 msgid "Search the YGOPRODECK card database."
-msgstr "YGOPRODECK 카드 데이터베이스를 검색합니다."
+msgstr "YGOPRODECK 카드 데이터베이스에서 검색합니다."
 
 #: src\commands\yugipedia.ts:37
 msgctxt "command-description"
 msgid "Search the Yugipedia wiki for a page and link to it."
-msgstr "Yugipedia 위키 페이지와 링크를 검색하세요."
+msgstr "Yugipedia에서 검색하고 링크를 출력합니다."
