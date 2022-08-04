@@ -526,12 +526,12 @@ msgstr "카드 효과"
 #: src\locale.ts:46
 msgctxt "command-option"
 msgid "result-language"
-msgstr "출력 언어"
+msgstr ""
 
 #: src\locale.ts:66
 msgctxt "command-option"
 msgid "input-language"
-msgstr "입력 언어"
+msgstr ""
 
 #: src\commands\art.ts:38
 msgctxt "command-option"
