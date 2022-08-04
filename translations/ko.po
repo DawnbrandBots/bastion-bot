@@ -540,7 +540,7 @@ msgstr "결과언어"
 #: src\locale.ts:66
 msgctxt "command-option"
 msgid "input-language"
-msgstr "출력언어"
+msgstr "입력언어"
 
 #: src\commands\art.ts:38
 msgctxt "command-option"
