@@ -160,19 +160,15 @@ function parseAndExpandRuby(html: string): [string, string] {
 			rubyonly += element.data;
 		} else if (element.type === "tag" && element.name === "ruby") {
 			if (element.children.length === 2) {
-				// Note <rb> deprecated, to be removed from the input
 				const [rb, rt] = element.children;
 				if (
-					rb.type === "tag" &&
-					rb.name === "rb" &&
+					rb.type === "text" &&
 					rt.type === "tag" &&
 					rt.name === "rt" &&
-					rb.children.length === 1 &&
-					rb.children[0].type === "text" &&
 					rt.children.length === 1 &&
 					rt.children[0].type === "text"
 				) {
-					rubyless += rb.children[0].data;
+					rubyless += rb.data;
 					rubyonly += rt.children[0].data;
 				}
 			}
