@@ -38,7 +38,8 @@ export class PingCommand extends Command {
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		const lang = await this.locales.get(interaction);
 		useLocale(lang);
-		const content = t`Average WebSocket ping (new instance): ${interaction.client.ws.ping} ms`;
+		const ping = interaction.client.ws.ping;
+		const content = t`Average WebSocket ping (new instance): ${ping} ms`;
 		const reply = await interaction.reply({ content, fetchReply: true });
 		if ("createdTimestamp" in reply) {
 			useLocale(lang);

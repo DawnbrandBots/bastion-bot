@@ -1,6 +1,8 @@
 import { Message, MessageEmbedOptions } from "discord.js";
-import { injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
+import { t, useLocale } from "ttag";
 import { Listener } from ".";
+import { LocaleProvider } from "../locale";
 import { getLogger } from "../logger";
 
 @injectable()
@@ -9,9 +11,24 @@ export class MessageListener implements Listener<"messageCreate"> {
 
 	#logger = getLogger("events:message");
 
-	readonly EMBED: MessageEmbedOptions = {
-		title: "Free and open source _Yu-Gi-Oh!_ bot",
-		description: `
+	constructor(@inject("LocaleProvider") private locales: LocaleProvider) {}
+
+	async run(message: Message): Promise<void> {
+		if (message.author.bot || message.reference) {
+			return;
+		}
+		if (
+			message.client.user &&
+			message.mentions.has(message.client.user, { ignoreEveryone: true, ignoreRoles: true })
+		) {
+			try {
+				const lang = await this.locales.getM(message);
+				useLocale(lang);
+				const ping = message.client.ws.ping;
+				const content = t`Average WebSocket ping (new instance): ${ping} ms`;
+				const embed: MessageEmbedOptions = {
+					title: t`Free and open source _Yu-Gi-Oh!_ bot`,
+					description: t`
 :question: Help documentation on [GitHub](https://github.com/DawnbrandBots/bastion-bot), or use \`.commands\` and \`.help\`.
 :green_circle: Licence: [GNU AGPL 3.0+](https://choosealicense.com/licenses/agpl-3.0/).
 :money_mouth: Prices from https://yugiohprices.com
@@ -23,33 +40,25 @@ export class MessageListener implements Listener<"messageCreate"> {
 
 :tools: An update is being worked on and rolling out slowly. Features will be handled by a new bot instance through Slash Commands concurrently with the old bot.
 `,
-		color: "YELLOW",
-		author: {
-			name: "Bastion",
-			url: "https://github.com/DawnbrandBots/bastion-bot",
-			iconURL: "https://cdn.discordapp.com/avatars/383854640694820865/fab10204c193d0bc3d48169d11245a1a.webp"
-		},
-		footer: {
-			text: `Revision: ${process.env.BOT_REVISION}.`
-		}
-	};
-
-	async run(message: Message): Promise<void> {
-		if (message.author.bot || message.reference) {
-			return;
-		}
-		if (
-			message.client.user &&
-			message.mentions.has(message.client.user, { ignoreEveryone: true, ignoreRoles: true })
-		) {
-			try {
-				const ping = message.client.ws.ping;
+					color: "YELLOW",
+					author: {
+						name: "Bastion",
+						url: "https://github.com/DawnbrandBots/bastion-bot",
+						iconURL:
+							"https://cdn.discordapp.com/avatars/383854640694820865/fab10204c193d0bc3d48169d11245a1a.webp"
+					},
+					footer: {
+						text: t`Revision: ${process.env.BOT_REVISION}.`
+					}
+				};
 				const response = await message.reply({
-					content: `${process.env.BOT_MOTD}\n\nAverage WebSocket ping (new instance): ${ping} ms`,
-					embeds: [this.EMBED]
+					content: `${process.env.BOT_MOTD}\n\n${content}`,
+					embeds: [embed]
 				});
+				useLocale(lang);
 				const latency = response.createdTimestamp - message.createdTimestamp;
-				await response.edit(`${response.content}\nTotal latency for this event: ${latency} ms`);
+				const addendum = t`Total latency: ${latency} ms`;
+				await response.edit(`${response.content}\n${addendum}`);
 				this.#logger.verbose(
 					JSON.stringify({
 						channel: message.channel.id,

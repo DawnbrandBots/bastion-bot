@@ -1,1 +1,1 @@
-# See the [docs](/docs/command/translations.md)
+# See the [docs](/docs/translations.md)

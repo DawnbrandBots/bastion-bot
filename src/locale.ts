@@ -1,7 +1,7 @@
 import { SlashCommandStringOption } from "@discordjs/builders";
 import sqlite, { Database, Statement } from "better-sqlite3";
 import { Locale as DiscordLocale } from "discord-api-types/v9";
-import { CommandInteraction, Snowflake } from "discord.js";
+import { CommandInteraction, Message, Snowflake } from "discord.js";
 import { inject, singleton } from "tsyringe";
 import { c, useLocale } from "ttag";
 
@@ -117,6 +117,21 @@ export abstract class LocaleProvider {
 			// In direct messages, it is safe to use the user's Discord-reported locale
 			// without breaching privacy. Further support configuring the locale in the DM.
 			return (await this.channel(interaction.channelId)) ?? this.filter(interaction.locale);
+		}
+	}
+
+	async getM(context: Message): Promise<Locale> {
+		if (context.inGuild()) {
+			// Channel settings override server-wide settings override Discord-reported
+			// server locale. Threads are treated as an extension of their parent channel.
+			return (
+				(await this.channel((context.channel?.isThread() && context.channel.parentId) || context.channelId)) ??
+				(await this.guild(context.guildId)) ??
+				this.filter(context.guild.preferredLocale)
+			);
+		} else {
+			// Cannot retrieve the user's locale from a direct message.
+			return (await this.channel(context.channelId)) ?? "en";
 		}
 	}
 

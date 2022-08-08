@@ -45,3 +45,9 @@ yarn ttag update translations/LOCALE.po src/{,**/*}*.ts
 
 Note: the babel configurations in `package.json` are not strictly necessary but suppress a lot of
 warnings from these commands due to our use of newer language features.
+
+To update all translation files at once after a code change:
+
+```bash
+find translations -type f -name '*.po' -exec yarn ttag update {} src/{,**/*}*.ts \;
+```
