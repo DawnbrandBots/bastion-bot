@@ -123,6 +123,7 @@ msgid "Found what you were looking for? Consider supporting us!"
 msgstr "찾으시려던 것을 찾으셨나요? 저희를 지원해 주시는 건 어떤가요?"
 
 #: src\commands\art.ts:81
+#: src\commands\search.ts:51
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr "일치하는 카드를 찾을 수 없습니다. : `${ input }`!"
@@ -227,7 +228,6 @@ msgid "Total latency: ${ latency } ms"
 msgstr "총 지연 시간: ${ latency } ms"
 
 #: src\commands\ygoprodeck.ts:68
-#, javascript-format
 msgid "Searching YGOPRODECK for `${ term }`…"
 msgstr "YGOPRODECK에서 `${ term }`을(를) 검색하는 중…"
 
@@ -240,6 +240,67 @@ msgstr "Yugipedia에서 `${ page }`을(를) 검색하는 중…"
 #, javascript-format
 msgid "Could not find a Yugipedia page named `${ page }`."
 msgstr "일치하는 이름을 Yugipedia 페이지에서 찾을 수 없습니다. : `${ page }`."
+
+#: src\commands\deck.ts:132
+#, javascript-format
+msgid "${ counts.Monster } Monster"
+msgid_plural "${ counts.Monster } Monsters"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src\commands\deck.ts:135
+msgid "${ counts.Spell } Spell"
+msgid_plural "${ counts.Spell } Spells"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src\commands\deck.ts:138
+#, javascript-format
+msgid "${ counts.Trap } Trap"
+msgid_plural "${ counts.Trap } Traps"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src\commands\deck.ts:166
+msgid "Your Deck"
+msgstr ""
+
+#: src\commands\deck.ts:171
+#, javascript-format
+msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
+msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src\commands\deck.ts:178
+msgid "Main Deck (continued)"
+msgstr ""
+
+#: src\commands\deck.ts:185
+#, javascript-format
+msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
+msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src\commands\deck.ts:192
+msgid "Extra Deck (continued)"
+msgstr ""
+
+#: src\commands\deck.ts:199
+#, javascript-format
+msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
+msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src\commands\deck.ts:206
+msgid "Side Deck (continued)"
+msgstr ""
+
+#: src\commands\deck.ts:231
+msgid "Error: Your deck is empty."
+msgstr ""
 
 #: src\card.ts:37
 msgctxt "monster-type-race"

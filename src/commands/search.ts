@@ -2,6 +2,7 @@ import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builde
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
 import { inject, injectable } from "tsyringe";
+import { t, useLocale } from "ttag";
 import { createCardEmbed, getCard, inferInputType } from "../card";
 import { Command } from "../Command";
 import { inputLangStringOption, Locale, LocaleProvider, resultLangStringOption } from "../locale";
@@ -46,8 +47,8 @@ export class SearchCommand extends Command {
 		let end: number;
 		if (!card) {
 			end = Date.now();
-			// TODO: include properly-named type in this message
-			await interaction.editReply({ content: `Could not find a card matching \`${input}\`!` });
+			useLocale(resultLanguage);
+			await interaction.editReply({ content: t`Could not find a card matching \`${input}\`!` });
 		} else {
 			let embeds = createCardEmbed(card, resultLanguage);
 			embeds = addFunding(addNotice(embeds));

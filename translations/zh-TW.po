@@ -119,6 +119,7 @@ msgid "Found what you were looking for? Consider supporting us!"
 msgstr ""
 
 #: src\commands\art.ts:81
+#: src\commands\search.ts:51
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr "查無此卡：`${ input }`"
@@ -215,7 +216,6 @@ msgid "Total latency: ${ latency } ms"
 msgstr ""
 
 #: src\commands\ygoprodeck.ts:68
-#, javascript-format
 msgid "Searching YGOPRODECK for `${ term }`…"
 msgstr ""
 
@@ -227,6 +227,61 @@ msgstr ""
 #: src\commands\yugipedia.ts:85
 #, javascript-format
 msgid "Could not find a Yugipedia page named `${ page }`."
+msgstr ""
+
+#: src\commands\deck.ts:132
+#, javascript-format
+msgid "${ counts.Monster } Monster"
+msgid_plural "${ counts.Monster } Monsters"
+msgstr[0] ""
+
+#: src\commands\deck.ts:135
+msgid "${ counts.Spell } Spell"
+msgid_plural "${ counts.Spell } Spells"
+msgstr[0] ""
+
+#: src\commands\deck.ts:138
+#, javascript-format
+msgid "${ counts.Trap } Trap"
+msgid_plural "${ counts.Trap } Traps"
+msgstr[0] ""
+
+#: src\commands\deck.ts:166
+msgid "Your Deck"
+msgstr ""
+
+#: src\commands\deck.ts:171
+#, javascript-format
+msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
+msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
+msgstr[0] ""
+
+#: src\commands\deck.ts:178
+msgid "Main Deck (continued)"
+msgstr ""
+
+#: src\commands\deck.ts:185
+#, javascript-format
+msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
+msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
+msgstr[0] ""
+
+#: src\commands\deck.ts:192
+msgid "Extra Deck (continued)"
+msgstr ""
+
+#: src\commands\deck.ts:199
+#, javascript-format
+msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
+msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
+msgstr[0] ""
+
+#: src\commands\deck.ts:206
+msgid "Side Deck (continued)"
+msgstr ""
+
+#: src\commands\deck.ts:231
+msgid "Error: Your deck is empty."
 msgstr ""
 
 #: src\card.ts:37

@@ -161,7 +161,7 @@ export class DeckCommand extends Command {
 				.map(([type, count]) => `${count} ${rc("monster-type-race").gettext(type)}`)
 				.join(", ");
 		}
-		const printCount = ([cardName, count]: [string, number]): string => t`${count} ${cardName}`;
+		const printCount = ([cardName, count]: [string, number]): string => `${count} ${cardName}`;
 		const embed = new MessageEmbed();
 		embed.setTitle(t`Your Deck`);
 		if (deck.main.length > 0) {
@@ -170,7 +170,7 @@ export class DeckCommand extends Command {
 			const countDetail = countMain(deck.main);
 			const name = ngettext(
 				msgid`Main Deck (${deck.main.length} card — ${countDetail})`,
-				msgid`Main Deck (${deck.main.length} cards — ${countDetail})`,
+				`Main Deck (${deck.main.length} cards — ${countDetail})`,
 				deck.main.length
 			);
 			embed.addFields({ name, value: first, inline });
@@ -184,7 +184,7 @@ export class DeckCommand extends Command {
 			const countDetail = countExtraMonsterTypes(deck.extra);
 			const name = ngettext(
 				msgid`Extra Deck (${deck.extra.length} card — ${countDetail})`,
-				msgid`Extra Deck (${deck.extra.length} cards — ${countDetail})`,
+				`Extra Deck (${deck.extra.length} cards — ${countDetail})`,
 				deck.extra.length
 			);
 			embed.addFields({ name, value: first, inline });
@@ -198,7 +198,7 @@ export class DeckCommand extends Command {
 			const countDetail = countMain(deck.side);
 			const name = ngettext(
 				msgid`Side Deck (${deck.side.length} card — ${countDetail})`,
-				msgid`Side Deck (${deck.side.length} cards — ${countDetail})`,
+				`Side Deck (${deck.side.length} cards — ${countDetail})`,
 				deck.side.length
 			);
 			embed.addFields({ name, value: first, inline });
