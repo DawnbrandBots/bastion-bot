@@ -1,7 +1,7 @@
 import { REST } from "@discordjs/rest";
 import { APIUser, Routes } from "discord-api-types/v9";
 import { ArtCommand } from "./art";
-// import { DeckCommand } from "./deck";
+import { DeckCommand } from "./deck";
 import { IdCommand } from "./id";
 import { LinkCommand } from "./link";
 import { LocaleCommand } from "./locale";
@@ -12,7 +12,7 @@ import { YGOPRODECKCommand } from "./ygoprodeck";
 import { YugiCommand } from "./yugipedia";
 
 export const classes = [
-	// DeckCommand,
+	DeckCommand,
 	PingCommand,
 	LinkCommand,
 	YugiCommand,
@@ -23,8 +23,8 @@ export const classes = [
 	ArtCommand,
 	RandomCommand
 ];
-// DeckCommand,
 export {
+	DeckCommand,
 	PingCommand,
 	LinkCommand,
 	YugiCommand,
