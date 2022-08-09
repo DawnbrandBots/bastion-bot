@@ -42,6 +42,7 @@ export abstract class Command {
 			this.logger.verbose(serializeCommand(interaction, { event: "success", latency }));
 			this.metrics.writeCommand(interaction, latency);
 		} catch (error) {
+			this.metrics.writeCommand(interaction, -1);
 			this.logger.error(serializeCommand(interaction), error);
 			await interaction
 				.followUp("Something went wrong")
