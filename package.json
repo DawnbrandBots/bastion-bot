@@ -21,7 +21,7 @@
 		"yarn": "1.22.x"
 	},
 	"dependencies": {
-		"@discordjs/rest": "^1.0.1",
+		"@discordjs/rest": "^1.1.0",
 		"@sinclair/typebox": "^0.24.28",
 		"better-sqlite3": "^7.6.2",
 		"debug": "^4.3.4",
