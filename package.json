@@ -27,7 +27,7 @@
 		"debug": "^4.3.4",
 		"discord.js": "^13.10.3",
 		"dotenv": "^16.0.1",
-		"gettext-parser": "^5.1.2",
+		"gettext-parser": "^6.0.0",
 		"htmlparser2": "^8.0.1",
 		"node-fetch": "^2.6.7",
 		"reflect-metadata": "^0.1.13",
