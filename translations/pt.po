@@ -1,0 +1,700 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Plural-Forms: nplurals = 2; plural = (n != 1);\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src\card.ts:235
+msgid ":link: Links"
+msgstr ""
+
+#: src\card.ts:236
+#, javascript-format
+msgid ""
+"[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
+"[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
+msgstr ""
+
+#: src\card.ts:272
+msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
+msgstr ""
+
+#: src\card.ts:274
+#, javascript-format
+msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
+msgstr ""
+
+#: src\card.ts:278
+#, javascript-format
+msgid ""
+"**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
+"card.def }"
+msgstr ""
+
+#: src\card.ts:281
+#, javascript-format
+msgid ""
+"**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
+"Arrows**: ${ arrows }"
+msgstr ""
+
+#: src\card.ts:283
+msgid ""
+"**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
+"${ card.def }"
+msgstr ""
+
+#: src\card.ts:290
+#, javascript-format
+msgid "**Pendulum Scale**: ${ formattedScale }"
+msgstr ""
+
+#: src\card.ts:310
+#: src\card.ts:327
+#, javascript-format
+msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
+msgstr ""
+
+#: src\utils.ts:33
+msgid ":tools: This command is in development."
+msgstr ""
+
+#: src\utils.ts:34
+msgid ""
+":incoming_envelope: Please send feedback to [our issue "
+"tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support "
+"server](https://discord.gg/4aFuPyuE96)!"
+msgstr ""
+
+#: src\utils.ts:45
+msgid "Please consider supporting us!"
+msgstr ""
+
+#: src\utils.ts:46
+msgid "Help keep Bastion online!"
+msgstr ""
+
+#: src\utils.ts:47
+msgid "Please help keep Bastion online!"
+msgstr ""
+
+#: src\utils.ts:48
+msgid "Was Bastion helpful? Consider supporting us!"
+msgstr ""
+
+#: src\utils.ts:49
+msgid "Was Bastion helpful? We need your support!"
+msgstr ""
+
+#: src\utils.ts:50
+msgid "Did you find Bastion useful? Consider supporting us!"
+msgstr ""
+
+#: src\utils.ts:51
+msgid "Did you find Bastion useful? Help keep it online!"
+msgstr ""
+
+#: src\utils.ts:52
+msgid "Did you find Bastion useful? We need your support!"
+msgstr ""
+
+#: src\utils.ts:53
+msgid "Enjoy Bastion? Help keep it online!"
+msgstr ""
+
+#: src\utils.ts:54
+msgid "Enjoy Bastion? Consider supporting us!"
+msgstr ""
+
+#: src\utils.ts:55
+msgid "Found what you were looking for? Consider supporting us!"
+msgstr ""
+
+#: src\commands\art.ts:81
+#: src\commands\search.ts:51
+#, javascript-format
+msgid "Could not find a card matching `${ input }`!"
+msgstr ""
+
+#: src\commands\art.ts:91
+msgid "Could not find art for `${ name }`!"
+msgstr ""
+
+#: src\commands\deck.ts:132
+#, javascript-format
+msgid "${ counts.Monster } Monster"
+msgid_plural "${ counts.Monster } Monsters"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src\commands\deck.ts:135
+msgid "${ counts.Spell } Spell"
+msgid_plural "${ counts.Spell } Spells"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src\commands\deck.ts:138
+#, javascript-format
+msgid "${ counts.Trap } Trap"
+msgid_plural "${ counts.Trap } Traps"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src\commands\deck.ts:166
+msgid "Your Deck"
+msgstr ""
+
+#: src\commands\deck.ts:171
+#, javascript-format
+msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
+msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src\commands\deck.ts:178
+msgid "Main Deck (continued)"
+msgstr ""
+
+#: src\commands\deck.ts:185
+#, javascript-format
+msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
+msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src\commands\deck.ts:192
+msgid "Extra Deck (continued)"
+msgstr ""
+
+#: src\commands\deck.ts:199
+#, javascript-format
+msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
+msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src\commands\deck.ts:206
+msgid "Side Deck (continued)"
+msgstr ""
+
+#: src\commands\deck.ts:231
+msgid "Error: Your deck is empty."
+msgstr ""
+
+#: src\commands\locale.ts:62
+#, javascript-format
+msgid "Locale override for this channel: ${ channelOverride }"
+msgstr ""
+
+#: src\commands\locale.ts:66
+msgid "Locale override for this server: ${ guildOverride }"
+msgstr ""
+
+#: src\commands\locale.ts:69
+#: src\commands\locale.ts:99
+#, javascript-format
+msgid "Discord Community locale for this server: ${ interaction.guildLocale }"
+msgstr ""
+
+#: src\commands\locale.ts:73
+msgid "Locale override for this direct message: ${ override }"
+msgstr ""
+
+#: src\commands\locale.ts:76
+#, javascript-format
+msgid "Your Discord locale: ${ interaction.locale }"
+msgstr ""
+
+#: src\commands\locale.ts:88
+#, javascript-format
+msgid "Locale for current channel <#${ channel }> overridden with ${ locale }."
+msgstr ""
+
+#: src\commands\locale.ts:91
+msgid "Locale for current channel <#${ channel }> reset to server default."
+msgstr ""
+
+#: src\commands\locale.ts:96
+#, javascript-format
+msgid "Server-wide locale override: ${ _guildOverride }"
+msgstr ""
+
+#: src\commands\locale.ts:101
+msgid ""
+"Sorry, you must have the Manage Channel permission in this channel. If you "
+"think this is an error, contact your server admin or report a bug."
+msgstr ""
+
+#: src\commands\locale.ts:108
+#, javascript-format
+msgid "Locale for this server overriden with ${ locale }."
+msgstr ""
+
+#: src\commands\locale.ts:111
+msgid "Locale for this server reset to Discord Community default."
+msgstr ""
+
+#: src\commands\locale.ts:114
+#, javascript-format
+msgid "Server-wide default for community servers is ${ interaction.guildLocale }."
+msgstr ""
+
+#: src\commands\locale.ts:116
+msgid ""
+"Sorry, you must have the Manage Server permission to do this. If you think "
+"this is an error, contact your server admin or report a bug."
+msgstr ""
+
+#: src\commands\locale.ts:123
+#, javascript-format
+msgid ""
+"Locale for this direct message overridden with ${ locale }. Your Discord "
+"setting is ${ interaction.locale }."
+msgstr ""
+
+#: src\commands\locale.ts:126
+#, javascript-format
+msgid ""
+"Locale for this direct message reset to Discord default. Your Discord "
+"setting is ${ interaction.locale }."
+msgstr ""
+
+#: src\commands\ping.ts:42
+#: src\events\message.ts:28
+msgid "Average WebSocket ping (new instance): ${ ping } ms"
+msgstr ""
+
+#: src\commands\ping.ts:47
+#: src\events\message.ts:60
+#, javascript-format
+msgid "Total latency: ${ latency } ms"
+msgstr ""
+
+#: src\commands\ygoprodeck.ts:68
+msgid "Searching YGOPRODECK for `${ term }`…"
+msgstr ""
+
+#: src\commands\yugipedia.ts:82
+#, javascript-format
+msgid "Searching Yugipedia for `${ page }`…"
+msgstr ""
+
+#: src\commands\yugipedia.ts:85
+#, javascript-format
+msgid "Could not find a Yugipedia page named `${ page }`."
+msgstr ""
+
+#: src\events\message.ts:30
+msgid "Free and open source _Yu-Gi-Oh!_ bot"
+msgstr ""
+
+#: src\events\message.ts:31
+msgid ""
+":question: Help documentation on "
+"[GitHub](https://github.com/DawnbrandBots/bastion-bot), or use `.commands` "
+"and `.help`.\n"
+":green_circle: Licence: [GNU AGPL "
+"3.0+](https://choosealicense.com/licenses/agpl-3.0/).\n"
+":money_mouth: Prices from https://yugiohprices.com\n"
+":placard: Bastion Misawa is a character from [Yu-Gi-Oh! "
+"GX](https://yugipedia.com/wiki/Bastion_Misawa).\n"
+"\n"
+"**Bastion has mostly been funded out-of-pocket for years.**\n"
+"<:patreon:895892186841890816> Support us [on "
+"Patreon](https://www.patreon.com/alphakretinbots) and help keep the bot "
+"online!\n"
+"<:kofi:927373724959789096> Ko-fi also works for [one-time "
+"donations](https://ko-fi.com/dawnbrandbots).\n"
+"\n"
+":tools: An update is being worked on and rolling out slowly. Features will "
+"be handled by a new bot instance through Slash Commands concurrently with "
+"the old bot."
+msgstr ""
+
+#: src\events\message.ts:51
+#, javascript-format
+msgid "Revision: ${ process.env.BOT_REVISION }."
+msgstr ""
+
+#: src\card.ts:37
+msgctxt "monster-type-race"
+msgid "Normal"
+msgstr ""
+
+#: src\card.ts:38
+msgctxt "monster-type-race"
+msgid "Effect"
+msgstr ""
+
+#: src\card.ts:39
+msgctxt "monster-type-race"
+msgid "Pendulum"
+msgstr ""
+
+#: src\card.ts:40
+msgctxt "monster-type-race"
+msgid "Ritual"
+msgstr ""
+
+#: src\card.ts:41
+msgctxt "monster-type-race"
+msgid "Fusion"
+msgstr ""
+
+#: src\card.ts:42
+msgctxt "monster-type-race"
+msgid "Synchro"
+msgstr ""
+
+#: src\card.ts:43
+msgctxt "monster-type-race"
+msgid "Xyz"
+msgstr ""
+
+#: src\card.ts:44
+msgctxt "monster-type-race"
+msgid "Link"
+msgstr ""
+
+#: src\card.ts:45
+msgctxt "monster-type-race"
+msgid "Tuner"
+msgstr ""
+
+#: src\card.ts:46
+msgctxt "monster-type-race"
+msgid "Flip"
+msgstr ""
+
+#: src\card.ts:47
+msgctxt "monster-type-race"
+msgid "Toon"
+msgstr ""
+
+#: src\card.ts:48
+msgctxt "monster-type-race"
+msgid "Spirit"
+msgstr ""
+
+#: src\card.ts:49
+msgctxt "monster-type-race"
+msgid "Union"
+msgstr ""
+
+#: src\card.ts:50
+msgctxt "monster-type-race"
+msgid "Gemini"
+msgstr ""
+
+#: src\card.ts:65
+msgctxt "monster-type-race"
+msgid "Warrior"
+msgstr ""
+
+#: src\card.ts:66
+msgctxt "monster-type-race"
+msgid "Spellcaster"
+msgstr ""
+
+#: src\card.ts:67
+msgctxt "monster-type-race"
+msgid "Fairy"
+msgstr ""
+
+#: src\card.ts:68
+msgctxt "monster-type-race"
+msgid "Fiend"
+msgstr ""
+
+#: src\card.ts:69
+msgctxt "monster-type-race"
+msgid "Zombie"
+msgstr ""
+
+#: src\card.ts:70
+msgctxt "monster-type-race"
+msgid "Machine"
+msgstr ""
+
+#: src\card.ts:71
+msgctxt "monster-type-race"
+msgid "Aqua"
+msgstr ""
+
+#: src\card.ts:72
+msgctxt "monster-type-race"
+msgid "Pyro"
+msgstr ""
+
+#: src\card.ts:73
+msgctxt "monster-type-race"
+msgid "Rock"
+msgstr ""
+
+#: src\card.ts:74
+msgctxt "monster-type-race"
+msgid "Winged Beast"
+msgstr ""
+
+#: src\card.ts:75
+msgctxt "monster-type-race"
+msgid "Plant"
+msgstr ""
+
+#: src\card.ts:76
+msgctxt "monster-type-race"
+msgid "Insect"
+msgstr ""
+
+#: src\card.ts:77
+msgctxt "monster-type-race"
+msgid "Thunder"
+msgstr ""
+
+#: src\card.ts:78
+msgctxt "monster-type-race"
+msgid "Dragon"
+msgstr ""
+
+#: src\card.ts:79
+msgctxt "monster-type-race"
+msgid "Beast"
+msgstr ""
+
+#: src\card.ts:80
+msgctxt "monster-type-race"
+msgid "Beast-Warrior"
+msgstr ""
+
+#: src\card.ts:81
+msgctxt "monster-type-race"
+msgid "Dinosaur"
+msgstr ""
+
+#: src\card.ts:82
+msgctxt "monster-type-race"
+msgid "Fish"
+msgstr ""
+
+#: src\card.ts:83
+msgctxt "monster-type-race"
+msgid "Sea Serpent"
+msgstr ""
+
+#: src\card.ts:84
+msgctxt "monster-type-race"
+msgid "Reptile"
+msgstr ""
+
+#: src\card.ts:85
+msgctxt "monster-type-race"
+msgid "Psychic"
+msgstr ""
+
+#: src\card.ts:86
+msgctxt "monster-type-race"
+msgid "Divine-Beast"
+msgstr ""
+
+#: src\card.ts:87
+msgctxt "monster-type-race"
+msgid "Creator God"
+msgstr ""
+
+#: src\card.ts:88
+msgctxt "monster-type-race"
+msgid "Wyrm"
+msgstr ""
+
+#: src\card.ts:89
+msgctxt "monster-type-race"
+msgid "Cyberse"
+msgstr ""
+
+#: src\card.ts:51
+msgctxt "spell-trap-property"
+msgid "Normal Spell"
+msgstr ""
+
+#: src\card.ts:52
+msgctxt "spell-trap-property"
+msgid "Continuous Spell"
+msgstr ""
+
+#: src\card.ts:53
+msgctxt "spell-trap-property"
+msgid "Equip Spell"
+msgstr ""
+
+#: src\card.ts:54
+msgctxt "spell-trap-property"
+msgid "Quick-Play Spell"
+msgstr ""
+
+#: src\card.ts:55
+msgctxt "spell-trap-property"
+msgid "Field Spell"
+msgstr ""
+
+#: src\card.ts:56
+msgctxt "spell-trap-property"
+msgid "Ritual Spell"
+msgstr ""
+
+#: src\card.ts:57
+msgctxt "spell-trap-property"
+msgid "Normal Trap"
+msgstr ""
+
+#: src\card.ts:58
+msgctxt "spell-trap-property"
+msgid "Continuous Trap"
+msgstr ""
+
+#: src\card.ts:59
+msgctxt "spell-trap-property"
+msgid "Counter Trap"
+msgstr ""
+
+#: src\card.ts:95
+msgctxt "attribute"
+msgid "EARTH"
+msgstr ""
+
+#: src\card.ts:96
+msgctxt "attribute"
+msgid "WATER"
+msgstr ""
+
+#: src\card.ts:97
+msgctxt "attribute"
+msgid "FIRE"
+msgstr ""
+
+#: src\card.ts:98
+msgctxt "attribute"
+msgid "WIND"
+msgstr ""
+
+#: src\card.ts:99
+msgctxt "attribute"
+msgid "LIGHT"
+msgstr ""
+
+#: src\card.ts:100
+msgctxt "attribute"
+msgid "DARK"
+msgstr ""
+
+#: src\card.ts:101
+msgctxt "attribute"
+msgid "DIVINE"
+msgstr ""
+
+#: src\card.ts:296
+#: src\card.ts:307
+msgctxt "card-embed"
+msgid "Card Text"
+msgstr ""
+
+#: src\card.ts:301
+msgctxt "card-embed"
+msgid "Pendulum Effect"
+msgstr ""
+
+#: src\card.ts:322
+msgctxt "card-embed"
+msgid "Card Effect"
+msgstr ""
+
+#: src\locale.ts:46
+msgctxt "command-option"
+msgid "result-language"
+msgstr ""
+
+#: src\locale.ts:66
+msgctxt "command-option"
+msgid "input-language"
+msgstr ""
+
+#: src\commands\art.ts:38
+msgctxt "command-option"
+msgid "input"
+msgstr ""
+
+#: src\commands\ygoprodeck.ts:37
+msgctxt "command-option"
+msgid "term"
+msgstr ""
+
+#: src\commands\yugipedia.ts:40
+msgctxt "command-option"
+msgid "page"
+msgstr ""
+
+#: src\locale.ts:49
+msgctxt "command-option-description"
+msgid "The output language for the card embed, overriding other settings."
+msgstr ""
+
+#: src\locale.ts:69
+msgctxt "command-option-description"
+msgid "The language to search in, defaulting to the result language."
+msgstr ""
+
+#: src\commands\art.ts:41
+msgctxt "command-option-description"
+msgid "The password, Konami ID, or name to search for a card."
+msgstr ""
+
+#: src\commands\ygoprodeck.ts:40
+msgctxt "command-option-description"
+msgid "The name or password of the card you're looking for."
+msgstr ""
+
+#: src\commands\yugipedia.ts:43
+msgctxt "command-option-description"
+msgid "The name of the Yugipedia page you want to search for."
+msgstr ""
+
+#: src\commands\art.ts:35
+msgctxt "command-name"
+msgid "art"
+msgstr ""
+
+#: src\commands\ping.ts:27
+msgctxt "command-name"
+msgid "ping"
+msgstr ""
+
+#: src\commands\ygoprodeck.ts:34
+msgctxt "command-name"
+msgid "ygoprodeck"
+msgstr ""
+
+#: src\commands\yugipedia.ts:34
+msgctxt "command-name"
+msgid "yugipedia"
+msgstr ""
+
+#: src\commands\art.ts:36
+msgctxt "command-description"
+msgid "Display the art for a card!"
+msgstr ""
+
+#: src\commands\ping.ts:28
+msgctxt "command-description"
+msgid "Test latency to the new bot instance."
+msgstr ""
+
+#: src\commands\ygoprodeck.ts:35
+msgctxt "command-description"
+msgid "Search the YGOPRODECK card database."
+msgstr ""
+
+#: src\commands\yugipedia.ts:37
+msgctxt "command-description"
+msgid "Search the Yugipedia wiki for a page and link to it."
+msgstr ""
