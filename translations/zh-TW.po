@@ -231,17 +231,20 @@ msgstr ""
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
 msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:135
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
 msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:138
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
 msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:166
 msgid "Your Deck"
@@ -252,6 +255,7 @@ msgstr ""
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
 msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:178
 msgid "Main Deck (continued)"
@@ -262,6 +266,7 @@ msgstr ""
 msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
 msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:192
 msgid "Extra Deck (continued)"
@@ -272,6 +277,7 @@ msgstr ""
 msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
 msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:206
 msgid "Side Deck (continued)"
@@ -316,6 +322,20 @@ msgstr ""
 #: src\events\message.ts:51
 #, javascript-format
 msgid "Revision: ${ process.env.BOT_REVISION }."
+msgstr ""
+
+#: src\commands\help.ts:75
+#, javascript-format
+msgid ""
+"Documentation for the `/${ command }` Slash Command:\n"
+"<https://github.com/DawnbrandBots/bastion-bot/blob/master/docs/commands/${ "
+"command }.md>"
+msgstr ""
+
+#: src\commands\help.ts:77
+msgid ""
+"Documentation for Slash Commands:\n"
+"<https://github.com/DawnbrandBots/bastion-bot/tree/master/docs/commands>"
 msgstr ""
 
 #: src\card.ts:37
@@ -634,6 +654,11 @@ msgctxt "command-option"
 msgid "page"
 msgstr ""
 
+#: src\commands\help.ts:52
+msgctxt "command-option"
+msgid "command"
+msgstr ""
+
 #: src\locale.ts:49
 msgctxt "command-option-description"
 msgid "The output language for the card embed, overriding other settings."
@@ -659,6 +684,11 @@ msgctxt "command-option-description"
 msgid "The name of the Yugipedia page you want to search for."
 msgstr ""
 
+#: src\commands\help.ts:55
+msgctxt "command-option-description"
+msgid "The name of a specific Slash Command."
+msgstr ""
+
 #: src\commands\art.ts:35
 msgctxt "command-name"
 msgid "art"
@@ -679,6 +709,11 @@ msgctxt "command-name"
 msgid "yugipedia"
 msgstr ""
 
+#: src\commands\help.ts:49
+msgctxt "command-name"
+msgid "help"
+msgstr ""
+
 #: src\commands\art.ts:36
 msgctxt "command-description"
 msgid "Display the art for a card!"
@@ -697,4 +732,9 @@ msgstr ""
 #: src\commands\yugipedia.ts:37
 msgctxt "command-description"
 msgid "Search the Yugipedia wiki for a page and link to it."
+msgstr ""
+
+#: src\commands\help.ts:50
+msgctxt "command-description"
+msgid "Get help with a Slash Command."
 msgstr ""
