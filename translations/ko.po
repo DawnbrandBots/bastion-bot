@@ -646,6 +646,11 @@ msgctxt "command-option"
 msgid "page"
 msgstr "페이지"
 
+#: src\commands\help.ts:51
+msgctxt "command-option"
+msgid "command"
+msgstr ""
+
 #: src\locale.ts:49
 msgctxt "command-option-description"
 msgid "The output language for the card embed, overriding other settings."
@@ -671,6 +676,11 @@ msgctxt "command-option-description"
 msgid "The name of the Yugipedia page you want to search for."
 msgstr "검색할 Yugipedia 페이지의 이름입니다."
 
+#: src\commands\help.ts:54
+msgctxt "command-option-description"
+msgid "The name of a specific Slash Command."
+msgstr ""
+
 #: src\commands\art.ts:35
 msgctxt "command-name"
 msgid "art"
@@ -689,6 +699,11 @@ msgstr ""
 #: src\commands\yugipedia.ts:34
 msgctxt "command-name"
 msgid "yugipedia"
+msgstr ""
+
+#: src\commands\help.ts:48
+msgctxt "command-name"
+msgid "help"
 msgstr ""
 
 #: src\commands\art.ts:36
@@ -710,3 +725,8 @@ msgstr "YGOPRODECK 카드 데이터베이스에서 검색합니다."
 msgctxt "command-description"
 msgid "Search the Yugipedia wiki for a page and link to it."
 msgstr "Yugipedia에서 검색하고 링크를 출력합니다."
+
+#: src\commands\help.ts:49
+msgctxt "command-description"
+msgid "Get help with a Slash Command."
+msgstr ""
