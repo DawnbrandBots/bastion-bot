@@ -33,7 +33,8 @@ export const COMMAND_LOCALIZATIONS = [
 	{ gettext: "zh-TW", discord: DiscordLocale.ChineseTW }
 ] as const;
 
-export const resultLangStringOption = (() => {
+// Cannot be an IIFE because we need to construct after .po files are loaded.
+export function getResultLangStringOption(): SlashCommandStringOption {
 	const option = new SlashCommandStringOption()
 		.setName("result-language")
 		.setDescription("The output language for the card embed, overriding other settings.")
@@ -51,9 +52,9 @@ export const resultLangStringOption = (() => {
 	}
 
 	return option;
-})();
+}
 
-export const inputLangStringOption = (() => {
+export function getInputLangStringOption(): SlashCommandStringOption {
 	const option = new SlashCommandStringOption()
 		.setName("input-language")
 		.setDescription("The language to search in, defaulting to the result language.")
@@ -71,7 +72,7 @@ export const inputLangStringOption = (() => {
 	}
 
 	return option;
-})();
+}
 
 /**
  * Abstract persistent store for locale overrides. We need this if we switch to
@@ -100,7 +101,7 @@ export abstract class LocaleProvider {
 		if (lang) {
 			// We could verify with this.filter, but that unnecessarily checks through
 			// the entire list when we know that this entire codebase should use
-			// resultLangStringOption if it has a lang option to a command.
+			// getResultLangStringOption if it has a lang option to a command.
 			return lang as Locale;
 		}
 		if (interaction.inGuild()) {

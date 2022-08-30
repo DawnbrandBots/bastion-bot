@@ -8,7 +8,7 @@ import { c, t, useLocale } from "ttag";
 import { getCard, inferInputType } from "../card";
 import { Command } from "../Command";
 import { CardSchema } from "../definitions/yaml-yugi";
-import { COMMAND_LOCALIZATIONS, inputLangStringOption, Locale, LocaleProvider } from "../locale";
+import { COMMAND_LOCALIZATIONS, getInputLangStringOption, Locale, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { searchQueryTypeStringOption } from "../utils";
@@ -44,7 +44,7 @@ export class ArtCommand extends Command {
 
 		builder
 			.addStringOption(option)
-			.addStringOption(inputLangStringOption)
+			.addStringOption(getInputLangStringOption())
 			.addStringOption(searchQueryTypeStringOption);
 
 		return builder.toJSON();
