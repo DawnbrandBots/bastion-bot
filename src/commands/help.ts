@@ -2,7 +2,7 @@ import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builde
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
 import { inject, injectable } from "tsyringe";
-import { c, t, useLocale } from "ttag";
+import { c, useLocale } from "ttag";
 import { Command } from "../Command";
 import { COMMAND_LOCALIZATIONS, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
@@ -19,8 +19,7 @@ export class HelpCommand extends Command {
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		const builder = new SlashCommandBuilder().setName("help").setDescription("Get help with a Slash Command.");
 
-		// TODO: un-hardcode this? would require wrestling with circular deps, and would probably still need
-		// manual exclusions in case of undocumented commands like ping
+		// update this when documentation is added for new commands!
 		const documentedCommands = [
 			"art",
 			"deck",
@@ -67,17 +66,15 @@ export class HelpCommand extends Command {
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		const command = interaction.options.getString("command", false);
-		const resultLanguage = await this.locales.get(interaction);
 
 		let output: string;
 
 		if (command) {
-			output = t`Documentation for the \`/${command}\` Slash Command:\n<https://github.com/DawnbrandBots/bastion-bot/blob/master/docs/commands/${command}.md>`;
+			output = `<https://github.com/DawnbrandBots/bastion-bot/blob/master/docs/commands/${command}.md>`;
 		} else {
-			output = t`Documentation for Slash Commands:\n<https://github.com/DawnbrandBots/bastion-bot/tree/master/docs/commands>`;
+			output = `<https://github.com/DawnbrandBots/bastion-bot/tree/master/docs/commands>`;
 		}
 
-		useLocale(resultLanguage);
 		const reply = await interaction.reply({ content: output, ephemeral: true, fetchReply: true });
 
 		if ("createdTimestamp" in reply) {

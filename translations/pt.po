@@ -318,20 +318,6 @@ msgstr ""
 msgid "Revision: ${ process.env.BOT_REVISION }."
 msgstr ""
 
-#: src\commands\help.ts:75
-#, javascript-format
-msgid ""
-"Documentation for the `/${ command }` Slash Command:\n"
-"<https://github.com/DawnbrandBots/bastion-bot/blob/master/docs/commands/${ "
-"command }.md>"
-msgstr ""
-
-#: src\commands\help.ts:77
-msgid ""
-"Documentation for Slash Commands:\n"
-"<https://github.com/DawnbrandBots/bastion-bot/tree/master/docs/commands>"
-msgstr ""
-
 #: src\card.ts:37
 msgctxt "monster-type-race"
 msgid "Normal"
@@ -648,7 +634,7 @@ msgctxt "command-option"
 msgid "page"
 msgstr ""
 
-#: src\commands\help.ts:52
+#: src\commands\help.ts:51
 msgctxt "command-option"
 msgid "command"
 msgstr ""
@@ -678,7 +664,7 @@ msgctxt "command-option-description"
 msgid "The name of the Yugipedia page you want to search for."
 msgstr ""
 
-#: src\commands\help.ts:55
+#: src\commands\help.ts:54
 msgctxt "command-option-description"
 msgid "The name of a specific Slash Command."
 msgstr ""
@@ -703,7 +689,7 @@ msgctxt "command-name"
 msgid "yugipedia"
 msgstr ""
 
-#: src\commands\help.ts:49
+#: src\commands\help.ts:48
 msgctxt "command-name"
 msgid "help"
 msgstr ""
@@ -728,7 +714,7 @@ msgctxt "command-description"
 msgid "Search the Yugipedia wiki for a page and link to it."
 msgstr ""
 
-#: src\commands\help.ts:50
+#: src\commands\help.ts:49
 msgctxt "command-description"
 msgid "Get help with a Slash Command."
 msgstr ""
