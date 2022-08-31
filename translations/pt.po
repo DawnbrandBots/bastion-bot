@@ -73,7 +73,7 @@ msgid ""
 "server](https://discord.gg/4aFuPyuE96)!"
 msgstr ""
 ":incoming_envelope: Por favor, envie um feedback para o "
-"[nosso Github](https://github.com/DawnbrandBots/bastion-bot)" "ou no nosso [servidor no Discord](https://discord.gg/4aFuPyuE96)!"
+"[nosso Github](https://github.com/DawnbrandBots/bastion-bot)ou no nosso [servidor no Discord](https://discord.gg/4aFuPyuE96)!"
 
 #: src\utils.ts:45
 msgid "Please consider supporting us!"
