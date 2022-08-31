@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
-"Plural-Forms: nplurals = 1; plural = 0;\n"
-"Language: ja\n"
+"Plural-Forms: nplurals = 2; plural = (n != 1);\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -19,37 +19,37 @@ msgstr ""
 
 #: src\card.ts:272
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
-msgstr "**種族**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
+msgstr "**Tipo**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 
 #: src\card.ts:274
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
-msgstr "**属性**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
+msgstr "**Attributo**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
 #: src\card.ts:278
 #, javascript-format
 msgid ""
 "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
 "card.def }"
-msgstr "**ランク**: ${ Icon.Rank } ${ card.rank } **攻撃力**: ${ card.atk } **守備力**: ${ card.def }"
+msgstr "**Rango**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 
 #: src\card.ts:281
 #, javascript-format
 msgid ""
 "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
 "Arrows**: ${ arrows }"
-msgstr "**リンクの数字分**: ${ card.link_arrows.length } **攻撃力**: ${ card.atk } **リンクマーカー**: ${ arrows }"
+msgstr ""
 
 #: src\card.ts:283
 msgid ""
 "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
 "${ card.def }"
-msgstr "**レベル**: ${ Icon.Level } ${ card.level } **攻撃力**: ${ card.atk } **守備力**: ${ card.def }"
+msgstr "Livello**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 
 #: src\card.ts:290
 #, javascript-format
 msgid "**Pendulum Scale**: ${ formattedScale }"
-msgstr "**ペンデュラムスケール**: ${ formattedScale }"
+msgstr "**Valore Pendulum**: ${ formattedScale }"
 
 #: src\card.ts:310
 #: src\card.ts:327
@@ -127,17 +127,20 @@ msgstr ""
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
 msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:135
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
 msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:138
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
 msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:166
 msgid "Your Deck"
@@ -148,6 +151,7 @@ msgstr ""
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
 msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:178
 msgid "Main Deck (continued)"
@@ -158,6 +162,7 @@ msgstr ""
 msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
 msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:192
 msgid "Extra Deck (continued)"
@@ -168,6 +173,7 @@ msgstr ""
 msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
 msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:206
 msgid "Side Deck (continued)"
@@ -315,288 +321,288 @@ msgstr ""
 #: src\card.ts:37
 msgctxt "monster-type-race"
 msgid "Normal"
-msgstr "通常"
+msgstr "Normale"
 
 #: src\card.ts:38
 msgctxt "monster-type-race"
 msgid "Effect"
-msgstr "効果"
+msgstr "Effetto"
 
 #: src\card.ts:39
 msgctxt "monster-type-race"
 msgid "Pendulum"
-msgstr "ペンデュラム"
+msgstr "Pêndulo"
 
 #: src\card.ts:40
 msgctxt "monster-type-race"
 msgid "Ritual"
-msgstr "儀式"
+msgstr "Rituale"
 
 #: src\card.ts:41
 msgctxt "monster-type-race"
 msgid "Fusion"
-msgstr "融合"
+msgstr "Fusione"
 
 #: src\card.ts:42
 msgctxt "monster-type-race"
 msgid "Synchro"
-msgstr "シンクロ"
+msgstr "Synchro"
 
 #: src\card.ts:43
 msgctxt "monster-type-race"
 msgid "Xyz"
-msgstr "エクシーズ"
+msgstr "Xyz"
 
 #: src\card.ts:44
 msgctxt "monster-type-race"
 msgid "Link"
-msgstr "リンク"
+msgstr "Link"
 
 #: src\card.ts:45
 msgctxt "monster-type-race"
 msgid "Tuner"
-msgstr "チューナー"
+msgstr "Tuner"
 
 #: src\card.ts:46
 msgctxt "monster-type-race"
 msgid "Flip"
-msgstr "リバース"
+msgstr "Scoperta"
 
 #: src\card.ts:47
 msgctxt "monster-type-race"
 msgid "Toon"
-msgstr "トゥーン"
+msgstr "Toon"
 
 #: src\card.ts:48
 msgctxt "monster-type-race"
 msgid "Spirit"
-msgstr "スピリット"
+msgstr "Spirit"
 
 #: src\card.ts:49
 msgctxt "monster-type-race"
 msgid "Union"
-msgstr "ユニオン"
+msgstr "Unione"
 
 #: src\card.ts:50
 msgctxt "monster-type-race"
 msgid "Gemini"
-msgstr "デュアル"
+msgstr "Gemello"
 
 #: src\card.ts:65
 msgctxt "monster-type-race"
 msgid "Warrior"
-msgstr "戦士族"
+msgstr "Guerriero"
 
 #: src\card.ts:66
 msgctxt "monster-type-race"
 msgid "Spellcaster"
-msgstr "魔法使い族"
+msgstr "Incantatore"
 
 #: src\card.ts:67
 msgctxt "monster-type-race"
 msgid "Fairy"
-msgstr "天使族"
+msgstr "Fata"
 
 #: src\card.ts:68
 msgctxt "monster-type-race"
 msgid "Fiend"
-msgstr "悪魔族"
+msgstr "Demone"
 
 #: src\card.ts:69
 msgctxt "monster-type-race"
 msgid "Zombie"
-msgstr "アンデット族"
+msgstr "Zombie"
 
 #: src\card.ts:70
 msgctxt "monster-type-race"
 msgid "Machine"
-msgstr "機械族"
+msgstr "Macchina"
 
 #: src\card.ts:71
 msgctxt "monster-type-race"
 msgid "Aqua"
-msgstr "水族"
+msgstr "Acqua"
 
 #: src\card.ts:72
 msgctxt "monster-type-race"
 msgid "Pyro"
-msgstr "炎族"
+msgstr "Pyro"
 
 #: src\card.ts:73
 msgctxt "monster-type-race"
 msgid "Rock"
-msgstr "岩石族"
+msgstr "Roccia"
 
 #: src\card.ts:74
 msgctxt "monster-type-race"
 msgid "Winged Beast"
-msgstr "鳥獣族"
+msgstr "Bestia Alata"
 
 #: src\card.ts:75
 msgctxt "monster-type-race"
 msgid "Plant"
-msgstr "植物族"
+msgstr "Pianta"
 
 #: src\card.ts:76
 msgctxt "monster-type-race"
 msgid "Insect"
-msgstr "昆虫族"
+msgstr "Insetto"
 
 #: src\card.ts:77
 msgctxt "monster-type-race"
 msgid "Thunder"
-msgstr "雷族"
+msgstr "Tuono"
 
 #: src\card.ts:78
 msgctxt "monster-type-race"
 msgid "Dragon"
-msgstr "ドラゴン族"
+msgstr "Drago"
 
 #: src\card.ts:79
 msgctxt "monster-type-race"
 msgid "Beast"
-msgstr "獣族"
+msgstr "Bestia"
 
 #: src\card.ts:80
 msgctxt "monster-type-race"
 msgid "Beast-Warrior"
-msgstr "獣戦士族"
+msgstr "Guerriero-Bestia"
 
 #: src\card.ts:81
 msgctxt "monster-type-race"
 msgid "Dinosaur"
-msgstr "恐竜族"
+msgstr "Dinosauro"
 
 #: src\card.ts:82
 msgctxt "monster-type-race"
 msgid "Fish"
-msgstr "魚族"
+msgstr "Pesce"
 
 #: src\card.ts:83
 msgctxt "monster-type-race"
 msgid "Sea Serpent"
-msgstr "海竜族"
+msgstr "Serpente Marino"
 
 #: src\card.ts:84
 msgctxt "monster-type-race"
 msgid "Reptile"
-msgstr "爬虫類族"
+msgstr "Rettile"
 
 #: src\card.ts:85
 msgctxt "monster-type-race"
 msgid "Psychic"
-msgstr "サイキック族"
+msgstr "Psichico"
 
 #: src\card.ts:86
 msgctxt "monster-type-race"
 msgid "Divine-Beast"
-msgstr "幻神獣族"
+msgstr "Divinità-Bestia"
 
 #: src\card.ts:87
 msgctxt "monster-type-race"
 msgid "Creator God"
-msgstr "創造神族"
+msgstr ""
 
 #: src\card.ts:88
 msgctxt "monster-type-race"
 msgid "Wyrm"
-msgstr "幻竜族"
+msgstr "Wyrm"
 
 #: src\card.ts:89
 msgctxt "monster-type-race"
 msgid "Cyberse"
-msgstr "サイバース族"
+msgstr "Cyberso"
 
 #: src\card.ts:51
 msgctxt "spell-trap-property"
 msgid "Normal Spell"
-msgstr "通常魔法"
+msgstr "Magia Normale"
 
 #: src\card.ts:52
 msgctxt "spell-trap-property"
 msgid "Continuous Spell"
-msgstr "永続魔法"
+msgstr "Magia Continua"
 
 #: src\card.ts:53
 msgctxt "spell-trap-property"
 msgid "Equip Spell"
-msgstr "装備魔法"
+msgstr "Magia Equipaggiamento"
 
 #: src\card.ts:54
 msgctxt "spell-trap-property"
 msgid "Quick-Play Spell"
-msgstr "速攻魔法"
+msgstr "Magia Rapida"
 
 #: src\card.ts:55
 msgctxt "spell-trap-property"
 msgid "Field Spell"
-msgstr "フィールド魔法"
+msgstr "Magia Terreno"
 
 #: src\card.ts:56
 msgctxt "spell-trap-property"
 msgid "Ritual Spell"
-msgstr "儀式魔法"
+msgstr "Magia Rituale"
 
 #: src\card.ts:57
 msgctxt "spell-trap-property"
 msgid "Normal Trap"
-msgstr "通常罠"
+msgstr "Trappola Normale"
 
 #: src\card.ts:58
 msgctxt "spell-trap-property"
 msgid "Continuous Trap"
-msgstr "永続罠"
+msgstr "Trappola Continua"
 
 #: src\card.ts:59
 msgctxt "spell-trap-property"
 msgid "Counter Trap"
-msgstr "カウンター罠"
+msgstr "Contro-Trappola"
 
 #: src\card.ts:95
 msgctxt "attribute"
 msgid "EARTH"
-msgstr "地"
+msgstr "TERRA"
 
 #: src\card.ts:96
 msgctxt "attribute"
 msgid "WATER"
-msgstr "水"
+msgstr "ACQUA"
 
 #: src\card.ts:97
 msgctxt "attribute"
 msgid "FIRE"
-msgstr "炎"
+msgstr "FUOCO"
 
 #: src\card.ts:98
 msgctxt "attribute"
 msgid "WIND"
-msgstr "風"
+msgstr "VENTO"
 
 #: src\card.ts:99
 msgctxt "attribute"
 msgid "LIGHT"
-msgstr "光"
+msgstr "LUCE"
 
 #: src\card.ts:100
 msgctxt "attribute"
 msgid "DARK"
-msgstr "闇"
+msgstr "OSCURITÀ"
 
 #: src\card.ts:101
 msgctxt "attribute"
 msgid "DIVINE"
-msgstr "神"
+msgstr "DIVINO"
 
 #: src\card.ts:296
 #: src\card.ts:307
 msgctxt "card-embed"
 msgid "Card Text"
-msgstr "カードテキスト"
+msgstr "Testo carta"
 
 #: src\card.ts:301
 msgctxt "card-embed"
 msgid "Pendulum Effect"
-msgstr "ペンデュラム効果"
+msgstr "Effetto Pendulum"
 
 #: src\card.ts:322
 msgctxt "card-embed"
