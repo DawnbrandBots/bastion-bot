@@ -624,7 +624,7 @@ msgstr ""
 #: src\locale.ts:66
 msgctxt "command-option"
 msgid "input-language"
-msgstr "idioma de entrada"
+msgstr "idioma-de-entrada"
 
 #: src\commands\art.ts:38
 msgctxt "command-option"
