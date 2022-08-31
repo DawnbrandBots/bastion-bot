@@ -64,7 +64,7 @@ msgstr "Senha: ${ card.password } | Konami ID #${ card.konami_id }"
 
 #: src\utils.ts:33
 msgid ":tools: This command is in development."
-msgstr ":ferraments: Este comando está em desenvolvimento."
+msgstr ":tools: Este comando está em desenvolvimento."
 
 #: src\utils.ts:34
 msgid ""
