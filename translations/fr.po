@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
-"Plural-Forms: nplurals = 2; plural = (n != 1);\n"
-"Language: pt\n"
+"Plural-Forms: nplurals = 2; plural = (n > 1);\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -15,26 +15,23 @@ msgstr ""
 msgid ""
 "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
 "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
-msgstr
-"[Database oficial da Konami](${ official }) | [Regras no OCG](${ rulings }) | "
-"[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
+msgstr ""
 
 #: src\card.ts:272
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
-msgstr "**Tipo**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
+msgstr "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 
 #: src\card.ts:274
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
-msgstr "**Atributo**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
+msgstr "**Attribut**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
 #: src\card.ts:278
 #, javascript-format
 msgid ""
 "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
 "card.def }"
-msgstr "**Classe**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
-"card.def }"
+msgstr "**Rang**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 
 #: src\card.ts:281
 #, javascript-format
@@ -42,29 +39,27 @@ msgid ""
 "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
 "Arrows**: ${ arrows }"
 msgstr ""
-"**Valor Link**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
-"Flechas Link**: ${ arrows }"
+
 #: src\card.ts:283
 msgid ""
 "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
 "${ card.def }"
-msgstr "**Nível**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
-"${ card.def }"
+msgstr "**Niveau**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 
 #: src\card.ts:290
 #, javascript-format
 msgid "**Pendulum Scale**: ${ formattedScale }"
-msgstr "**Escala Pêndulo**: ${ formattedScale }"
+msgstr "**Échelle Pendule**: ${ formattedScale }"
 
 #: src\card.ts:310
 #: src\card.ts:327
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
-msgstr "Senha: ${ card.password } | Konami ID #${ card.konami_id }"
+msgstr ""
 
 #: src\utils.ts:33
 msgid ":tools: This command is in development."
-msgstr ":tools: Este comando está em desenvolvimento."
+msgstr ""
 
 #: src\utils.ts:34
 msgid ""
@@ -72,20 +67,18 @@ msgid ""
 "tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support "
 "server](https://discord.gg/4aFuPyuE96)!"
 msgstr ""
-":incoming_envelope: Por favor, envie um feedback para o "
-"[nosso Github](https://github.com/DawnbrandBots/bastion-bot)ou no nosso [servidor no Discord](https://discord.gg/4aFuPyuE96)!"
 
 #: src\utils.ts:45
 msgid "Please consider supporting us!"
-msgstr "Por favor, considere nos apoiar!"
+msgstr ""
 
 #: src\utils.ts:46
 msgid "Help keep Bastion online!"
-msgstr "Ajude a manter o Bastion online!"
+msgstr ""
 
 #: src\utils.ts:47
 msgid "Please help keep Bastion online!"
-msgstr "Por favor, ajude a manter o Bastion online!"
+msgstr ""
 
 #: src\utils.ts:48
 msgid "Was Bastion helpful? Consider supporting us!"
@@ -93,102 +86,102 @@ msgstr ""
 
 #: src\utils.ts:49
 msgid "Was Bastion helpful? We need your support!"
-msgstr "Bastion foi útil? Nós precisamos do seu apoio!"
+msgstr ""
 
 #: src\utils.ts:50
 msgid "Did you find Bastion useful? Consider supporting us!"
-msgstr "Você acha que o Bastion foi útil? Conside nos apoiar!"
+msgstr ""
 
 #: src\utils.ts:51
 msgid "Did you find Bastion useful? Help keep it online!"
-msgstr "Você acha que o Bastion foi útil? Ajude a mantê-lo online!"
+msgstr ""
 
 #: src\utils.ts:52
 msgid "Did you find Bastion useful? We need your support!"
-msgstr "Você acha que o Bastion foi útil? Nós precisamos do seu apoio!"
+msgstr ""
 
 #: src\utils.ts:53
 msgid "Enjoy Bastion? Help keep it online!"
-msgstr "Você está gostando do Bastion? Ajude a mantê-lo online!"
+msgstr ""
 
 #: src\utils.ts:54
 msgid "Enjoy Bastion? Consider supporting us!"
-msgstr "Você está gostando do Bastion? Considere nos apoiar!"
+msgstr ""
 
 #: src\utils.ts:55
 msgid "Found what you were looking for? Consider supporting us!"
-msgstr "Você encontrou o que procurava? Considere nos apoiar!"
+msgstr ""
 
 #: src\commands\art.ts:81
 #: src\commands\search.ts:51
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
-msgstr "Não foi possível encontrar uma carta compatível com `${ input }`!"
+msgstr ""
 
 #: src\commands\art.ts:91
 msgid "Could not find art for `${ name }`!"
-msgstr "Não foi possível encontrar uma arte para `${ name }`!"
+msgstr ""
 
 #: src\commands\deck.ts:132
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
-msgstr[0] "${ counts.Monster } Monstro"
-msgstr[1] "${ counts.Monster } Monstros"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:135
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
-msgstr[0] "${ counts.Spell } Magia"
-msgstr[1] "${ counts.Spell } Magias"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:138
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
-msgstr[0] "${ counts.Trap } Armadilha"
-msgstr[1] "${ counts.Trap } Armadilhas"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:166
 msgid "Your Deck"
-msgstr "Seu Deck"
+msgstr ""
 
 #: src\commands\deck.ts:171
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
-msgstr[0] "Deck Principal (${ deck.main.length } carta — ${ countDetail })"
-msgstr[1] "Deck Principal (${ deck.main.length } cartas — ${ countDetail })"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:178
 msgid "Main Deck (continued)"
-msgstr "Deck Principal (continuação)"
+msgstr ""
 
 #: src\commands\deck.ts:185
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
-msgstr[0] "Deck Adicional (${ deck.extra.length } carta — ${ _countDetail })"
-msgstr[1] "Deck Adicional (${ deck.extra.length } cartas — ${ _countDetail })"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:192
 msgid "Extra Deck (continued)"
-msgstr "Deck Adicional (continuação)"
+msgstr ""
 
 #: src\commands\deck.ts:199
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
-msgstr[0] "Deck Auxiliar (${ deck.side.length } carta — ${ _countDetail2 })"
-msgstr[1] "Deck Auxiliar (${ deck.side.length } cartas — ${ _countDetail2 })"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src\commands\deck.ts:206
 msgid "Side Deck (continued)"
-msgstr "Deck Auxiliar (continuação)"
+msgstr ""
 
 #: src\commands\deck.ts:231
 msgid "Error: Your deck is empty."
-msgstr "Erro: Seu deck está vazio"
+msgstr ""
 
 #: src\commands\locale.ts:62
 #, javascript-format
@@ -277,25 +270,25 @@ msgstr ""
 #: src\events\message.ts:60
 #, javascript-format
 msgid "Total latency: ${ latency } ms"
-msgstr "Latência total: ${ latency } ms"
+msgstr ""
 
 #: src\commands\ygoprodeck.ts:68
 msgid "Searching YGOPRODECK for `${ term }`…"
-msgstr "Buscando em YGOPRODECK por `${ term }`…"
+msgstr ""
 
 #: src\commands\yugipedia.ts:82
 #, javascript-format
 msgid "Searching Yugipedia for `${ page }`…"
-msgstr "Buscando na Yugipedia por `${ page }`…"
+msgstr ""
 
 #: src\commands\yugipedia.ts:85
 #, javascript-format
 msgid "Could not find a Yugipedia page named `${ page }`."
-msgstr "Não foi possível encontrar uma página na Yugipedia chamada `${ page }`."
+msgstr ""
 
 #: src\events\message.ts:30
 msgid "Free and open source _Yu-Gi-Oh!_ bot"
-msgstr "Um bot de _Yu-Gi-Oh!_ gratuito e de código aberto"
+msgstr ""
 
 #: src\events\message.ts:31
 msgid ""
@@ -323,7 +316,7 @@ msgstr ""
 #: src\events\message.ts:51
 #, javascript-format
 msgid "Revision: ${ process.env.BOT_REVISION }."
-msgstr "Revisão: ${ process.env.BOT_REVISION }."
+msgstr ""
 
 #: src\card.ts:37
 msgctxt "monster-type-race"
@@ -333,27 +326,27 @@ msgstr "Normal"
 #: src\card.ts:38
 msgctxt "monster-type-race"
 msgid "Effect"
-msgstr "Efeito"
+msgstr "Effet"
 
 #: src\card.ts:39
 msgctxt "monster-type-race"
 msgid "Pendulum"
-msgstr "Pêndulo"
+msgstr "Pendule"
 
 #: src\card.ts:40
 msgctxt "monster-type-race"
 msgid "Ritual"
-msgstr "Ritual"
+msgstr "Rituel"
 
 #: src\card.ts:41
 msgctxt "monster-type-race"
 msgid "Fusion"
-msgstr "Fusão"
+msgstr "Fusion"
 
 #: src\card.ts:42
 msgctxt "monster-type-race"
 msgid "Synchro"
-msgstr "Sincro"
+msgstr "Synchro"
 
 #: src\card.ts:43
 msgctxt "monster-type-race"
@@ -363,17 +356,17 @@ msgstr "Xyz"
 #: src\card.ts:44
 msgctxt "monster-type-race"
 msgid "Link"
-msgstr "Link"
+msgstr "Lien"
 
 #: src\card.ts:45
 msgctxt "monster-type-race"
 msgid "Tuner"
-msgstr "Regulador"
+msgstr "Syntoniseur"
 
 #: src\card.ts:46
 msgctxt "monster-type-race"
 msgid "Flip"
-msgstr "Virar"
+msgstr "Flip"
 
 #: src\card.ts:47
 msgctxt "monster-type-race"
@@ -383,47 +376,47 @@ msgstr "Toon"
 #: src\card.ts:48
 msgctxt "monster-type-race"
 msgid "Spirit"
-msgstr "Espírito"
+msgstr "Spirit"
 
 #: src\card.ts:49
 msgctxt "monster-type-race"
 msgid "Union"
-msgstr "União"
+msgstr "Union"
 
 #: src\card.ts:50
 msgctxt "monster-type-race"
 msgid "Gemini"
-msgstr "Gêmeo"
+msgstr "Gémeau"
 
 #: src\card.ts:65
 msgctxt "monster-type-race"
 msgid "Warrior"
-msgstr "Guerreiro"
+msgstr "Guerrier"
 
 #: src\card.ts:66
 msgctxt "monster-type-race"
 msgid "Spellcaster"
-msgstr "Mago"
+msgstr "Magicien"
 
 #: src\card.ts:67
 msgctxt "monster-type-race"
 msgid "Fairy"
-msgstr "Fada"
+msgstr "Elfe"
 
 #: src\card.ts:68
 msgctxt "monster-type-race"
 msgid "Fiend"
-msgstr "Demônio"
+msgstr "Démon"
 
 #: src\card.ts:69
 msgctxt "monster-type-race"
 msgid "Zombie"
-msgstr "Zumbi"
+msgstr "Zombie"
 
 #: src\card.ts:70
 msgctxt "monster-type-race"
 msgid "Machine"
-msgstr "Máquina"
+msgstr "Machine"
 
 #: src\card.ts:71
 msgctxt "monster-type-race"
@@ -433,82 +426,82 @@ msgstr "Aqua"
 #: src\card.ts:72
 msgctxt "monster-type-race"
 msgid "Pyro"
-msgstr "Piro"
+msgstr "Pyro"
 
 #: src\card.ts:73
 msgctxt "monster-type-race"
 msgid "Rock"
-msgstr "Rocha"
+msgstr "Rocher"
 
 #: src\card.ts:74
 msgctxt "monster-type-race"
 msgid "Winged Beast"
-msgstr "Fera Alada"
+msgstr "Bête Ailée"
 
 #: src\card.ts:75
 msgctxt "monster-type-race"
 msgid "Plant"
-msgstr "Planta"
+msgstr "Plante"
 
 #: src\card.ts:76
 msgctxt "monster-type-race"
 msgid "Insect"
-msgstr "Inseto"
+msgstr "Insecte"
 
 #: src\card.ts:77
 msgctxt "monster-type-race"
 msgid "Thunder"
-msgstr "Trovão"
+msgstr "Tonnerre"
 
 #: src\card.ts:78
 msgctxt "monster-type-race"
 msgid "Dragon"
-msgstr ""
+msgstr "Dragon"
 
 #: src\card.ts:79
 msgctxt "monster-type-race"
 msgid "Beast"
-msgstr "Fera"
+msgstr "Bête"
 
 #: src\card.ts:80
 msgctxt "monster-type-race"
 msgid "Beast-Warrior"
-msgstr "Fera Guerreira"
+msgstr "Bête-Guerrier"
 
 #: src\card.ts:81
 msgctxt "monster-type-race"
 msgid "Dinosaur"
-msgstr "Dinossauro"
+msgstr "Dinosaure"
 
 #: src\card.ts:82
 msgctxt "monster-type-race"
 msgid "Fish"
-msgstr "Peixe"
+msgstr "Poisson"
 
 #: src\card.ts:83
 msgctxt "monster-type-race"
 msgid "Sea Serpent"
-msgstr "Serpente Marinha"
+msgstr "Serpent de Mer"
 
 #: src\card.ts:84
 msgctxt "monster-type-race"
 msgid "Reptile"
-msgstr "Réptil"
+msgstr "Reptile"
 
 #: src\card.ts:85
 msgctxt "monster-type-race"
 msgid "Psychic"
-msgstr "Psíquico"
+msgstr "Psychique"
 
 #: src\card.ts:86
 msgctxt "monster-type-race"
 msgid "Divine-Beast"
-msgstr "Fera Divina"
+msgstr "Bête Divine"
 
 #: src\card.ts:87
 msgctxt "monster-type-race"
 msgid "Creator God"
-msgstr "Deus Creator"
+msgstr ""
 
 #: src\card.ts:88
 msgctxt "monster-type-race"
@@ -518,210 +511,210 @@ msgstr "Wyrm"
 #: src\card.ts:89
 msgctxt "monster-type-race"
 msgid "Cyberse"
-msgstr "Ciberso"
+msgstr "Cyberse"
 
 #: src\card.ts:51
 msgctxt "spell-trap-property"
 msgid "Normal Spell"
-msgstr "Mágia Normal"
+msgstr "Magie Normale"
 
 #: src\card.ts:52
 msgctxt "spell-trap-property"
 msgid "Continuous Spell"
-msgstr "Magia Contínua"
+msgstr "Magie Continue"
 
 #: src\card.ts:53
 msgctxt "spell-trap-property"
 msgid "Equip Spell"
-msgstr "Magia de Equipamento"
+msgstr "Magie d'Équipement"
 
 #: src\card.ts:54
 msgctxt "spell-trap-property"
 msgid "Quick-Play Spell"
-msgstr "Magia Rápida"
+msgstr "Magie Jeu-Rapide"
 
 #: src\card.ts:55
 msgctxt "spell-trap-property"
 msgid "Field Spell"
-msgstr "Campo Mágico"
+msgstr "Magie de Terrain"
 
 #: src\card.ts:56
 msgctxt "spell-trap-property"
 msgid "Ritual Spell"
-msgstr "Magia de Ritual"
+msgstr "Magie Rituelle"
 
 #: src\card.ts:57
 msgctxt "spell-trap-property"
 msgid "Normal Trap"
-msgstr "Armadilha Normal"
+msgstr "Piège Normal"
 
 #: src\card.ts:58
 msgctxt "spell-trap-property"
 msgid "Continuous Trap"
-msgstr "Armadilha Contínua"
+msgstr "Piège Continu"
 
 #: src\card.ts:59
 msgctxt "spell-trap-property"
 msgid "Counter Trap"
-msgstr "Armadilha de Contra-Ataque"
+msgstr "Contre-Piège"
 
 #: src\card.ts:95
 msgctxt "attribute"
 msgid "EARTH"
-msgstr "TERRA"
+msgstr "TERRE"
 
 #: src\card.ts:96
 msgctxt "attribute"
 msgid "WATER"
-msgstr "ÁGUA"
+msgstr "EAU"
 
 #: src\card.ts:97
 msgctxt "attribute"
 msgid "FIRE"
-msgstr "FOGO"
+msgstr "FEU"
 
 #: src\card.ts:98
 msgctxt "attribute"
 msgid "WIND"
-msgstr "VENTO"
+msgstr "VENT"
 
 #: src\card.ts:99
 msgctxt "attribute"
 msgid "LIGHT"
-msgstr "LUZ"
+msgstr "LUMIÈRE"
 
 #: src\card.ts:100
 msgctxt "attribute"
 msgid "DARK"
-msgstr "TREVAS"
+msgstr "TÉNÈBRES"
 
 #: src\card.ts:101
 msgctxt "attribute"
 msgid "DIVINE"
-msgstr "DIVINO"
+msgstr "DIVIN"
 
 #: src\card.ts:296
 #: src\card.ts:307
 msgctxt "card-embed"
 msgid "Card Text"
-msgstr "Texto da carta"
+msgstr "Texte de carte"
 
 #: src\card.ts:301
 msgctxt "card-embed"
 msgid "Pendulum Effect"
-msgstr "Efeito Pêndulo"
+msgstr "Effet Pendule"
 
 #: src\card.ts:322
 msgctxt "card-embed"
 msgid "Card Effect"
-msgstr "Efeito da Carta"
+msgstr ""
 
-#: src\locale.ts:46
+#: src\locale.ts:47
 msgctxt "command-option"
 msgid "result-language"
 msgstr ""
 
-#: src\locale.ts:66
+#: src\locale.ts:67
 msgctxt "command-option"
 msgid "input-language"
-msgstr "idioma-de-entrada"
+msgstr ""
 
 #: src\commands\art.ts:38
 msgctxt "command-option"
 msgid "input"
-msgstr "entrada"
-
-#: src\commands\ygoprodeck.ts:37
-msgctxt "command-option"
-msgid "term"
-msgstr "termo"
-
-#: src\commands\yugipedia.ts:40
-msgctxt "command-option"
-msgid "page"
-msgstr "página"
+msgstr ""
 
 #: src\commands\help.ts:51
 msgctxt "command-option"
 msgid "command"
 msgstr ""
 
-#: src\locale.ts:49
+#: src\commands\ygoprodeck.ts:37
+msgctxt "command-option"
+msgid "term"
+msgstr ""
+
+#: src\commands\yugipedia.ts:40
+msgctxt "command-option"
+msgid "page"
+msgstr ""
+
+#: src\locale.ts:50
 msgctxt "command-option-description"
 msgid "The output language for the card embed, overriding other settings."
 msgstr ""
 
-#: src\locale.ts:69
+#: src\locale.ts:70
 msgctxt "command-option-description"
 msgid "The language to search in, defaulting to the result language."
-msgstr "O idioma no qual procurar, tendo como padrão o idioma do resultado"
+msgstr ""
 
 #: src\commands\art.ts:41
 msgctxt "command-option-description"
 msgid "The password, Konami ID, or name to search for a card."
-msgstr "O código, ID da Konami ou nome da carta para buscard"
-
-#: src\commands\ygoprodeck.ts:40
-msgctxt "command-option-description"
-msgid "The name or password of the card you're looking for."
-msgstr "O nome ou o código da carta que você procura"
-
-#: src\commands\yugipedia.ts:43
-msgctxt "command-option-description"
-msgid "The name of the Yugipedia page you want to search for."
-msgstr "O nome da página da Yugipedia que você gostaria de procurar"
+msgstr ""
 
 #: src\commands\help.ts:54
 msgctxt "command-option-description"
 msgid "The name of a specific Slash Command."
 msgstr ""
 
+#: src\commands\ygoprodeck.ts:40
+msgctxt "command-option-description"
+msgid "The name or password of the card you're looking for."
+msgstr ""
+
+#: src\commands\yugipedia.ts:43
+msgctxt "command-option-description"
+msgid "The name of the Yugipedia page you want to search for."
+msgstr ""
+
 #: src\commands\art.ts:35
 msgctxt "command-name"
 msgid "art"
-msgstr "arte"
-
-#: src\commands\ping.ts:27
-msgctxt "command-name"
-msgid "ping"
-msgstr "ping"
-
-#: src\commands\ygoprodeck.ts:34
-msgctxt "command-name"
-msgid "ygoprodeck"
-msgstr "ygoprodeck"
-
-#: src\commands\yugipedia.ts:34
-msgctxt "command-name"
-msgid "yugipedia"
-msgstr "yugipedia"
+msgstr ""
 
 #: src\commands\help.ts:48
 msgctxt "command-name"
 msgid "help"
 msgstr ""
 
+#: src\commands\ping.ts:27
+msgctxt "command-name"
+msgid "ping"
+msgstr ""
+
+#: src\commands\ygoprodeck.ts:34
+msgctxt "command-name"
+msgid "ygoprodeck"
+msgstr ""
+
+#: src\commands\yugipedia.ts:34
+msgctxt "command-name"
+msgid "yugipedia"
+msgstr ""
+
 #: src\commands\art.ts:36
 msgctxt "command-description"
 msgid "Display the art for a card!"
-msgstr "Mostra a arte de uma carta!"
-
-#: src\commands\ping.ts:28
-msgctxt "command-description"
-msgid "Test latency to the new bot instance."
-msgstr "Testa a latência para uma nova instância do bot"
-
-#: src\commands\ygoprodeck.ts:35
-msgctxt "command-description"
-msgid "Search the YGOPRODECK card database."
-msgstr "Procura na database do YGOPRODECK"
-
-#: src\commands\yugipedia.ts:37
-msgctxt "command-description"
-msgid "Search the Yugipedia wiki for a page and link to it."
-msgstr "Procura uma página da wiki da Yugipedia e a linka"
+msgstr ""
 
 #: src\commands\help.ts:49
 msgctxt "command-description"
 msgid "Get help with a Slash Command."
+msgstr ""
+
+#: src\commands\ping.ts:28
+msgctxt "command-description"
+msgid "Test latency to the new bot instance."
+msgstr ""
+
+#: src\commands\ygoprodeck.ts:35
+msgctxt "command-description"
+msgid "Search the YGOPRODECK card database."
+msgstr ""
+
+#: src\commands\yugipedia.ts:37
+msgctxt "command-description"
+msgid "Search the Yugipedia wiki for a page and link to it."
 msgstr ""

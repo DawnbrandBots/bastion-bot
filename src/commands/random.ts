@@ -5,7 +5,7 @@ import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { createCardEmbed } from "../card";
 import { Command } from "../Command";
-import { LocaleProvider, resultLangStringOption } from "../locale";
+import { getResultLangStringOption, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { addFunding, addNotice } from "../utils";
@@ -22,7 +22,7 @@ export class RandomCommand extends Command {
 		return new SlashCommandBuilder()
 			.setName("random")
 			.setDescription("Get a random Yu-Gi-Oh! card.")
-			.addStringOption(resultLangStringOption)
+			.addStringOption(getResultLangStringOption())
 			.toJSON();
 	}
 

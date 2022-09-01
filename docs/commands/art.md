@@ -1,4 +1,4 @@
-# `/search` command
+# `/art` command
 
 Diosplay the art for a card! _This command is in development._
 

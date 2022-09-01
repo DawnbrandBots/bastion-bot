@@ -2,6 +2,7 @@ import { REST } from "@discordjs/rest";
 import { APIUser, Routes } from "discord-api-types/v9";
 import { ArtCommand } from "./art";
 import { DeckCommand } from "./deck";
+import { HelpCommand } from "./help";
 import { IdCommand } from "./id";
 import { LinkCommand } from "./link";
 import { LocaleCommand } from "./locale";
@@ -21,7 +22,8 @@ export const classes = [
 	YGOPRODECKCommand,
 	LocaleCommand,
 	ArtCommand,
-	RandomCommand
+	RandomCommand,
+	HelpCommand
 ];
 export {
 	DeckCommand,
@@ -33,7 +35,8 @@ export {
 	YGOPRODECKCommand,
 	LocaleCommand,
 	ArtCommand,
-	RandomCommand
+	RandomCommand,
+	HelpCommand
 };
 
 // Register Slash Commands on CI

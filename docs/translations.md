@@ -28,6 +28,9 @@ obtained from a `gettext`-like system called [ttag](https://ttag.js.org/). These
 stored in standard `.po` files, which can be edited in your favourite text editor or a variety of
 offline and online tools. These are stored in the `translations` directory of the repository.
 
+For strings labelled "command-name" and "command-option", Discord enforces a rule in the spirit of
+the original English strings, [prohibiting spaces and majuscule characters if they exist in the locale](https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-naming).
+
 To start a translation for a new `LOCALE`, run this in the repository root after installing
 dependencies to create the template, or ask a maintainer to create this file for you.
 
@@ -51,3 +54,8 @@ To update all translation files at once after a code change:
 ```bash
 find translations -type f -name '*.po' -exec yarn ttag update {} src/{,**/*}*.ts \;
 ```
+
+A bug causes ttag to add `msgstr[1] ""`, even for locales without plural forms, as specified by
+the Plural-Forms header. This doesn't happen the first time the strings are picked up, but on
+subsequent runs when they are already in the file. The locales we care about are the CJK locales,
+so for now we will have to manually remove the extraneous lines after generation.

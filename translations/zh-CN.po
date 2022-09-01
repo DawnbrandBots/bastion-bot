@@ -16,8 +16,8 @@ msgid ""
 "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
 "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
-"[K社官方数据库](${ official }) | [事务局FAQ](${ rulings }) | "
-"[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
+"[K社官方数据库](${ official }) | [事务局FAQ](${ rulings }) | [Yugipedia](${ "
+"yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
 #: src\card.ts:272
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
@@ -75,9 +75,9 @@ msgid ""
 "tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support "
 "server](https://discord.gg/4aFuPyuE96)!"
 msgstr ""
-":incoming_envelope: 如有意见或建议请反馈至[Github issue]"
-"(https://github.com/DawnbrandBots/bastion-bot)或者"
-"[Discord服务器](https://discord.gg/4aFuPyuE96)!"
+":incoming_envelope: 如有意见或建议请反馈至[Github "
+"issue](https://github.com/DawnbrandBots/bastion-bot)或者[Discord服务器](https://"
+"discord.gg/4aFuPyuE96)!"
 
 #: src\utils.ts:45
 msgid "Please consider supporting us!"
@@ -639,6 +639,11 @@ msgctxt "command-option"
 msgid "page"
 msgstr ""
 
+#: src\commands\help.ts:51
+msgctxt "command-option"
+msgid "command"
+msgstr ""
+
 #: src\locale.ts:49
 msgctxt "command-option-description"
 msgid "The output language for the card embed, overriding other settings."
@@ -664,6 +669,11 @@ msgctxt "command-option-description"
 msgid "The name of the Yugipedia page you want to search for."
 msgstr "你想要查询的Yugipedia页面的名字"
 
+#: src\commands\help.ts:54
+msgctxt "command-option-description"
+msgid "The name of a specific Slash Command."
+msgstr ""
+
 #: src\commands\art.ts:35
 msgctxt "command-name"
 msgid "art"
@@ -682,6 +692,11 @@ msgstr ""
 #: src\commands\yugipedia.ts:34
 msgctxt "command-name"
 msgid "yugipedia"
+msgstr ""
+
+#: src\commands\help.ts:48
+msgctxt "command-name"
+msgid "help"
 msgstr ""
 
 #: src\commands\art.ts:36
@@ -703,3 +718,8 @@ msgstr "搜索YGOPRODECK卡片数据库"
 msgctxt "command-description"
 msgid "Search the Yugipedia wiki for a page and link to it."
 msgstr "搜索Yugipedia页面与链接"
+
+#: src\commands\help.ts:49
+msgctxt "command-description"
+msgid "Get help with a Slash Command."
+msgstr ""
