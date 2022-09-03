@@ -128,64 +128,64 @@ msgstr ""
 msgid "Could not find art for `${ name }`!"
 msgstr ""
 
-#: src\commands\deck.ts:153
+#: src\commands\deck.ts:198
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:156
+#: src\commands\deck.ts:201
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:159
+#: src\commands\deck.ts:204
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:187
+#: src\commands\deck.ts:232
 msgid "Your Deck"
 msgstr ""
 
-#: src\commands\deck.ts:192
+#: src\commands\deck.ts:237
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:199
+#: src\commands\deck.ts:244
 msgid "Main Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:206
+#: src\commands\deck.ts:251
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:213
+#: src\commands\deck.ts:258
 msgid "Extra Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:220
+#: src\commands\deck.ts:265
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:227
+#: src\commands\deck.ts:272
 msgid "Side Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:285
+#: src\commands\deck.ts:331
 msgid "Error: Your deck is empty."
 msgstr ""
 
@@ -324,12 +324,16 @@ msgstr ""
 msgid "Revision: ${ process.env.BOT_REVISION }."
 msgstr ""
 
-#: src\commands\deck.ts:236
+#: src\commands\deck.ts:282
 msgid ".ydk files must have the .ydk extension!"
 msgstr ""
 
-#: src\commands\deck.ts:239
+#: src\commands\deck.ts:285
 msgid ".ydk files should not be larger than 1 KB!"
+msgstr ""
+
+#: src\commands\deck.ts:275
+msgid "ydke URL"
 msgstr ""
 
 #: src\card.ts:37
@@ -653,6 +657,32 @@ msgctxt "command-option"
 msgid "page"
 msgstr ""
 
+#: src\commands\deck.ts:74
+msgctxt "command-option"
+msgid "url"
+msgstr ""
+
+#: src\commands\deck.ts:80
+msgctxt "command-option"
+msgid "file"
+msgstr ""
+
+#: src\commands\deck.ts:86
+#: src\commands\deck.ts:92
+msgctxt "command-option"
+msgid "deck"
+msgstr ""
+
+#: src\commands\deck.ts:98
+msgctxt "command-option"
+msgid "public"
+msgstr ""
+
+#: src\commands\deck.ts:105
+msgctxt "command-option"
+msgid "stacked"
+msgstr ""
+
 #: src\locale.ts:50
 msgctxt "command-option-description"
 msgid "The output language for the card embed, overriding other settings."
@@ -683,6 +713,40 @@ msgctxt "command-option-description"
 msgid "The name of the Yugipedia page you want to search for."
 msgstr ""
 
+#: src\commands\deck.ts:77
+msgctxt "command-option-description"
+msgid "View a deck by entering a ydke:// URL."
+msgstr ""
+
+#: src\commands\deck.ts:83
+msgctxt "command-option-description"
+msgid "View a deck by uploading a .ydk file."
+msgstr ""
+
+#: src\commands\deck.ts:89
+msgctxt "command-option-description"
+msgid "The ydke:// URL of the deck you want to view."
+msgstr ""
+
+#: src\commands\deck.ts:95
+msgctxt "command-option-description"
+msgid "The .ydk file of the deck you want to view."
+msgstr ""
+
+#: src\commands\deck.ts:101
+msgctxt "command-option-description"
+msgid ""
+"Whether to display the deck details publicly in chat. This is false by "
+"default."
+msgstr ""
+
+#: src\commands\deck.ts:108
+msgctxt "command-option-description"
+msgid ""
+"Whether to display the deck sections as one stacked column. This is false "
+"(side-by-side) by default."
+msgstr ""
+
 #: src\commands\art.ts:35
 msgctxt "command-name"
 msgid "art"
@@ -708,6 +772,11 @@ msgctxt "command-name"
 msgid "yugipedia"
 msgstr ""
 
+#: src\commands\deck.ts:67
+msgctxt "command-name"
+msgid "deck"
+msgstr ""
+
 #: src\commands\art.ts:36
 msgctxt "command-description"
 msgid "Display the art for a card!"
@@ -731,4 +800,11 @@ msgstr ""
 #: src\commands\yugipedia.ts:37
 msgctxt "command-description"
 msgid "Search the Yugipedia wiki for a page and link to it."
+msgstr ""
+
+#: src\commands\deck.ts:70
+msgctxt "command-description"
+msgid ""
+"Display a deck list from ydke:// or .ydk format, exported from a number of "
+"deck building programs."
 msgstr ""

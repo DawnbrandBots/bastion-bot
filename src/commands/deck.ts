@@ -1,6 +1,11 @@
 import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
-import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
+import {
+	SlashCommandBuilder,
+	SlashCommandStringOption,
+	SlashCommandAttachmentOption,
+	SlashCommandSubcommandBuilder
+} from "@discordjs/builders";
 import { CommandInteraction, MessageAttachment, MessageEmbed } from "discord.js";
 import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
@@ -8,7 +13,7 @@ import { c, msgid, ngettext, t, useLocale } from "ttag";
 import { parseURL, toURL, TypedDeck } from "ydke";
 import { Command } from "../Command";
 import { CardSchema } from "../definitions/yaml-yugi";
-import { Locale, LocaleProvider } from "../locale";
+import { COMMAND_LOCALIZATIONS, Locale, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { addNotice, replyLatency } from "../utils";
@@ -26,51 +31,91 @@ export class DeckCommand extends Command {
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
-		// define shared options in advance to call them repeatedly
-		const publicOption = (option: SlashCommandStringOption): SlashCommandStringOption =>
-			option
-				.setName("public")
-				.setDescription("Whether to display the deck details publicly in chat. This is false by default.")
-				.setRequired(false);
-		const stackedOption = (option: SlashCommandStringOption): SlashCommandStringOption =>
-			option
-				.setName("stacked")
-				.setDescription(
-					"Whether to display the deck sections as one stacked column. This is false (side-by-side) by default."
-				)
-				.setRequired(false);
-		return new SlashCommandBuilder()
+		const builder = new SlashCommandBuilder()
 			.setName("deck")
 			.setDescription(
 				"Display a deck list from ydke:// or .ydk format, exported from a number of deck building programs."
+			);
+		const urlSubcommand = new SlashCommandSubcommandBuilder()
+			.setName("url")
+			.setDescription("View a deck by entering a ydke:// URL.");
+		const fileSubcommand = new SlashCommandSubcommandBuilder()
+			.setName("file")
+			.setDescription("View a deck by uploading a .ydk file.");
+		const deckUrlOption = new SlashCommandStringOption()
+			.setName("deck")
+			.setDescription("The ydke:// URL of the deck you want to view.")
+			.setRequired(true);
+		const deckFileOption = new SlashCommandAttachmentOption()
+			.setName("deck")
+			.setDescription("The .ydk file of the deck you want to view.")
+			.setRequired(true);
+		const publicOption = new SlashCommandStringOption()
+			.setName("public")
+			.setDescription("Whether to display the deck details publicly in chat. This is false by default.")
+			.setRequired(false);
+		const stackedOption = new SlashCommandStringOption()
+			.setName("stacked")
+			.setDescription(
+				"Whether to display the deck sections as one stacked column. This is false (side-by-side) by default."
 			)
-			.addSubcommand(subcommand =>
-				subcommand
-					.setName("url")
-					.setDescription("View a deck by entering a ydke:// URL.")
-					.addStringOption(option =>
-						option
-							.setName("deck")
-							.setDescription("The ydke:// URL of the deck you want to view.")
-							.setRequired(true)
-					)
-					.addStringOption(publicOption)
-					.addStringOption(stackedOption)
-			)
-			.addSubcommand(subcommand =>
-				subcommand
-					.setName("file")
-					.setDescription("View a deck by uploading a .ydk file.")
-					.addAttachmentOption(option =>
-						option
-							.setName("deck")
-							.setDescription("The .ydk file of the deck you want to view.")
-							.setRequired(true)
-					)
-					.addStringOption(publicOption)
-					.addStringOption(stackedOption)
-			)
-			.toJSON();
+			.setRequired(false);
+
+		for (const { gettext, discord } of COMMAND_LOCALIZATIONS) {
+			useLocale(gettext);
+			builder
+				.setNameLocalization(discord, c("command-name").t`deck`)
+				.setDescriptionLocalization(
+					discord,
+					c("command-description")
+						.t`Display a deck list from ydke:// or .ydk format, exported from a number of deck building programs.`
+				);
+			urlSubcommand
+				.setNameLocalization(discord, c("command-option").t`url`)
+				.setDescriptionLocalization(
+					discord,
+					c("command-option-description").t`View a deck by entering a ydke:// URL.`
+				);
+			fileSubcommand
+				.setNameLocalization(discord, c("command-option").t`file`)
+				.setDescriptionLocalization(
+					discord,
+					c("command-option-description").t`View a deck by uploading a .ydk file.`
+				);
+			deckUrlOption
+				.setNameLocalization(discord, c("command-option").t`deck`)
+				.setDescriptionLocalization(
+					discord,
+					c("command-option-description").t`The ydke:// URL of the deck you want to view.`
+				);
+			deckFileOption
+				.setNameLocalization(discord, c("command-option").t`deck`)
+				.setDescriptionLocalization(
+					discord,
+					c("command-option-description").t`The .ydk file of the deck you want to view.`
+				);
+			publicOption
+				.setNameLocalization(discord, c("command-option").t`public`)
+				.setDescriptionLocalization(
+					discord,
+					c("command-option-description")
+						.t`Whether to display the deck details publicly in chat. This is false by default.`
+				);
+			stackedOption
+				.setNameLocalization(discord, c("command-option").t`stacked`)
+				.setDescriptionLocalization(
+					discord,
+					c("command-option-description")
+						.t`Whether to display the deck sections as one stacked column. This is false (side-by-side) by default.`
+				);
+		}
+
+		urlSubcommand.addStringOption(deckUrlOption).addStringOption(publicOption).addStringOption(stackedOption);
+		fileSubcommand.addAttachmentOption(deckFileOption).addStringOption(publicOption).addStringOption(stackedOption);
+
+		builder.addSubcommand(urlSubcommand).addSubcommand(fileSubcommand);
+
+		return builder.toJSON();
 	}
 
 	protected override get logger(): Logger {
