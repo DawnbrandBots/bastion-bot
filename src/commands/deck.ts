@@ -1,7 +1,7 @@
 import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
-import { CommandInteraction, MessageEmbed } from "discord.js";
-import { ApplicationCommandOptionTypes } from "discord.js/typings/enums";
+import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
+import { CommandInteraction, MessageAttachment, MessageEmbed } from "discord.js";
 import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { c, msgid, ngettext, t, useLocale } from "ttag";
@@ -12,6 +12,7 @@ import { Locale, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { addNotice, replyLatency } from "../utils";
+import { ydkToTypedDeck } from "ydeck";
 
 // Same hack as in card.ts
 const rc = c;
@@ -25,31 +26,51 @@ export class DeckCommand extends Command {
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
-		return {
-			name: "deck",
-			description: "Display a deck list from ydke:// format, exported from a number of deck building programs.",
-			options: [
-				{
-					type: ApplicationCommandOptionTypes.STRING.valueOf(),
-					name: "deck",
-					description: "The ydke:// URL of the deck you want to view.",
-					required: true
-				},
-				{
-					type: ApplicationCommandOptionTypes.BOOLEAN.valueOf(),
-					name: "public",
-					description: "Whether to display the deck details publicly in chat. This is false by default.",
-					required: false
-				},
-				{
-					type: ApplicationCommandOptionTypes.BOOLEAN.valueOf(),
-					name: "stacked",
-					description:
-						"Whether to display the deck sections as one stacked column. This is false (side-by-side) by default.",
-					required: false
-				}
-			]
-		};
+		// define shared options in advance to call them repeatedly
+		const publicOption = (option: SlashCommandStringOption): SlashCommandStringOption =>
+			option
+				.setName("public")
+				.setDescription("Whether to display the deck details publicly in chat. This is false by default.")
+				.setRequired(false);
+		const stackedOption = (option: SlashCommandStringOption): SlashCommandStringOption =>
+			option
+				.setName("stacked")
+				.setDescription(
+					"Whether to display the deck sections as one stacked column. This is false (side-by-side) by default."
+				)
+				.setRequired(false);
+		return new SlashCommandBuilder()
+			.setName("deck")
+			.setDescription(
+				"Display a deck list from ydke:// or .ydk format, exported from a number of deck building programs."
+			)
+			.addSubcommand(subcommand =>
+				subcommand
+					.setName("url")
+					.setDescription("View a deck by entering a ydke:// URL.")
+					.addStringOption(option =>
+						option
+							.setName("deck")
+							.setDescription("The ydke:// URL of the deck you want to view.")
+							.setRequired(true)
+					)
+					.addStringOption(publicOption)
+					.addStringOption(stackedOption)
+			)
+			.addSubcommand(subcommand =>
+				subcommand
+					.setName("file")
+					.setDescription("View a deck by uploading a .ydk file.")
+					.addAttachmentOption(option =>
+						option
+							.setName("deck")
+							.setDescription("The .ydk file of the deck you want to view.")
+							.setRequired(true)
+					)
+					.addStringOption(publicOption)
+					.addStringOption(stackedOption)
+			)
+			.toJSON();
 	}
 
 	protected override get logger(): Logger {
@@ -209,21 +230,54 @@ export class DeckCommand extends Command {
 		return embed;
 	}
 
+	async parseFile(deck: MessageAttachment): Promise<TypedDeck> {
+		// Various guards for malicious or non-deck content before we bother downloading
+		if (!deck.name?.endsWith(".ydk")) {
+			throw new Error(t`.ydk files must have the .ydk extension!`);
+		}
+		if (deck.size > 1024) {
+			throw new Error(t`.ydk files should not be larger than 1 KB!`);
+		}
+		const file = await fetch(deck.url);
+		const ydk = await file.text();
+		return ydkToTypedDeck(ydk);
+	}
+
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		const resultLanguage = await this.locales.get(interaction);
-		// NOTE: when we implement reading .ydk files, validate existence of headers/at least one populated section?
 		let deck: TypedDeck;
-		try {
-			deck = parseURL(interaction.options.getString("deck", true));
-		} catch (e) {
-			// TODO: specifically catch error for bad input and respond more clearly?
-			const reply = await interaction.reply({
-				content: (e as Error).message,
-				ephemeral: true,
-				fetchReply: true
-			});
-			return replyLatency(reply, interaction);
+		const isPublic = !!interaction.options.getBoolean("public", false);
+		const isStacked = !!interaction.options.getBoolean("stacked", false);
+
+		// defer earlier than before adding .ydk support because that requires fetching a file
+		await interaction.deferReply({ ephemeral: !isPublic });
+
+		if (interaction.options.getSubcommand() === "url") {
+			try {
+				deck = parseURL(interaction.options.getString("deck", true));
+			} catch (e) {
+				// TODO: specifically catch error for bad input and respond more clearly?
+				const reply = await interaction.reply({
+					content: (e as Error).message,
+					ephemeral: true,
+					fetchReply: true
+				});
+				return replyLatency(reply, interaction);
+			}
+		} else {
+			// subcommand === "file"
+			try {
+				deck = await this.parseFile(interaction.options.getAttachment("deck", true));
+			} catch (e) {
+				const reply = await interaction.reply({
+					content: (e as Error).message,
+					ephemeral: true,
+					fetchReply: true
+				});
+				return replyLatency(reply, interaction);
+			}
 		}
+
 		// return error on empty deck
 		if (deck.main.length + deck.extra.length + deck.side.length < 1) {
 			useLocale(resultLanguage);
@@ -234,9 +288,7 @@ export class DeckCommand extends Command {
 			});
 			return replyLatency(reply, interaction);
 		}
-		const isPublic = !!interaction.options.getBoolean("public", false);
-		const isStacked = !!interaction.options.getBoolean("stacked", false);
-		await interaction.deferReply({ ephemeral: !isPublic });
+
 		const content = await this.generateProfile(deck, resultLanguage, !isStacked);
 		const end = Date.now();
 		await interaction.editReply({ embeds: addNotice(content) });

@@ -243,58 +243,64 @@ msgstr "Yugipedia에서 `${ page }`을(를) 검색하는 중…"
 msgid "Could not find a Yugipedia page named `${ page }`."
 msgstr "일치하는 이름을 Yugipedia 페이지에서 찾을 수 없습니다. : `${ page }`."
 
-#: src\commands\deck.ts:132
+#: src\commands\deck.ts:153
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
 msgstr[0] ""
+msgstr[1] ""
 
-#: src\commands\deck.ts:135
+#: src\commands\deck.ts:156
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
 msgstr[0] ""
+msgstr[1] ""
 
-#: src\commands\deck.ts:138
+#: src\commands\deck.ts:159
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
 msgstr[0] ""
+msgstr[1] ""
 
-#: src\commands\deck.ts:166
+#: src\commands\deck.ts:187
 msgid "Your Deck"
 msgstr ""
 
-#: src\commands\deck.ts:171
+#: src\commands\deck.ts:192
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
 msgstr[0] ""
+msgstr[1] ""
 
-#: src\commands\deck.ts:178
+#: src\commands\deck.ts:199
 msgid "Main Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:185
+#: src\commands\deck.ts:206
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
 msgstr[0] ""
+msgstr[1] ""
 
-#: src\commands\deck.ts:192
+#: src\commands\deck.ts:213
 msgid "Extra Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:199
+#: src\commands\deck.ts:220
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
 msgstr[0] ""
+msgstr[1] ""
 
-#: src\commands\deck.ts:206
+#: src\commands\deck.ts:227
 msgid "Side Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:231
+#: src\commands\deck.ts:285
 msgid "Error: Your deck is empty."
 msgstr ""
 
@@ -328,6 +334,14 @@ msgstr ""
 #: src\events\message.ts:51
 #, javascript-format
 msgid "Revision: ${ process.env.BOT_REVISION }."
+msgstr ""
+
+#: src\commands\deck.ts:236
+msgid ".ydk files must have the .ydk extension!"
+msgstr ""
+
+#: src\commands\deck.ts:239
+msgid ".ydk files should not be larger than 1 KB!"
 msgstr ""
 
 #: src\card.ts:37
@@ -621,12 +635,12 @@ msgctxt "card-embed"
 msgid "Card Effect"
 msgstr "카드 효과"
 
-#: src\locale.ts:46
+#: src\locale.ts:47
 msgctxt "command-option"
 msgid "result-language"
 msgstr "출력언어"
 
-#: src\locale.ts:66
+#: src\locale.ts:67
 msgctxt "command-option"
 msgid "input-language"
 msgstr "입력언어"
@@ -651,12 +665,12 @@ msgctxt "command-option"
 msgid "command"
 msgstr ""
 
-#: src\locale.ts:49
+#: src\locale.ts:50
 msgctxt "command-option-description"
 msgid "The output language for the card embed, overriding other settings."
 msgstr "다른 설정을 재정의하는 카드 임베드의 출력 언어입니다."
 
-#: src\locale.ts:69
+#: src\locale.ts:70
 msgctxt "command-option-description"
 msgid "The language to search in, defaulting to the result language."
 msgstr "검색할 언어로, 기본적으로 출력 언어로 설정됩니다."

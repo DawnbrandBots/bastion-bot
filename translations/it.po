@@ -31,7 +31,9 @@ msgstr "**Attributo**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute 
 msgid ""
 "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
 "card.def }"
-msgstr "**Rango**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
+msgstr ""
+"**Rango**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
+"card.def }"
 
 #: src\card.ts:281
 #, javascript-format
@@ -44,7 +46,9 @@ msgstr ""
 msgid ""
 "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
 "${ card.def }"
-msgstr "Livello**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
+msgstr ""
+"Livello**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
+"${ card.def }"
 
 #: src\card.ts:290
 #, javascript-format
@@ -122,64 +126,64 @@ msgstr ""
 msgid "Could not find art for `${ name }`!"
 msgstr ""
 
-#: src\commands\deck.ts:132
+#: src\commands\deck.ts:153
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:135
+#: src\commands\deck.ts:156
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:138
+#: src\commands\deck.ts:159
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:166
+#: src\commands\deck.ts:187
 msgid "Your Deck"
 msgstr ""
 
-#: src\commands\deck.ts:171
+#: src\commands\deck.ts:192
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:178
+#: src\commands\deck.ts:199
 msgid "Main Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:185
+#: src\commands\deck.ts:206
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:192
+#: src\commands\deck.ts:213
 msgid "Extra Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:199
+#: src\commands\deck.ts:220
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:206
+#: src\commands\deck.ts:227
 msgid "Side Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:231
+#: src\commands\deck.ts:285
 msgid "Error: Your deck is empty."
 msgstr ""
 
@@ -316,6 +320,14 @@ msgstr ""
 #: src\events\message.ts:51
 #, javascript-format
 msgid "Revision: ${ process.env.BOT_REVISION }."
+msgstr ""
+
+#: src\commands\deck.ts:236
+msgid ".ydk files must have the .ydk extension!"
+msgstr ""
+
+#: src\commands\deck.ts:239
+msgid ".ydk files should not be larger than 1 KB!"
 msgstr ""
 
 #: src\card.ts:37
