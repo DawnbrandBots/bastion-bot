@@ -5,14 +5,14 @@ import { CommandInteraction, MessageAttachment, MessageEmbed } from "discord.js"
 import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { c, msgid, ngettext, t, useLocale } from "ttag";
-import { parseURL, TypedDeck } from "ydke";
+import { parseURL, toURL, TypedDeck } from "ydke";
 import { Command } from "../Command";
 import { CardSchema } from "../definitions/yaml-yugi";
 import { Locale, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { addNotice, replyLatency } from "../utils";
-import { ydkToTypedDeck } from "ydeck";
+import { typedDeckToYdk, ydkToTypedDeck } from "ydeck";
 
 // Same hack as in card.ts
 const rc = c;
@@ -112,7 +112,7 @@ export class DeckCommand extends Command {
 		throw new Error((await response.json()).message);
 	}
 
-	async generateProfile(deck: TypedDeck, lang: Locale, inline: boolean): Promise<MessageEmbed> {
+	async generateProfile(deck: TypedDeck, lang: Locale, inline: boolean, outUrl: string): Promise<MessageEmbed> {
 		// use Set to remove duplicates from list of passwords to pass to API
 		// populate the names into a Map to be fetched linearly
 		const cardMemo = await this.getCards(new Set([...deck.main, ...deck.extra, ...deck.side]));
@@ -227,6 +227,7 @@ export class DeckCommand extends Command {
 				embed.addFields({ name: t`Side Deck (continued)`, value: part, inline });
 			}
 		}
+		embed.addFields({ name: t`ydke URL`, value: outUrl, inline: false });
 		return embed;
 	}
 
@@ -289,9 +290,17 @@ export class DeckCommand extends Command {
 			return replyLatency(reply, interaction);
 		}
 
-		const content = await this.generateProfile(deck, resultLanguage, !isStacked);
+		// one of these two will be redundant with an input, but if it's the file then we'd have to download it again
+		const outUrl = toURL(deck);
+		const outFile = typedDeckToYdk(deck);
+
+		const content = await this.generateProfile(deck, resultLanguage, !isStacked, outUrl);
 		const end = Date.now();
-		await interaction.editReply({ embeds: addNotice(content) });
+		await interaction.editReply({
+			embeds: addNotice(content),
+			// a string is interpreted as a path, to upload it as a file we need a Buffer
+			files: [new MessageAttachment(Buffer.from(outFile, "utf-8"), "deck.ydk")]
+		});
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
 		const latency = end - interaction.createdTimestamp;
 		return latency;
