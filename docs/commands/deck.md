@@ -38,3 +38,4 @@ Bastion will upload an attachment containing the deck in YDK format, as well as 
 ### Limitations
 
 - With `stacked` false, the section headings overflow the width of a column and wrap, harming aesthetics and readability.
+- Error messages from the `ydeck` package are unclear and unlocalised
