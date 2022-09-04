@@ -17,7 +17,7 @@ This command has two subcommands, `/deck url` and `/deck file`. They behave the 
 
 Name | Required? | Description | Type
 --- | --- | --- | ---
-`deck` | ✔ | See "Subcommands". | text or attachment
+`deck` | ✔ | See ["Subcommands"](#subcommands). | text or attachment
 `public` | ❌ | Whether to display the deck publicly, or only show it to yourself with an ephemeral reply. | boolean
 `stacked` | ❌ | Whether to display deck sections stacked on top of each other in one long column, or in seperate columns side-by-side. | boolean
 
