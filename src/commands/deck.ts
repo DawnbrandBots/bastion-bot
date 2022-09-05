@@ -4,6 +4,7 @@ import {
 	SlashCommandBuilder,
 	SlashCommandStringOption,
 	SlashCommandAttachmentOption,
+	SlashCommandBooleanOption,
 	SlashCommandSubcommandBuilder
 } from "@discordjs/builders";
 import { CommandInteraction, MessageAttachment, MessageEmbed } from "discord.js";
@@ -50,11 +51,11 @@ export class DeckCommand extends Command {
 			.setName("deck")
 			.setDescription("The .ydk file of the deck you want to view.")
 			.setRequired(true);
-		const publicOption = new SlashCommandStringOption()
+		const publicOption = new SlashCommandBooleanOption()
 			.setName("public")
 			.setDescription("Whether to display the deck details publicly in chat. This is false by default.")
 			.setRequired(false);
-		const stackedOption = new SlashCommandStringOption()
+		const stackedOption = new SlashCommandBooleanOption()
 			.setName("stacked")
 			.setDescription(
 				"Whether to display the deck sections as one stacked column. This is false (side-by-side) by default."
@@ -110,8 +111,11 @@ export class DeckCommand extends Command {
 				);
 		}
 
-		urlSubcommand.addStringOption(deckUrlOption).addStringOption(publicOption).addStringOption(stackedOption);
-		fileSubcommand.addAttachmentOption(deckFileOption).addStringOption(publicOption).addStringOption(stackedOption);
+		urlSubcommand.addStringOption(deckUrlOption).addBooleanOption(publicOption).addBooleanOption(stackedOption);
+		fileSubcommand
+			.addAttachmentOption(deckFileOption)
+			.addBooleanOption(publicOption)
+			.addBooleanOption(stackedOption);
 
 		builder.addSubcommand(urlSubcommand).addSubcommand(fileSubcommand);
 
