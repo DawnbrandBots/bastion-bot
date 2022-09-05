@@ -1,24 +1,25 @@
-import { Static } from "@sinclair/typebox";
-import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import {
-	SlashCommandBuilder,
-	SlashCommandStringOption,
 	SlashCommandAttachmentOption,
 	SlashCommandBooleanOption,
+	SlashCommandBuilder,
+	SlashCommandStringOption,
 	SlashCommandSubcommandBuilder
 } from "@discordjs/builders";
+import { Static } from "@sinclair/typebox";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction, MessageAttachment, MessageEmbed } from "discord.js";
 import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { c, msgid, ngettext, t, useLocale } from "ttag";
+import { typedDeckToYdk, ydkToTypedDeck } from "ydeck";
 import { parseURL, toURL, TypedDeck } from "ydke";
+import { parseAndExpandRuby } from "../card";
 import { Command } from "../Command";
 import { CardSchema } from "../definitions/yaml-yugi";
 import { COMMAND_LOCALIZATIONS, Locale, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { addNotice, serializeCommand } from "../utils";
-import { typedDeckToYdk, ydkToTypedDeck } from "ydeck";
 
 // Same hack as in card.ts
 const rc = c;
@@ -166,8 +167,15 @@ export class DeckCommand extends Command {
 		// populate the names into a Map to be fetched linearly
 		const cardMemo = await this.getCards(new Set([...deck.main, ...deck.extra, ...deck.side]));
 		// apply the names to the record of the deck
-		const getName = (password: number): string =>
-			cardMemo.get(password)?.name[lang] || cardMemo.get(password)?.name.en || `${password}`;
+		function getName(password: number): string {
+			// very similar to card.ts:formatCardName, but only uses base text and falls back to password
+			const name = cardMemo.get(password)?.name[lang];
+			if ((lang === "ja" || lang === "ko") && name?.includes("<ruby>")) {
+				const [rubyless] = parseAndExpandRuby(name);
+				return rubyless;
+			}
+			return name || cardMemo.get(password)?.name.en || `${password}`;
+		}
 		const namedDeck = {
 			main: [...deck.main].map(getName),
 			extra: [...deck.extra].map(getName),

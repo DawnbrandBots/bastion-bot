@@ -165,7 +165,7 @@ function formatLimitRegulation(value: LimitRegulation | null | undefined): numbe
 	}
 }
 
-function parseAndExpandRuby(html: string): [string, string] {
+export function parseAndExpandRuby(html: string): [string, string] {
 	let rubyless = "";
 	let rubyonly = "";
 	const doc = parseDocument(html);
