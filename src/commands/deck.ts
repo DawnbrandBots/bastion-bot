@@ -16,7 +16,7 @@ import { CardSchema } from "../definitions/yaml-yugi";
 import { COMMAND_LOCALIZATIONS, Locale, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { addNotice } from "../utils";
+import { addNotice, serializeCommand } from "../utils";
 import { typedDeckToYdk, ydkToTypedDeck } from "ydeck";
 
 // Same hack as in card.ts
@@ -289,6 +289,10 @@ export class DeckCommand extends Command {
 		return ydkToTypedDeck(ydk);
 	}
 
+	protected log(interaction: CommandInteraction, error: Error): void {
+		this.logger.info(serializeCommand(interaction), error);
+	}
+
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		const resultLanguage = await this.locales.get(interaction);
 		let deck: TypedDeck;
@@ -304,9 +308,11 @@ export class DeckCommand extends Command {
 			} catch (e) {
 				// TODO: specifically catch error for bad input and respond more clearly?
 				const end = Date.now();
+				const error = e as Error;
 				await interaction.editReply({
-					content: (e as Error).message
+					content: error.message
 				});
+				this.log(interaction, error);
 				const latency = end - interaction.createdTimestamp;
 				return latency;
 			}
@@ -316,9 +322,11 @@ export class DeckCommand extends Command {
 				deck = await this.parseFile(interaction.options.getAttachment("deck", true));
 			} catch (e) {
 				const end = Date.now();
+				const error = e as Error;
 				await interaction.editReply({
-					content: (e as Error).message
+					content: error.message
 				});
+				this.log(interaction, error);
 				const latency = end - interaction.createdTimestamp;
 				return latency;
 			}
