@@ -16,7 +16,7 @@ import { CardSchema } from "../definitions/yaml-yugi";
 import { COMMAND_LOCALIZATIONS, Locale, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { addNotice, replyLatency } from "../utils";
+import { addNotice } from "../utils";
 import { typedDeckToYdk, ydkToTypedDeck } from "ydeck";
 
 // Same hack as in card.ts
@@ -303,36 +303,36 @@ export class DeckCommand extends Command {
 				deck = parseURL(interaction.options.getString("deck", true));
 			} catch (e) {
 				// TODO: specifically catch error for bad input and respond more clearly?
-				const reply = await interaction.reply({
-					content: (e as Error).message,
-					ephemeral: true,
-					fetchReply: true
+				const end = Date.now();
+				await interaction.editReply({
+					content: (e as Error).message
 				});
-				return replyLatency(reply, interaction);
+				const latency = end - interaction.createdTimestamp;
+				return latency;
 			}
 		} else {
 			// subcommand === "file"
 			try {
 				deck = await this.parseFile(interaction.options.getAttachment("deck", true));
 			} catch (e) {
-				const reply = await interaction.reply({
-					content: (e as Error).message,
-					ephemeral: true,
-					fetchReply: true
+				const end = Date.now();
+				await interaction.editReply({
+					content: (e as Error).message
 				});
-				return replyLatency(reply, interaction);
+				const latency = end - interaction.createdTimestamp;
+				return latency;
 			}
 		}
 
 		// return error on empty deck
 		if (deck.main.length + deck.extra.length + deck.side.length < 1) {
 			useLocale(resultLanguage);
-			const reply = await interaction.reply({
-				content: t`Error: Your deck is empty.`,
-				ephemeral: true,
-				fetchReply: true
+			const end = Date.now();
+			await interaction.editReply({
+				content: t`Error: Your deck is empty.`
 			});
-			return replyLatency(reply, interaction);
+			const latency = end - interaction.createdTimestamp;
+			return latency;
 		}
 
 		// one of these two will be redundant with an input, but if it's the file then we'd have to download it again
