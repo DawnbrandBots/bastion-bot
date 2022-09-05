@@ -6,11 +6,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src\card.ts:235
+#: src\card.ts:250
 msgid ":link: Links"
 msgstr ":link: 링크"
 
-#: src\card.ts:236
+#: src\card.ts:251
 #, javascript-format
 msgid ""
 "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
@@ -19,17 +19,17 @@ msgstr ""
 "[공식 코나미 DB](${ official }) | [OCG 규칙](${ rulings }) | [Yugipedia](${ "
 "yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
-#: src\card.ts:272
+#: src\card.ts:311
+#, javascript-format
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 msgstr "**종족**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:274
+#: src\card.ts:313
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 msgstr "**속성**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
-#: src\card.ts:278
-#, javascript-format
+#: src\card.ts:317
 msgid ""
 "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
 "card.def }"
@@ -37,7 +37,7 @@ msgstr ""
 "**랭크**: ${ Icon.Rank } ${ card.rank } **공격력**: ${ card.atk } **수비력**: ${ "
 "card.def }"
 
-#: src\card.ts:281
+#: src\card.ts:320
 #, javascript-format
 msgid ""
 "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
@@ -46,7 +46,8 @@ msgstr ""
 "**LINK**: ${ card.link_arrows.length } **공격력**: ${ card.atk } **링크 마커**: ${ "
 "arrows }"
 
-#: src\card.ts:283
+#: src\card.ts:322
+#, javascript-format
 msgid ""
 "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
 "${ card.def }"
@@ -54,13 +55,12 @@ msgstr ""
 "**레벨**: ${ Icon.Level } ${ card.level } **공격력**: ${ card.atk } **수비력**: ${ "
 "card.def }"
 
-#: src\card.ts:290
-#, javascript-format
+#: src\card.ts:329
 msgid "**Pendulum Scale**: ${ formattedScale }"
 msgstr "**펜듈럼 스케일**: ${ formattedScale }"
 
-#: src\card.ts:310
-#: src\card.ts:327
+#: src\card.ts:349
+#: src\card.ts:367
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
 msgstr "패스워드: ${ card.password } | 코나미 ID #${ card.konami_id }"
@@ -243,58 +243,58 @@ msgstr "Yugipedia에서 `${ page }`을(를) 검색하는 중…"
 msgid "Could not find a Yugipedia page named `${ page }`."
 msgstr "일치하는 이름을 Yugipedia 페이지에서 찾을 수 없습니다. : `${ page }`."
 
-#: src\commands\deck.ts:198
+#: src\commands\deck.ts:202
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
 msgstr[0] ""
 
-#: src\commands\deck.ts:201
+#: src\commands\deck.ts:205
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
 msgstr[0] ""
 
-#: src\commands\deck.ts:204
+#: src\commands\deck.ts:208
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
 msgstr[0] ""
 
-#: src\commands\deck.ts:232
+#: src\commands\deck.ts:236
 msgid "Your Deck"
 msgstr ""
 
-#: src\commands\deck.ts:237
+#: src\commands\deck.ts:241
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
 msgstr[0] ""
 
-#: src\commands\deck.ts:244
+#: src\commands\deck.ts:248
 msgid "Main Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:251
+#: src\commands\deck.ts:255
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
 msgstr[0] ""
 
-#: src\commands\deck.ts:258
+#: src\commands\deck.ts:262
 msgid "Extra Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:265
+#: src\commands\deck.ts:269
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
 msgstr[0] ""
 
-#: src\commands\deck.ts:272
+#: src\commands\deck.ts:276
 msgid "Side Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:331
+#: src\commands\deck.ts:344
 msgid "Error: Your deck is empty."
 msgstr ""
 
@@ -330,16 +330,21 @@ msgstr ""
 msgid "Revision: ${ process.env.BOT_REVISION }."
 msgstr ""
 
-#: src\commands\deck.ts:282
+#: src\commands\deck.ts:286
 msgid ".ydk files must have the .ydk extension!"
 msgstr ""
 
-#: src\commands\deck.ts:285
+#: src\commands\deck.ts:289
 msgid ".ydk files should not be larger than 1 KB!"
 msgstr ""
 
-#: src\commands\deck.ts:275
+#: src\commands\deck.ts:279
 msgid "ydke URL"
+msgstr ""
+
+#: src\card.ts:285
+#. Forbidden/Limited Lists or Limit Regulations in the OCG
+msgid "**Limit**: ${ limitRegulationDisplay }"
 msgstr ""
 
 #: src\card.ts:37
@@ -617,18 +622,18 @@ msgctxt "attribute"
 msgid "DIVINE"
 msgstr "신"
 
-#: src\card.ts:296
-#: src\card.ts:307
+#: src\card.ts:335
+#: src\card.ts:346
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "카드 텍스트"
 
-#: src\card.ts:301
+#: src\card.ts:340
 msgctxt "card-embed"
 msgid "Pendulum Effect"
 msgstr "펜듈럼 효과"
 
-#: src\card.ts:322
+#: src\card.ts:362
 msgctxt "card-embed"
 msgid "Card Effect"
 msgstr "카드 효과"
@@ -663,28 +668,28 @@ msgctxt "command-option"
 msgid "command"
 msgstr ""
 
-#: src\commands\deck.ts:74
+#: src\commands\deck.ts:75
 msgctxt "command-option"
 msgid "url"
 msgstr ""
 
-#: src\commands\deck.ts:80
+#: src\commands\deck.ts:81
 msgctxt "command-option"
 msgid "file"
 msgstr ""
 
-#: src\commands\deck.ts:86
-#: src\commands\deck.ts:92
+#: src\commands\deck.ts:87
+#: src\commands\deck.ts:93
 msgctxt "command-option"
 msgid "deck"
 msgstr ""
 
-#: src\commands\deck.ts:98
+#: src\commands\deck.ts:99
 msgctxt "command-option"
 msgid "public"
 msgstr ""
 
-#: src\commands\deck.ts:105
+#: src\commands\deck.ts:106
 msgctxt "command-option"
 msgid "stacked"
 msgstr ""
@@ -719,34 +724,34 @@ msgctxt "command-option-description"
 msgid "The name of a specific Slash Command."
 msgstr ""
 
-#: src\commands\deck.ts:77
+#: src\commands\deck.ts:78
 msgctxt "command-option-description"
 msgid "View a deck by entering a ydke:// URL."
 msgstr ""
 
-#: src\commands\deck.ts:83
+#: src\commands\deck.ts:84
 msgctxt "command-option-description"
 msgid "View a deck by uploading a .ydk file."
 msgstr ""
 
-#: src\commands\deck.ts:89
+#: src\commands\deck.ts:90
 msgctxt "command-option-description"
 msgid "The ydke:// URL of the deck you want to view."
 msgstr ""
 
-#: src\commands\deck.ts:95
+#: src\commands\deck.ts:96
 msgctxt "command-option-description"
 msgid "The .ydk file of the deck you want to view."
 msgstr ""
 
-#: src\commands\deck.ts:101
+#: src\commands\deck.ts:102
 msgctxt "command-option-description"
 msgid ""
 "Whether to display the deck details publicly in chat. This is false by "
 "default."
 msgstr ""
 
-#: src\commands\deck.ts:108
+#: src\commands\deck.ts:109
 msgctxt "command-option-description"
 msgid ""
 "Whether to display the deck sections as one stacked column. This is false "
@@ -778,7 +783,7 @@ msgctxt "command-name"
 msgid "help"
 msgstr ""
 
-#: src\commands\deck.ts:67
+#: src\commands\deck.ts:68
 msgctxt "command-name"
 msgid "deck"
 msgstr ""
@@ -808,7 +813,7 @@ msgctxt "command-description"
 msgid "Get help with a Slash Command."
 msgstr ""
 
-#: src\commands\deck.ts:70
+#: src\commands\deck.ts:71
 msgctxt "command-description"
 msgid ""
 "Display a deck list from ydke:// or .ydk format, exported from a number of "

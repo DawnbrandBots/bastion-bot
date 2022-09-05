@@ -3,7 +3,7 @@ import { CommandInteraction, MessageEmbed } from "discord.js";
 import { parseDocument } from "htmlparser2";
 import fetch from "node-fetch";
 import { c, t, useLocale } from "ttag";
-import { CardSchema } from "./definitions/yaml-yugi";
+import { CardSchema, LimitRegulation } from "./definitions/yaml-yugi";
 import { Locale } from "./locale";
 
 /**
@@ -150,6 +150,21 @@ export async function getCard(
 	throw new Error((await response.json()).message);
 }
 
+function formatLimitRegulation(value: LimitRegulation | null | undefined): number | null {
+	switch (value) {
+		case "Forbidden":
+			return 0;
+		case "Limited":
+			return 1;
+		case "Semi-Limited":
+			return 2;
+		case "Unlimited":
+			return 3;
+		default:
+			return null;
+	}
+}
+
 function parseAndExpandRuby(html: string): [string, string] {
 	let rubyless = "";
 	let rubyonly = "";
@@ -247,6 +262,30 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 		}
 	}
 
+	const limitRegulations = [
+		{ label: "TCG: ", value: formatLimitRegulation(card.limit_regulation.tcg) },
+		{ label: "OCG: ", value: formatLimitRegulation(card.limit_regulation.ocg) },
+		{ label: "Speed: ", value: formatLimitRegulation(card.limit_regulation.speed) }
+	];
+	let limitRegulationDisplay: string;
+	if (["ja", "ko", "zh-CN", "zh-TW"].includes(lang)) {
+		// Switch order and exclude TCG Speed
+		limitRegulationDisplay = [limitRegulations[1], limitRegulations[0]]
+			.filter(({ value }) => value !== null)
+			.map(({ label, value }) => `${label}${value}`)
+			.join(" / ");
+	} else {
+		limitRegulationDisplay = limitRegulations
+			.filter(({ value }) => value !== null)
+			.map(({ label, value }) => `${label}${value}`)
+			.join(" / ");
+	}
+	if (limitRegulationDisplay) {
+		// Forbidden/Limited Lists or Limit Regulations in the OCG
+		description += t`**Limit**: ${limitRegulationDisplay}`;
+		description += "\n";
+	}
+
 	// TODO: expand with hyperlinks
 	if (card.card_type === "Monster") {
 		embed.setColor(
@@ -316,6 +355,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 		// Spells and Traps
 		embed.setColor(Colour[card.card_type]);
 
+		description += "\n"; // don't put \n in a gettext string
 		const localizedProperty = rc("spell-trap-property").gettext(`${card.property} ${card.card_type}`);
 		embed.setDescription(`${description}${Icon[card.card_type]} ${localizedProperty} ${Icon[card.property]}`);
 
