@@ -1,17 +1,23 @@
 import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
-import { CommandInteraction, MessageEmbed } from "discord.js";
-import { ApplicationCommandOptionTypes } from "discord.js/typings/enums";
+import {
+	SlashCommandBuilder,
+	SlashCommandStringOption,
+	SlashCommandAttachmentOption,
+	SlashCommandSubcommandBuilder
+} from "@discordjs/builders";
+import { CommandInteraction, MessageAttachment, MessageEmbed } from "discord.js";
 import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { c, msgid, ngettext, t, useLocale } from "ttag";
-import { parseURL, TypedDeck } from "ydke";
+import { parseURL, toURL, TypedDeck } from "ydke";
 import { Command } from "../Command";
 import { CardSchema } from "../definitions/yaml-yugi";
-import { Locale, LocaleProvider } from "../locale";
+import { COMMAND_LOCALIZATIONS, Locale, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { addNotice, replyLatency } from "../utils";
+import { addNotice, serializeCommand } from "../utils";
+import { typedDeckToYdk, ydkToTypedDeck } from "ydeck";
 
 // Same hack as in card.ts
 const rc = c;
@@ -25,31 +31,91 @@ export class DeckCommand extends Command {
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
-		return {
-			name: "deck",
-			description: "Display a deck list from ydke:// format, exported from a number of deck building programs.",
-			options: [
-				{
-					type: ApplicationCommandOptionTypes.STRING.valueOf(),
-					name: "deck",
-					description: "The ydke:// URL of the deck you want to view.",
-					required: true
-				},
-				{
-					type: ApplicationCommandOptionTypes.BOOLEAN.valueOf(),
-					name: "public",
-					description: "Whether to display the deck details publicly in chat. This is false by default.",
-					required: false
-				},
-				{
-					type: ApplicationCommandOptionTypes.BOOLEAN.valueOf(),
-					name: "stacked",
-					description:
-						"Whether to display the deck sections as one stacked column. This is false (side-by-side) by default.",
-					required: false
-				}
-			]
-		};
+		const builder = new SlashCommandBuilder()
+			.setName("deck")
+			.setDescription(
+				"Display a deck list from ydke:// or .ydk format, exported from a number of deck building programs."
+			);
+		const urlSubcommand = new SlashCommandSubcommandBuilder()
+			.setName("url")
+			.setDescription("View a deck by entering a ydke:// URL.");
+		const fileSubcommand = new SlashCommandSubcommandBuilder()
+			.setName("file")
+			.setDescription("View a deck by uploading a .ydk file.");
+		const deckUrlOption = new SlashCommandStringOption()
+			.setName("deck")
+			.setDescription("The ydke:// URL of the deck you want to view.")
+			.setRequired(true);
+		const deckFileOption = new SlashCommandAttachmentOption()
+			.setName("deck")
+			.setDescription("The .ydk file of the deck you want to view.")
+			.setRequired(true);
+		const publicOption = new SlashCommandStringOption()
+			.setName("public")
+			.setDescription("Whether to display the deck details publicly in chat. This is false by default.")
+			.setRequired(false);
+		const stackedOption = new SlashCommandStringOption()
+			.setName("stacked")
+			.setDescription(
+				"Whether to display the deck sections as one stacked column. This is false (side-by-side) by default."
+			)
+			.setRequired(false);
+
+		for (const { gettext, discord } of COMMAND_LOCALIZATIONS) {
+			useLocale(gettext);
+			builder
+				.setNameLocalization(discord, c("command-name").t`deck`)
+				.setDescriptionLocalization(
+					discord,
+					c("command-description")
+						.t`Display a deck list from ydke:// or .ydk format, exported from a number of deck building programs.`
+				);
+			urlSubcommand
+				.setNameLocalization(discord, c("command-option").t`url`)
+				.setDescriptionLocalization(
+					discord,
+					c("command-option-description").t`View a deck by entering a ydke:// URL.`
+				);
+			fileSubcommand
+				.setNameLocalization(discord, c("command-option").t`file`)
+				.setDescriptionLocalization(
+					discord,
+					c("command-option-description").t`View a deck by uploading a .ydk file.`
+				);
+			deckUrlOption
+				.setNameLocalization(discord, c("command-option").t`deck`)
+				.setDescriptionLocalization(
+					discord,
+					c("command-option-description").t`The ydke:// URL of the deck you want to view.`
+				);
+			deckFileOption
+				.setNameLocalization(discord, c("command-option").t`deck`)
+				.setDescriptionLocalization(
+					discord,
+					c("command-option-description").t`The .ydk file of the deck you want to view.`
+				);
+			publicOption
+				.setNameLocalization(discord, c("command-option").t`public`)
+				.setDescriptionLocalization(
+					discord,
+					c("command-option-description")
+						.t`Whether to display the deck details publicly in chat. This is false by default.`
+				);
+			stackedOption
+				.setNameLocalization(discord, c("command-option").t`stacked`)
+				.setDescriptionLocalization(
+					discord,
+					c("command-option-description")
+						.t`Whether to display the deck sections as one stacked column. This is false (side-by-side) by default.`
+				);
+		}
+
+		urlSubcommand.addStringOption(deckUrlOption).addStringOption(publicOption).addStringOption(stackedOption);
+		fileSubcommand.addAttachmentOption(deckFileOption).addStringOption(publicOption).addStringOption(stackedOption);
+
+		builder.addSubcommand(urlSubcommand).addSubcommand(fileSubcommand);
+
+		return builder.toJSON();
 	}
 
 	protected override get logger(): Logger {
@@ -91,7 +157,7 @@ export class DeckCommand extends Command {
 		throw new Error((await response.json()).message);
 	}
 
-	async generateProfile(deck: TypedDeck, lang: Locale, inline: boolean): Promise<MessageEmbed> {
+	async generateProfile(deck: TypedDeck, lang: Locale, inline: boolean, outUrl: string): Promise<MessageEmbed> {
 		// use Set to remove duplicates from list of passwords to pass to API
 		// populate the names into a Map to be fetched linearly
 		const cardMemo = await this.getCards(new Set([...deck.main, ...deck.extra, ...deck.side]));
@@ -206,40 +272,88 @@ export class DeckCommand extends Command {
 				embed.addFields({ name: t`Side Deck (continued)`, value: part, inline });
 			}
 		}
+		embed.addFields({ name: t`ydke URL`, value: outUrl, inline: false });
 		return embed;
+	}
+
+	async parseFile(deck: MessageAttachment): Promise<TypedDeck> {
+		// Various guards for malicious or non-deck content before we bother downloading
+		if (!deck.name?.endsWith(".ydk")) {
+			throw new Error(t`.ydk files must have the .ydk extension!`);
+		}
+		if (deck.size > 1024) {
+			throw new Error(t`.ydk files should not be larger than 1 KB!`);
+		}
+		const file = await fetch(deck.url);
+		const ydk = await file.text();
+		return ydkToTypedDeck(ydk);
+	}
+
+	protected log(interaction: CommandInteraction, error: Error): void {
+		this.logger.info(serializeCommand(interaction), error);
 	}
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
 		const resultLanguage = await this.locales.get(interaction);
-		// NOTE: when we implement reading .ydk files, validate existence of headers/at least one populated section?
 		let deck: TypedDeck;
-		try {
-			deck = parseURL(interaction.options.getString("deck", true));
-		} catch (e) {
-			// TODO: specifically catch error for bad input and respond more clearly?
-			const reply = await interaction.reply({
-				content: (e as Error).message,
-				ephemeral: true,
-				fetchReply: true
-			});
-			return replyLatency(reply, interaction);
+		const isPublic = !!interaction.options.getBoolean("public", false);
+		const isStacked = !!interaction.options.getBoolean("stacked", false);
+
+		// defer earlier than before adding .ydk support because that requires fetching a file
+		await interaction.deferReply({ ephemeral: !isPublic });
+
+		if (interaction.options.getSubcommand() === "url") {
+			try {
+				deck = parseURL(interaction.options.getString("deck", true));
+			} catch (e) {
+				// TODO: specifically catch error for bad input and respond more clearly?
+				const end = Date.now();
+				const error = e as Error;
+				await interaction.editReply({
+					content: error.message
+				});
+				this.log(interaction, error);
+				const latency = end - interaction.createdTimestamp;
+				return latency;
+			}
+		} else {
+			// subcommand === "file"
+			try {
+				deck = await this.parseFile(interaction.options.getAttachment("deck", true));
+			} catch (e) {
+				const end = Date.now();
+				const error = e as Error;
+				await interaction.editReply({
+					content: error.message
+				});
+				this.log(interaction, error);
+				const latency = end - interaction.createdTimestamp;
+				return latency;
+			}
 		}
+
 		// return error on empty deck
 		if (deck.main.length + deck.extra.length + deck.side.length < 1) {
 			useLocale(resultLanguage);
-			const reply = await interaction.reply({
-				content: t`Error: Your deck is empty.`,
-				ephemeral: true,
-				fetchReply: true
+			const end = Date.now();
+			await interaction.editReply({
+				content: t`Error: Your deck is empty.`
 			});
-			return replyLatency(reply, interaction);
+			const latency = end - interaction.createdTimestamp;
+			return latency;
 		}
-		const isPublic = !!interaction.options.getBoolean("public", false);
-		const isStacked = !!interaction.options.getBoolean("stacked", false);
-		await interaction.deferReply({ ephemeral: !isPublic });
-		const content = await this.generateProfile(deck, resultLanguage, !isStacked);
+
+		// one of these two will be redundant with an input, but if it's the file then we'd have to download it again
+		const outUrl = toURL(deck);
+		const outFile = typedDeckToYdk(deck);
+
+		const content = await this.generateProfile(deck, resultLanguage, !isStacked, outUrl);
 		const end = Date.now();
-		await interaction.editReply({ embeds: addNotice(content) });
+		await interaction.editReply({
+			embeds: addNotice(content),
+			// a string is interpreted as a path, to upload it as a file we need a Buffer
+			files: [new MessageAttachment(Buffer.from(outFile, "utf-8"), "deck.ydk")]
+		});
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
 		const latency = end - interaction.createdTimestamp;
 		return latency;

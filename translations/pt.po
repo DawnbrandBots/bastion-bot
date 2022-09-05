@@ -15,9 +15,9 @@ msgstr ""
 msgid ""
 "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
 "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
-msgstr
-"[Database oficial da Konami](${ official }) | [Regras no OCG](${ rulings }) | "
-"[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
+msgstr ""
+"[Database oficial da Konami](${ official }) | [Regras no OCG](${ rulings }) "
+"| [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
 #: src\card.ts:272
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
@@ -33,8 +33,9 @@ msgstr "**Atributo**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }
 msgid ""
 "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
 "card.def }"
-msgstr "**Classe**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
-"card.def }"
+msgstr ""
+"**Classe**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: "
+"${ card.def }"
 
 #: src\card.ts:281
 #, javascript-format
@@ -44,11 +45,13 @@ msgid ""
 msgstr ""
 "**Valor Link**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
 "Flechas Link**: ${ arrows }"
+
 #: src\card.ts:283
 msgid ""
 "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
 "${ card.def }"
-msgstr "**Nível**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
+msgstr ""
+"**Nível**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
 "${ card.def }"
 
 #: src\card.ts:290
@@ -72,8 +75,9 @@ msgid ""
 "tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support "
 "server](https://discord.gg/4aFuPyuE96)!"
 msgstr ""
-":incoming_envelope: Por favor, envie um feedback para o "
-"[nosso Github](https://github.com/DawnbrandBots/bastion-bot)ou no nosso [servidor no Discord](https://discord.gg/4aFuPyuE96)!"
+":incoming_envelope: Por favor, envie um feedback para o [nosso "
+"Github](https://github.com/DawnbrandBots/bastion-bot)ou no nosso [servidor "
+"no Discord](https://discord.gg/4aFuPyuE96)!"
 
 #: src\utils.ts:45
 msgid "Please consider supporting us!"
@@ -129,64 +133,64 @@ msgstr "Não foi possível encontrar uma carta compatível com `${ input }`!"
 msgid "Could not find art for `${ name }`!"
 msgstr "Não foi possível encontrar uma arte para `${ name }`!"
 
-#: src\commands\deck.ts:132
+#: src\commands\deck.ts:198
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
 msgstr[0] "${ counts.Monster } Monstro"
 msgstr[1] "${ counts.Monster } Monstros"
 
-#: src\commands\deck.ts:135
+#: src\commands\deck.ts:201
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
 msgstr[0] "${ counts.Spell } Magia"
 msgstr[1] "${ counts.Spell } Magias"
 
-#: src\commands\deck.ts:138
+#: src\commands\deck.ts:204
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
 msgstr[0] "${ counts.Trap } Armadilha"
 msgstr[1] "${ counts.Trap } Armadilhas"
 
-#: src\commands\deck.ts:166
+#: src\commands\deck.ts:232
 msgid "Your Deck"
 msgstr "Seu Deck"
 
-#: src\commands\deck.ts:171
+#: src\commands\deck.ts:237
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
 msgstr[0] "Deck Principal (${ deck.main.length } carta — ${ countDetail })"
 msgstr[1] "Deck Principal (${ deck.main.length } cartas — ${ countDetail })"
 
-#: src\commands\deck.ts:178
+#: src\commands\deck.ts:244
 msgid "Main Deck (continued)"
 msgstr "Deck Principal (continuação)"
 
-#: src\commands\deck.ts:185
+#: src\commands\deck.ts:251
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
 msgstr[0] "Deck Adicional (${ deck.extra.length } carta — ${ _countDetail })"
 msgstr[1] "Deck Adicional (${ deck.extra.length } cartas — ${ _countDetail })"
 
-#: src\commands\deck.ts:192
+#: src\commands\deck.ts:258
 msgid "Extra Deck (continued)"
 msgstr "Deck Adicional (continuação)"
 
-#: src\commands\deck.ts:199
+#: src\commands\deck.ts:265
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
 msgstr[0] "Deck Auxiliar (${ deck.side.length } carta — ${ _countDetail2 })"
 msgstr[1] "Deck Auxiliar (${ deck.side.length } cartas — ${ _countDetail2 })"
 
-#: src\commands\deck.ts:206
+#: src\commands\deck.ts:272
 msgid "Side Deck (continued)"
 msgstr "Deck Auxiliar (continuação)"
 
-#: src\commands\deck.ts:231
+#: src\commands\deck.ts:331
 msgid "Error: Your deck is empty."
 msgstr "Erro: Seu deck está vazio"
 
@@ -324,6 +328,18 @@ msgstr ""
 #, javascript-format
 msgid "Revision: ${ process.env.BOT_REVISION }."
 msgstr "Revisão: ${ process.env.BOT_REVISION }."
+
+#: src\commands\deck.ts:282
+msgid ".ydk files must have the .ydk extension!"
+msgstr ""
+
+#: src\commands\deck.ts:285
+msgid ".ydk files should not be larger than 1 KB!"
+msgstr ""
+
+#: src\commands\deck.ts:275
+msgid "ydke URL"
+msgstr ""
 
 #: src\card.ts:37
 msgctxt "monster-type-race"
@@ -616,12 +632,12 @@ msgctxt "card-embed"
 msgid "Card Effect"
 msgstr "Efeito da Carta"
 
-#: src\locale.ts:46
+#: src\locale.ts:47
 msgctxt "command-option"
 msgid "result-language"
 msgstr ""
 
-#: src\locale.ts:66
+#: src\locale.ts:67
 msgctxt "command-option"
 msgid "input-language"
 msgstr "idioma-de-entrada"
@@ -646,12 +662,38 @@ msgctxt "command-option"
 msgid "command"
 msgstr ""
 
-#: src\locale.ts:49
+#: src\commands\deck.ts:74
+msgctxt "command-option"
+msgid "url"
+msgstr ""
+
+#: src\commands\deck.ts:80
+msgctxt "command-option"
+msgid "file"
+msgstr ""
+
+#: src\commands\deck.ts:86
+#: src\commands\deck.ts:92
+msgctxt "command-option"
+msgid "deck"
+msgstr ""
+
+#: src\commands\deck.ts:98
+msgctxt "command-option"
+msgid "public"
+msgstr ""
+
+#: src\commands\deck.ts:105
+msgctxt "command-option"
+msgid "stacked"
+msgstr ""
+
+#: src\locale.ts:50
 msgctxt "command-option-description"
 msgid "The output language for the card embed, overriding other settings."
 msgstr ""
 
-#: src\locale.ts:69
+#: src\locale.ts:70
 msgctxt "command-option-description"
 msgid "The language to search in, defaulting to the result language."
 msgstr "O idioma no qual procurar, tendo como padrão o idioma do resultado"
@@ -674,6 +716,40 @@ msgstr "O nome da página da Yugipedia que você gostaria de procurar"
 #: src\commands\help.ts:54
 msgctxt "command-option-description"
 msgid "The name of a specific Slash Command."
+msgstr ""
+
+#: src\commands\deck.ts:77
+msgctxt "command-option-description"
+msgid "View a deck by entering a ydke:// URL."
+msgstr ""
+
+#: src\commands\deck.ts:83
+msgctxt "command-option-description"
+msgid "View a deck by uploading a .ydk file."
+msgstr ""
+
+#: src\commands\deck.ts:89
+msgctxt "command-option-description"
+msgid "The ydke:// URL of the deck you want to view."
+msgstr ""
+
+#: src\commands\deck.ts:95
+msgctxt "command-option-description"
+msgid "The .ydk file of the deck you want to view."
+msgstr ""
+
+#: src\commands\deck.ts:101
+msgctxt "command-option-description"
+msgid ""
+"Whether to display the deck details publicly in chat. This is false by "
+"default."
+msgstr ""
+
+#: src\commands\deck.ts:108
+msgctxt "command-option-description"
+msgid ""
+"Whether to display the deck sections as one stacked column. This is false "
+"(side-by-side) by default."
 msgstr ""
 
 #: src\commands\art.ts:35
@@ -701,6 +777,11 @@ msgctxt "command-name"
 msgid "help"
 msgstr ""
 
+#: src\commands\deck.ts:67
+msgctxt "command-name"
+msgid "deck"
+msgstr ""
+
 #: src\commands\art.ts:36
 msgctxt "command-description"
 msgid "Display the art for a card!"
@@ -724,4 +805,11 @@ msgstr "Procura uma página da wiki da Yugipedia e a linka"
 #: src\commands\help.ts:49
 msgctxt "command-description"
 msgid "Get help with a Slash Command."
+msgstr ""
+
+#: src\commands\deck.ts:70
+msgctxt "command-description"
+msgid ""
+"Display a deck list from ydke:// or .ydk format, exported from a number of "
+"deck building programs."
 msgstr ""

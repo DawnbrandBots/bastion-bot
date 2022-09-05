@@ -5333,6 +5333,13 @@ yargs@^17.3.1:
     y18n "^5.0.5"
     yargs-parser "^21.0.0"
 
+ydeck@^0.2.7:
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/ydeck/-/ydeck-0.2.7.tgz#8a75e0042556570355188e50450c497f27742160"
+  integrity sha512-qxei1EGcadQe6qsXqVYu0dA9hmlrPuZwpxJUUAJN/5kHQVO91FCA3t9/gKx+ZRzmqfnTxZtAdCkL3nHpBAHjjg==
+  dependencies:
+    ydke "^1.1.0"
+
 ydke@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ydke/-/ydke-1.1.0.tgz#acfbe5fed8b82716c5280594f7f815eec34a9b1e"
