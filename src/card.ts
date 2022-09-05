@@ -233,7 +233,8 @@ function formatCardText(text: Static<typeof CardSchema>["text"], lang: Locale): 
 export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): MessageEmbed[] {
 	useLocale(lang);
 
-	const yugipedia = `https://yugipedia.com/wiki/${card.konami_id}?utm_source=bastion`;
+	const yugipediaPage = card.konami_id ?? encodeURIComponent(`${card.name.en}`);
+	const yugipedia = `https://yugipedia.com/wiki/${yugipediaPage}?utm_source=bastion`;
 	const ygoprodeckTerm = card.password ?? encodeURIComponent(`${card.name.en}`);
 	const ygoprodeck = `https://db.ygoprodeck.com/card/?search=${ygoprodeckTerm}&utm_source=bastion`;
 	// Official database, does not work for zh locales
@@ -250,6 +251,9 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 		name: t`:link: Links`,
 		value: t`[Official Konami DB](${official}) | [OCG Rulings](${rulings}) | [Yugipedia](${yugipedia}) | [YGOPRODECK](${ygoprodeck})`
 	};
+	if (card.konami_id === null) {
+		links.value = t`[Yugipedia](${yugipedia}) | [YGOPRODECK](${ygoprodeck})`;
+	}
 
 	let description = "";
 	if (lang === "ja") {

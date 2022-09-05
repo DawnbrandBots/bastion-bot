@@ -6,28 +6,33 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src\card.ts:250
+#: src\card.ts:251
 msgid ":link: Links"
 msgstr ""
 
-#: src\card.ts:251
+#: src\card.ts:252
 #, javascript-format
 msgid ""
 "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
 "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
 
-#: src\card.ts:311
+#: src\card.ts:255
+#, javascript-format
+msgid "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
+msgstr ""
+
+#: src\card.ts:315
 #, javascript-format
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 msgstr "**Typ**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:313
+#: src\card.ts:317
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 msgstr "**Eigenschaft**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
-#: src\card.ts:317
+#: src\card.ts:321
 msgid ""
 "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
 "card.def }"
@@ -35,14 +40,14 @@ msgstr ""
 "**Rang**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
 "card.def }"
 
-#: src\card.ts:320
+#: src\card.ts:324
 #, javascript-format
 msgid ""
 "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
 "Arrows**: ${ arrows }"
 msgstr ""
 
-#: src\card.ts:322
+#: src\card.ts:326
 #, javascript-format
 msgid ""
 "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
@@ -51,12 +56,12 @@ msgstr ""
 "**Stufe**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
 "${ card.def }"
 
-#: src\card.ts:329
+#: src\card.ts:333
 msgid "**Pendulum Scale**: ${ formattedScale }"
 msgstr "**Pendelbereich**: ${ formattedScale }"
 
-#: src\card.ts:349
-#: src\card.ts:367
+#: src\card.ts:353
+#: src\card.ts:371
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
 msgstr ""
@@ -334,7 +339,7 @@ msgstr ""
 msgid "ydke URL"
 msgstr ""
 
-#: src\card.ts:285
+#: src\card.ts:289
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 msgid "**Limit**: ${ limitRegulationDisplay }"
 msgstr ""
@@ -614,18 +619,18 @@ msgctxt "attribute"
 msgid "DIVINE"
 msgstr "GÖTTLICH"
 
-#: src\card.ts:335
-#: src\card.ts:346
+#: src\card.ts:339
+#: src\card.ts:350
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "Kartentext"
 
-#: src\card.ts:340
+#: src\card.ts:344
 msgctxt "card-embed"
 msgid "Pendulum Effect"
 msgstr "Pendeleffekt"
 
-#: src\card.ts:362
+#: src\card.ts:366
 msgctxt "card-embed"
 msgid "Card Effect"
 msgstr ""
