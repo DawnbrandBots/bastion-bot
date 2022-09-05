@@ -59,3 +59,7 @@ A bug causes ttag to add `msgstr[1] ""`, even for locales without plural forms, 
 the Plural-Forms header. This doesn't happen the first time the strings are picked up, but on
 subsequent runs when they are already in the file. The locales we care about are the CJK locales,
 so for now we will have to manually remove the extraneous lines after generation.
+
+```bash
+sed -i '/^msgstr\[1\] ""$/d' translations/ja.po translations/ko.po translations/zh-CN.po translations/zh-TW.po
+```
