@@ -1,4 +1,4 @@
-import { SlashCommandStringOption } from "@discordjs/builders";
+import { SharedNameAndDescription, SlashCommandStringOption } from "@discordjs/builders";
 import sqlite, { Database, Statement } from "better-sqlite3";
 import { Locale as DiscordLocale } from "discord-api-types/v9";
 import { CommandInteraction, Message, Snowflake } from "discord.js";
@@ -72,6 +72,29 @@ export function getInputLangStringOption(): SlashCommandStringOption {
 	}
 
 	return option;
+}
+
+/**
+ * Helper for integrating ttag gettext localisations with discord.js builders.
+ * @param component SlashCommandBuilder, subcommand builder, option builder, etc.
+ * @param getLocalisedName Lambda function returning the name using gettext.
+ * @param getLocalisedDescription Lambda function returning the description using gettext.
+ * @returns the same `component`, with the name, description, and all localisations added.
+ */
+export function buildLocalisedCommand<T extends SharedNameAndDescription>(
+	component: T,
+	getLocalisedName: () => string,
+	getLocalisedDescription: () => string
+): T {
+	useLocale("en");
+	component.setName(getLocalisedName()).setDescription(getLocalisedDescription());
+	for (const { gettext, discord } of COMMAND_LOCALIZATIONS) {
+		useLocale(gettext);
+		component
+			.setNameLocalization(discord, getLocalisedName())
+			.setDescriptionLocalization(discord, getLocalisedDescription());
+	}
+	return component;
 }
 
 /**
