@@ -1,17 +1,16 @@
-import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
+import { SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandBuilder } from "@discordjs/builders";
 import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
 import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
-import { getCard, inferInputType } from "../card";
+import { CardLookupType, getCard } from "../card";
 import { Command } from "../Command";
 import { CardSchema } from "../definitions/yaml-yugi";
-import { COMMAND_LOCALIZATIONS, getInputLangStringOption, Locale, LocaleProvider } from "../locale";
+import { buildLocalisedCommand, getInputLangStringOption, Locale, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { searchQueryTypeStringOption } from "../utils";
 
 @injectable()
 export class ArtCommand extends Command {
@@ -22,31 +21,47 @@ export class ArtCommand extends Command {
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
-		const builder = new SlashCommandBuilder().setName("art").setDescription("Display the art for a card!");
-
-		const option = new SlashCommandStringOption()
-			.setName("input")
-			.setDescription("The password, Konami ID, or name to search for a card.")
-			.setRequired(true);
-
-		for (const { gettext, discord } of COMMAND_LOCALIZATIONS) {
-			useLocale(gettext);
-			builder
-				.setNameLocalization(discord, c("command-name").t`art`)
-				.setDescriptionLocalization(discord, c("command-description").t`Display the art for a card!`);
-			option
-				.setNameLocalization(discord, c("command-option").t`input`)
-				.setDescriptionLocalization(
-					discord,
-					c("command-option-description").t`The password, Konami ID, or name to search for a card.`
-				);
-		}
-
-		builder
-			.addStringOption(option)
-			.addStringOption(getInputLangStringOption())
-			.addStringOption(searchQueryTypeStringOption);
-
+		const builder = buildLocalisedCommand(
+			new SlashCommandBuilder(),
+			() => c("command-name").t`art`,
+			() => c("command-description").t`Display the art for a card!`
+		);
+		const nameSubcommand = buildLocalisedCommand(
+			new SlashCommandSubcommandBuilder(),
+			() => c("command-option").t`name`,
+			() => c("command-option-description").t`Display the art for the card with this name.`
+		);
+		const nameOption = buildLocalisedCommand(
+			new SlashCommandStringOption().setRequired(true),
+			() => c("command-option").t`input`,
+			() => c("command-option-description").t`Card name, fuzzy matching supported.`
+		);
+		const passwordSubcommand = buildLocalisedCommand(
+			new SlashCommandSubcommandBuilder(),
+			() => c("command-option").t`password`,
+			() => c("command-option-description").t`Display the art for the card with this password.`
+		);
+		const passwordOption = buildLocalisedCommand(
+			new SlashCommandStringOption().setRequired(true),
+			() => c("command-option").t`input`,
+			() =>
+				c("command-option-description")
+					.t`Card password, the eight-digit number printed on the bottom left corner.`
+		);
+		const konamiIdSubcommand = buildLocalisedCommand(
+			new SlashCommandSubcommandBuilder(),
+			() => c("command-option").t`konami-id`,
+			() => c("command-option-description").t`Display the art for the card with this official database ID.`
+		);
+		const konamiIdOption = buildLocalisedCommand(
+			new SlashCommandStringOption().setRequired(true),
+			() => c("command-option").t`input`,
+			() => c("command-option-description").t`Konami's official card database identifier.`
+		);
+		nameSubcommand.addStringOption(nameOption).addStringOption(getInputLangStringOption());
+		passwordSubcommand.addStringOption(passwordOption);
+		konamiIdSubcommand.addStringOption(konamiIdOption);
+		builder.addSubcommand(nameSubcommand).addSubcommand(passwordSubcommand).addSubcommand(konamiIdSubcommand);
 		return builder.toJSON();
 	}
 
@@ -69,11 +84,12 @@ export class ArtCommand extends Command {
 	}
 
 	protected override async execute(interaction: CommandInteraction): Promise<number> {
-		const [type, input] = inferInputType(interaction);
+		const type = interaction.options.getSubcommand(true) as CardLookupType;
+		const input = interaction.options.getString("input", true);
 		const resultLanguage = await this.locales.get(interaction);
 		const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
-		await interaction.deferReply();
-		const card = await getCard(type, input, inputLanguage);
+		// Send out both requests simultaneously
+		const [, card] = await Promise.all([interaction.deferReply(), getCard(type, input, inputLanguage)]);
 		let end: number;
 		if (!card) {
 			end = Date.now();

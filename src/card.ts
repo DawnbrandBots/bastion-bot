@@ -121,8 +121,11 @@ const Icon = {
 	Rank: "<:rank:602707927114973185>"
 };
 
+// TODO: remove "kid"
+export type CardLookupType = "name" | "password" | "konami-id" | "kid";
+
 export async function getCard(
-	type: "password" | "kid" | "name",
+	type: CardLookupType,
 	input: string,
 	lang?: Locale
 ): Promise<Static<typeof CardSchema> | undefined> {
@@ -130,7 +133,7 @@ export async function getCard(
 	input = encodeURIComponent(input);
 	if (type === "password") {
 		url += `/card/password/${input}`;
-	} else if (type === "kid") {
+	} else if (type === "konami-id" || type === "kid") {
 		url += `/card/kid/${input}`;
 	} else {
 		url += `/search?name=${input}`;

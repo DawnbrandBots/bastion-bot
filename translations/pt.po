@@ -6,11 +6,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src\card.ts:251
+#: src\card.ts:254
 msgid ":link: Links"
 msgstr ""
 
-#: src\card.ts:252
+#: src\card.ts:255
 #, javascript-format
 msgid ""
 "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
@@ -19,22 +19,22 @@ msgstr ""
 "[Database oficial da Konami](${ official }) | [Regras no OCG](${ rulings }) "
 "| [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
-#: src\card.ts:255
+#: src\card.ts:258
 #, javascript-format
 msgid "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
 
-#: src\card.ts:315
+#: src\card.ts:318
 #, javascript-format
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 msgstr "**Tipo**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:317
+#: src\card.ts:320
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 msgstr "**Atributo**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
-#: src\card.ts:321
+#: src\card.ts:324
 msgid ""
 "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
 "card.def }"
@@ -42,7 +42,7 @@ msgstr ""
 "**Classe**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: "
 "${ card.def }"
 
-#: src\card.ts:324
+#: src\card.ts:327
 #, javascript-format
 msgid ""
 "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
@@ -51,7 +51,7 @@ msgstr ""
 "**Valor Link**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
 "Flechas Link**: ${ arrows }"
 
-#: src\card.ts:326
+#: src\card.ts:329
 #, javascript-format
 msgid ""
 "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
@@ -60,12 +60,12 @@ msgstr ""
 "**Nível**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
 "${ card.def }"
 
-#: src\card.ts:333
+#: src\card.ts:336
 msgid "**Pendulum Scale**: ${ formattedScale }"
 msgstr "**Escala Pêndulo**: ${ formattedScale }"
 
-#: src\card.ts:353
-#: src\card.ts:371
+#: src\card.ts:356
+#: src\card.ts:374
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
 msgstr "Senha: ${ card.password } | Konami ID #${ card.konami_id }"
@@ -128,74 +128,74 @@ msgstr "Você está gostando do Bastion? Considere nos apoiar!"
 msgid "Found what you were looking for? Consider supporting us!"
 msgstr "Você encontrou o que procurava? Considere nos apoiar!"
 
-#: src\commands\art.ts:81
-#: src\commands\search.ts:51
+#: src\commands\art.ts:97
+#: src\commands\search.ts:90
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr "Não foi possível encontrar uma carta compatível com `${ input }`!"
 
-#: src\commands\art.ts:91
+#: src\commands\art.ts:107
 msgid "Could not find art for `${ name }`!"
 msgstr "Não foi possível encontrar uma arte para `${ name }`!"
 
-#: src\commands\deck.ts:202
+#: src\commands\deck.ts:210
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
 msgstr[0] "${ counts.Monster } Monstro"
 msgstr[1] "${ counts.Monster } Monstros"
 
-#: src\commands\deck.ts:205
+#: src\commands\deck.ts:213
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
 msgstr[0] "${ counts.Spell } Magia"
 msgstr[1] "${ counts.Spell } Magias"
 
-#: src\commands\deck.ts:208
+#: src\commands\deck.ts:216
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
 msgstr[0] "${ counts.Trap } Armadilha"
 msgstr[1] "${ counts.Trap } Armadilhas"
 
-#: src\commands\deck.ts:236
+#: src\commands\deck.ts:244
 msgid "Your Deck"
 msgstr "Seu Deck"
 
-#: src\commands\deck.ts:241
+#: src\commands\deck.ts:249
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
 msgstr[0] "Deck Principal (${ deck.main.length } carta — ${ countDetail })"
 msgstr[1] "Deck Principal (${ deck.main.length } cartas — ${ countDetail })"
 
-#: src\commands\deck.ts:248
+#: src\commands\deck.ts:256
 msgid "Main Deck (continued)"
 msgstr "Deck Principal (continuação)"
 
-#: src\commands\deck.ts:255
+#: src\commands\deck.ts:263
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
 msgstr[0] "Deck Adicional (${ deck.extra.length } carta — ${ _countDetail })"
 msgstr[1] "Deck Adicional (${ deck.extra.length } cartas — ${ _countDetail })"
 
-#: src\commands\deck.ts:262
+#: src\commands\deck.ts:270
 msgid "Extra Deck (continued)"
 msgstr "Deck Adicional (continuação)"
 
-#: src\commands\deck.ts:269
+#: src\commands\deck.ts:277
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
 msgstr[0] "Deck Auxiliar (${ deck.side.length } carta — ${ _countDetail2 })"
 msgstr[1] "Deck Auxiliar (${ deck.side.length } cartas — ${ _countDetail2 })"
 
-#: src\commands\deck.ts:276
+#: src\commands\deck.ts:284
 msgid "Side Deck (continued)"
 msgstr "Deck Auxiliar (continuação)"
 
-#: src\commands\deck.ts:344
+#: src\commands\deck.ts:352
 msgid "Error: Your deck is empty."
 msgstr "Erro: Seu deck está vazio"
 
@@ -289,6 +289,7 @@ msgid "Total latency: ${ latency } ms"
 msgstr "Latência total: ${ latency } ms"
 
 #: src\commands\ygoprodeck.ts:68
+#, javascript-format
 msgid "Searching YGOPRODECK for `${ term }`…"
 msgstr "Buscando em YGOPRODECK por `${ term }`…"
 
@@ -334,19 +335,19 @@ msgstr ""
 msgid "Revision: ${ process.env.BOT_REVISION }."
 msgstr "Revisão: ${ process.env.BOT_REVISION }."
 
-#: src\commands\deck.ts:286
+#: src\commands\deck.ts:294
 msgid ".ydk files must have the .ydk extension!"
 msgstr ""
 
-#: src\commands\deck.ts:289
+#: src\commands\deck.ts:297
 msgid ".ydk files should not be larger than 1 KB!"
 msgstr ""
 
-#: src\commands\deck.ts:279
+#: src\commands\deck.ts:287
 msgid "ydke URL"
 msgstr ""
 
-#: src\card.ts:289
+#: src\card.ts:292
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 msgid "**Limit**: ${ limitRegulationDisplay }"
 msgstr ""
@@ -626,18 +627,18 @@ msgctxt "attribute"
 msgid "DIVINE"
 msgstr "DIVINO"
 
-#: src\card.ts:339
-#: src\card.ts:350
+#: src\card.ts:342
+#: src\card.ts:353
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "Texto da carta"
 
-#: src\card.ts:344
+#: src\card.ts:347
 msgctxt "card-embed"
 msgid "Pendulum Effect"
 msgstr "Efeito Pêndulo"
 
-#: src\card.ts:366
+#: src\card.ts:369
 msgctxt "card-embed"
 msgid "Card Effect"
 msgstr "Efeito da Carta"
@@ -652,7 +653,12 @@ msgctxt "command-option"
 msgid "input-language"
 msgstr "idioma-de-entrada"
 
-#: src\commands\art.ts:38
+#: src\commands\art.ts:36
+#: src\commands\art.ts:46
+#: src\commands\art.ts:58
+#: src\commands\search.ts:40
+#: src\commands\search.ts:50
+#: src\commands\search.ts:62
 msgctxt "command-option"
 msgid "input"
 msgstr "entrada"
@@ -672,30 +678,48 @@ msgctxt "command-option"
 msgid "command"
 msgstr ""
 
-#: src\commands\deck.ts:75
+#: src\commands\deck.ts:76
 msgctxt "command-option"
 msgid "url"
 msgstr ""
 
-#: src\commands\deck.ts:81
+#: src\commands\deck.ts:82
 msgctxt "command-option"
 msgid "file"
 msgstr ""
 
-#: src\commands\deck.ts:87
-#: src\commands\deck.ts:93
+#: src\commands\deck.ts:88
+#: src\commands\deck.ts:94
 msgctxt "command-option"
 msgid "deck"
 msgstr ""
 
-#: src\commands\deck.ts:99
+#: src\commands\deck.ts:100
 msgctxt "command-option"
 msgid "public"
 msgstr ""
 
-#: src\commands\deck.ts:106
+#: src\commands\deck.ts:107
 msgctxt "command-option"
 msgid "stacked"
+msgstr ""
+
+#: src\commands\art.ts:31
+#: src\commands\search.ts:35
+msgctxt "command-option"
+msgid "name"
+msgstr ""
+
+#: src\commands\art.ts:41
+#: src\commands\search.ts:45
+msgctxt "command-option"
+msgid "password"
+msgstr ""
+
+#: src\commands\art.ts:53
+#: src\commands\search.ts:57
+msgctxt "command-option"
+msgid "konami-id"
 msgstr ""
 
 #: src\locale.ts:50
@@ -707,11 +731,6 @@ msgstr ""
 msgctxt "command-option-description"
 msgid "The language to search in, defaulting to the result language."
 msgstr "O idioma no qual procurar, tendo como padrão o idioma do resultado"
-
-#: src\commands\art.ts:41
-msgctxt "command-option-description"
-msgid "The password, Konami ID, or name to search for a card."
-msgstr "O código, ID da Konami ou nome da carta para buscard"
 
 #: src\commands\ygoprodeck.ts:40
 msgctxt "command-option-description"
@@ -728,41 +747,89 @@ msgctxt "command-option-description"
 msgid "The name of a specific Slash Command."
 msgstr ""
 
-#: src\commands\deck.ts:78
+#: src\commands\deck.ts:79
 msgctxt "command-option-description"
 msgid "View a deck by entering a ydke:// URL."
 msgstr ""
 
-#: src\commands\deck.ts:84
+#: src\commands\deck.ts:85
 msgctxt "command-option-description"
 msgid "View a deck by uploading a .ydk file."
 msgstr ""
 
-#: src\commands\deck.ts:90
+#: src\commands\deck.ts:91
 msgctxt "command-option-description"
 msgid "The ydke:// URL of the deck you want to view."
 msgstr ""
 
-#: src\commands\deck.ts:96
+#: src\commands\deck.ts:97
 msgctxt "command-option-description"
 msgid "The .ydk file of the deck you want to view."
 msgstr ""
 
-#: src\commands\deck.ts:102
+#: src\commands\deck.ts:103
 msgctxt "command-option-description"
 msgid ""
 "Whether to display the deck details publicly in chat. This is false by "
 "default."
 msgstr ""
 
-#: src\commands\deck.ts:109
+#: src\commands\deck.ts:110
 msgctxt "command-option-description"
 msgid ""
 "Whether to display the deck sections as one stacked column. This is false "
 "(side-by-side) by default."
 msgstr ""
 
-#: src\commands\art.ts:35
+#: src\commands\art.ts:32
+msgctxt "command-option-description"
+msgid "Display the art for the card with this name."
+msgstr ""
+
+#: src\commands\art.ts:37
+#: src\commands\search.ts:41
+msgctxt "command-option-description"
+msgid "Card name, fuzzy matching supported."
+msgstr ""
+
+#: src\commands\art.ts:42
+msgctxt "command-option-description"
+msgid "Display the art for the card with this password."
+msgstr ""
+
+#: src\commands\art.ts:48
+#: src\commands\search.ts:52
+msgctxt "command-option-description"
+msgid "Card password, the eight-digit number printed on the bottom left corner."
+msgstr ""
+
+#: src\commands\art.ts:54
+msgctxt "command-option-description"
+msgid "Display the art for the card with this official database ID."
+msgstr ""
+
+#: src\commands\art.ts:59
+#: src\commands\search.ts:63
+msgctxt "command-option-description"
+msgid "Konami's official card database identifier."
+msgstr ""
+
+#: src\commands\search.ts:36
+msgctxt "command-option-description"
+msgid "Find all information for the card with this name."
+msgstr ""
+
+#: src\commands\search.ts:46
+msgctxt "command-option-description"
+msgid "Find all information for the card with this password."
+msgstr ""
+
+#: src\commands\search.ts:58
+msgctxt "command-option-description"
+msgid "Find all information for the card with this official database ID."
+msgstr ""
+
+#: src\commands\art.ts:26
 msgctxt "command-name"
 msgid "art"
 msgstr "arte"
@@ -787,12 +854,17 @@ msgctxt "command-name"
 msgid "help"
 msgstr ""
 
-#: src\commands\deck.ts:68
+#: src\commands\deck.ts:69
 msgctxt "command-name"
 msgid "deck"
 msgstr ""
 
-#: src\commands\art.ts:36
+#: src\commands\search.ts:30
+msgctxt "command-name"
+msgid "search"
+msgstr ""
+
+#: src\commands\art.ts:27
 msgctxt "command-description"
 msgid "Display the art for a card!"
 msgstr "Mostra a arte de uma carta!"
@@ -817,9 +889,14 @@ msgctxt "command-description"
 msgid "Get help with a Slash Command."
 msgstr ""
 
-#: src\commands\deck.ts:71
+#: src\commands\deck.ts:72
 msgctxt "command-description"
 msgid ""
 "Display a deck list from ydke:// or .ydk format, exported from a number of "
 "deck building programs."
+msgstr ""
+
+#: src\commands\search.ts:31
+msgctxt "command-description"
+msgid "Find all information on a card!"
 msgstr ""
