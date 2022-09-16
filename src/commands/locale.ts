@@ -1,10 +1,10 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
+import { SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandBuilder } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
 import { inject, injectable } from "tsyringe";
-import { t } from "ttag";
+import { c, t } from "ttag";
 import { Command } from "../Command";
-import { Locale, LocaleProvider, LOCALE_CHOICES } from "../locale";
+import { buildLocalisedChoice, buildLocalisedCommand, Locale, LocaleProvider, LOCALE_CHOICES } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { replyLatency } from "../utils";
@@ -20,32 +20,40 @@ export class LocaleCommand extends Command {
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
-		// TODO: localise later, it's not like Discord actually shows localisations for these yet
-		// https://github.com/discord/discord-api-docs/issues/5015
-		return new SlashCommandBuilder()
-			.setName("locale")
-			.setDescription("Check or set Bastion's locale for this channel or server.")
-			.addSubcommand(subcommand => subcommand.setName("get").setDescription("Check Bastion's locale setting."))
-			.addSubcommand(subcommand =>
-				subcommand
-					.setName("set")
-					.setDescription("Override Bastion's locale for this channel or server.")
-					.addStringOption(option =>
-						option
-							.setName("scope")
-							.setDescription("Edit just this channel or the whole server?")
-							.addChoices({ name: "channel", value: "channel" }, { name: "server", value: "server" })
-							.setRequired(true)
-					)
-					.addStringOption(option =>
-						option
-							.setName("locale")
-							.setDescription("The new default language to use in this channel or server.")
-							.setRequired(true)
-							.addChoices({ name: "Discord default", value: "default" }, ...LOCALE_CHOICES)
-					)
-			)
-			.toJSON();
+		const builder = buildLocalisedCommand(
+			new SlashCommandBuilder(),
+			() => c("command-name").t`locale`,
+			() => c("command-description").t`Check or set Bastion's locale for this channel or server.`
+		);
+		const getSubcommand = buildLocalisedCommand(
+			new SlashCommandSubcommandBuilder(),
+			() => c("command-option").t`get`,
+			() => c("command-option-description").t`Check Bastion's locale setting for this channel or server.`
+		);
+		const setSubcommand = buildLocalisedCommand(
+			new SlashCommandSubcommandBuilder(),
+			() => c("command-option").t`set`,
+			() => c("command-option-description").t`Override Bastion's locale for this channel or server.`
+		);
+		const scopeOption = buildLocalisedCommand(
+			new SlashCommandStringOption().setRequired(true),
+			() => c("command-option").t`scope`,
+			() => c("command-option-description").t`Edit just this channel or the whole server?`
+		).addChoices(
+			buildLocalisedChoice("channel", () => c("command-option-choice").t`channel`),
+			buildLocalisedChoice("server", () => c("command-option-choice").t`server`)
+		);
+		const localeOption = buildLocalisedCommand(
+			new SlashCommandStringOption().setRequired(true),
+			() => c("command-option").t`locale`,
+			() => c("command-option-description").t`The new default language to use in this channel or server.`
+		).addChoices(
+			buildLocalisedChoice("default", () => c("command-option-choice").t`Discord default`),
+			...LOCALE_CHOICES
+		);
+		setSubcommand.addStringOption(scopeOption).addStringOption(localeOption);
+		builder.addSubcommand(getSubcommand).addSubcommand(setSubcommand);
+		return builder.toJSON();
 	}
 
 	protected override get logger(): Logger {

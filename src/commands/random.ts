@@ -3,9 +3,10 @@ import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
 import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
+import { c } from "ttag";
 import { createCardEmbed } from "../card";
 import { Command } from "../Command";
-import { getResultLangStringOption, LocaleProvider } from "../locale";
+import { buildLocalisedCommand, getResultLangStringOption, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { addFunding, addNotice } from "../utils";
@@ -19,9 +20,11 @@ export class RandomCommand extends Command {
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
-		return new SlashCommandBuilder()
-			.setName("random")
-			.setDescription("Get a random Yu-Gi-Oh! card.")
+		return buildLocalisedCommand(
+			new SlashCommandBuilder(),
+			() => c("command-name").t`random`,
+			() => c("command-description").t`Get a random Yu-Gi-Oh! card.`
+		)
 			.addStringOption(getResultLangStringOption())
 			.toJSON();
 	}

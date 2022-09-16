@@ -137,45 +137,45 @@ msgstr "일치하는 카드를 찾을 수 없습니다. : `${ input }`!"
 msgid "Could not find art for `${ name }`!"
 msgstr "일치하는 이미지를 찾을 수 없습니다. : `${ name }`!"
 
-#: src\commands\locale.ts:62
+#: src\commands\locale.ts:70
 #, javascript-format
 msgid "Locale override for this channel: ${ channelOverride }"
 msgstr "이 채널의 로케일 재정의 : ${ channelOverride }"
 
-#: src\commands\locale.ts:66
+#: src\commands\locale.ts:74
 msgid "Locale override for this server: ${ guildOverride }"
 msgstr "이 서버의 로케일 재정의 : ${ guildOverride }"
 
-#: src\commands\locale.ts:69
-#: src\commands\locale.ts:99
+#: src\commands\locale.ts:77
+#: src\commands\locale.ts:107
 #, javascript-format
 msgid "Discord Community locale for this server: ${ interaction.guildLocale }"
 msgstr "이 서버의 디스코드 커뮤니티 로케일 : ${ interaction.guildLocale }"
 
-#: src\commands\locale.ts:73
+#: src\commands\locale.ts:81
 msgid "Locale override for this direct message: ${ override }"
 msgstr "이 다이렉트 메시지의 로케일 재정의 : ${ override }"
 
-#: src\commands\locale.ts:76
+#: src\commands\locale.ts:84
 #, javascript-format
 msgid "Your Discord locale: ${ interaction.locale }"
 msgstr "당신의 디스코드 로케일 : ${ interaction.locale }"
 
-#: src\commands\locale.ts:88
+#: src\commands\locale.ts:96
 #, javascript-format
 msgid "Locale for current channel <#${ channel }> overridden with ${ locale }."
 msgstr "현재 채널의 로케일 <#${ channel }> 재정의 ${ locale }."
 
-#: src\commands\locale.ts:91
+#: src\commands\locale.ts:99
 msgid "Locale for current channel <#${ channel }> reset to server default."
 msgstr "현재 채널의 로케일 <#${ channel }> 서버 기본값으로 재설정됩니다."
 
-#: src\commands\locale.ts:96
+#: src\commands\locale.ts:104
 #, javascript-format
 msgid "Server-wide locale override: ${ _guildOverride }"
 msgstr "서버 전체 로케일 재정의 : ${ _guildOverride }"
 
-#: src\commands\locale.ts:101
+#: src\commands\locale.ts:109
 msgid ""
 "Sorry, you must have the Manage Channel permission in this channel. If you "
 "think this is an error, contact your server admin or report a bug."
@@ -183,21 +183,21 @@ msgstr ""
 "죄송합니다. 이 작업을 수행하려면 서버 관리 권한이 있어야 합니다. 이 메시지가 잘못 출력되었다면, 서버 관리자에게 문의하시거나 버그를 "
 "신고해 주세요."
 
-#: src\commands\locale.ts:108
+#: src\commands\locale.ts:116
 #, javascript-format
 msgid "Locale for this server overriden with ${ locale }."
 msgstr "이 서버의 로케일이 재정의되었습니다. ${ locale }."
 
-#: src\commands\locale.ts:111
+#: src\commands\locale.ts:119
 msgid "Locale for this server reset to Discord Community default."
 msgstr "이 서버의 로케일이 디스코드 커뮤니티 기본값으로 재설정됩니다."
 
-#: src\commands\locale.ts:114
+#: src\commands\locale.ts:122
 #, javascript-format
 msgid "Server-wide default for community servers is ${ interaction.guildLocale }."
 msgstr "커뮤니티 서버의 서버 전체 기본값은 ${ interaction.guildLocale } 입니다."
 
-#: src\commands\locale.ts:116
+#: src\commands\locale.ts:124
 msgid ""
 "Sorry, you must have the Manage Server permission to do this. If you think "
 "this is an error, contact your server admin or report a bug."
@@ -205,7 +205,7 @@ msgstr ""
 "죄송합니다. 이 작업을 수행하려면 서버 관리 권한이 있어야 합니다. 이 메시지가 잘못 출력되었다면, 서버 관리자에게 문의하시거나 버그를 "
 "신고해 주세요."
 
-#: src\commands\locale.ts:123
+#: src\commands\locale.ts:131
 #, javascript-format
 msgid ""
 "Locale for this direct message overridden with ${ locale }. Your Discord "
@@ -214,7 +214,7 @@ msgstr ""
 "해당 다이렉트 메시지의 로케일이 ${ locale }로 재정의되었습니다. 당신의 디스코드 설정은 ${ interaction.locale "
 "} 입니다."
 
-#: src\commands\locale.ts:126
+#: src\commands\locale.ts:134
 #, javascript-format
 msgid ""
 "Locale for this direct message reset to Discord default. Your Discord "
@@ -225,12 +225,12 @@ msgstr ""
 
 #: src\commands\ping.ts:35
 #: src\events\message.ts:28
+#, javascript-format
 msgid "Average WebSocket ping (new instance): ${ ping } ms"
 msgstr "평균 WebSocket 핑 (새로운 인스턴스): ${ ping } ms"
 
 #: src\commands\ping.ts:40
 #: src\events\message.ts:60
-#, javascript-format
 msgid "Total latency: ${ latency } ms"
 msgstr "총 지연 시간: ${ latency } ms"
 
@@ -723,6 +723,26 @@ msgctxt "command-option"
 msgid "konami-id"
 msgstr ""
 
+#: src\commands\locale.ts:30
+msgctxt "command-option"
+msgid "get"
+msgstr ""
+
+#: src\commands\locale.ts:35
+msgctxt "command-option"
+msgid "set"
+msgstr ""
+
+#: src\commands\locale.ts:40
+msgctxt "command-option"
+msgid "scope"
+msgstr ""
+
+#: src\commands\locale.ts:48
+msgctxt "command-option"
+msgid "locale"
+msgstr ""
+
 #: src\locale.ts:50
 msgctxt "command-option-description"
 msgid "The output language for the card embed, overriding other settings."
@@ -830,6 +850,26 @@ msgctxt "command-option-description"
 msgid "Find all information for the card with this official database ID."
 msgstr ""
 
+#: src\commands\locale.ts:31
+msgctxt "command-option-description"
+msgid "Check Bastion's locale setting for this channel or server."
+msgstr ""
+
+#: src\commands\locale.ts:36
+msgctxt "command-option-description"
+msgid "Override Bastion's locale for this channel or server."
+msgstr ""
+
+#: src\commands\locale.ts:41
+msgctxt "command-option-description"
+msgid "Edit just this channel or the whole server?"
+msgstr ""
+
+#: src\commands\locale.ts:49
+msgctxt "command-option-description"
+msgid "The new default language to use in this channel or server."
+msgstr ""
+
 #: src\commands\art.ts:26
 msgctxt "command-name"
 msgid "art"
@@ -863,6 +903,16 @@ msgstr ""
 #: src\commands\search.ts:30
 msgctxt "command-name"
 msgid "search"
+msgstr ""
+
+#: src\commands\locale.ts:25
+msgctxt "command-name"
+msgid "locale"
+msgstr ""
+
+#: src\commands\random.ts:25
+msgctxt "command-name"
+msgid "random"
 msgstr ""
 
 #: src\commands\art.ts:27
@@ -900,4 +950,29 @@ msgstr ""
 #: src\commands\search.ts:31
 msgctxt "command-description"
 msgid "Find all information on a card!"
+msgstr ""
+
+#: src\commands\locale.ts:26
+msgctxt "command-description"
+msgid "Check or set Bastion's locale for this channel or server."
+msgstr ""
+
+#: src\commands\random.ts:26
+msgctxt "command-description"
+msgid "Get a random Yu-Gi-Oh! card."
+msgstr ""
+
+#: src\commands\locale.ts:43
+msgctxt "command-option-choice"
+msgid "channel"
+msgstr ""
+
+#: src\commands\locale.ts:44
+msgctxt "command-option-choice"
+msgid "server"
+msgstr ""
+
+#: src\commands\locale.ts:51
+msgctxt "command-option-choice"
+msgid "Discord default"
 msgstr ""

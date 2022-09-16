@@ -1,6 +1,6 @@
 import { SharedNameAndDescription, SlashCommandStringOption } from "@discordjs/builders";
 import sqlite, { Database, Statement } from "better-sqlite3";
-import { Locale as DiscordLocale } from "discord-api-types/v9";
+import { APIApplicationCommandOptionChoice, Locale as DiscordLocale } from "discord-api-types/v9";
 import { CommandInteraction, Message, Snowflake } from "discord.js";
 import { inject, singleton } from "tsyringe";
 import { c, useLocale } from "ttag";
@@ -95,6 +95,30 @@ export function buildLocalisedCommand<T extends SharedNameAndDescription>(
 			.setDescriptionLocalization(discord, getLocalisedDescription());
 	}
 	return component;
+}
+
+/**
+ * Helper for integrating ttag gettext localisations with discord.js command option builders.
+ * @param value
+ * @param getLocalisedName Lambda function returning the name using gettext.
+ * @returns an argument for an option builder's addChoices method
+ */
+export function buildLocalisedChoice<T = string | number>(
+	value: T,
+	getLocalisedName: () => string
+): APIApplicationCommandOptionChoice<T> {
+	useLocale("en");
+	const choice: APIApplicationCommandOptionChoice<T> = {
+		name: getLocalisedName(),
+		value
+	};
+	// Initialising separately helps TypeScript figure out that it isn't null
+	choice.name_localizations = {};
+	for (const { gettext, discord } of COMMAND_LOCALIZATIONS) {
+		useLocale(gettext);
+		choice.name_localizations[discord] = getLocalisedName();
+	}
+	return choice;
 }
 
 /**
