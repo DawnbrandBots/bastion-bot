@@ -223,28 +223,28 @@ msgstr ""
 "해당 다이렉트 메시지의 로케일은 디스코드 기본값으로 초기화됩니다. 당신의 디스코드 설정은 ${ interaction.locale } "
 "입니다."
 
-#: src\commands\ping.ts:42
+#: src\commands\ping.ts:35
 #: src\events\message.ts:28
 msgid "Average WebSocket ping (new instance): ${ ping } ms"
 msgstr "평균 WebSocket 핑 (새로운 인스턴스): ${ ping } ms"
 
-#: src\commands\ping.ts:47
+#: src\commands\ping.ts:40
 #: src\events\message.ts:60
 #, javascript-format
 msgid "Total latency: ${ latency } ms"
 msgstr "총 지연 시간: ${ latency } ms"
 
-#: src\commands\ygoprodeck.ts:68
+#: src\commands\ygoprodeck.ts:55
 #, javascript-format
 msgid "Searching YGOPRODECK for `${ term }`…"
 msgstr "YGOPRODECK에서 `${ term }`을(를) 검색하는 중…"
 
-#: src\commands\yugipedia.ts:82
+#: src\commands\yugipedia.ts:66
 #, javascript-format
 msgid "Searching Yugipedia for `${ page }`…"
 msgstr "Yugipedia에서 `${ page }`을(를) 검색하는 중…"
 
-#: src\commands\yugipedia.ts:85
+#: src\commands\yugipedia.ts:69
 #, javascript-format
 msgid "Could not find a Yugipedia page named `${ page }`."
 msgstr "일치하는 이름을 Yugipedia 페이지에서 찾을 수 없습니다. : `${ page }`."
@@ -664,12 +664,12 @@ msgctxt "command-option"
 msgid "input"
 msgstr "입력"
 
-#: src\commands\ygoprodeck.ts:37
+#: src\commands\ygoprodeck.ts:29
 msgctxt "command-option"
 msgid "term"
 msgstr "용어"
 
-#: src\commands\yugipedia.ts:40
+#: src\commands\yugipedia.ts:29
 msgctxt "command-option"
 msgid "page"
 msgstr "페이지"
@@ -733,12 +733,12 @@ msgctxt "command-option-description"
 msgid "The language to search in, defaulting to the result language."
 msgstr "검색할 언어로, 기본적으로 출력 언어로 설정됩니다."
 
-#: src\commands\ygoprodeck.ts:40
+#: src\commands\ygoprodeck.ts:30
 msgctxt "command-option-description"
 msgid "The name or password of the card you're looking for."
 msgstr "찾으시는 카드의 이름 또는 패스워드입니다."
 
-#: src\commands\yugipedia.ts:43
+#: src\commands\yugipedia.ts:30
 msgctxt "command-option-description"
 msgid "The name of the Yugipedia page you want to search for."
 msgstr "검색할 Yugipedia 페이지의 이름입니다."
@@ -835,17 +835,17 @@ msgctxt "command-name"
 msgid "art"
 msgstr "일러스트"
 
-#: src\commands\ping.ts:27
+#: src\commands\ping.ts:22
 msgctxt "command-name"
 msgid "ping"
 msgstr "핑"
 
-#: src\commands\ygoprodeck.ts:34
+#: src\commands\ygoprodeck.ts:24
 msgctxt "command-name"
 msgid "ygoprodeck"
 msgstr ""
 
-#: src\commands\yugipedia.ts:34
+#: src\commands\yugipedia.ts:24
 msgctxt "command-name"
 msgid "yugipedia"
 msgstr ""
@@ -870,17 +870,17 @@ msgctxt "command-description"
 msgid "Display the art for a card!"
 msgstr "카드의 일러스트를 표시합니다."
 
-#: src\commands\ping.ts:28
+#: src\commands\ping.ts:23
 msgctxt "command-description"
 msgid "Test latency to the new bot instance."
 msgstr "새로운 봇 인스턴스의 지연 시간을 테스트합니다."
 
-#: src\commands\ygoprodeck.ts:35
+#: src\commands\ygoprodeck.ts:25
 msgctxt "command-description"
 msgid "Search the YGOPRODECK card database."
 msgstr "YGOPRODECK 카드 데이터베이스에서 검색합니다."
 
-#: src\commands\yugipedia.ts:37
+#: src\commands\yugipedia.ts:25
 msgctxt "command-description"
 msgid "Search the Yugipedia wiki for a page and link to it."
 msgstr "Yugipedia에서 검색하고 링크를 출력합니다."

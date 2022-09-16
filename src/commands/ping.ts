@@ -4,7 +4,7 @@ import { CommandInteraction } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { Command } from "../Command";
-import { COMMAND_LOCALIZATIONS, LocaleProvider } from "../locale";
+import { buildLocalisedCommand, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 
@@ -17,18 +17,11 @@ export class PingCommand extends Command {
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
-		const builder = new SlashCommandBuilder()
-			.setName("ping")
-			.setDescription("Test latency to the new bot instance.");
-
-		for (const { gettext, discord } of COMMAND_LOCALIZATIONS) {
-			useLocale(gettext);
-			builder
-				.setNameLocalization(discord, c("command-name").t`ping`)
-				.setDescriptionLocalization(discord, c("command-description").t`Test latency to the new bot instance.`);
-		}
-
-		return builder.toJSON();
+		return buildLocalisedCommand(
+			new SlashCommandBuilder(),
+			() => c("command-name").t`ping`,
+			() => c("command-description").t`Test latency to the new bot instance.`
+		).toJSON();
 	}
 
 	protected override get logger(): Logger {

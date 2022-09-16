@@ -270,28 +270,28 @@ msgid ""
 "setting is ${ interaction.locale }."
 msgstr ""
 
-#: src\commands\ping.ts:42
+#: src\commands\ping.ts:35
 #: src\events\message.ts:28
 msgid "Average WebSocket ping (new instance): ${ ping } ms"
 msgstr ""
 
-#: src\commands\ping.ts:47
+#: src\commands\ping.ts:40
 #: src\events\message.ts:60
 #, javascript-format
 msgid "Total latency: ${ latency } ms"
 msgstr ""
 
-#: src\commands\ygoprodeck.ts:68
+#: src\commands\ygoprodeck.ts:55
 #, javascript-format
 msgid "Searching YGOPRODECK for `${ term }`…"
 msgstr ""
 
-#: src\commands\yugipedia.ts:82
+#: src\commands\yugipedia.ts:66
 #, javascript-format
 msgid "Searching Yugipedia for `${ page }`…"
 msgstr ""
 
-#: src\commands\yugipedia.ts:85
+#: src\commands\yugipedia.ts:69
 #, javascript-format
 msgid "Could not find a Yugipedia page named `${ page }`."
 msgstr ""
@@ -661,12 +661,12 @@ msgctxt "command-option"
 msgid "command"
 msgstr ""
 
-#: src\commands\ygoprodeck.ts:37
+#: src\commands\ygoprodeck.ts:29
 msgctxt "command-option"
 msgid "term"
 msgstr ""
 
-#: src\commands\yugipedia.ts:40
+#: src\commands\yugipedia.ts:29
 msgctxt "command-option"
 msgid "page"
 msgstr ""
@@ -730,12 +730,12 @@ msgctxt "command-option-description"
 msgid "The name of a specific Slash Command."
 msgstr ""
 
-#: src\commands\ygoprodeck.ts:40
+#: src\commands\ygoprodeck.ts:30
 msgctxt "command-option-description"
 msgid "The name or password of the card you're looking for."
 msgstr ""
 
-#: src\commands\yugipedia.ts:43
+#: src\commands\yugipedia.ts:30
 msgctxt "command-option-description"
 msgid "The name of the Yugipedia page you want to search for."
 msgstr ""
@@ -832,17 +832,17 @@ msgctxt "command-name"
 msgid "help"
 msgstr ""
 
-#: src\commands\ping.ts:27
+#: src\commands\ping.ts:22
 msgctxt "command-name"
 msgid "ping"
 msgstr ""
 
-#: src\commands\ygoprodeck.ts:34
+#: src\commands\ygoprodeck.ts:24
 msgctxt "command-name"
 msgid "ygoprodeck"
 msgstr ""
 
-#: src\commands\yugipedia.ts:34
+#: src\commands\yugipedia.ts:24
 msgctxt "command-name"
 msgid "yugipedia"
 msgstr ""
@@ -867,17 +867,17 @@ msgctxt "command-description"
 msgid "Get help with a Slash Command."
 msgstr ""
 
-#: src\commands\ping.ts:28
+#: src\commands\ping.ts:23
 msgctxt "command-description"
 msgid "Test latency to the new bot instance."
 msgstr ""
 
-#: src\commands\ygoprodeck.ts:35
+#: src\commands\ygoprodeck.ts:25
 msgctxt "command-description"
 msgid "Search the YGOPRODECK card database."
 msgstr ""
 
-#: src\commands\yugipedia.ts:37
+#: src\commands\yugipedia.ts:25
 msgctxt "command-description"
 msgid "Search the Yugipedia wiki for a page and link to it."
 msgstr ""

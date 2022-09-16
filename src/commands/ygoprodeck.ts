@@ -5,7 +5,7 @@ import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { Command } from "../Command";
-import { COMMAND_LOCALIZATIONS, LocaleProvider } from "../locale";
+import { buildLocalisedCommand, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { editLatency } from "../utils";
@@ -19,30 +19,17 @@ export class YGOPRODECKCommand extends Command {
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
-		const builder = new SlashCommandBuilder()
-			.setName("ygoprodeck")
-			.setDescription("Search the YGOPRODECK card database.");
-
-		const option = new SlashCommandStringOption()
-			.setName("term")
-			.setDescription("The name or password of the card you're looking for.")
-			.setRequired(true);
-
-		for (const { gettext, discord } of COMMAND_LOCALIZATIONS) {
-			useLocale(gettext);
-			builder
-				.setNameLocalization(discord, c("command-name").t`ygoprodeck`)
-				.setDescriptionLocalization(discord, c("command-description").t`Search the YGOPRODECK card database.`);
-			option
-				.setNameLocalization(discord, c("command-option").t`term`)
-				.setDescriptionLocalization(
-					discord,
-					c("command-option-description").t`The name or password of the card you're looking for.`
-				);
-		}
-
+		const builder = buildLocalisedCommand(
+			new SlashCommandBuilder(),
+			() => c("command-name").t`ygoprodeck`,
+			() => c("command-description").t`Search the YGOPRODECK card database.`
+		);
+		const option = buildLocalisedCommand(
+			new SlashCommandStringOption().setRequired(true),
+			() => c("command-option").t`term`,
+			() => c("command-option-description").t`The name or password of the card you're looking for.`
+		);
 		builder.addStringOption(option);
-
 		return builder.toJSON();
 	}
 
