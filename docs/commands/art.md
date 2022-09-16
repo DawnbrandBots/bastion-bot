@@ -8,27 +8,52 @@ Diosplay the art for a card! _This command is in development._
 
 [**Konami ID**](https://yugipedia.com/wiki/List_of_cards_by_Konami_index_number_(4007%E2%80%935000)): the ID assigned to the card in the [official card database](https://www.db.yugioh-card.com/).
 
-## Parameters
+## Subcommands
+
+- [`/art name`](#subcommand-art-name)
+- [`/art password`](#subcommand-art-password)
+- [`/art konami-id`](#subcommand-art-konami-id)
+
+## Subcommand `/art name`
+
+Display the art for the card with this name.
+
+### Parameters
 
 Name | Required? | Description | Type
 --- | --- | --- | ---
-`input` | ✔ | The password, Konami ID, or name you're searching by. | text
+`input` | ✔ | Card name to search by, fuzzy matching supported. | text
 `input-language` | ❌ | The language to search in. | one of the [supported locales](./locale.md#parameters)
-`type` | ❌ | Whether you're searching by password, Konami ID, or name. | one of "password", "kid", "name"
+
+## Subcommand `/art password`
+
+Display the art for the card with this password.
+
+### Parameters
+
+Name | Required? | Description | Type
+--- | --- | --- | ---
+`input` | ✔ | The password you're searching by. | text
+
+## Subcommand `/art konami-id`
+
+Display the art for the card with this official database ID.
+
+### Parameters
+
+Name | Required? | Description | Type
+--- | --- | --- | ---
+`input` | ✔ | The Konami ID you're searching by. | text
 
 ## Current behaviour
 
-If `input-language` is unspecified, it is assumed to be the setting for the
-channel or server per [Bastion's locale setting](./locale.md).
+For [`/art name`](#subcommand-art-name), if `input-language` is unspecified,
+it is assumed to be the setting for the channel or server per [Bastion's locale setting](./locale.md).
+A fuzzy search is performed with the provided `input` in the `input-language`.
+For searches in Japanese and Korean, this will consider every possible combination of ruby and base text.
 
-If `type` is unspecified, infers the type of `input` using these rules:
-
-- numbers are treated as passwords
-- numbers that start with `#` are treated as Konami IDs
-- anything else is treated as a name
-
-In the first two cases, a direct lookup of the card is performed using that password or Konami ID.
-In the latter case, an fuzzy search is performed with the provided `input` in the `input-language`.
+For [`/art password`](#subcommand-art-password) and [`/art konami-id`](#subcommand-art-konami-id),
+a direct lookup of the card is performed using that password or Konami ID.
 
 The public reply will either be a no-match message or a URL for an image of the card artwork, with the expectation that Discord automatically embeds this.
 
