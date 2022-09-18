@@ -7,7 +7,7 @@ import { addLocale } from "ttag";
 import { BotFactory } from "./bot";
 import { Command } from "./Command";
 import { classes, registerSlashCommands } from "./commands";
-import { InteractionListener, MessageListener } from "./events";
+import { InteractionListener, PingMessageListener, SearchMessageListener } from "./events";
 import { LocaleProvider, SQLiteLocaleProvider } from "./locale";
 import { getLogger } from "./logger";
 import { Metrics } from "./metrics";
@@ -48,7 +48,8 @@ if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 	container.registerSingleton<LocaleProvider>("LocaleProvider", SQLiteLocaleProvider);
 	classes.forEach(Class => container.register<Command>("Command", { useClass: Class }));
 	container.register<InteractionListener>("Listener", { useClass: InteractionListener });
-	container.register<MessageListener>("Listener", { useClass: MessageListener });
+	container.register<PingMessageListener>("Listener", { useClass: PingMessageListener });
+	container.register<SearchMessageListener>("Listener", { useClass: SearchMessageListener });
 	//container.register<BotFactory>(BotFactory, { useClass: BotFactory });
 
 	const bot = container.resolve(BotFactory).createInstance();
