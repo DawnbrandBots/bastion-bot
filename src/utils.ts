@@ -1,5 +1,5 @@
 import { SlashCommandStringOption } from "@discordjs/builders";
-import { CacheType, CommandInteraction, Guild, GuildCacheMessage, MessageEmbed } from "discord.js";
+import { CacheType, CommandInteraction, EmbedBuilder, Guild, GuildCacheMessage, Message } from "discord.js";
 import { gettext, t, useLocale } from "ttag";
 
 export function serializeServer(server: Guild): string {
@@ -24,7 +24,7 @@ export function serializeCommand(interaction: CommandInteraction, extras?: Recor
 }
 
 // Adds a development notice to embed output
-export function addNotice(embeds: MessageEmbed | MessageEmbed[]): MessageEmbed[] {
+export function addNotice(embeds: EmbedBuilder | EmbedBuilder[]): EmbedBuilder[] {
 	if (!Array.isArray(embeds)) {
 		embeds = [embeds];
 	}
@@ -59,7 +59,7 @@ const messages = [
 const rt = gettext;
 
 // Has a random chance of adding a funding notice
-export function addFunding(embeds: MessageEmbed | MessageEmbed[], chance = 0.25): MessageEmbed[] {
+export function addFunding(embeds: EmbedBuilder | EmbedBuilder[], chance = 0.25): EmbedBuilder[] {
 	if (!Array.isArray(embeds)) {
 		embeds = [embeds];
 	}
@@ -86,13 +86,8 @@ export function addFunding(embeds: MessageEmbed | MessageEmbed[], chance = 0.25)
  * @param interaction The triggering command interaction.
  * @returns latency in milliseconds
  */
-export function replyLatency(reply: GuildCacheMessage<CacheType>, interaction: CommandInteraction): number {
-	if ("createdTimestamp" in reply) {
-		return reply.createdTimestamp - interaction.createdTimestamp;
-	} else {
-		// This should never happen, as Bastion must be a member of its servers.
-		return -1;
-	}
+export function replyLatency(reply: Message<boolean>, interaction: CommandInteraction): number {
+	return reply.createdTimestamp - interaction.createdTimestamp;
 }
 
 /**

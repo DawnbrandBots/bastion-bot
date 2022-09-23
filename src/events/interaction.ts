@@ -21,7 +21,7 @@ export class InteractionListener implements Listener<"interactionCreate"> {
 	}
 
 	async run(interaction: Interaction): Promise<void> {
-		if (!interaction.isCommand() || !interaction.channel?.isText()) {
+		if (!interaction.isCommand()) {
 			return;
 		}
 		this.#logger.verbose(serializeCommand(interaction));

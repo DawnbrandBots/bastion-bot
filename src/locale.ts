@@ -1,6 +1,6 @@
 import { SharedNameAndDescription, SlashCommandStringOption } from "@discordjs/builders";
 import sqlite, { Database, Statement } from "better-sqlite3";
-import { APIApplicationCommandOptionChoice, Locale as DiscordLocale } from "discord-api-types/v9";
+import { APIApplicationCommandOptionChoice, Locale as DiscordLocale } from "discord-api-types/v10";
 import { CommandInteraction, Message, Snowflake } from "discord.js";
 import { inject, singleton } from "tsyringe";
 import { c, useLocale } from "ttag";

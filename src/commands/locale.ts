@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandBuilder } from "@discordjs/builders";
-import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
-import { CommandInteraction } from "discord.js";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
+import { CommandInteraction, PermissionFlagsBits } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { c, t } from "ttag";
 import { Command } from "../Command";
@@ -89,7 +89,7 @@ export class LocaleCommand extends Command {
 			if (interaction.inGuild()) {
 				const scope = interaction.options.getString("scope", true);
 				if (scope === "channel") {
-					if (interaction.memberPermissions.has("MANAGE_CHANNELS")) {
+					if (interaction.memberPermissions.has(PermissionFlagsBits.ManageChannels)) {
 						const channel = this.#locales.getChannel(interaction);
 						if (locale !== "default") {
 							await this.#locales.setForChannel(channel, locale);
@@ -110,7 +110,7 @@ export class LocaleCommand extends Command {
 					}
 				} else {
 					// server-wide
-					if (interaction.memberPermissions.has("MANAGE_GUILD")) {
+					if (interaction.memberPermissions.has(PermissionFlagsBits.ManageGuild)) {
 						if (locale !== "default") {
 							await this.#locales.setForGuild(interaction.guildId, locale);
 							content = t`Locale for this server overriden with ${locale}.`;

@@ -6,8 +6,8 @@ import {
 	SlashCommandSubcommandBuilder
 } from "@discordjs/builders";
 import { Static } from "@sinclair/typebox";
-import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
-import { CommandInteraction, MessageAttachment, MessageEmbed } from "discord.js";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
+import { CommandInteraction, EmbedBuilder, MessageAttachment } from "discord.js";
 import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { c, msgid, ngettext, t, useLocale } from "ttag";
@@ -162,7 +162,7 @@ export class DeckCommand extends Command {
 		throw new Error((await response.json()).message);
 	}
 
-	async generateProfile(deck: TypedDeck, lang: Locale, inline: boolean, outUrl: string): Promise<MessageEmbed> {
+	async generateProfile(deck: TypedDeck, lang: Locale, inline: boolean, outUrl: string): Promise<EmbedBuilder> {
 		// use Set to remove duplicates from list of passwords to pass to API
 		// populate the names into a Map to be fetched linearly
 		const cardMemo = await this.getCards(new Set([...deck.main, ...deck.extra, ...deck.side]));
@@ -240,7 +240,7 @@ export class DeckCommand extends Command {
 				.join(", ");
 		}
 		const printCount = ([cardName, count]: [string, number]): string => `${count} ${cardName}`;
-		const embed = new MessageEmbed();
+		const embed = new EmbedBuilder();
 		embed.setTitle(t`Your Deck`);
 		if (deck.main.length > 0) {
 			const content = Object.entries(deckCounts.main).map(printCount).join("\n");

@@ -1,4 +1,4 @@
-import { Message, MessageEmbedOptions } from "discord.js";
+import { MessageEmbedOptions, Message } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { t, useLocale } from "ttag";
 import { Listener } from ".";
@@ -26,7 +26,7 @@ export class MessageListener implements Listener<"messageCreate"> {
 				useLocale(lang);
 				const ping = message.client.ws.ping;
 				const content = t`Average WebSocket ping (new instance): ${ping} ms`;
-				const embed: MessageEmbedOptions = {
+				const embed: EmbedOptions = {
 					title: t`Free and open source _Yu-Gi-Oh!_ bot`,
 					description: t`
 :question: Help documentation on [GitHub](https://github.com/DawnbrandBots/bastion-bot), or use \`.commands\` and \`.help\`.
