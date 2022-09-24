@@ -1,12 +1,13 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
-import { CommandInteraction } from "discord.js";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
+import { ChatInputCommandInteraction } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { Command } from "../Command";
 import { buildLocalisedCommand, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
+import { replyLatency } from "../utils";
 
 @injectable()
 export class PingCommand extends Command {
@@ -28,23 +29,16 @@ export class PingCommand extends Command {
 		return this.#logger;
 	}
 
-	protected override async execute(interaction: CommandInteraction): Promise<number> {
+	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const lang = await this.locales.get(interaction);
 		useLocale(lang);
 		const ping = interaction.client.ws.ping;
 		const content = t`Average WebSocket ping (new instance): ${ping} ms`;
 		const reply = await interaction.reply({ content, fetchReply: true });
-		if ("createdTimestamp" in reply) {
-			useLocale(lang);
-			const latency = reply.createdTimestamp - interaction.createdTimestamp;
-			const addendum = t`Total latency: ${latency} ms`;
-			await interaction.editReply(`${content}\n${addendum}`);
-			return latency;
-		} else {
-			// This should never happen, as Bastion must be a member of its servers and also we are not using deferReply
-			const latency = Number(reply.timestamp) - interaction.createdTimestamp;
-			await interaction.editReply(`${content}\nTotal latency: ${latency} ms\nThis should never been seen.`);
-			return latency;
-		}
+		useLocale(lang);
+		const latency = replyLatency(reply, interaction);
+		const addendum = t`Total latency: ${latency} ms`;
+		await interaction.editReply(`${content}\n${addendum}`);
+		return latency;
 	}
 }

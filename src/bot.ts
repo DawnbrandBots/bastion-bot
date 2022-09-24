@@ -1,4 +1,4 @@
-import { Client, Intents, Options } from "discord.js";
+import { Client, GatewayIntentBits, Options, Partials } from "discord.js";
 import { injectable, injectAll } from "tsyringe";
 import { Listener } from "./events";
 import { getLogger } from "./logger";
@@ -21,13 +21,13 @@ export class BotFactory {
 
 		const bot = new Client({
 			intents: [
-				Intents.FLAGS.GUILDS,
-				Intents.FLAGS.GUILD_MESSAGES,
+				GatewayIntentBits.Guilds,
+				GatewayIntentBits.GuildMessages,
 				// Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-				Intents.FLAGS.DIRECT_MESSAGES
+				GatewayIntentBits.DirectMessages
 				// Intents.FLAGS.DIRECT_MESSAGE_REACTIONS
 			],
-			partials: ["CHANNEL"],
+			partials: [Partials.Channel],
 			shards: `${process.env.DISCORD_TOTAL_SHARDS}` === "auto" ? "auto" : isNaN(shard) ? undefined : shard,
 			shardCount: parseInt(`${process.env.DISCORD_TOTAL_SHARDS}`) || undefined,
 			makeCache: Options.cacheWithLimits({

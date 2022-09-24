@@ -6,8 +6,8 @@ import {
 	SlashCommandSubcommandBuilder
 } from "@discordjs/builders";
 import { Static } from "@sinclair/typebox";
-import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
-import { CommandInteraction, MessageAttachment, MessageEmbed } from "discord.js";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
+import { Attachment, AttachmentBuilder, ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { c, msgid, ngettext, t, useLocale } from "ttag";
@@ -142,7 +142,7 @@ export class DeckCommand extends Command {
 		throw new Error((await response.json()).message);
 	}
 
-	async generateProfile(deck: TypedDeck, lang: Locale, inline: boolean, outUrl: string): Promise<MessageEmbed> {
+	async generateProfile(deck: TypedDeck, lang: Locale, inline: boolean, outUrl: string): Promise<EmbedBuilder> {
 		// use Set to remove duplicates from list of passwords to pass to API
 		// populate the names into a Map to be fetched linearly
 		const cardMemo = await this.getCards(new Set([...deck.main, ...deck.extra, ...deck.side]));
@@ -220,7 +220,7 @@ export class DeckCommand extends Command {
 				.join(", ");
 		}
 		const printCount = ([cardName, count]: [string, number]): string => `${count} ${cardName}`;
-		const embed = new MessageEmbed();
+		const embed = new EmbedBuilder();
 		embed.setTitle(t`Your Deck`);
 		if (deck.main.length > 0) {
 			const content = Object.entries(deckCounts.main).map(printCount).join("\n");
@@ -268,7 +268,7 @@ export class DeckCommand extends Command {
 		return embed;
 	}
 
-	async parseFile(deck: MessageAttachment): Promise<TypedDeck> {
+	async parseFile(deck: Attachment): Promise<TypedDeck> {
 		// Various guards for malicious or non-deck content before we bother downloading
 		if (!deck.name?.endsWith(".ydk")) {
 			throw new Error(t`.ydk files must have the .ydk extension!`);
@@ -281,11 +281,11 @@ export class DeckCommand extends Command {
 		return ydkToTypedDeck(ydk);
 	}
 
-	protected log(interaction: CommandInteraction, error: Error): void {
+	protected log(interaction: ChatInputCommandInteraction, error: Error): void {
 		this.logger.info(serializeCommand(interaction), error);
 	}
 
-	protected override async execute(interaction: CommandInteraction): Promise<number> {
+	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const resultLanguage = await this.locales.get(interaction);
 		let deck: TypedDeck;
 		const isPublic = !!interaction.options.getBoolean("public", false);
@@ -344,7 +344,7 @@ export class DeckCommand extends Command {
 		await interaction.editReply({
 			embeds: addNotice(content),
 			// a string is interpreted as a path, to upload it as a file we need a Buffer
-			files: [new MessageAttachment(Buffer.from(outFile, "utf-8"), "deck.ydk")]
+			files: [new AttachmentBuilder(Buffer.from(outFile, "utf-8")).setName("deck.ydk")]
 		});
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
 		const latency = end - interaction.createdTimestamp;

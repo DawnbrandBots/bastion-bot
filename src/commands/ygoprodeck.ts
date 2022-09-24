@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
-import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
-import { CommandInteraction } from "discord.js";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
+import { ChatInputCommandInteraction } from "discord.js";
 import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
@@ -48,7 +48,7 @@ export class YGOPRODECKCommand extends Command {
 		}
 	}
 
-	protected override async execute(interaction: CommandInteraction): Promise<number> {
+	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const term = interaction.options.getString("term", true);
 		const lang = await this.locales.get(interaction);
 		useLocale(lang);

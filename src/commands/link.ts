@@ -1,6 +1,5 @@
-import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
-import { CommandInteraction } from "discord.js";
-import { ApplicationCommandOptionTypes } from "discord.js/typings/enums";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
+import { ApplicationCommandOptionType, ChatInputCommandInteraction } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
@@ -72,7 +71,7 @@ export class LinkCommand extends Command {
 			description: "Display one of several links with useful information.",
 			options: [
 				{
-					type: ApplicationCommandOptionTypes.STRING.valueOf(),
+					type: ApplicationCommandOptionType.String.valueOf(),
 					name: "key",
 					description: "The name of the link you want to display.",
 					required: true,
@@ -91,7 +90,7 @@ export class LinkCommand extends Command {
 		return this.#logger;
 	}
 
-	protected override async execute(interaction: CommandInteraction): Promise<number> {
+	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const key = interaction.options.getString("key", true);
 		const content = LinkCommand.links[key].result;
 		const reply = await interaction.reply({ content, fetchReply: true });
