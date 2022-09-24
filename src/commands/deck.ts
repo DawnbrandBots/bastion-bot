@@ -19,7 +19,7 @@ import { CardSchema } from "../definitions/yaml-yugi";
 import { COMMAND_LOCALIZATIONS, Locale, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { addNotice, serializeCommand } from "../utils";
+import { addNotice, serializeCommand, splitText } from "../utils";
 
 // Same hack as in card.ts
 const rc = c;
@@ -127,26 +127,6 @@ export class DeckCommand extends Command {
 		return this.#logger;
 	}
 
-	splitText(outString: string, cap = 1024): string[] {
-		const outStrings: string[] = [];
-		while (outString.length > cap) {
-			let index = outString.slice(0, cap).lastIndexOf("\n");
-			if (index === -1 || index >= cap) {
-				index = outString.slice(0, cap).lastIndexOf(".");
-				if (index === -1 || index >= cap) {
-					index = outString.slice(0, cap).lastIndexOf(" ");
-					if (index === -1 || index >= cap) {
-						index = cap - 1;
-					}
-				}
-			}
-			outStrings.push(outString.slice(0, index + 1));
-			outString = outString.slice(index + 1);
-		}
-		outStrings.push(outString);
-		return outStrings;
-	}
-
 	async getCards(cards: Set<number>): Promise<Map<number, Static<typeof CardSchema>>> {
 		const response = await fetch(`${process.env.SEARCH_API}/yaml-yugi/multi?password=${[...cards].join(",")}`);
 		if (response.status === 200) {
@@ -244,7 +224,7 @@ export class DeckCommand extends Command {
 		embed.setTitle(t`Your Deck`);
 		if (deck.main.length > 0) {
 			const content = Object.entries(deckCounts.main).map(printCount).join("\n");
-			const [first, ...rest] = this.splitText(content);
+			const [first, ...rest] = splitText(content);
 			const countDetail = countMain(deck.main);
 			const name = ngettext(
 				msgid`Main Deck (${deck.main.length} card — ${countDetail})`,
@@ -258,7 +238,7 @@ export class DeckCommand extends Command {
 		}
 		if (deck.extra.length > 0) {
 			const content = Object.entries(deckCounts.extra).map(printCount).join("\n");
-			const [first, ...rest] = this.splitText(content);
+			const [first, ...rest] = splitText(content);
 			const countDetail = countExtraMonsterTypes(deck.extra);
 			const name = ngettext(
 				msgid`Extra Deck (${deck.extra.length} card — ${countDetail})`,
@@ -272,7 +252,7 @@ export class DeckCommand extends Command {
 		}
 		if (deck.side.length > 0) {
 			const content = Object.entries(deckCounts.side).map(printCount).join("\n");
-			const [first, ...rest] = this.splitText(content);
+			const [first, ...rest] = splitText(content);
 			const countDetail = countMain(deck.side);
 			const name = ngettext(
 				msgid`Side Deck (${deck.side.length} card — ${countDetail})`,
