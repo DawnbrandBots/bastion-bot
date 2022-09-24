@@ -114,8 +114,7 @@ export class PriceCommand extends Command {
 
 	async getPrice(card: Static<typeof CardSchema>, vendor: string): Promise<APIPrice | undefined> {
 		if (!card.name.en) {
-			// note: this is about our database, not the user input. Could clarify.
-			// unsure where, how or if to localise this error. Will it even come up?
+			// TODO: future, determine localisation and relevance status of this error
 			throw new Error(t`Sorry, I can't find the price for a card with no English name!`);
 		}
 		// we make sure the ID for each vendor choice is the same as its required form here
@@ -147,11 +146,10 @@ export class PriceCommand extends Command {
 			await interaction.editReply({ content: t`Could not find a card matching \`${input}\`!` });
 		} else {
 			const prices = await this.getPrice(card, vendor);
-			end = Date.now();
 			if (prices) {
 				useLocale(resultLanguage);
-				const getLocalisedName = CHOICES_GLOBAL[vendor];
-				const name = getLocalisedName();
+				const getLocalisedVendorName = CHOICES_GLOBAL[vendor];
+				const vendorName = getLocalisedVendorName();
 				const profiles = splitText(
 					prices.set_info
 						.map(s => {
@@ -164,18 +162,20 @@ export class PriceCommand extends Command {
 				);
 				const embeds = profiles.map(p => {
 					const embed = new MessageEmbed();
-					embed.setTitle(t`Prices for ${card.name[resultLanguage]} - ${name}`);
+					embed.setTitle(t`Prices for ${card.name[resultLanguage]} - ${vendorName}`);
 					embed.setDescription(p);
 					return embed;
 				});
+				end = Date.now();
 				await interaction.editReply({ embeds: [embeds[0]] }); // Actually returns void
-				embeds.shift();
+				embeds.shift(); // would like to use this in the line above, but its return type includes undefined
 				for (const embed of embeds) {
 					await interaction.followUp({ embeds: [embed] });
 				}
 			} else {
 				const name = card.name[resultLanguage] || card.konami_id;
 				useLocale(resultLanguage);
+				end = Date.now();
 				await interaction.editReply({ content: t`Could not find prices for \`${name}\`!` });
 			}
 		}
