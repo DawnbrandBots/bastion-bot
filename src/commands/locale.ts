@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandBuilder } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
-import { CommandInteraction, PermissionFlagsBits } from "discord.js";
+import { ChatInputCommandInteraction, PermissionFlagsBits } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { c, t } from "ttag";
 import { Command } from "../Command";
@@ -60,7 +60,7 @@ export class LocaleCommand extends Command {
 		return this.#logger;
 	}
 
-	protected override async execute(interaction: CommandInteraction): Promise<number> {
+	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		let content = "";
 		if (interaction.options.getSubcommand() === "get") {
 			if (interaction.inGuild()) {

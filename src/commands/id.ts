@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
-import { CommandInteraction, EmbedBuilder } from "discord.js";
+import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { injectable } from "tsyringe";
 import { getCard, inferInputType } from "../card";
 import { Command } from "../Command";
@@ -34,7 +34,7 @@ export class IdCommand extends Command {
 		return this.#logger;
 	}
 
-	protected override async execute(interaction: CommandInteraction): Promise<number> {
+	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const [type, input] = inferInputType(interaction);
 		await interaction.deferReply({ ephemeral: true });
 		const card = await getCard(type, input);

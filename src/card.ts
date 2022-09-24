@@ -1,5 +1,5 @@
 import { Static } from "@sinclair/typebox";
-import { CommandInteraction, EmbedBuilder } from "discord.js";
+import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { parseDocument } from "htmlparser2";
 import fetch from "node-fetch";
 import { c, t, useLocale } from "ttag";
@@ -378,7 +378,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 
 type InputType = "password" | "kid" | "name";
 
-export function inferInputType(interaction: CommandInteraction): [InputType, string] {
+export function inferInputType(interaction: ChatInputCommandInteraction): [InputType, string] {
 	const type = interaction.options.getString("type", false);
 	const input = interaction.options.getString("input", true);
 	if (type) {

@@ -1,5 +1,5 @@
 import { SlashCommandStringOption } from "@discordjs/builders";
-import { CacheType, CommandInteraction, EmbedBuilder, Guild, GuildCacheMessage, Message } from "discord.js";
+import { CacheType, ChatInputCommandInteraction, EmbedBuilder, Guild, GuildCacheMessage, Message } from "discord.js";
 import { gettext, t, useLocale } from "ttag";
 
 export function serializeServer(server: Guild): string {
@@ -11,7 +11,7 @@ export function serializeServer(server: Guild): string {
 	}
 }
 
-export function serializeCommand(interaction: CommandInteraction, extras?: Record<string, unknown>): string {
+export function serializeCommand(interaction: ChatInputCommandInteraction, extras?: Record<string, unknown>): string {
 	return JSON.stringify({
 		channel: interaction.channel?.id,
 		message: interaction.id,
@@ -86,7 +86,7 @@ export function addFunding(embeds: EmbedBuilder | EmbedBuilder[], chance = 0.25)
  * @param interaction The triggering command interaction.
  * @returns latency in milliseconds
  */
-export function replyLatency(reply: Message<boolean>, interaction: CommandInteraction): number {
+export function replyLatency(reply: Message<boolean>, interaction: ChatInputCommandInteraction): number {
 	return reply.createdTimestamp - interaction.createdTimestamp;
 }
 
@@ -99,7 +99,7 @@ export function replyLatency(reply: Message<boolean>, interaction: CommandIntera
  * @param interaction The triggering command interaction.
  * @returns latency in milliseconds
  */
-export function editLatency(reply: GuildCacheMessage<CacheType>, interaction: CommandInteraction): number {
+export function editLatency(reply: GuildCacheMessage<CacheType>, interaction: ChatInputCommandInteraction): number {
 	if ("editedTimestamp" in reply && reply.editedTimestamp !== null) {
 		return reply.editedTimestamp - interaction.createdTimestamp;
 	} else {

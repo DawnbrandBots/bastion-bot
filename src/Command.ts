@@ -1,5 +1,5 @@
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
-import { CommandInteraction } from "discord.js";
+import { ChatInputCommandInteraction } from "discord.js";
 import { Logger } from "./logger";
 import { Metrics } from "./metrics";
 import { serializeCommand } from "./utils";
@@ -27,7 +27,7 @@ export abstract class Command {
 	 * @param interaction
 	 * @returns latency metric in milliseconds
 	 */
-	protected abstract execute(interaction: CommandInteraction): Promise<number>;
+	protected abstract execute(interaction: ChatInputCommandInteraction): Promise<number>;
 
 	/**
 	 * Run this command in response to user interaction from start to finish.
@@ -35,7 +35,7 @@ export abstract class Command {
 	 *
 	 * @param interaction
 	 */
-	async run(interaction: CommandInteraction): Promise<void> {
+	async run(interaction: ChatInputCommandInteraction): Promise<void> {
 		try {
 			this.logger.verbose(serializeCommand(interaction, { event: "attempt", ping: interaction.client.ws.ping }));
 			const latency = await this.execute(interaction);

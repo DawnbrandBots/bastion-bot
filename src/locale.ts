@@ -1,7 +1,7 @@
 import { SharedNameAndDescription, SlashCommandStringOption } from "@discordjs/builders";
 import sqlite, { Database, Statement } from "better-sqlite3";
 import { APIApplicationCommandOptionChoice, Locale as DiscordLocale } from "discord-api-types/v10";
-import { CommandInteraction, Message, Snowflake } from "discord.js";
+import { ChatInputCommandInteraction, Message, Snowflake } from "discord.js";
 import { inject, singleton } from "tsyringe";
 import { c, useLocale } from "ttag";
 
@@ -139,11 +139,11 @@ export abstract class LocaleProvider {
 	 * @param interaction
 	 * @returns The channel snowflake to use for setting locale
 	 */
-	getChannel(interaction: CommandInteraction): Snowflake {
+	getChannel(interaction: ChatInputCommandInteraction): Snowflake {
 		return (interaction.channel?.isThread() && interaction.channel.parentId) || interaction.channelId;
 	}
 
-	async get(interaction: CommandInteraction): Promise<Locale> {
+	async get(interaction: ChatInputCommandInteraction): Promise<Locale> {
 		const lang = interaction.options.getString("result-language");
 		if (lang) {
 			// We could verify with this.filter, but that unnecessarily checks through
