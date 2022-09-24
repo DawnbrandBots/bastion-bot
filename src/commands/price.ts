@@ -118,7 +118,9 @@ export class PriceCommand extends Command {
 			throw new Error(t`Sorry, I can't find the price for a card with no English name!`);
 		}
 		// we make sure the ID for each vendor choice is the same as its required form here
-		const priceUrl = `${process.env.PRICE_API}?cardone=${encodeURIComponent(card.name.en)}&vendor=${vendor}`;
+		const priceUrl = `https://db.ygoprodeck.com/queries/getPrices.php?cardone=${encodeURIComponent(
+			card.name.en
+		)}&vendor=${vendor}`;
 		const response = await fetch(priceUrl);
 		// 400: Bad syntax, 404: Not found
 		if (response.status === 400 || response.status === 404) {
