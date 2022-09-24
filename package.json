@@ -25,7 +25,7 @@
 		"better-sqlite3": "^7.6.2",
 		"debug": "^4.3.4",
 		"discord.js": "^14.4.0",
-		"dotenv": "^16.0.1",
+		"dotenv": "^16.0.2",
 		"gettext-parser": "^6.0.0",
 		"htmlparser2": "^8.0.1",
 		"node-fetch": "^2.6.7",
