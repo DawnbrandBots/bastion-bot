@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandBuilder } from "@discordjs/builders";
 import { Static } from "@sinclair/typebox";
-import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
