@@ -124,6 +124,7 @@ msgid "Found what you were looking for? Consider supporting us!"
 msgstr ""
 
 #: src\commands\art.ts:97
+#: src\commands\price.ts:146
 #: src\commands\search.ts:90
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
@@ -133,58 +134,58 @@ msgstr ""
 msgid "Could not find art for `${ name }`!"
 msgstr ""
 
-#: src\commands\deck.ts:210
+#: src\commands\deck.ts:190
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
 msgstr[0] ""
 
-#: src\commands\deck.ts:213
+#: src\commands\deck.ts:193
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
 msgstr[0] ""
 
-#: src\commands\deck.ts:216
+#: src\commands\deck.ts:196
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
 msgstr[0] ""
 
-#: src\commands\deck.ts:244
+#: src\commands\deck.ts:224
 msgid "Your Deck"
 msgstr ""
 
-#: src\commands\deck.ts:249
+#: src\commands\deck.ts:229
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
 msgstr[0] ""
 
-#: src\commands\deck.ts:256
+#: src\commands\deck.ts:236
 msgid "Main Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:263
+#: src\commands\deck.ts:243
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
 msgstr[0] ""
 
-#: src\commands\deck.ts:270
+#: src\commands\deck.ts:250
 msgid "Extra Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:277
+#: src\commands\deck.ts:257
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
 msgstr[0] ""
 
-#: src\commands\deck.ts:284
+#: src\commands\deck.ts:264
 msgid "Side Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:352
+#: src\commands\deck.ts:332
 msgid "Error: Your deck is empty."
 msgstr ""
 
@@ -324,21 +325,52 @@ msgstr ""
 msgid "Revision: ${ process.env.BOT_REVISION }."
 msgstr ""
 
-#: src\commands\deck.ts:294
+#: src\commands\deck.ts:274
 msgid ".ydk files must have the .ydk extension!"
 msgstr ""
 
-#: src\commands\deck.ts:297
+#: src\commands\deck.ts:277
 msgid ".ydk files should not be larger than 1 KB!"
 msgstr ""
 
-#: src\commands\deck.ts:287
+#: src\commands\deck.ts:267
 msgid "ydke URL"
 msgstr ""
 
 #: src\card.ts:292
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 msgid "**Limit**: ${ limitRegulationDisplay }"
+msgstr ""
+
+#: src\commands\price.ts:38
+msgid "TCGPlayer"
+msgstr ""
+
+#: src\commands\price.ts:39
+msgid "Cardmarket"
+msgstr ""
+
+#: src\commands\price.ts:40
+msgid "CoolStuffInc"
+msgstr ""
+
+#: src\commands\price.ts:118
+#. note: this is about our database, not the user input. Could clarify.
+#. unsure where, how or if to localise this error. Will it even come up?
+msgid "Sorry, I can't find the price for a card with no English name!"
+msgstr ""
+
+#: src\commands\price.ts:158
+msgid "No market price"
+msgstr ""
+
+#: src\commands\price.ts:164
+#, javascript-format
+msgid "Prices for ${ card.name[resultLanguage] }"
+msgstr ""
+
+#: src\commands\price.ts:172
+msgid "Could not find prices for `${ _name }`!"
 msgstr ""
 
 #: src\card.ts:37
@@ -645,6 +677,9 @@ msgstr ""
 #: src\commands\art.ts:36
 #: src\commands\art.ts:46
 #: src\commands\art.ts:58
+#: src\commands\price.ts:64
+#: src\commands\price.ts:74
+#: src\commands\price.ts:86
 #: src\commands\search.ts:40
 #: src\commands\search.ts:50
 #: src\commands\search.ts:62
@@ -694,18 +729,21 @@ msgid "stacked"
 msgstr ""
 
 #: src\commands\art.ts:31
+#: src\commands\price.ts:59
 #: src\commands\search.ts:35
 msgctxt "command-option"
 msgid "name"
 msgstr ""
 
 #: src\commands\art.ts:41
+#: src\commands\price.ts:69
 #: src\commands\search.ts:45
 msgctxt "command-option"
 msgid "password"
 msgstr ""
 
 #: src\commands\art.ts:53
+#: src\commands\price.ts:81
 #: src\commands\search.ts:57
 msgctxt "command-option"
 msgid "konami-id"
@@ -729,6 +767,11 @@ msgstr ""
 #: src\commands\locale.ts:48
 msgctxt "command-option"
 msgid "locale"
+msgstr ""
+
+#: src\commands\price.ts:91
+msgctxt "command-option"
+msgid "vendor"
 msgstr ""
 
 #: src\locale.ts:50
@@ -796,6 +839,7 @@ msgid "Display the art for the card with this name."
 msgstr ""
 
 #: src\commands\art.ts:37
+#: src\commands\price.ts:65
 #: src\commands\search.ts:41
 msgctxt "command-option-description"
 msgid "Card name, fuzzy matching supported."
@@ -807,6 +851,7 @@ msgid "Display the art for the card with this password."
 msgstr ""
 
 #: src\commands\art.ts:48
+#: src\commands\price.ts:76
 #: src\commands\search.ts:52
 msgctxt "command-option-description"
 msgid "Card password, the eight-digit number printed on the bottom left corner."
@@ -818,6 +863,7 @@ msgid "Display the art for the card with this official database ID."
 msgstr ""
 
 #: src\commands\art.ts:59
+#: src\commands\price.ts:87
 #: src\commands\search.ts:63
 msgctxt "command-option-description"
 msgid "Konami's official card database identifier."
@@ -856,6 +902,26 @@ msgstr ""
 #: src\commands\locale.ts:49
 msgctxt "command-option-description"
 msgid "The new default language to use in this channel or server."
+msgstr ""
+
+#: src\commands\price.ts:60
+msgctxt "command-option-description"
+msgid "Display the price for the card with this name."
+msgstr ""
+
+#: src\commands\price.ts:70
+msgctxt "command-option-description"
+msgid "Display the price for the card with this password."
+msgstr ""
+
+#: src\commands\price.ts:82
+msgctxt "command-option-description"
+msgid "Display the price for the card with this official database ID."
+msgstr ""
+
+#: src\commands\price.ts:92
+msgctxt "command-option-description"
+msgid "The vendor to fetch the price data from."
 msgstr ""
 
 #: src\commands\art.ts:26
@@ -903,6 +969,11 @@ msgctxt "command-name"
 msgid "random"
 msgstr ""
 
+#: src\commands\price.ts:54
+msgctxt "command-name"
+msgid "price"
+msgstr ""
+
 #: src\commands\art.ts:27
 msgctxt "command-description"
 msgid "Display the art for a card!"
@@ -948,6 +1019,11 @@ msgstr ""
 #: src\commands\random.ts:26
 msgctxt "command-description"
 msgid "Get a random Yu-Gi-Oh! card."
+msgstr ""
+
+#: src\commands\price.ts:55
+msgctxt "command-description"
+msgid "Display the price for a card!"
 msgstr ""
 
 #: src\commands\locale.ts:43
