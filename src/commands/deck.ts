@@ -303,15 +303,14 @@ export class DeckCommand extends Command {
 	protected async upload(filename: string, deck: Buffer): Promise<void> {
 		// specifying the port is a bit tricky bc typescript assumes envvars are strings
 		// for now, the default should be correct
-		/*await ftp.access({
+		await ftp.access({
 			host: process.env.FTP_HOST,
 			user: process.env.FTP_USER,
 			password: process.env.FTP_PASS,
 			secure: false // current FTP destination does not support SFTP
 		});
 		await ftp.uploadFrom(Readable.from(deck), filename);
-		ftp.close(); // will be reopened by access next time it's needed*/
-		// to prevent repeat uploads, remove the button
+		ftp.close(); // will be reopened by access next time it's needed
 	}
 
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
@@ -420,7 +419,7 @@ export class DeckCommand extends Command {
 
 				// reply in affirmation
 				await i.editReply({
-					content: t`Deck successfully uploaded to <https://ygoprodeck.com/card-database/deck-prices/?u=https://ygoprodeck.com/discord-decks/${filename}>!`,
+					content: t`Deck successfully uploaded to <https://ygoprodeck.com/deckbuilder/?u=https://ygoprodeck.com/discord-decks/${filename}>!`,
 					components: []
 				});
 			})
