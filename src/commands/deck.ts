@@ -6,9 +6,21 @@ import {
 	SlashCommandSubcommandBuilder
 } from "@discordjs/builders";
 import { Static } from "@sinclair/typebox";
+import { Client } from "basic-ftp";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
-import { Attachment, AttachmentBuilder, ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
+import {
+	ActionRowBuilder,
+	Attachment,
+	AttachmentBuilder,
+	ButtonBuilder,
+	ButtonInteraction,
+	ButtonStyle,
+	ChatInputCommandInteraction,
+	ComponentType,
+	EmbedBuilder
+} from "discord.js";
 import fetch from "node-fetch";
+import { Readable } from "stream";
 import { inject, injectable } from "tsyringe";
 import { c, msgid, ngettext, t, useLocale } from "ttag";
 import { typedDeckToYdk, ydkToTypedDeck } from "ydeck";
@@ -23,6 +35,9 @@ import { addNotice, serializeCommand, splitText } from "../utils";
 
 // Same hack as in card.ts
 const rc = c;
+
+// create one client for all ftp interactions
+const ftp = new Client();
 
 @injectable()
 export class DeckCommand extends Command {
@@ -285,6 +300,20 @@ export class DeckCommand extends Command {
 		this.logger.info(serializeCommand(interaction), error);
 	}
 
+	protected async upload(filename: string, deck: Buffer): Promise<void> {
+		// specifying the port is a bit tricky bc typescript assumes envvars are strings
+		// for now, the default should be correct
+		/*await ftp.access({
+			host: process.env.FTP_HOST,
+			user: process.env.FTP_USER,
+			password: process.env.FTP_PASS,
+			secure: false // current FTP destination does not support SFTP
+		});
+		await ftp.uploadFrom(Readable.from(deck), filename);
+		ftp.close(); // will be reopened by access next time it's needed*/
+		// to prevent repeat uploads, remove the button
+	}
+
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const resultLanguage = await this.locales.get(interaction);
 		let deck: TypedDeck;
@@ -340,12 +369,71 @@ export class DeckCommand extends Command {
 		const outFile = typedDeckToYdk(deck);
 
 		const content = await this.generateProfile(deck, resultLanguage, !isStacked, outUrl);
+
+		// prepare interaction button for FTP upload
+		const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+			new ButtonBuilder().setCustomId("ftp").setLabel("Upload to YGOPRODeck").setStyle(ButtonStyle.Primary)
+		);
+
+		// a string is interpreted as a path, to upload it as a file we need a Buffer
+		// we might also want it again for the FTP upload
+		const deckBuffer = Buffer.from(outFile, "utf-8");
+
+		// save to re-use when we later edit the message
+		const embeds = addNotice(content);
+		const attachment = new AttachmentBuilder(deckBuffer).setName("deck.ydk");
+
 		const end = Date.now();
-		await interaction.editReply({
-			embeds: addNotice(content),
-			// a string is interpreted as a path, to upload it as a file we need a Buffer
-			files: [new AttachmentBuilder(Buffer.from(outFile, "utf-8")).setName("deck.ydk")]
+		const response = await interaction.editReply({
+			embeds,
+			files: [attachment],
+			components: [row]
 		});
+
+		const filter = (i: ButtonInteraction): boolean => {
+			// only allow the OP to click
+			return i.user.id === interaction.user.id;
+		};
+
+		// TODO: determine ideal timeout length.
+		// we don't await this promise, we set up the callback and then let the method complete
+		response
+			.awaitMessageComponent({ filter, componentType: ComponentType.Button, time: 60000 })
+			.then(async i => {
+				await i.deferReply({ ephemeral: !isPublic });
+
+				// upload deck with FTP
+				const filename = `${i.id}.ydk`; // use interaction ID for unique filename
+				await this.upload(filename, deckBuffer);
+
+				// disable original button
+				// prepare row to disable button on original message
+				useLocale(resultLanguage);
+				const disabledRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+					new ButtonBuilder()
+						.setCustomId("ftp-disabled")
+						.setLabel(t`Upload Complete`)
+						.setStyle(ButtonStyle.Success)
+						.setDisabled(true)
+				);
+				await interaction.editReply({ embeds, files: [attachment], components: [disabledRow] });
+
+				// reply in affirmation
+				await i.editReply({
+					content: t`Deck successfully uploaded to <https://ygoprodeck.com/card-database/deck-prices/?u=https://ygoprodeck.com/discord-decks/${filename}>!`,
+					components: []
+				});
+			})
+			.catch(async (err: Error) => {
+				// a rejection can mean the timeout was reached without a response
+				// otherwise, though, we want to treat it as a normal error
+				if (err.name !== "Error [InteractionCollectorError]") {
+					throw err;
+				}
+				// remove original button
+				await interaction.editReply({ embeds, files: [attachment], components: [] });
+			});
+
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
 		const latency = end - interaction.createdTimestamp;
 		return latency;
