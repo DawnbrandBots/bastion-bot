@@ -246,16 +246,15 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 
 	const embed = new EmbedBuilder()
 		.setTitle(formatCardName(card, lang))
-		// TODO: update when we start doing cards without Konami IDs
-		.setURL(yugipedia)
+		.setURL(ygoprodeck)
 		.setThumbnail(`${process.env.IMAGE_HOST}/${card.password}.png`);
 
 	const links = {
 		name: t`:link: Links`,
-		value: t`[Official Konami DB](${official}) | [OCG Rulings](${rulings}) | [Yugipedia](${yugipedia}) | [YGOPRODECK](${ygoprodeck})`
+		value: t`[Official Konami DB](${official}) | [OCG Rulings](${rulings}) | [YGOPRODECK](${ygoprodeck}) | [Yugipedia](${yugipedia})`
 	};
 	if (card.konami_id === null) {
-		links.value = t`[Yugipedia](${yugipedia}) | [YGOPRODECK](${ygoprodeck})`;
+		links.value = t`[YGOPRODECK](${ygoprodeck}) | [Yugipedia](${yugipedia})`;
 	}
 
 	let description = "";
