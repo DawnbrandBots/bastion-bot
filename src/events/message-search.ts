@@ -21,17 +21,21 @@ const parser = parserFor({
 } as ParserRules);
 // Can improve in future to do the entire processing with this parser to just grab the search tokens we want
 
+// https://discord.com/developers/docs/reference#message-formatting-formats
+const mentionPatterns = (
+	["UserWithOptionalNickname", "Channel", "Role", "SlashCommand", "Emoji", "Timestamp"] as const
+).map(key => new RegExp(FormattingPatterns[key], "g"));
+
 function cleanMessageMarkup(message: string): string {
 	// Remove the above markup elements
 	const nodes = parser(message);
 	message = nodes
 		.filter(node => node.type === "text")
 		.map(node => node.content)
-		.join();
-	// https://discord.com/developers/docs/reference#message-formatting-formats
-	const patternKeys = ["UserWithOptionalNickname", "Channel", "Role", "SlashCommand", "Emoji", "Timestamp"] as const;
-	for (const key of patternKeys) {
-		message = message.replaceAll(FormattingPatterns[key], "");
+		.join("");
+
+	for (const regex of mentionPatterns) {
+		message = message.replaceAll(regex, "");
 	}
 	return message;
 }
