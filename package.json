@@ -24,6 +24,7 @@
 		"@sinclair/typebox": "^0.24.28",
 		"better-sqlite3": "^7.6.2",
 		"debug": "^4.3.4",
+		"discord-markdown": "2.5.1",
 		"discord.js": "^14.4.0",
 		"dotenv": "^16.0.1",
 		"gettext-parser": "^6.0.0",

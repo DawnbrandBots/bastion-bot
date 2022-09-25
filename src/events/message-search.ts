@@ -1,4 +1,6 @@
-import { Message } from "discord.js";
+import { rules } from "discord-markdown";
+import { FormattingPatterns, Message } from "discord.js";
+import { parserFor, ParserRules } from "simple-markdown";
 import { inject, injectable } from "tsyringe";
 import { t, useLocale } from "ttag";
 import { Listener } from ".";
@@ -6,6 +8,60 @@ import { createCardEmbed, getCard } from "../card";
 import { LocaleProvider } from "../locale";
 import { getLogger } from "../logger";
 import { addFunding, addNotice } from "../utils";
+
+// Only take certain plugins because we don't need to parse all markup like bolding
+// and the mention parsing is not as well-maintained as discord.js
+const parser = parserFor({
+	blockQuote: rules.blockQuote, // type blockQuote, > OR >>>
+	codeBlock: rules.codeBlock, // type inlineCode, ```
+	escape: rules.escape, // type text, e.g. \`
+	inlineCode: rules.inlineCode, // type inlineCode, `
+	spoiler: rules.spoiler, // type spoiler, ||
+	text: rules.text
+} as ParserRules);
+// Can improve in future to do the entire processing with this parser to just grab the search tokens we want
+
+function cleanMessageMarkup(message: string): string {
+	// Remove the above markup elements
+	const nodes = parser(message);
+	message = nodes
+		.filter(node => node.type === "text")
+		.map(node => node.content)
+		.join();
+	// https://discord.com/developers/docs/reference#message-formatting-formats
+	const patternKeys = ["UserWithOptionalNickname", "Channel", "Role", "SlashCommand", "Emoji", "Timestamp"] as const;
+	for (const key of patternKeys) {
+		message = message.replaceAll(FormattingPatterns[key], "");
+	}
+	return message;
+}
+
+const DELIMITERS = {
+	ANGLE: { match: /<([^<\n]+?)>/g, prune: /<<.*?>>/g },
+	SQUARE: { match: /\[([^<\n]+?)\]/g, prune: /\[\[.*?\]\]/g },
+	CC: { match: /=([^<\n]+?)=/g, prune: /==.*?==/g },
+	TRANS: { match: /\)([^<\n]+?)\(/g, prune: null }, // ) (
+	HAVEN: { match: /%([^<\n]+?)\^/g, prune: null } // % ^
+} as const;
+
+function parseSummons(cleanMessage: string, regex: RegExp): string[] {
+	return [...cleanMessage.matchAll(regex)]
+		.map(match => match[1].trim())
+		.filter(summon => {
+			// Ignore matches containing only whitespace or containing the following three tokens
+			if (summon.length === 0) {
+				return false;
+			}
+			const lower = summon.toLowerCase();
+			return !["://", "(", "anime"].some(token => lower.includes(token));
+		});
+}
+
+function preprocess(message: string): string[] {
+	message = cleanMessageMarkup(message);
+	message = message.replaceAll(DELIMITERS.ANGLE.prune, "");
+	return parseSummons(message, DELIMITERS.ANGLE.match);
+}
 
 @injectable()
 export class SearchMessageListener implements Listener<"messageCreate"> {
@@ -19,21 +75,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		if (message.author.bot) {
 			return;
 		}
-		// parse markdown, remove code blocks ```, `, spoiler tags ||
-		// ignore doubled-up brackets?
-		const inputs: string[] = [];
-		let remaining = message.content;
-		while (remaining.includes("<")) {
-			const intermediate = remaining.slice(1 + remaining.indexOf("<"));
-			const endPosition = intermediate.indexOf(">");
-			const input = intermediate.slice(0, endPosition);
-			// Skip if this is a Discord markdown element
-			// https://discord.com/developers/docs/reference#message-formatting
-			// also strip and skip if blank
-			// skip if contains "(" or ignore-case "anime" as a heuristic
-			inputs.push(input);
-			remaining = intermediate.slice(1 + endPosition);
-		}
+		const inputs = preprocess(message.content);
 		if (inputs.length === 0) {
 			return;
 		}
