@@ -122,7 +122,7 @@ msgid "Found what you were looking for? Consider supporting us!"
 msgstr ""
 
 #: src\commands\art.ts:97
-#: src\commands\price.ts:146
+#: src\commands\price.ts:148
 #: src\commands\search.ts:90
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
@@ -132,64 +132,64 @@ msgstr ""
 msgid "Could not find art for `${ name }`!"
 msgstr ""
 
-#: src\commands\deck.ts:190
+#: src\commands\deck.ts:205
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:193
+#: src\commands\deck.ts:208
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:196
+#: src\commands\deck.ts:211
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:224
+#: src\commands\deck.ts:239
 msgid "Your Deck"
 msgstr ""
 
-#: src\commands\deck.ts:229
+#: src\commands\deck.ts:244
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:236
+#: src\commands\deck.ts:251
 msgid "Main Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:243
+#: src\commands\deck.ts:258
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:250
+#: src\commands\deck.ts:265
 msgid "Extra Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:257
+#: src\commands\deck.ts:272
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:264
+#: src\commands\deck.ts:279
 msgid "Side Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:332
+#: src\commands\deck.ts:360
 msgid "Error: Your deck is empty."
 msgstr ""
 
@@ -271,7 +271,7 @@ msgid ""
 "setting is ${ interaction.locale }."
 msgstr ""
 
-#: src\commands\ping.ts:35
+#: src\commands\ping.ts:36
 #: src\events\message.ts:28
 #, javascript-format
 msgid "Average WebSocket ping (new instance): ${ ping } ms"
@@ -329,15 +329,15 @@ msgstr ""
 msgid "Revision: ${ process.env.BOT_REVISION }."
 msgstr ""
 
-#: src\commands\deck.ts:274
+#: src\commands\deck.ts:289
 msgid ".ydk files must have the .ydk extension!"
 msgstr ""
 
-#: src\commands\deck.ts:277
+#: src\commands\deck.ts:292
 msgid ".ydk files should not be larger than 1 KB!"
 msgstr ""
 
-#: src\commands\deck.ts:267
+#: src\commands\deck.ts:282
 msgid "ydke URL"
 msgstr ""
 
@@ -359,22 +359,41 @@ msgid "CoolStuffInc"
 msgstr ""
 
 #: src\commands\price.ts:118
-#. note: this is about our database, not the user input. Could clarify.
-#. unsure where, how or if to localise this error. Will it even come up?
+#. TODO: future, determine localisation and relevance status of this error
 msgid "Sorry, I can't find the price for a card with no English name!"
 msgstr ""
 
-#: src\commands\price.ts:158
+#: src\commands\price.ts:159
 msgid "No market price"
 msgstr ""
 
-#: src\commands\price.ts:164
-#, javascript-format
-msgid "Prices for ${ card.name[resultLanguage] }"
+#: src\commands\deck.ts:417
+#. disable original button
+#. prepare row to disable button on original message
+msgid "Upload Complete"
 msgstr ""
 
-#: src\commands\price.ts:172
-msgid "Could not find prices for `${ _name }`!"
+#: src\commands\deck.ts:425
+#. reply in affirmation
+#, javascript-format
+msgid ""
+"Deck successfully uploaded to "
+"<https://ygoprodeck.com/deckbuilder/?u=https://ygoprodeck.com/discord-decks/"
+"${ filename }>!"
+msgstr ""
+
+#: src\commands\price.ts:167
+#, javascript-format
+msgid "Prices for ${ card.name[resultLanguage] } - ${ vendorName }"
+msgstr ""
+
+#: src\commands\price.ts:181
+msgid "Could not find prices for `${ name }`!"
+msgstr ""
+
+#: src\commands\deck.ts:377
+#. prepare interaction button for FTP upload
+msgid "Upload to YGOPRODECK"
 msgstr ""
 
 #: src\card.ts:37
@@ -691,7 +710,7 @@ msgctxt "command-option"
 msgid "input"
 msgstr ""
 
-#: src\commands\help.ts:51
+#: src\commands\help.ts:52
 msgctxt "command-option"
 msgid "command"
 msgstr ""
@@ -706,28 +725,28 @@ msgctxt "command-option"
 msgid "page"
 msgstr ""
 
-#: src\commands\deck.ts:76
+#: src\commands\deck.ts:91
 msgctxt "command-option"
 msgid "url"
 msgstr ""
 
-#: src\commands\deck.ts:82
+#: src\commands\deck.ts:97
 msgctxt "command-option"
 msgid "file"
 msgstr ""
 
-#: src\commands\deck.ts:88
-#: src\commands\deck.ts:94
+#: src\commands\deck.ts:103
+#: src\commands\deck.ts:109
 msgctxt "command-option"
 msgid "deck"
 msgstr ""
 
-#: src\commands\deck.ts:100
+#: src\commands\deck.ts:115
 msgctxt "command-option"
 msgid "public"
 msgstr ""
 
-#: src\commands\deck.ts:107
+#: src\commands\deck.ts:122
 msgctxt "command-option"
 msgid "stacked"
 msgstr ""
@@ -788,7 +807,7 @@ msgctxt "command-option-description"
 msgid "The language to search in, defaulting to the result language."
 msgstr ""
 
-#: src\commands\help.ts:54
+#: src\commands\help.ts:55
 msgctxt "command-option-description"
 msgid "The name of a specific Slash Command."
 msgstr ""
@@ -803,34 +822,34 @@ msgctxt "command-option-description"
 msgid "The name of the Yugipedia page you want to search for."
 msgstr ""
 
-#: src\commands\deck.ts:79
+#: src\commands\deck.ts:94
 msgctxt "command-option-description"
 msgid "View a deck by entering a ydke:// URL."
 msgstr ""
 
-#: src\commands\deck.ts:85
+#: src\commands\deck.ts:100
 msgctxt "command-option-description"
 msgid "View a deck by uploading a .ydk file."
 msgstr ""
 
-#: src\commands\deck.ts:91
+#: src\commands\deck.ts:106
 msgctxt "command-option-description"
 msgid "The ydke:// URL of the deck you want to view."
 msgstr ""
 
-#: src\commands\deck.ts:97
+#: src\commands\deck.ts:112
 msgctxt "command-option-description"
 msgid "The .ydk file of the deck you want to view."
 msgstr ""
 
-#: src\commands\deck.ts:103
+#: src\commands\deck.ts:118
 msgctxt "command-option-description"
 msgid ""
 "Whether to display the deck details publicly in chat. This is false by "
 "default."
 msgstr ""
 
-#: src\commands\deck.ts:110
+#: src\commands\deck.ts:125
 msgctxt "command-option-description"
 msgid ""
 "Whether to display the deck sections as one stacked column. This is false "
@@ -933,12 +952,12 @@ msgctxt "command-name"
 msgid "art"
 msgstr ""
 
-#: src\commands\help.ts:48
+#: src\commands\help.ts:49
 msgctxt "command-name"
 msgid "help"
 msgstr ""
 
-#: src\commands\ping.ts:22
+#: src\commands\ping.ts:23
 msgctxt "command-name"
 msgid "ping"
 msgstr ""
@@ -953,7 +972,7 @@ msgctxt "command-name"
 msgid "yugipedia"
 msgstr ""
 
-#: src\commands\deck.ts:69
+#: src\commands\deck.ts:84
 msgctxt "command-name"
 msgid "deck"
 msgstr ""
@@ -983,12 +1002,12 @@ msgctxt "command-description"
 msgid "Display the art for a card!"
 msgstr ""
 
-#: src\commands\help.ts:49
+#: src\commands\help.ts:50
 msgctxt "command-description"
 msgid "Get help with a Slash Command."
 msgstr ""
 
-#: src\commands\ping.ts:23
+#: src\commands\ping.ts:24
 msgctxt "command-description"
 msgid "Test latency to the new bot instance."
 msgstr ""
@@ -1003,7 +1022,7 @@ msgctxt "command-description"
 msgid "Search the Yugipedia wiki for a page and link to it."
 msgstr ""
 
-#: src\commands\deck.ts:72
+#: src\commands\deck.ts:87
 msgctxt "command-description"
 msgid ""
 "Display a deck list from ydke:// or .ydk format, exported from a number of "

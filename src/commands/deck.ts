@@ -369,9 +369,13 @@ export class DeckCommand extends Command {
 
 		const content = await this.generateProfile(deck, resultLanguage, !isStacked, outUrl);
 
+		useLocale(resultLanguage);
 		// prepare interaction button for FTP upload
 		const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-			new ButtonBuilder().setCustomId("ftp").setLabel("Upload to YGOPRODECK").setStyle(ButtonStyle.Primary)
+			new ButtonBuilder()
+				.setCustomId("ftp")
+				.setLabel(t`Upload to YGOPRODECK`)
+				.setStyle(ButtonStyle.Primary)
 		);
 
 		// a string is interpreted as a path, to upload it as a file we need a Buffer
@@ -407,7 +411,6 @@ export class DeckCommand extends Command {
 
 				// disable original button
 				// prepare row to disable button on original message
-				useLocale(resultLanguage);
 				const disabledRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
 					new ButtonBuilder()
 						.setCustomId("ftp-disabled")
