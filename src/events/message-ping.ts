@@ -1,4 +1,4 @@
-import { Message, MessageEmbedOptions } from "discord.js";
+import { APIEmbed, Colors, Message } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { t, useLocale } from "ttag";
 import { Listener } from ".";
@@ -26,7 +26,7 @@ export class PingMessageListener implements Listener<"messageCreate"> {
 				useLocale(lang);
 				const ping = message.client.ws.ping;
 				const content = t`Average WebSocket ping (new instance): ${ping} ms`;
-				const embed: MessageEmbedOptions = {
+				const embed: APIEmbed = {
 					title: t`Free and open source _Yu-Gi-Oh!_ bot`,
 					description: t`
 :question: Help documentation on [GitHub](https://github.com/DawnbrandBots/bastion-bot), or use \`.commands\` and \`.help\`.
@@ -40,11 +40,11 @@ export class PingMessageListener implements Listener<"messageCreate"> {
 
 :tools: An update is being worked on and rolling out slowly. Features will be handled by a new bot instance through Slash Commands concurrently with the old bot.
 `,
-					color: "YELLOW",
+					color: Colors.Yellow,
 					author: {
 						name: "Bastion",
 						url: "https://github.com/DawnbrandBots/bastion-bot",
-						iconURL:
+						icon_url:
 							"https://cdn.discordapp.com/avatars/383854640694820865/fab10204c193d0bc3d48169d11245a1a.webp"
 					},
 					footer: {

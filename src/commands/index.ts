@@ -1,5 +1,5 @@
 import { REST } from "@discordjs/rest";
-import { APIUser, Routes } from "discord-api-types/v9";
+import { APIUser, Routes } from "discord-api-types/v10";
 import { ArtCommand } from "./art";
 import { DeckCommand } from "./deck";
 import { HelpCommand } from "./help";
@@ -7,6 +7,7 @@ import { IdCommand } from "./id";
 import { LinkCommand } from "./link";
 import { LocaleCommand } from "./locale";
 import { PingCommand } from "./ping";
+import { PriceCommand } from "./price";
 import { RandomCommand } from "./random";
 import { SearchCommand } from "./search";
 import { YGOPRODECKCommand } from "./ygoprodeck";
@@ -23,7 +24,8 @@ export const classes = [
 	LocaleCommand,
 	ArtCommand,
 	RandomCommand,
-	HelpCommand
+	HelpCommand,
+	PriceCommand
 ];
 export {
 	DeckCommand,
@@ -36,7 +38,8 @@ export {
 	LocaleCommand,
 	ArtCommand,
 	RandomCommand,
-	HelpCommand
+	HelpCommand,
+	PriceCommand
 };
 
 // Register Slash Commands on CI
@@ -48,8 +51,7 @@ export async function registerSlashCommands(guild?: `${bigint}`): Promise<void> 
 	console.log("Generated command metadata:");
 	console.log(JSON.stringify(commands, null, 4));
 
-	// The default version is 9, but we'll be explicit in case unexpected version bumps happen
-	const api = new REST({ version: "9" }).setToken(`${process.env.DISCORD_TOKEN}`);
+	const api = new REST().setToken(`${process.env.DISCORD_TOKEN}`);
 
 	// Server commands deploy instantly, but global commands may take up to an hour to roll out
 	const botUser = (await api.get(Routes.user())) as APIUser;

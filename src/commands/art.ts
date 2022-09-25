@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandBuilder } from "@discordjs/builders";
 import { Static } from "@sinclair/typebox";
-import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
-import { CommandInteraction } from "discord.js";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
+import { ChatInputCommandInteraction } from "discord.js";
 import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
@@ -83,7 +83,7 @@ export class ArtCommand extends Command {
 		throw new Error((await response.json()).message);
 	}
 
-	protected override async execute(interaction: CommandInteraction): Promise<number> {
+	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const type = interaction.options.getSubcommand(true) as CardLookupType;
 		const input = interaction.options.getString("input", true);
 		const resultLanguage = await this.locales.get(interaction);

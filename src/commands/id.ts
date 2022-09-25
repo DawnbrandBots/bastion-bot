@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
-import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
-import { CommandInteraction, MessageEmbed } from "discord.js";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
+import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { injectable } from "tsyringe";
 import { getCard, inferInputType } from "../card";
 import { Command } from "../Command";
@@ -34,7 +34,7 @@ export class IdCommand extends Command {
 		return this.#logger;
 	}
 
-	protected override async execute(interaction: CommandInteraction): Promise<number> {
+	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const [type, input] = inferInputType(interaction);
 		await interaction.deferReply({ ephemeral: true });
 		const card = await getCard(type, input);
@@ -44,10 +44,10 @@ export class IdCommand extends Command {
 			// TODO: include properly-named type in this message
 			await interaction.editReply({ content: `Could not find a card matching \`${input}\`!` });
 		} else {
-			const embed = new MessageEmbed()
-				.setTitle(`${card.name.en}`)
-				.addField("Password", `${card.password}`, true)
-				.addField("Konami ID", `${card.konami_id}`, true);
+			const embed = new EmbedBuilder().setTitle(`${card.name.en}`).addFields([
+				{ name: "Password", value: `${card.password}`, inline: true },
+				{ name: "Konami ID", value: `${card.konami_id}`, inline: true }
+			]);
 			end = Date.now();
 			await interaction.editReply({ embeds: addNotice(embed) });
 		}

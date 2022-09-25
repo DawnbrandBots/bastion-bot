@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandBuilder } from "@discordjs/builders";
-import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
-import { CommandInteraction } from "discord.js";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
+import { ChatInputCommandInteraction } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { CardLookupType, createCardEmbed, getCard } from "../card";
@@ -76,7 +76,7 @@ export class SearchCommand extends Command {
 		return this.#logger;
 	}
 
-	protected override async execute(interaction: CommandInteraction): Promise<number> {
+	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const type = interaction.options.getSubcommand(true) as CardLookupType;
 		const input = interaction.options.getString("input", true);
 		const resultLanguage = await this.locales.get(interaction);

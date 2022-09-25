@@ -1,5 +1,5 @@
 import { Static } from "@sinclair/typebox";
-import { CommandInteraction, MessageEmbed } from "discord.js";
+import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { parseDocument } from "htmlparser2";
 import fetch from "node-fetch";
 import { c, t, useLocale } from "ttag";
@@ -233,7 +233,7 @@ function formatCardText(text: Static<typeof CardSchema>["text"], lang: Locale): 
 	return text[lang] || text.en || "\u200b";
 }
 
-export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): MessageEmbed[] {
+export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): EmbedBuilder[] {
 	useLocale(lang);
 
 	const yugipediaPage = card.konami_id ?? encodeURIComponent(`${card.name.en}`);
@@ -244,7 +244,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 	const official = `https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&request_locale=${lang}&cid=${card.konami_id}`;
 	const rulings = `https://www.db.yugioh-card.com/yugiohdb/faq_search.action?ope=4&request_locale=ja&cid=${card.konami_id}`;
 
-	const embed = new MessageEmbed()
+	const embed = new EmbedBuilder()
 		.setTitle(formatCardName(card, lang))
 		// TODO: update when we start doing cards without Konami IDs
 		.setURL(yugipedia)
@@ -348,7 +348,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 				value: formatCardText(card.pendulum_effect, lang)
 			});
 
-			const addon = new MessageEmbed()
+			const addon = new EmbedBuilder()
 				.setColor(Colour.Spell)
 				.addFields({ name: c("card-embed").t`Card Text`, value: formatCardText(card.text, lang) })
 				.addFields(links)
@@ -378,7 +378,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 
 type InputType = "password" | "kid" | "name";
 
-export function inferInputType(interaction: CommandInteraction): [InputType, string] {
+export function inferInputType(interaction: ChatInputCommandInteraction): [InputType, string] {
 	const type = interaction.options.getString("type", false);
 	const input = interaction.options.getString("input", true);
 	if (type) {

@@ -1,5 +1,5 @@
 import sqlite, { Database, Statement } from "better-sqlite3";
-import { CommandInteraction } from "discord.js";
+import { ChatInputCommandInteraction } from "discord.js";
 import { inject, singleton } from "tsyringe";
 
 @singleton()
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS "commands" (
 		return db;
 	}
 
-	public writeCommand(interaction: CommandInteraction, latency: number): void {
+	public writeCommand(interaction: ChatInputCommandInteraction, latency: number): void {
 		const id = interaction.id;
 		const guild = interaction.guild?.id;
 		const channel = interaction.channel?.id;

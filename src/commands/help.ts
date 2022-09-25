@@ -1,12 +1,13 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
-import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v9";
-import { CommandInteraction } from "discord.js";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
+import { ChatInputCommandInteraction } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { c, useLocale } from "ttag";
 import { Command } from "../Command";
 import { COMMAND_LOCALIZATIONS, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
+import { replyLatency } from "../utils";
 
 @injectable()
 export class HelpCommand extends Command {
@@ -64,7 +65,7 @@ export class HelpCommand extends Command {
 		return this.#logger;
 	}
 
-	protected override async execute(interaction: CommandInteraction): Promise<number> {
+	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const command = interaction.options.getString("command", false);
 
 		let output: string;
@@ -76,14 +77,6 @@ export class HelpCommand extends Command {
 		}
 
 		const reply = await interaction.reply({ content: output, ephemeral: true, fetchReply: true });
-
-		if ("createdTimestamp" in reply) {
-			const latency = reply.createdTimestamp - interaction.createdTimestamp;
-			return latency;
-		} else {
-			// This should never happen, as Bastion must be a member of its servers and also we are not using deferReply
-			const latency = Number(reply.timestamp) - interaction.createdTimestamp;
-			return latency;
-		}
+		return replyLatency(reply, interaction);
 	}
 }
