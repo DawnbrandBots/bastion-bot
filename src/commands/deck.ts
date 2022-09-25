@@ -371,7 +371,7 @@ export class DeckCommand extends Command {
 
 		// prepare interaction button for FTP upload
 		const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-			new ButtonBuilder().setCustomId("ftp").setLabel("Upload to YGOPRODeck").setStyle(ButtonStyle.Primary)
+			new ButtonBuilder().setCustomId("ftp").setLabel("Upload to YGOPRODECK").setStyle(ButtonStyle.Primary)
 		);
 
 		// a string is interpreted as a path, to upload it as a file we need a Buffer
