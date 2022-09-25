@@ -11,14 +11,17 @@ import { addFunding, addNotice } from "../utils";
 
 // Only take certain plugins because we don't need to parse all markup like bolding
 // and the mention parsing is not as well-maintained as discord.js
-const parser = parserFor({
-	blockQuote: rules.blockQuote, // type blockQuote, > OR >>>
-	codeBlock: rules.codeBlock, // type inlineCode, ```
-	escape: rules.escape, // type text, e.g. \`
-	inlineCode: rules.inlineCode, // type inlineCode, `
-	spoiler: rules.spoiler, // type spoiler, ||
-	text: rules.text
-} as ParserRules);
+const ourRules = Object.fromEntries(
+	[
+		"escape", // type text, e.g. \`
+		"blockQuote", // type blockQuote, > OR >>>
+		"codeBlock", // type inlineCode, ```
+		"inlineCode", // type inlineCode, `
+		"spoiler", // type spoiler, ||
+		"text"
+	].map((label, order) => [label, { ...rules[label], order }])
+) as ParserRules;
+const parser = parserFor(ourRules);
 // Can improve in future to do the entire processing with this parser to just grab the search tokens we want
 
 // https://discord.com/developers/docs/reference#message-formatting-formats
@@ -26,14 +29,13 @@ const mentionPatterns = (
 	["UserWithOptionalNickname", "Channel", "Role", "SlashCommand", "Emoji", "Timestamp"] as const
 ).map(key => new RegExp(FormattingPatterns[key], "g"));
 
-function cleanMessageMarkup(message: string): string {
+export function cleanMessageMarkup(message: string): string {
 	// Remove the above markup elements
-	const nodes = parser(message);
+	const nodes = parser(message, { inline: true });
 	message = nodes
 		.filter(node => node.type === "text")
 		.map(node => node.content)
 		.join("");
-
 	for (const regex of mentionPatterns) {
 		message = message.replaceAll(regex, "");
 	}
@@ -48,7 +50,7 @@ const DELIMITERS = {
 	HAVEN: { match: /%([^<\n]+?)\^/g, prune: null } // % ^
 } as const;
 
-function parseSummons(cleanMessage: string, regex: RegExp): string[] {
+export function parseSummons(cleanMessage: string, regex: RegExp): string[] {
 	return [...cleanMessage.matchAll(regex)]
 		.map(match => match[1].trim())
 		.filter(summon => {
@@ -61,7 +63,7 @@ function parseSummons(cleanMessage: string, regex: RegExp): string[] {
 		});
 }
 
-function preprocess(message: string): string[] {
+export function preprocess(message: string): string[] {
 	message = cleanMessageMarkup(message);
 	message = message.replaceAll(DELIMITERS.ANGLE.prune, "");
 	return parseSummons(message, DELIMITERS.ANGLE.match);
