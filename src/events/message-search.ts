@@ -81,15 +81,15 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		if (message.author.bot) {
 			return;
 		}
-		const inputs = preprocess(message.content);
+		let inputs = preprocess(message.content);
 		if (inputs.length === 0) {
 			return;
 		}
-		// upper limit of 3
 		this.#logger.info(inputs);
-		const language = await this.locales.getM(message);
+		inputs = inputs.slice(0, 3);
+		message.react("🕙").catch(this.#logger.warn);
 		// metrics
-		// add reaction
+		const language = await this.locales.getM(message);
 		const promises = inputs
 			.map(input => {
 				const password = Number(input);
@@ -124,6 +124,6 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 				this.#logger.info(-1);
 			}
 		}
-		// remove reaction
+		message.reactions.cache.get("🕙")?.users.remove(message.client.user).catch(this.#logger.warn);
 	}
 }
