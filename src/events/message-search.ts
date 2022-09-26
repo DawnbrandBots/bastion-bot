@@ -5,7 +5,7 @@ import { inject, injectable } from "tsyringe";
 import { t, useLocale } from "ttag";
 import { Listener } from ".";
 import { createCardEmbed, getCard } from "../card";
-import { LocaleProvider } from "../locale";
+import { Locale, LocaleProvider, LOCALES } from "../locale";
 import { getLogger } from "../logger";
 import { addFunding, addNotice } from "../utils";
 
@@ -69,6 +69,44 @@ export function preprocess(message: string): string[] {
 	return parseSummons(message, DELIMITERS.ANGLE.match);
 }
 
+/**
+ * Capture groups:
+ * - kid: % sign, if this matches a Konami ID, optional
+ * - number: matched sequence of digits
+ * - lang: one of the locales,optional
+ *
+ * %4007
+ * %4007,en
+ *  % 4007  ,en
+ * 00010000
+ * 00010000,ja
+ */
+const NUMERIC_REGEX = new RegExp(
+	// eslint-disable-next-line prefer-template
+	/^(?<kid>%)?\s*(?<number>\d+)\s*/.toString().slice(1, -1) + "(?:,(?<lang>" + LOCALES.join("|") + "))?$"
+);
+
+/**
+ * Capture groups:
+ * - text: main body
+ * - inputLang: one of the locales, optional
+ * - resultLang: one of the locales, optional, if exists then inputLang exists
+ *
+ * blue-eyes
+ * baguette,fr
+ * blue-eyes,en,ja
+ */
+const TEXT_REGEX = new RegExp(
+	// eslint-disable-next-line prefer-template
+	/^(?<text>.*?)/.toString().slice(1, -1) +
+		"(?:(?<inputLang>," +
+		LOCALES.join("|") +
+		"))?" +
+		"(?:(?<resultLang>," +
+		LOCALES.join("|") +
+		"))?$"
+);
+
 @injectable()
 export class SearchMessageListener implements Listener<"messageCreate"> {
 	readonly type = "messageCreate";
@@ -92,25 +130,42 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		const language = await this.locales.getM(message);
 		const promises = inputs
 			.map(input => {
-				const password = Number(input);
-				const kid = Number(input.slice(1));
-				let promise;
-				if (input.startsWith("%") && Number.isSafeInteger(kid)) {
-					promise = getCard("konami-id", `${kid}`);
-				} else if (Number.isSafeInteger(password)) {
-					promise = getCard("password", `${password}`);
+				let promise, resultLanguage;
+				const matchNumeric = input.match(NUMERIC_REGEX);
+				if (matchNumeric && matchNumeric.groups) {
+					if (matchNumeric.groups.kid) {
+						promise = getCard("konami-id", matchNumeric.groups.number);
+					} else {
+						promise = getCard("password", matchNumeric.groups.number);
+					}
+					if (matchNumeric.groups.lang) {
+						resultLanguage = matchNumeric.groups.lang;
+					} else {
+						resultLanguage = language;
+					}
 				} else {
-					promise = getCard("name", input, language);
+					const matchText = input.match(TEXT_REGEX);
+					if (matchText && matchText.groups) {
+						promise = getCard(
+							"name",
+							matchText.groups.text,
+							(matchText.groups.inputLang as Locale | null) || language
+						);
+						resultLanguage = (matchText.groups.resultLang as Locale | null) || language;
+					} else {
+						// Should never happen
+						throw new Error(input);
+					}
 				}
-				return [input, promise] as const;
+				return [input, resultLanguage as Locale, promise] as const;
 			})
-			.map(([input, promise]) =>
+			.map(([input, resultLanguage, promise]) =>
 				promise.then(card => {
-					useLocale(language);
+					useLocale(resultLanguage);
 					if (!card) {
 						return message.reply({ content: t`Could not find a card matching \`${input}\`!` });
 					} else {
-						let embeds = createCardEmbed(card, language);
+						let embeds = createCardEmbed(card, resultLanguage);
 						embeds = addFunding(addNotice(embeds));
 						return message.reply({ embeds });
 					}
