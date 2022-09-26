@@ -82,8 +82,10 @@ export function preprocess(message: string): string[] {
  * 00010000,ja
  */
 const NUMERIC_REGEX = new RegExp(
-	// eslint-disable-next-line prefer-template
-	/^(?<kid>%)?\s*(?<number>\d+)\s*/.toString().slice(1, -1) + "(?:,(?<lang>" + LOCALES.join("|") + "))?$"
+	/^(?<kid>%)?\s*(?<number>\d+)\s*(?:,(?<lang>LOCALES))?$/
+		.toString()
+		.slice(1, -1)
+		.replace("LOCALES", LOCALES.join("|"))
 );
 
 /**
@@ -97,14 +99,10 @@ const NUMERIC_REGEX = new RegExp(
  * blue-eyes,en,ja
  */
 const TEXT_REGEX = new RegExp(
-	// eslint-disable-next-line prefer-template
-	/^(?<text>.*?)/.toString().slice(1, -1) +
-		"(?:(?<inputLang>," +
-		LOCALES.join("|") +
-		"))?" +
-		"(?:(?<resultLang>," +
-		LOCALES.join("|") +
-		"))?$"
+	/^(?<text>.*?)(?:,(?<inputLang>LOCALES))?(?:,(?<resultLang>))?$/
+		.toString()
+		.slice(1, -1)
+		.replaceAll("LOCALES", LOCALES.join("|"))
 );
 
 @injectable()
