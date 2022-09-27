@@ -303,12 +303,24 @@ export class DeckCommand extends Command {
 	}
 
 	protected async upload(filename: string, deck: Buffer): Promise<void> {
-		// specifying the port is a bit tricky bc typescript assumes envvars are strings
-		// for now, the default should be correct
+		// with no credentials, we can't upload
+		if (process.env.FTP_URL === undefined) {
+			throw new Error(t`FTP credentials are undefined!`);
+		}
+		// FTP_URL format in .env is ftp://user:password@host:port
+		const ftpUrl = new URL(process.env.FTP_URL);
+
+		// if the specified port is the default for the protocol, i.e. 21,
+		// URL#port returns the empty string, so we need to step in manually
+		let port = parseInt(ftpUrl.port);
+		if (isNaN(port)) {
+			port = 21;
+		}
 		await ftp.access({
-			host: process.env.FTP_HOST,
-			user: process.env.FTP_USER,
-			password: process.env.FTP_PASS,
+			host: ftpUrl.hostname,
+			port,
+			user: decodeURIComponent(ftpUrl.username), // URL class percent-encodes stuff we don't want it to
+			password: ftpUrl.password,
 			secure: false // current FTP destination does not support SFTP
 		});
 		await ftp.uploadFrom(Readable.from(deck), filename);
@@ -423,6 +435,7 @@ export class DeckCommand extends Command {
 					await interaction.editReply({ embeds, files: [attachment], components: [] });
 					// log the error - we're in a promise, so throwing is wrong
 					this.logger.error(serializeCommand(interaction), error);
+					return;
 				}
 
 				// disable original button

@@ -288,7 +288,7 @@ msgstr[0] ""
 msgid "Side Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:362
+#: src\commands\deck.ts:374
 msgid "Error: Your deck is empty."
 msgstr ""
 
@@ -368,13 +368,13 @@ msgstr ""
 msgid "No market price"
 msgstr ""
 
-#: src\commands\deck.ts:433
+#: src\commands\deck.ts:446
 #. disable original button
 #. prepare row to disable button on original message
 msgid "Upload Complete"
 msgstr ""
 
-#: src\commands\deck.ts:441
+#: src\commands\deck.ts:454
 #. reply in affirmation
 #, javascript-format
 msgid ""
@@ -392,15 +392,19 @@ msgstr ""
 msgid "Could not find prices for `${ name }`!"
 msgstr ""
 
-#: src\commands\deck.ts:379
+#: src\commands\deck.ts:391
 #. prepare interaction button for FTP upload
 msgid "Upload to YGOPRODECK"
 msgstr ""
 
-#: src\commands\deck.ts:419
+#: src\commands\deck.ts:431
 #. inform user of error
 #, javascript-format
 msgid "Deck upload failed! Error: ${ realError.message }"
+msgstr ""
+
+#: src\commands\deck.ts:308
+msgid "FTP credentials are undefined!"
 msgstr ""
 
 #: src\card.ts:37
