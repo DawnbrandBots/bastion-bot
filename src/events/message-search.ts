@@ -50,6 +50,23 @@ const DELIMITERS = {
 	HAVEN: { match: /%([^<\n]+?)\^/g, prune: null } // % ^
 } as const;
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+function getDelimiter(message: Message) {
+	switch (message.guildId) {
+		case "170669983079071745":
+			return DELIMITERS.CC;
+		case "597478047163219988":
+		case "845400480452050954":
+			return DELIMITERS.SQUARE;
+		case "871582695967301703":
+			return DELIMITERS.HAVEN;
+		case "780952232103116800":
+			return DELIMITERS.TRANS;
+		default:
+			return DELIMITERS.ANGLE;
+	}
+}
+
 export function parseSummons(cleanMessage: string, regex: RegExp): string[] {
 	return [...cleanMessage.matchAll(regex)]
 		.map(match => match[1].trim())
@@ -63,10 +80,15 @@ export function parseSummons(cleanMessage: string, regex: RegExp): string[] {
 		});
 }
 
-export function preprocess(message: string): string[] {
+export function preprocess(
+	message: string,
+	delimiter: typeof DELIMITERS[keyof typeof DELIMITERS] = DELIMITERS.ANGLE
+): string[] {
 	message = cleanMessageMarkup(message);
-	message = message.replaceAll(DELIMITERS.ANGLE.prune, "");
-	return parseSummons(message, DELIMITERS.ANGLE.match);
+	if (delimiter.prune) {
+		message = message.replaceAll(delimiter.prune, "");
+	}
+	return parseSummons(message, delimiter.match);
 }
 
 /**
@@ -117,7 +139,8 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		if (message.author.bot) {
 			return;
 		}
-		let inputs = preprocess(message.content);
+		const delimiter = getDelimiter(message);
+		let inputs = preprocess(message.content, delimiter);
 		if (inputs.length === 0) {
 			return;
 		}
