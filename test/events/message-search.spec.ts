@@ -1,4 +1,4 @@
-import { cleanMessageMarkup, preprocess } from "../../src/events/message-search";
+import { cleanMessageMarkup, inputToGetCardArguments, preprocess } from "../../src/events/message-search";
 
 describe("clean markup", () => {
 	test("cleans > blockQuote", () => {
@@ -105,5 +105,71 @@ describe("preprocess message to get inputs", () => {
 			"<#12345678901234567> <@!12345678901234567> <big test> <<missed>> < nibiru> <@&12345678901234567> :thonk: <t:1664136104811>\n`<miss>`\n\\`<eternity>`\n<tearlaments\n        lulucaros>\n|| <dark magician> ||\n<dark dragoon >>\n```\n<code talker>\n```\n> <majesty's fiend>"
 		);
 		expect(inputs).toEqual(["big test", "nibiru", "eternity", "dark dragoon"]);
+	});
+});
+
+describe("transform input to arguments", () => {
+	test("Konami ID", () => {
+		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments("%4007", "ja");
+		expect(resultLanguage).toBe("ja");
+		expect(type).toBe("konami-id");
+		expect(searchTerm).toBe("4007");
+		expect(inputLanguage).toBeUndefined();
+	});
+	test("Konami ID with override language", () => {
+		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments("%4007,en", "ja");
+		expect(resultLanguage).toBe("en");
+		expect(type).toBe("konami-id");
+		expect(searchTerm).toBe("4007");
+		expect(inputLanguage).toBeUndefined();
+	});
+	test("Konami ID with whitespace and override language", () => {
+		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments("% 4007  ,en", "ja");
+		expect(resultLanguage).toBe("en");
+		expect(type).toBe("konami-id");
+		expect(searchTerm).toBe("4007");
+		expect(inputLanguage).toBeUndefined();
+	});
+	test("Password", () => {
+		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments("00010000", "ja");
+		expect(resultLanguage).toBe("ja");
+		expect(type).toBe("password");
+		expect(searchTerm).toBe("00010000");
+		expect(inputLanguage).toBeUndefined();
+	});
+	test("Password with override language", () => {
+		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments("00010000,zh-CN", "ja");
+		expect(resultLanguage).toBe("zh-CN");
+		expect(type).toBe("password");
+		expect(searchTerm).toBe("00010000");
+		expect(inputLanguage).toBeUndefined();
+	});
+	test("Card name", () => {
+		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments("blue-eyes", "en");
+		expect(resultLanguage).toBe("en");
+		expect(type).toBe("name");
+		expect(searchTerm).toBe("blue-eyes");
+		expect(inputLanguage).toBe("en");
+	});
+	test("Card name starting with a number", () => {
+		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments("7 colored fish", "en");
+		expect(resultLanguage).toBe("en");
+		expect(type).toBe("name");
+		expect(searchTerm).toBe("7 colored fish");
+		expect(inputLanguage).toBe("en");
+	});
+	test("Card name with input language", () => {
+		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments("baguette,fr", "en");
+		expect(resultLanguage).toBe("en");
+		expect(type).toBe("name");
+		expect(searchTerm).toBe("baguette");
+		expect(inputLanguage).toBe("fr");
+	});
+	test("Card name with input and result language", () => {
+		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments("blue-eyes,en,ja", "fr");
+		expect(resultLanguage).toBe("ja");
+		expect(type).toBe("name");
+		expect(searchTerm).toBe("blue-eyes");
+		expect(inputLanguage).toBe("en");
 	});
 });

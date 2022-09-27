@@ -99,7 +99,7 @@ export function preprocess(
  *
  * %4007
  * %4007,en
- *  % 4007  ,en
+ * % 4007  ,en
  * 00010000
  * 00010000,ja
  */
@@ -127,6 +127,37 @@ const TEXT_REGEX = new RegExp(
 		.replaceAll("LOCALES", LOCALES.join("|"))
 );
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export function inputToGetCardArguments(input: string, defaultLanguage: Locale) {
+	let type, searchTerm, inputLanguage, resultLanguage;
+	const matchNumeric = input.match(NUMERIC_REGEX);
+	if (matchNumeric && matchNumeric.groups) {
+		if (matchNumeric.groups.kid) {
+			type = "konami-id" as const;
+		} else {
+			type = "password" as const;
+		}
+		searchTerm = matchNumeric.groups.number;
+		if (matchNumeric.groups.lang) {
+			resultLanguage = matchNumeric.groups.lang as Locale;
+		} else {
+			resultLanguage = defaultLanguage;
+		}
+	} else {
+		const matchText = input.match(TEXT_REGEX);
+		if (matchText && matchText.groups) {
+			type = "name" as const;
+			searchTerm = matchText.groups.text;
+			inputLanguage = (matchText.groups.inputLang as Locale | null) || defaultLanguage;
+			resultLanguage = (matchText.groups.resultLang as Locale | null) || defaultLanguage;
+		} else {
+			// Should never happen
+			throw new Error(input);
+		}
+	}
+	return [resultLanguage, type, searchTerm, inputLanguage] as const;
+}
+
 @injectable()
 export class SearchMessageListener implements Listener<"messageCreate"> {
 	readonly type = "messageCreate";
@@ -150,38 +181,9 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		// metrics
 		const language = await this.locales.getM(message);
 		const promises = inputs
-			.map(input => {
-				let promise, resultLanguage;
-				const matchNumeric = input.match(NUMERIC_REGEX);
-				if (matchNumeric && matchNumeric.groups) {
-					if (matchNumeric.groups.kid) {
-						promise = getCard("konami-id", matchNumeric.groups.number);
-					} else {
-						promise = getCard("password", matchNumeric.groups.number);
-					}
-					if (matchNumeric.groups.lang) {
-						resultLanguage = matchNumeric.groups.lang;
-					} else {
-						resultLanguage = language;
-					}
-				} else {
-					const matchText = input.match(TEXT_REGEX);
-					if (matchText && matchText.groups) {
-						promise = getCard(
-							"name",
-							matchText.groups.text,
-							(matchText.groups.inputLang as Locale | null) || language
-						);
-						resultLanguage = (matchText.groups.resultLang as Locale | null) || language;
-					} else {
-						// Should never happen
-						throw new Error(input);
-					}
-				}
-				return [input, resultLanguage as Locale, promise] as const;
-			})
-			.map(([input, resultLanguage, promise]) =>
-				promise.then(card => {
+			.map(input => [input, ...inputToGetCardArguments(input, language)] as const)
+			.map(([input, resultLanguage, ...args]) =>
+				getCard(...args).then(card => {
 					useLocale(resultLanguage);
 					if (!card) {
 						return message.reply({ content: t`Could not find a card matching \`${input}\`!` });
