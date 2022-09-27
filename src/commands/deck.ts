@@ -17,6 +17,8 @@ import {
 	ButtonStyle,
 	ChatInputCommandInteraction,
 	ComponentType,
+	DiscordAPIError,
+	DiscordjsErrorCodes,
 	EmbedBuilder
 } from "discord.js";
 import fetch from "node-fetch";
@@ -398,7 +400,6 @@ export class DeckCommand extends Command {
 			return i.user.id === interaction.user.id;
 		};
 
-		// TODO: determine ideal timeout length.
 		// we don't await this promise, we set up the callback and then let the method complete
 		response
 			.awaitMessageComponent({ filter, componentType: ComponentType.Button, time: 60000 })
@@ -407,7 +408,22 @@ export class DeckCommand extends Command {
 
 				// upload deck with FTP
 				const filename = `${i.id}.ydk`; // use interaction ID for unique filename
-				await this.upload(filename, deckBuffer);
+				try {
+					await this.upload(filename, deckBuffer);
+				} catch (error) {
+					// we can't specify the type in catch{}, but we can typecast now
+					// error must be from Discord.JS or basic-ftp, which we trust to only throw Errors
+					const realError = error as Error;
+					// inform user of error
+					await i.editReply({
+						content: t`Deck upload failed! Error: ${realError.message}`,
+						components: []
+					});
+					// Remove button
+					await interaction.editReply({ embeds, files: [attachment], components: [] });
+					// log the error - we're in a promise, so throwing is wrong
+					this.logger.error(serializeCommand(interaction), error);
+				}
 
 				// disable original button
 				// prepare row to disable button on original message
@@ -426,14 +442,16 @@ export class DeckCommand extends Command {
 					components: []
 				});
 			})
-			.catch(async (err: Error) => {
+			.catch(async (err: DiscordAPIError) => {
 				// a rejection can mean the timeout was reached without a response
 				// otherwise, though, we want to treat it as a normal error
-				if (err.name !== "Error [InteractionCollectorError]") {
-					throw err;
+				if (err.code === DiscordjsErrorCodes.InteractionCollectorError) {
+					this.logger.error(serializeCommand(interaction), err);
 				}
 				// remove original button
-				await interaction.editReply({ embeds, files: [attachment], components: [] });
+				interaction
+					.editReply({ embeds, files: [attachment], components: [] })
+					.catch(e => this.logger.error(serializeCommand(interaction), e));
 			});
 
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
