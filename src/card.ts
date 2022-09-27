@@ -251,7 +251,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 
 	const links = {
 		name: t`:link: Links`,
-		value: t`[Official Konami DB](${official}) | [OCG Rulings](${rulings}) | [Yugipedia](${yugipedia}) [YGOPRODECK](${ygoprodeck})`
+		value: t`[Official Konami DB](${official}) | [OCG Rulings](${rulings}) | [Yugipedia](${yugipedia}) | [YGOPRODECK](${ygoprodeck})`
 	};
 	if (card.konami_id === null) {
 		links.value = t`[Yugipedia](${yugipedia}) | [YGOPRODECK](${ygoprodeck})`;

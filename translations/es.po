@@ -6,33 +6,33 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src\card.ts:254
+#: src\card.ts:253
 msgid ":link: Links"
 msgstr ""
 
-#: src\card.ts:255
+#: src\card.ts:254
 #, javascript-format
 msgid ""
 "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
 "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
 
-#: src\card.ts:258
+#: src\card.ts:257
 #, javascript-format
 msgid "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
 
-#: src\card.ts:318
+#: src\card.ts:317
 #, javascript-format
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 msgstr "**Tipo**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:320
+#: src\card.ts:319
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 msgstr "**Atributo**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
-#: src\card.ts:324
+#: src\card.ts:323
 msgid ""
 "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
 "card.def }"
@@ -40,14 +40,14 @@ msgstr ""
 "**Rango**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
 "card.def }"
 
-#: src\card.ts:327
+#: src\card.ts:326
 #, javascript-format
 msgid ""
 "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
 "Arrows**: ${ arrows }"
 msgstr ""
 
-#: src\card.ts:329
+#: src\card.ts:328
 #, javascript-format
 msgid ""
 "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
@@ -56,12 +56,12 @@ msgstr ""
 "**Nivel**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
 "${ card.def }"
 
-#: src\card.ts:336
+#: src\card.ts:335
 msgid "**Pendulum Scale**: ${ formattedScale }"
 msgstr "**Escala de Péndulo**: ${ formattedScale }"
 
-#: src\card.ts:356
-#: src\card.ts:374
+#: src\card.ts:355
+#: src\card.ts:373
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
 msgstr ""
@@ -122,7 +122,7 @@ msgid "Found what you were looking for? Consider supporting us!"
 msgstr ""
 
 #: src\commands\art.ts:97
-#: src\commands\price.ts:146
+#: src\commands\price.ts:148
 #: src\commands\search.ts:90
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
@@ -271,7 +271,7 @@ msgid ""
 "setting is ${ interaction.locale }."
 msgstr ""
 
-#: src\commands\ping.ts:35
+#: src\commands\ping.ts:36
 #: src\events\message.ts:28
 #, javascript-format
 msgid "Average WebSocket ping (new instance): ${ ping } ms"
@@ -341,7 +341,7 @@ msgstr ""
 msgid "ydke URL"
 msgstr ""
 
-#: src\card.ts:292
+#: src\card.ts:291
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 msgid "**Limit**: ${ limitRegulationDisplay }"
 msgstr ""
@@ -359,22 +359,21 @@ msgid "CoolStuffInc"
 msgstr ""
 
 #: src\commands\price.ts:118
-#. note: this is about our database, not the user input. Could clarify.
-#. unsure where, how or if to localise this error. Will it even come up?
+#. TODO: future, determine localisation and relevance status of this error
 msgid "Sorry, I can't find the price for a card with no English name!"
 msgstr ""
 
-#: src\commands\price.ts:158
+#: src\commands\price.ts:159
 msgid "No market price"
 msgstr ""
 
-#: src\commands\price.ts:164
+#: src\commands\price.ts:167
 #, javascript-format
-msgid "Prices for ${ card.name[resultLanguage] }"
+msgid "Prices for ${ card.name[resultLanguage] } - ${ vendorName }"
 msgstr ""
 
-#: src\commands\price.ts:172
-msgid "Could not find prices for `${ _name }`!"
+#: src\commands\price.ts:181
+msgid "Could not find prices for `${ name }`!"
 msgstr ""
 
 #: src\card.ts:37
@@ -652,18 +651,18 @@ msgctxt "attribute"
 msgid "DIVINE"
 msgstr "DIVINIDAD"
 
-#: src\card.ts:342
-#: src\card.ts:353
+#: src\card.ts:341
+#: src\card.ts:352
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "Texto de carta"
 
-#: src\card.ts:347
+#: src\card.ts:346
 msgctxt "card-embed"
 msgid "Pendulum Effect"
 msgstr "Efecto de Péndulo"
 
-#: src\card.ts:369
+#: src\card.ts:368
 msgctxt "card-embed"
 msgid "Card Effect"
 msgstr ""
@@ -691,7 +690,7 @@ msgctxt "command-option"
 msgid "input"
 msgstr ""
 
-#: src\commands\help.ts:51
+#: src\commands\help.ts:52
 msgctxt "command-option"
 msgid "command"
 msgstr ""
@@ -788,7 +787,7 @@ msgctxt "command-option-description"
 msgid "The language to search in, defaulting to the result language."
 msgstr ""
 
-#: src\commands\help.ts:54
+#: src\commands\help.ts:55
 msgctxt "command-option-description"
 msgid "The name of a specific Slash Command."
 msgstr ""
@@ -933,12 +932,12 @@ msgctxt "command-name"
 msgid "art"
 msgstr ""
 
-#: src\commands\help.ts:48
+#: src\commands\help.ts:49
 msgctxt "command-name"
 msgid "help"
 msgstr ""
 
-#: src\commands\ping.ts:22
+#: src\commands\ping.ts:23
 msgctxt "command-name"
 msgid "ping"
 msgstr ""
@@ -983,12 +982,12 @@ msgctxt "command-description"
 msgid "Display the art for a card!"
 msgstr ""
 
-#: src\commands\help.ts:49
+#: src\commands\help.ts:50
 msgctxt "command-description"
 msgid "Get help with a Slash Command."
 msgstr ""
 
-#: src\commands\ping.ts:23
+#: src\commands\ping.ts:24
 msgctxt "command-description"
 msgid "Test latency to the new bot instance."
 msgstr ""
