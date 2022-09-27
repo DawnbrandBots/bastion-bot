@@ -251,10 +251,10 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 
 	const links = {
 		name: t`:link: Links`,
-		value: t`[Official Konami DB](${official}) | [OCG Rulings](${rulings}) | [YGOPRODECK](${ygoprodeck}) | [Yugipedia](${yugipedia})`
+		value: t`[Official Konami DB](${official}) | [OCG Rulings](${rulings}) | [Yugipedia](${yugipedia}) [YGOPRODECK](${ygoprodeck})`
 	};
 	if (card.konami_id === null) {
-		links.value = t`[YGOPRODECK](${ygoprodeck}) | [Yugipedia](${yugipedia})`;
+		links.value = t`[Yugipedia](${yugipedia}) | [YGOPRODECK](${ygoprodeck})`;
 	}
 
 	let description = "";
