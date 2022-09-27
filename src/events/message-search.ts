@@ -99,7 +99,7 @@ const NUMERIC_REGEX = new RegExp(
  * blue-eyes,en,ja
  */
 const TEXT_REGEX = new RegExp(
-	/^(?<text>.*?)(?:,(?<inputLang>LOCALES))?(?:,(?<resultLang>))?$/
+	/^(?<text>.*?)(?:,(?<inputLang>LOCALES))?(?:,(?<resultLang>LOCALES))?$/
 		.toString()
 		.slice(1, -1)
 		.replaceAll("LOCALES", LOCALES.join("|"))
