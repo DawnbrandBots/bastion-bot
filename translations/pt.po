@@ -139,64 +139,64 @@ msgstr "Não foi possível encontrar uma carta compatível com `${ input }`!"
 msgid "Could not find art for `${ name }`!"
 msgstr "Não foi possível encontrar uma arte para `${ name }`!"
 
-#: src\commands\deck.ts:207
+#: src\commands\deck.ts:236
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
 msgstr[0] "${ counts.Monster } Monstro"
 msgstr[1] "${ counts.Monster } Monstros"
 
-#: src\commands\deck.ts:210
+#: src\commands\deck.ts:239
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
 msgstr[0] "${ counts.Spell } Magia"
 msgstr[1] "${ counts.Spell } Magias"
 
-#: src\commands\deck.ts:213
+#: src\commands\deck.ts:242
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
 msgstr[0] "${ counts.Trap } Armadilha"
 msgstr[1] "${ counts.Trap } Armadilhas"
 
-#: src\commands\deck.ts:241
+#: src\commands\deck.ts:270
 msgid "Your Deck"
 msgstr "Seu Deck"
 
-#: src\commands\deck.ts:246
+#: src\commands\deck.ts:275
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
 msgstr[0] "Deck Principal (${ deck.main.length } carta — ${ countDetail })"
 msgstr[1] "Deck Principal (${ deck.main.length } cartas — ${ countDetail })"
 
-#: src\commands\deck.ts:253
+#: src\commands\deck.ts:282
 msgid "Main Deck (continued)"
 msgstr "Deck Principal (continuação)"
 
-#: src\commands\deck.ts:260
+#: src\commands\deck.ts:289
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
 msgstr[0] "Deck Adicional (${ deck.extra.length } carta — ${ _countDetail })"
 msgstr[1] "Deck Adicional (${ deck.extra.length } cartas — ${ _countDetail })"
 
-#: src\commands\deck.ts:267
+#: src\commands\deck.ts:296
 msgid "Extra Deck (continued)"
 msgstr "Deck Adicional (continuação)"
 
-#: src\commands\deck.ts:274
+#: src\commands\deck.ts:303
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
 msgstr[0] "Deck Auxiliar (${ deck.side.length } carta — ${ _countDetail2 })"
 msgstr[1] "Deck Auxiliar (${ deck.side.length } cartas — ${ _countDetail2 })"
 
-#: src\commands\deck.ts:281
+#: src\commands\deck.ts:310
 msgid "Side Deck (continued)"
 msgstr "Deck Auxiliar (continuação)"
 
-#: src\commands\deck.ts:374
+#: src\commands\deck.ts:399
 msgid "Error: Your deck is empty."
 msgstr "Erro: Seu deck está vazio"
 
@@ -336,15 +336,15 @@ msgstr ""
 msgid "Revision: ${ process.env.BOT_REVISION }."
 msgstr "Revisão: ${ process.env.BOT_REVISION }."
 
-#: src\commands\deck.ts:291
+#: src\commands\deck.ts:320
 msgid ".ydk files must have the .ydk extension!"
 msgstr ""
 
-#: src\commands\deck.ts:294
+#: src\commands\deck.ts:323
 msgid ".ydk files should not be larger than 1 KB!"
 msgstr ""
 
-#: src\commands\deck.ts:284
+#: src\commands\deck.ts:313
 msgid "ydke URL"
 msgstr ""
 
@@ -374,13 +374,13 @@ msgstr ""
 msgid "No market price"
 msgstr ""
 
-#: src\commands\deck.ts:446
+#: src\commands\deck.ts:471
 #. disable original button
 #. prepare row to disable button on original message
 msgid "Upload Complete"
 msgstr ""
 
-#: src\commands\deck.ts:454
+#: src\commands\deck.ts:479
 #. reply in affirmation
 #, javascript-format
 msgid ""
@@ -398,18 +398,18 @@ msgstr ""
 msgid "Could not find prices for `${ name }`!"
 msgstr ""
 
-#: src\commands\deck.ts:391
+#: src\commands\deck.ts:416
 #. prepare interaction button for FTP upload
 msgid "Upload to YGOPRODECK"
 msgstr ""
 
-#: src\commands\deck.ts:431
+#: src\commands\deck.ts:456
 #. inform user of error
 #, javascript-format
 msgid "Deck upload failed! Error: ${ realError.message }"
 msgstr ""
 
-#: src\commands\deck.ts:308
+#: src\commands\deck.ts:342
 msgid "FTP credentials are undefined!"
 msgstr ""
 
@@ -742,28 +742,28 @@ msgctxt "command-option"
 msgid "command"
 msgstr ""
 
-#: src\commands\deck.ts:93
+#: src\commands\deck.ts:122
 msgctxt "command-option"
 msgid "url"
 msgstr ""
 
-#: src\commands\deck.ts:99
+#: src\commands\deck.ts:128
 msgctxt "command-option"
 msgid "file"
 msgstr ""
 
-#: src\commands\deck.ts:105
-#: src\commands\deck.ts:111
+#: src\commands\deck.ts:134
+#: src\commands\deck.ts:140
 msgctxt "command-option"
 msgid "deck"
 msgstr ""
 
-#: src\commands\deck.ts:117
+#: src\commands\deck.ts:146
 msgctxt "command-option"
 msgid "public"
 msgstr ""
 
-#: src\commands\deck.ts:124
+#: src\commands\deck.ts:153
 msgctxt "command-option"
 msgid "stacked"
 msgstr ""
@@ -839,34 +839,34 @@ msgctxt "command-option-description"
 msgid "The name of a specific Slash Command."
 msgstr ""
 
-#: src\commands\deck.ts:96
+#: src\commands\deck.ts:125
 msgctxt "command-option-description"
 msgid "View a deck by entering a ydke:// URL."
 msgstr ""
 
-#: src\commands\deck.ts:102
+#: src\commands\deck.ts:131
 msgctxt "command-option-description"
 msgid "View a deck by uploading a .ydk file."
 msgstr ""
 
-#: src\commands\deck.ts:108
+#: src\commands\deck.ts:137
 msgctxt "command-option-description"
 msgid "The ydke:// URL of the deck you want to view."
 msgstr ""
 
-#: src\commands\deck.ts:114
+#: src\commands\deck.ts:143
 msgctxt "command-option-description"
 msgid "The .ydk file of the deck you want to view."
 msgstr ""
 
-#: src\commands\deck.ts:120
+#: src\commands\deck.ts:149
 msgctxt "command-option-description"
 msgid ""
 "Whether to display the deck details publicly in chat. This is false by "
 "default."
 msgstr ""
 
-#: src\commands\deck.ts:127
+#: src\commands\deck.ts:156
 msgctxt "command-option-description"
 msgid ""
 "Whether to display the deck sections as one stacked column. This is false "
@@ -989,7 +989,7 @@ msgctxt "command-name"
 msgid "help"
 msgstr ""
 
-#: src\commands\deck.ts:86
+#: src\commands\deck.ts:115
 msgctxt "command-name"
 msgid "deck"
 msgstr ""
@@ -1039,7 +1039,7 @@ msgctxt "command-description"
 msgid "Get help with a Slash Command."
 msgstr ""
 
-#: src\commands\deck.ts:89
+#: src\commands\deck.ts:118
 msgctxt "command-description"
 msgid ""
 "Display a deck list from ydke:// or .ydk format, exported from a number of "
