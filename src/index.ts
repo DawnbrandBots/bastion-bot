@@ -7,9 +7,10 @@ import { addLocale } from "ttag";
 import { BotFactory } from "./bot";
 import { Command } from "./Command";
 import { classes, registerSlashCommands } from "./commands";
-import { InteractionListener, PingMessageListener, SearchMessageListener } from "./events";
+import { InteractionListener, MessageDeleteListener, PingMessageListener, SearchMessageListener } from "./events";
 import { LocaleProvider, SQLiteLocaleProvider } from "./locale";
 import { getLogger } from "./logger";
+import { RecentMessageCache } from "./message-cache";
 import { Metrics } from "./metrics";
 
 const logger = getLogger("index");
@@ -44,12 +45,16 @@ if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 		useValue: localeDb
 	});
 
+	// TTL: 1 minute, sweep every 5 minutes
+	container.registerInstance<RecentMessageCache>(RecentMessageCache, new RecentMessageCache(60000, 300000));
+
 	//container.registerSingleton<Metrics>(Metrics);
 	container.registerSingleton<LocaleProvider>("LocaleProvider", SQLiteLocaleProvider);
 	classes.forEach(Class => container.register<Command>("Command", { useClass: Class }));
 	container.register<InteractionListener>("Listener", { useClass: InteractionListener });
 	container.register<PingMessageListener>("Listener", { useClass: PingMessageListener });
 	container.register<SearchMessageListener>("Listener", { useClass: SearchMessageListener });
+	container.register<MessageDeleteListener>("Listener", { useClass: MessageDeleteListener });
 	//container.register<BotFactory>(BotFactory, { useClass: BotFactory });
 
 	const bot = container.resolve(BotFactory).createInstance();

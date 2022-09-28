@@ -7,6 +7,7 @@ import { Listener } from ".";
 import { createCardEmbed, getCard } from "../card";
 import { Locale, LocaleProvider, LOCALES } from "../locale";
 import { getLogger } from "../logger";
+import { RecentMessageCache } from "../message-cache";
 import { addFunding, addNotice } from "../utils";
 
 // Only take certain plugins because we don't need to parse all markup like bolding
@@ -164,7 +165,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 
 	#logger = getLogger("events:message:search");
 
-	constructor(@inject("LocaleProvider") private locales: LocaleProvider) {}
+	constructor(@inject("LocaleProvider") private locales: LocaleProvider, private recentCache: RecentMessageCache) {}
 
 	async run(message: Message): Promise<void> {
 		if (message.author.bot) {
@@ -194,14 +195,18 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 					}
 				})
 			);
-		const replies = await Promise.allSettled(promises);
-		for (const reply of replies) {
-			if (reply.status === "fulfilled") {
-				this.#logger.info(reply.value.createdTimestamp - message.createdTimestamp);
+		const results = await Promise.allSettled(promises);
+		const replies = [];
+		for (const result of results) {
+			if (result.status === "fulfilled") {
+				const reply = result.value;
+				this.#logger.info(reply.createdTimestamp - message.createdTimestamp);
+				replies.push(reply.id);
 			} else {
 				this.#logger.info(-1);
 			}
 		}
+		this.recentCache.set(message, replies);
 		message.reactions.cache.get("🕙")?.users.remove(message.client.user).catch(this.#logger.warn);
 	}
 }
