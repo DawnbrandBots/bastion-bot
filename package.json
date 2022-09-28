@@ -21,7 +21,7 @@
 		"yarn": "1.22.x"
 	},
 	"dependencies": {
-		"@sinclair/typebox": "^0.24.28",
+		"@sinclair/typebox": "^0.24.43",
 		"basic-ftp": "^5.0.2",
 		"better-sqlite3": "^7.6.2",
 		"debug": "^4.3.4",
