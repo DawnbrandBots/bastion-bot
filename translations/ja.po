@@ -6,33 +6,33 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src\card.ts:254
+#: src\card.ts:253
 msgid ":link: Links"
 msgstr ""
 
-#: src\card.ts:255
+#: src\card.ts:254
 #, javascript-format
 msgid ""
 "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
 "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
 
-#: src\card.ts:258
+#: src\card.ts:257
 #, javascript-format
 msgid "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
 
-#: src\card.ts:318
+#: src\card.ts:317
 #, javascript-format
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 msgstr "**種族**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:320
+#: src\card.ts:319
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 msgstr "**属性**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
-#: src\card.ts:324
+#: src\card.ts:323
 msgid ""
 "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
 "card.def }"
@@ -40,7 +40,7 @@ msgstr ""
 "**ランク**: ${ Icon.Rank } ${ card.rank } **攻撃力**: ${ card.atk } **守備力**: ${ "
 "card.def }"
 
-#: src\card.ts:327
+#: src\card.ts:326
 #, javascript-format
 msgid ""
 "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
@@ -49,7 +49,7 @@ msgstr ""
 "**リンクの数字分**: ${ card.link_arrows.length } **攻撃力**: ${ card.atk } "
 "**リンクマーカー**: ${ arrows }"
 
-#: src\card.ts:329
+#: src\card.ts:328
 #, javascript-format
 msgid ""
 "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
@@ -58,12 +58,12 @@ msgstr ""
 "**レベル**: ${ Icon.Level } ${ card.level } **攻撃力**: ${ card.atk } **守備力**: ${ "
 "card.def }"
 
-#: src\card.ts:336
+#: src\card.ts:335
 msgid "**Pendulum Scale**: ${ formattedScale }"
 msgstr "**ペンデュラムスケール**: ${ formattedScale }"
 
-#: src\card.ts:356
-#: src\card.ts:374
+#: src\card.ts:355
+#: src\card.ts:373
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
 msgstr ""
@@ -134,58 +134,58 @@ msgstr ""
 msgid "Could not find art for `${ name }`!"
 msgstr ""
 
-#: src\commands\deck.ts:236
+#: src\commands\deck.ts:190
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
 msgstr[0] ""
 
-#: src\commands\deck.ts:239
+#: src\commands\deck.ts:193
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
 msgstr[0] ""
 
-#: src\commands\deck.ts:242
+#: src\commands\deck.ts:196
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
 msgstr[0] ""
 
-#: src\commands\deck.ts:270
+#: src\commands\deck.ts:224
 msgid "Your Deck"
 msgstr ""
 
-#: src\commands\deck.ts:275
+#: src\commands\deck.ts:229
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
 msgstr[0] ""
 
-#: src\commands\deck.ts:282
+#: src\commands\deck.ts:236
 msgid "Main Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:289
+#: src\commands\deck.ts:243
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
 msgstr[0] ""
 
-#: src\commands\deck.ts:296
+#: src\commands\deck.ts:250
 msgid "Extra Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:303
+#: src\commands\deck.ts:257
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
 msgstr[0] ""
 
-#: src\commands\deck.ts:310
+#: src\commands\deck.ts:264
 msgid "Side Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:399
+#: src\commands\deck.ts:332
 msgid "Error: Your deck is empty."
 msgstr ""
 
@@ -325,19 +325,19 @@ msgstr ""
 msgid "Revision: ${ process.env.BOT_REVISION }."
 msgstr ""
 
-#: src\commands\deck.ts:320
+#: src\commands\deck.ts:274
 msgid ".ydk files must have the .ydk extension!"
 msgstr ""
 
-#: src\commands\deck.ts:323
+#: src\commands\deck.ts:277
 msgid ".ydk files should not be larger than 1 KB!"
 msgstr ""
 
-#: src\commands\deck.ts:313
+#: src\commands\deck.ts:267
 msgid "ydke URL"
 msgstr ""
 
-#: src\card.ts:292
+#: src\card.ts:291
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 msgid "**Limit**: ${ limitRegulationDisplay }"
 msgstr ""
@@ -363,21 +363,6 @@ msgstr ""
 msgid "No market price"
 msgstr ""
 
-#: src\commands\deck.ts:471
-#. disable original button
-#. prepare row to disable button on original message
-msgid "Upload Complete"
-msgstr ""
-
-#: src\commands\deck.ts:479
-#. reply in affirmation
-#, javascript-format
-msgid ""
-"Deck successfully uploaded to "
-"<https://ygoprodeck.com/deckbuilder/?u=https://ygoprodeck.com/discord-decks/"
-"${ filename }>!"
-msgstr ""
-
 #: src\commands\price.ts:167
 #, javascript-format
 msgid "Prices for ${ card.name[resultLanguage] } - ${ vendorName }"
@@ -385,21 +370,6 @@ msgstr ""
 
 #: src\commands\price.ts:181
 msgid "Could not find prices for `${ name }`!"
-msgstr ""
-
-#: src\commands\deck.ts:416
-#. prepare interaction button for FTP upload
-msgid "Upload to YGOPRODECK"
-msgstr ""
-
-#: src\commands\deck.ts:456
-#. inform user of error
-#, javascript-format
-msgid "Deck upload failed! Error: ${ realError.message }"
-msgstr ""
-
-#: src\commands\deck.ts:342
-msgid "FTP credentials are undefined!"
 msgstr ""
 
 #: src\card.ts:37
@@ -677,18 +647,18 @@ msgctxt "attribute"
 msgid "DIVINE"
 msgstr "神"
 
-#: src\card.ts:342
-#: src\card.ts:353
+#: src\card.ts:341
+#: src\card.ts:352
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "カードテキスト"
 
-#: src\card.ts:347
+#: src\card.ts:346
 msgctxt "card-embed"
 msgid "Pendulum Effect"
 msgstr "ペンデュラム効果"
 
-#: src\card.ts:369
+#: src\card.ts:368
 msgctxt "card-embed"
 msgid "Card Effect"
 msgstr ""
@@ -731,28 +701,28 @@ msgctxt "command-option"
 msgid "page"
 msgstr ""
 
-#: src\commands\deck.ts:122
+#: src\commands\deck.ts:76
 msgctxt "command-option"
 msgid "url"
 msgstr ""
 
-#: src\commands\deck.ts:128
+#: src\commands\deck.ts:82
 msgctxt "command-option"
 msgid "file"
 msgstr ""
 
-#: src\commands\deck.ts:134
-#: src\commands\deck.ts:140
+#: src\commands\deck.ts:88
+#: src\commands\deck.ts:94
 msgctxt "command-option"
 msgid "deck"
 msgstr ""
 
-#: src\commands\deck.ts:146
+#: src\commands\deck.ts:100
 msgctxt "command-option"
 msgid "public"
 msgstr ""
 
-#: src\commands\deck.ts:153
+#: src\commands\deck.ts:107
 msgctxt "command-option"
 msgid "stacked"
 msgstr ""
@@ -828,34 +798,34 @@ msgctxt "command-option-description"
 msgid "The name of the Yugipedia page you want to search for."
 msgstr ""
 
-#: src\commands\deck.ts:125
+#: src\commands\deck.ts:79
 msgctxt "command-option-description"
 msgid "View a deck by entering a ydke:// URL."
 msgstr ""
 
-#: src\commands\deck.ts:131
+#: src\commands\deck.ts:85
 msgctxt "command-option-description"
 msgid "View a deck by uploading a .ydk file."
 msgstr ""
 
-#: src\commands\deck.ts:137
+#: src\commands\deck.ts:91
 msgctxt "command-option-description"
 msgid "The ydke:// URL of the deck you want to view."
 msgstr ""
 
-#: src\commands\deck.ts:143
+#: src\commands\deck.ts:97
 msgctxt "command-option-description"
 msgid "The .ydk file of the deck you want to view."
 msgstr ""
 
-#: src\commands\deck.ts:149
+#: src\commands\deck.ts:103
 msgctxt "command-option-description"
 msgid ""
 "Whether to display the deck details publicly in chat. This is false by "
 "default."
 msgstr ""
 
-#: src\commands\deck.ts:156
+#: src\commands\deck.ts:110
 msgctxt "command-option-description"
 msgid ""
 "Whether to display the deck sections as one stacked column. This is false "
@@ -978,7 +948,7 @@ msgctxt "command-name"
 msgid "yugipedia"
 msgstr ""
 
-#: src\commands\deck.ts:115
+#: src\commands\deck.ts:69
 msgctxt "command-name"
 msgid "deck"
 msgstr ""
@@ -1028,7 +998,7 @@ msgctxt "command-description"
 msgid "Search the Yugipedia wiki for a page and link to it."
 msgstr ""
 
-#: src\commands\deck.ts:118
+#: src\commands\deck.ts:72
 msgctxt "command-description"
 msgid ""
 "Display a deck list from ydke:// or .ydk format, exported from a number of "
