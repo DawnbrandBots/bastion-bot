@@ -28,7 +28,10 @@ export class BotFactory {
 				GatewayIntentBits.DirectMessages
 				// Intents.FLAGS.DIRECT_MESSAGE_REACTIONS
 			],
-			partials: [Partials.Channel],
+			partials: [
+				Partials.Channel, // for direct message events
+				Partials.Message // for message deletion events
+			],
 			shards: `${process.env.DISCORD_TOTAL_SHARDS}` === "auto" ? "auto" : isNaN(shard) ? undefined : shard,
 			shardCount: parseInt(`${process.env.DISCORD_TOTAL_SHARDS}`) || undefined,
 			makeCache: Options.cacheWithLimits({
