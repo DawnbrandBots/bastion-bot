@@ -246,8 +246,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 
 	const embed = new EmbedBuilder()
 		.setTitle(formatCardName(card, lang))
-		// TODO: update when we start doing cards without Konami IDs
-		.setURL(yugipedia)
+		.setURL(ygoprodeck)
 		.setThumbnail(`${process.env.IMAGE_HOST}/${card.password}.png`);
 
 	const links = {

@@ -6,11 +6,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src\card.ts:254
+#: src\card.ts:253
 msgid ":link: Links"
 msgstr ":link: 링크"
 
-#: src\card.ts:255
+#: src\card.ts:254
 #, javascript-format
 msgid ""
 "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
@@ -19,22 +19,22 @@ msgstr ""
 "[공식 코나미 DB](${ official }) | [OCG 규칙](${ rulings }) | [Yugipedia](${ "
 "yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
-#: src\card.ts:258
+#: src\card.ts:257
 #, javascript-format
 msgid "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
-#: src\card.ts:318
+#: src\card.ts:317
 #, javascript-format
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 msgstr "**종족**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:320
+#: src\card.ts:319
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 msgstr "**속성**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
-#: src\card.ts:324
+#: src\card.ts:323
 msgid ""
 "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
 "card.def }"
@@ -42,7 +42,7 @@ msgstr ""
 "**랭크**: ${ Icon.Rank } ${ card.rank } **공격력**: ${ card.atk } **수비력**: ${ "
 "card.def }"
 
-#: src\card.ts:327
+#: src\card.ts:326
 #, javascript-format
 msgid ""
 "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
@@ -51,7 +51,7 @@ msgstr ""
 "**LINK**: ${ card.link_arrows.length } **공격력**: ${ card.atk } **링크 마커**: ${ "
 "arrows }"
 
-#: src\card.ts:329
+#: src\card.ts:328
 #, javascript-format
 msgid ""
 "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
@@ -60,12 +60,12 @@ msgstr ""
 "**레벨**: ${ Icon.Level } ${ card.level } **공격력**: ${ card.atk } **수비력**: ${ "
 "card.def }"
 
-#: src\card.ts:336
+#: src\card.ts:335
 msgid "**Pendulum Scale**: ${ formattedScale }"
 msgstr "**펜듈럼 스케일**: ${ formattedScale }"
 
-#: src\card.ts:356
-#: src\card.ts:374
+#: src\card.ts:355
+#: src\card.ts:373
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
 msgstr "패스워드: ${ card.password } | 코나미 ID #${ card.konami_id }"
@@ -128,7 +128,7 @@ msgid "Found what you were looking for? Consider supporting us!"
 msgstr "찾으시려던 것을 찾으셨나요? 저희를 지원해 주시는 건 어떤가요?"
 
 #: src\commands\art.ts:97
-#: src\commands\price.ts:146
+#: src\commands\price.ts:148
 #: src\commands\search.ts:90
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
@@ -224,7 +224,7 @@ msgstr ""
 "해당 다이렉트 메시지의 로케일은 디스코드 기본값으로 초기화됩니다. 당신의 디스코드 설정은 ${ interaction.locale } "
 "입니다."
 
-#: src\commands\ping.ts:35
+#: src\commands\ping.ts:36
 #: src\events\message.ts:28
 #, javascript-format
 msgid "Average WebSocket ping (new instance): ${ ping } ms"
@@ -349,7 +349,7 @@ msgstr ""
 msgid "ydke URL"
 msgstr ""
 
-#: src\card.ts:292
+#: src\card.ts:291
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 msgid "**Limit**: ${ limitRegulationDisplay }"
 msgstr ""
@@ -367,22 +367,21 @@ msgid "CoolStuffInc"
 msgstr ""
 
 #: src\commands\price.ts:118
-#. note: this is about our database, not the user input. Could clarify.
-#. unsure where, how or if to localise this error. Will it even come up?
+#. TODO: future, determine localisation and relevance status of this error
 msgid "Sorry, I can't find the price for a card with no English name!"
 msgstr ""
 
-#: src\commands\price.ts:158
+#: src\commands\price.ts:159
 msgid "No market price"
 msgstr ""
 
-#: src\commands\price.ts:164
+#: src\commands\price.ts:167
 #, javascript-format
-msgid "Prices for ${ card.name[resultLanguage] }"
+msgid "Prices for ${ card.name[resultLanguage] } - ${ vendorName }"
 msgstr ""
 
-#: src\commands\price.ts:172
-msgid "Could not find prices for `${ _name }`!"
+#: src\commands\price.ts:181
+msgid "Could not find prices for `${ name }`!"
 msgstr ""
 
 #: src\card.ts:37
@@ -660,18 +659,18 @@ msgctxt "attribute"
 msgid "DIVINE"
 msgstr "신"
 
-#: src\card.ts:342
-#: src\card.ts:353
+#: src\card.ts:341
+#: src\card.ts:352
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "카드 텍스트"
 
-#: src\card.ts:347
+#: src\card.ts:346
 msgctxt "card-embed"
 msgid "Pendulum Effect"
 msgstr "펜듈럼 효과"
 
-#: src\card.ts:369
+#: src\card.ts:368
 msgctxt "card-embed"
 msgid "Card Effect"
 msgstr "카드 효과"
@@ -709,7 +708,7 @@ msgctxt "command-option"
 msgid "page"
 msgstr "페이지"
 
-#: src\commands\help.ts:51
+#: src\commands\help.ts:52
 msgctxt "command-option"
 msgid "command"
 msgstr ""
@@ -806,7 +805,7 @@ msgctxt "command-option-description"
 msgid "The name of the Yugipedia page you want to search for."
 msgstr "검색할 Yugipedia 페이지의 이름입니다."
 
-#: src\commands\help.ts:54
+#: src\commands\help.ts:55
 msgctxt "command-option-description"
 msgid "The name of a specific Slash Command."
 msgstr ""
@@ -941,7 +940,7 @@ msgctxt "command-name"
 msgid "art"
 msgstr "일러스트"
 
-#: src\commands\ping.ts:22
+#: src\commands\ping.ts:23
 msgctxt "command-name"
 msgid "ping"
 msgstr "핑"
@@ -956,7 +955,7 @@ msgctxt "command-name"
 msgid "yugipedia"
 msgstr ""
 
-#: src\commands\help.ts:48
+#: src\commands\help.ts:49
 msgctxt "command-name"
 msgid "help"
 msgstr ""
@@ -991,7 +990,7 @@ msgctxt "command-description"
 msgid "Display the art for a card!"
 msgstr "카드의 일러스트를 표시합니다."
 
-#: src\commands\ping.ts:23
+#: src\commands\ping.ts:24
 msgctxt "command-description"
 msgid "Test latency to the new bot instance."
 msgstr "새로운 봇 인스턴스의 지연 시간을 테스트합니다."
@@ -1006,7 +1005,7 @@ msgctxt "command-description"
 msgid "Search the Yugipedia wiki for a page and link to it."
 msgstr "Yugipedia에서 검색하고 링크를 출력합니다."
 
-#: src\commands\help.ts:49
+#: src\commands\help.ts:50
 msgctxt "command-description"
 msgid "Get help with a Slash Command."
 msgstr ""
