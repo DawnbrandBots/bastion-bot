@@ -38,15 +38,44 @@ import { addNotice, serializeCommand, splitText } from "../utils";
 // Same hack as in card.ts
 const rc = c;
 
-// create one client for all ftp interactions
-const ftp = new Client();
-
 @injectable()
 export class DeckCommand extends Command {
 	#logger = getLogger("command:deck");
 
+	// create one client for all ftp interactions
+	private ftp: Client;
+
+	// derived details for ftp authentication
+	private ftpHost: string | undefined;
+	private ftpPort: number | undefined;
+	private ftpUser: string | undefined;
+	private ftpPass: string | undefined;
+
 	constructor(@inject(Metrics) metrics: Metrics, @inject("LocaleProvider") private locales: LocaleProvider) {
 		super(metrics);
+		this.ftp = new Client();
+
+		if (!process.env.FTP_URL) {
+			// Internal error string doesn't need to be localised
+			this.logger.warn("FTP credentials are not defined!");
+		} else {
+			// FTP_URL format in .env is ftp://user:password@host:port
+			const ftpUrl = new URL(process.env.FTP_URL);
+
+			this.ftpHost = ftpUrl.hostname;
+
+			// if the specified port is the default for the protocol, i.e. 21,
+			// URL#port returns the empty string, so we need to step in manually
+			this.ftpPort = parseInt(ftpUrl.port);
+			if (isNaN(this.ftpPort)) {
+				this.ftpPort = 21;
+			}
+
+			// URL class percent-encodes stuff we don't want it to
+			this.ftpUser = decodeURIComponent(ftpUrl.username);
+
+			this.ftpPass = ftpUrl.password;
+		}
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
@@ -303,28 +332,24 @@ export class DeckCommand extends Command {
 	}
 
 	protected async upload(filename: string, deck: Buffer): Promise<void> {
-		// with no credentials, we can't upload
-		if (process.env.FTP_URL === undefined) {
+		// one of these should prove the others, but it's good to explicitly typeguard
+		if (
+			this.ftpHost === undefined ||
+			this.ftpPort === undefined ||
+			this.ftpUser === undefined ||
+			this.ftpPass === undefined
+		) {
 			throw new Error(t`FTP credentials are undefined!`);
 		}
-		// FTP_URL format in .env is ftp://user:password@host:port
-		const ftpUrl = new URL(process.env.FTP_URL);
-
-		// if the specified port is the default for the protocol, i.e. 21,
-		// URL#port returns the empty string, so we need to step in manually
-		let port = parseInt(ftpUrl.port);
-		if (isNaN(port)) {
-			port = 21;
-		}
-		await ftp.access({
-			host: ftpUrl.hostname,
-			port,
-			user: decodeURIComponent(ftpUrl.username), // URL class percent-encodes stuff we don't want it to
-			password: ftpUrl.password,
+		await this.ftp.access({
+			host: this.ftpHost,
+			port: this.ftpPort,
+			user: this.ftpUser,
+			password: this.ftpPass,
 			secure: false // current FTP destination does not support SFTP
 		});
-		await ftp.uploadFrom(Readable.from(deck), filename);
-		ftp.close(); // will be reopened by access next time it's needed
+		await this.ftp.uploadFrom(Readable.from(deck), filename);
+		this.ftp.close(); // will be reopened by access next time it's needed
 	}
 
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
