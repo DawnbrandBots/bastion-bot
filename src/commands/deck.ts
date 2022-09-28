@@ -481,15 +481,16 @@ export class DeckCommand extends Command {
 				});
 			})
 			.catch(async (err: DiscordAPIError) => {
-				// a rejection can mean the timeout was reached without a response
-				// otherwise, though, we want to treat it as a normal error
+				// a rejection can just mean the timeout was reached without a response
 				if (err.code === DiscordjsErrorCodes.InteractionCollectorError) {
+					// remove original button
+					interaction
+						.editReply({ embeds, files: [attachment], components: [] })
+						.catch(e => this.logger.error(serializeCommand(interaction), e));
+				} else {
+					// otherwise, though, we want to treat it as a normal error
 					this.logger.error(serializeCommand(interaction), err);
 				}
-				// remove original button
-				interaction
-					.editReply({ embeds, files: [attachment], components: [] })
-					.catch(e => this.logger.error(serializeCommand(interaction), e));
 			});
 
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
