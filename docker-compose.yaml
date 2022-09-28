@@ -9,6 +9,7 @@ services:
       DISCORD_TOKEN:
       SEARCH_API:
       IMAGE_HOST:
+      FTP_URL:
       DISCORD_TOTAL_SHARDS: auto
       BOT_LOGGER_WEBHOOK: "${BOT_LOGGER_WEBHOOK:-}"
       BOT_PRESENCE: "${BOT_PRESENCE:-}"
