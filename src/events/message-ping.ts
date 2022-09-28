@@ -6,10 +6,10 @@ import { LocaleProvider } from "../locale";
 import { getLogger } from "../logger";
 
 @injectable()
-export class MessageListener implements Listener<"messageCreate"> {
+export class PingMessageListener implements Listener<"messageCreate"> {
 	readonly type = "messageCreate";
 
-	#logger = getLogger("events:message");
+	#logger = getLogger("events:message:ping");
 
 	constructor(@inject("LocaleProvider") private locales: LocaleProvider) {}
 

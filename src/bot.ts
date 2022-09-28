@@ -23,6 +23,7 @@ export class BotFactory {
 			intents: [
 				GatewayIntentBits.Guilds,
 				GatewayIntentBits.GuildMessages,
+				GatewayIntentBits.MessageContent,
 				// Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
 				GatewayIntentBits.DirectMessages
 				// Intents.FLAGS.DIRECT_MESSAGE_REACTIONS

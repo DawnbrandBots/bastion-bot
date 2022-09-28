@@ -1,5 +1,5 @@
 import { Message } from "discord.js";
-import { MessageListener } from "../../src/events";
+import { PingMessageListener } from "../../src/events";
 import { Locale, LocaleProvider } from "../../src/locale";
 
 const { Message: MockMessage, MessageMentions } = jest.createMockFromModule("discord.js");
@@ -24,7 +24,7 @@ class MockLocaleProvider extends LocaleProvider {
 }
 
 describe("Message event listener", () => {
-	const listener = new MessageListener(new MockLocaleProvider());
+	const listener = new PingMessageListener(new MockLocaleProvider());
 
 	let message: Message;
 	const user = {};
