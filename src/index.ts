@@ -45,6 +45,13 @@ if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 		useValue: localeDb
 	});
 
+	const abdeployJson = process.argv[2]
+		? path.join(process.argv[2], "abdeploy.json")
+		: path.join(os.tmpdir(), "bastion-abdeploy.json");
+	container.register<string>("abdeployJson", {
+		useValue: abdeployJson
+	});
+
 	// TTL: 1 minute, sweep every 5 minutes
 	container.registerInstance<RecentMessageCache>(RecentMessageCache, new RecentMessageCache(60000, 300000));
 

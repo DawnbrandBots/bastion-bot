@@ -4,6 +4,7 @@ import { parserFor, ParserRules } from "simple-markdown";
 import { inject, injectable } from "tsyringe";
 import { t, useLocale } from "ttag";
 import { Listener } from ".";
+import { ABDeploy } from "../abdeploy";
 import { createCardEmbed, getCard } from "../card";
 import { Locale, LocaleProvider, LOCALES } from "../locale";
 import { getLogger } from "../logger";
@@ -165,10 +166,18 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 
 	#logger = getLogger("events:message:search");
 
-	constructor(@inject("LocaleProvider") private locales: LocaleProvider, private recentCache: RecentMessageCache) {}
+	constructor(
+		@inject("LocaleProvider") private locales: LocaleProvider,
+		private recentCache: RecentMessageCache,
+		private abdeploy: ABDeploy
+	) {}
 
 	async run(message: Message): Promise<void> {
 		if (message.author.bot) {
+			return;
+		}
+		// New functionality activated only in direct messages and select servers
+		if (message.guildId && !this.abdeploy.has(message.guildId)) {
 			return;
 		}
 		const delimiter = getDelimiter(message);
