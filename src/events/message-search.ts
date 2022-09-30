@@ -176,8 +176,8 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		if (message.author.bot) {
 			return;
 		}
-		// New functionality activated only in direct messages and select servers
-		if (message.guildId && !this.abdeploy.has(message.guildId)) {
+		// New functionality activated only in select servers
+		if (!message.guildId || !this.abdeploy.has(message.guildId)) {
 			return;
 		}
 		const delimiter = getDelimiter(message);
