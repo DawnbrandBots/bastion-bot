@@ -1,6 +1,8 @@
+import { Static } from "@sinclair/typebox";
 import sqlite, { Database, Statement } from "better-sqlite3";
 import { ChatInputCommandInteraction, Message } from "discord.js";
 import { inject, singleton } from "tsyringe";
+import { CardSchema } from "./definitions/yaml-yugi";
 
 @singleton()
 export class Metrics {
@@ -50,11 +52,27 @@ CREATE TABLE IF NOT EXISTS "searches" (
 		this.commandStatement.run(id, guild, channel, author, command, args, latency);
 	}
 
-	public writeSearch(message: Message, query: string, result: string, latency: number): void {
-		const id = message.id;
-		const guild = message.guild?.id;
-		const channel = message.channel?.id;
-		const author = message.author.id;
+	public writeSearch(
+		searchMessage: Message,
+		query: string,
+		resultCard?: Static<typeof CardSchema>,
+		replyMessage?: Message
+	): void {
+		const id = searchMessage.id;
+		const guild = searchMessage.guildId;
+		const channel = searchMessage.channelId;
+		const author = searchMessage.author.id;
+		let result = null;
+		if (resultCard) {
+			if (resultCard.password) {
+				result = `${resultCard.password}`;
+			} else if (resultCard.konami_id) {
+				result = `%${resultCard.konami_id}`;
+			} else {
+				result = `${resultCard.name.en}`;
+			}
+		}
+		const latency = replyMessage ? replyMessage.createdTimestamp - searchMessage.createdTimestamp : -1;
 		this.searchStatement.run(id, guild, channel, author, query, result, latency);
 	}
 

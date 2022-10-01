@@ -7,8 +7,9 @@ import { Listener } from ".";
 import { ABDeploy } from "../abdeploy";
 import { createCardEmbed, getCard } from "../card";
 import { Locale, LocaleProvider, LOCALES } from "../locale";
-import { getLogger } from "../logger";
+import { getLogger, Logger } from "../logger";
 import { RecentMessageCache } from "../message-cache";
+import { Metrics } from "../metrics";
 import { addFunding, addNotice } from "../utils";
 
 // Only take certain plugins because we don't need to parse all markup like bolding
@@ -168,9 +169,20 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 
 	constructor(
 		@inject("LocaleProvider") private locales: LocaleProvider,
+		private metrics: Metrics,
 		private recentCache: RecentMessageCache,
 		private abdeploy: ABDeploy
 	) {}
+
+	protected log(level: keyof Logger, message: Message, ...args: Parameters<Logger[keyof Logger]>): void {
+		const context = {
+			channel: message.channelId,
+			message: message.id,
+			guild: message.guildId,
+			author: message.author.id
+		};
+		this.#logger[level](JSON.stringify(context), ...args);
+	}
 
 	async run(message: Message): Promise<void> {
 		if (message.author.bot) {
@@ -185,37 +197,42 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		if (inputs.length === 0) {
 			return;
 		}
-		this.#logger.info(inputs);
+		this.log("info", message, JSON.stringify(inputs));
 		inputs = inputs.slice(0, 3);
-		message.react("🕙").catch(this.#logger.warn);
-		// metrics
+		message.react("🕙").catch(error => this.log("warn", message, error));
 		const language = await this.locales.getM(message);
 		const promises = inputs
 			.map(input => [input, ...inputToGetCardArguments(input, language)] as const)
 			.map(([input, resultLanguage, ...args]) =>
-				getCard(...args).then(card => {
+				getCard(...args).then(async card => {
 					useLocale(resultLanguage);
+					let reply;
 					if (!card) {
-						return message.reply({ content: t`Could not find a card matching \`${input}\`!` });
+						reply = await message.reply({ content: t`Could not find a card matching \`${input}\`!` });
 					} else {
 						let embeds = createCardEmbed(card, resultLanguage);
 						embeds = addFunding(addNotice(embeds));
-						return message.reply({ embeds });
+						reply = await message.reply({ embeds });
 					}
+					return [card, reply] as const;
 				})
 			);
 		const results = await Promise.allSettled(promises);
 		const replies = [];
-		for (const result of results) {
+		for (const [i, result] of results.entries()) {
 			if (result.status === "fulfilled") {
-				const reply = result.value;
-				this.#logger.info(reply.createdTimestamp - message.createdTimestamp);
+				const [card, reply] = result.value;
+				this.metrics.writeSearch(message, inputs[i], card, reply);
 				replies.push(reply.id);
 			} else {
-				this.#logger.info(-1);
+				this.metrics.writeSearch(message, inputs[i]);
+				this.log("error", message, inputs[i], result.reason);
 			}
 		}
 		this.recentCache.set(message, replies);
-		message.reactions.cache.get("🕙")?.users.remove(message.client.user).catch(this.#logger.warn);
+		message.reactions.cache
+			.get("🕙")
+			?.users.remove(message.client.user)
+			.catch(error => this.log("warn", message, error));
 	}
 }
