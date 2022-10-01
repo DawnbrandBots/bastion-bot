@@ -339,7 +339,7 @@ export class DeckCommand extends Command {
 			this.ftpUser === undefined ||
 			this.ftpPass === undefined
 		) {
-			throw new Error(t`FTP credentials are undefined!`);
+			throw new Error("FTP credentials are undefined!");
 		}
 		await this.ftp.access({
 			host: this.ftpHost,
@@ -368,10 +368,10 @@ export class DeckCommand extends Command {
 				// TODO: specifically catch error for bad input and respond more clearly?
 				const end = Date.now();
 				const error = e as Error;
+				this.log(interaction, error);
 				await interaction.editReply({
 					content: error.message
 				});
-				this.log(interaction, error);
 				const latency = end - interaction.createdTimestamp;
 				return latency;
 			}
@@ -382,10 +382,10 @@ export class DeckCommand extends Command {
 			} catch (e) {
 				const end = Date.now();
 				const error = e as Error;
+				this.log(interaction, error);
 				await interaction.editReply({
 					content: error.message
 				});
-				this.log(interaction, error);
 				const latency = end - interaction.createdTimestamp;
 				return latency;
 			}
@@ -395,6 +395,7 @@ export class DeckCommand extends Command {
 		if (deck.main.length + deck.extra.length + deck.side.length < 1) {
 			useLocale(resultLanguage);
 			const end = Date.now();
+			this.logger.info(serializeCommand(interaction), "empty deck");
 			await interaction.editReply({
 				content: t`Error: Your deck is empty.`
 			});
@@ -406,6 +407,7 @@ export class DeckCommand extends Command {
 		const outUrl = toURL(deck);
 		const outFile = typedDeckToYdk(deck);
 
+		this.logger.info(serializeCommand(interaction), outUrl);
 		const content = await this.generateProfile(deck, resultLanguage, !isStacked, outUrl);
 
 		useLocale(resultLanguage);
@@ -433,6 +435,7 @@ export class DeckCommand extends Command {
 		});
 
 		const filter = (i: ButtonInteraction): boolean => {
+			this.logger.info(serializeCommand(interaction), `click: ${i.user.id}`);
 			// only allow the OP to click
 			return i.user.id === interaction.user.id;
 		};
@@ -448,21 +451,16 @@ export class DeckCommand extends Command {
 				try {
 					await this.upload(filename, deckBuffer);
 				} catch (error) {
-					// we can't specify the type in catch{}, but we can typecast now
 					// error must be from Discord.JS or basic-ftp, which we trust to only throw Errors
-					const realError = error as Error;
-					// inform user of error
-					await i.editReply({
-						content: t`Deck upload failed! Error: ${realError.message}`,
-						components: []
-					});
+					this.logger.error(serializeCommand(interaction), error);
+					await i.editReply({ content: t`Deck upload failed!` });
 					// Remove button
 					await interaction.editReply({ embeds, files: [attachment], components: [] });
-					// log the error - we're in a promise, so throwing is wrong
-					this.logger.error(serializeCommand(interaction), error);
 					return;
 				}
 
+				const url = `https://ygoprodeck.com/deckbuilder/?u=https://ygoprodeck.com/discord-decks/${filename}`;
+				this.logger.info(serializeCommand(interaction), url);
 				// disable original button
 				// prepare row to disable button on original message
 				const disabledRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -476,7 +474,7 @@ export class DeckCommand extends Command {
 
 				// reply in affirmation
 				await i.editReply({
-					content: t`Deck successfully uploaded to <https://ygoprodeck.com/deckbuilder/?u=https://ygoprodeck.com/discord-decks/${filename}>!`,
+					content: t`Deck successfully uploaded to <${url}>!`,
 					components: []
 				});
 			})

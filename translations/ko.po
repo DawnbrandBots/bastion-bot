@@ -130,6 +130,7 @@ msgstr "찾으시려던 것을 찾으셨나요? 저희를 지원해 주시는 �
 #: src\commands\art.ts:97
 #: src\commands\price.ts:148
 #: src\commands\search.ts:90
+#: src\events\message-search.ts:211
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr "일치하는 카드를 찾을 수 없습니다. : `${ input }`!"
@@ -225,13 +226,13 @@ msgstr ""
 "입니다."
 
 #: src\commands\ping.ts:36
-#: src\events\message.ts:28
+#: src\events\message-ping.ts:28
 #, javascript-format
 msgid "Average WebSocket ping (new instance): ${ ping } ms"
 msgstr "평균 WebSocket 핑 (새로운 인스턴스): ${ ping } ms"
 
 #: src\commands\ping.ts:40
-#: src\events\message.ts:60
+#: src\events\message-ping.ts:60
 msgid "Total latency: ${ latency } ms"
 msgstr "총 지연 시간: ${ latency } ms"
 
@@ -301,15 +302,15 @@ msgstr[0] ""
 msgid "Side Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:399
+#: src\commands\deck.ts:400
 msgid "Error: Your deck is empty."
 msgstr ""
 
-#: src\events\message.ts:30
+#: src\events\message-ping.ts:30
 msgid "Free and open source _Yu-Gi-Oh!_ bot"
 msgstr ""
 
-#: src\events\message.ts:31
+#: src\events\message-ping.ts:31
 msgid ""
 ":question: Help documentation on "
 "[GitHub](https://github.com/DawnbrandBots/bastion-bot), or use `.commands` "
@@ -332,7 +333,7 @@ msgid ""
 "the old bot."
 msgstr ""
 
-#: src\events\message.ts:51
+#: src\events\message-ping.ts:51
 #, javascript-format
 msgid "Revision: ${ process.env.BOT_REVISION }."
 msgstr ""
@@ -384,34 +385,25 @@ msgstr ""
 msgid "Could not find prices for `${ name }`!"
 msgstr ""
 
-#: src\commands\deck.ts:342
-msgid "FTP credentials are undefined!"
-msgstr ""
-
-#: src\commands\deck.ts:416
+#: src\commands\deck.ts:418
 #. prepare interaction button for FTP upload
 msgid "Upload to YGOPRODECK"
 msgstr ""
 
-#: src\commands\deck.ts:456
-#. inform user of error
-#, javascript-format
-msgid "Deck upload failed! Error: ${ realError.message }"
-msgstr ""
-
-#: src\commands\deck.ts:471
+#: src\commands\deck.ts:469
 #. disable original button
 #. prepare row to disable button on original message
 msgid "Upload Complete"
 msgstr ""
 
-#: src\commands\deck.ts:479
+#: src\commands\deck.ts:456
+msgid "Deck upload failed!"
+msgstr ""
+
+#: src\commands\deck.ts:477
 #. reply in affirmation
 #, javascript-format
-msgid ""
-"Deck successfully uploaded to "
-"<https://ygoprodeck.com/deckbuilder/?u=https://ygoprodeck.com/discord-decks/"
-"${ filename }>!"
+msgid "Deck successfully uploaded to <${ url }>!"
 msgstr ""
 
 #: src\card.ts:37
