@@ -1,5 +1,5 @@
 import { rules } from "discord-markdown";
-import { FormattingPatterns, Message } from "discord.js";
+import { EmbedBuilder, FormattingPatterns, Message } from "discord.js";
 import { parserFor, ParserRules } from "simple-markdown";
 import { inject, injectable } from "tsyringe";
 import { t, useLocale } from "ttag";
@@ -10,7 +10,7 @@ import { Locale, LocaleProvider, LOCALES } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { RecentMessageCache } from "../message-cache";
 import { Metrics } from "../metrics";
-import { addFunding, addNotice } from "../utils";
+import { addFunding } from "../utils";
 
 // Only take certain plugins because we don't need to parse all markup like bolding
 // and the mention parsing is not as well-maintained as discord.js
@@ -161,6 +161,27 @@ export function inputToGetCardArguments(input: string, defaultLanguage: Locale) 
 	return [resultLanguage, type, searchTerm, inputLanguage] as const;
 }
 
+function addExplainer(embeds: EmbedBuilder | EmbedBuilder[], locale: Locale): EmbedBuilder[] {
+	if (!Array.isArray(embeds)) {
+		embeds = [embeds];
+	}
+	embeds[embeds.length - 1].addFields({
+		name: t`:robot: The new Bastion search experience is here!`,
+		value:
+			// eslint-disable-next-line prefer-template
+			t`:incoming_envelope: Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!` +
+			"\n" +
+			t`New search works in threads and voice chats, and will slowly roll out to all servers. More improvements are coming.`
+	});
+	if (locale !== "en") {
+		embeds[embeds.length - 1].addFields({
+			name: t`:speech_balloon: Translations missing?`,
+			value: t`Help translate Bastion at the links above.`
+		});
+	}
+	return embeds;
+}
+
 @injectable()
 export class SearchMessageListener implements Listener<"messageCreate"> {
 	readonly type = "messageCreate";
@@ -217,7 +238,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 						reply = await message.reply({ content: t`Could not find a card matching \`${input}\`!` });
 					} else {
 						let embeds = createCardEmbed(card, resultLanguage);
-						embeds = addFunding(addNotice(embeds));
+						embeds = addFunding(addExplainer(embeds, resultLanguage));
 						reply = await message.reply({ embeds });
 					}
 					return [card, reply] as const;

@@ -74,6 +74,7 @@ msgstr "Senha: ${ card.password } | Konami ID #${ card.konami_id }"
 msgid ":tools: This command is in development."
 msgstr ":tools: Este comando está em desenvolvimento."
 
+#: src\events\message-search.ts:172
 #: src\utils.ts:34
 msgid ""
 ":incoming_envelope: Please send feedback to [our issue "
@@ -131,7 +132,7 @@ msgstr "Você encontrou o que procurava? Considere nos apoiar!"
 #: src\commands\art.ts:97
 #: src\commands\price.ts:148
 #: src\commands\search.ts:90
-#: src\events\message-search.ts:211
+#: src\events\message-search.ts:238
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr "Não foi possível encontrar uma carta compatível com `${ input }`!"
@@ -403,6 +404,25 @@ msgstr ""
 #. reply in affirmation
 #, javascript-format
 msgid "Deck successfully uploaded to <${ url }>!"
+msgstr ""
+
+#: src\events\message-search.ts:169
+msgid ":robot: The new Bastion search experience is here!"
+msgstr ""
+
+#: src\events\message-search.ts:174
+#. eslint-disable-next-line prefer-template
+msgid ""
+"New search works in threads and voice chats, and will slowly roll out to "
+"all servers. More improvements are coming."
+msgstr ""
+
+#: src\events\message-search.ts:178
+msgid ":speech_balloon: Translations missing?"
+msgstr ""
+
+#: src\events\message-search.ts:179
+msgid "Help translate Bastion at the links above."
 msgstr ""
 
 #: src\card.ts:37
