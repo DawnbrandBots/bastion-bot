@@ -209,10 +209,11 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		if (message.author.bot) {
 			return;
 		}
-		// New functionality activated only in select servers, or in threads and voice chats that the old bot can't see
+		// New functionality activated only in select servers, DMs, or threads and voice chats that the old bot can't see
 		if (
 			!(
-				(message.guildId && this.abdeploy.has(message.guildId)) ||
+				!message.guildId ||
+				this.abdeploy.has(message.guildId) ||
 				message.channel.isThread() ||
 				message.channel.isVoiceBased()
 			)
