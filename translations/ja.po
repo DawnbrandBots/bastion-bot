@@ -276,7 +276,7 @@ msgid "Average WebSocket ping (new instance): ${ ping } ms"
 msgstr ""
 
 #: src\commands\ping.ts:40
-#: src\events\message-ping.ts:60
+#: src\events\message-ping.ts:62
 msgid "Total latency: ${ latency } ms"
 msgstr ""
 
@@ -299,30 +299,7 @@ msgstr ""
 msgid "Free and open source _Yu-Gi-Oh!_ bot"
 msgstr ""
 
-#: src\events\message-ping.ts:31
-msgid ""
-":question: Help documentation on "
-"[GitHub](https://github.com/DawnbrandBots/bastion-bot), or use `.commands` "
-"and `.help`.\n"
-":green_circle: Licence: [GNU AGPL "
-"3.0+](https://choosealicense.com/licenses/agpl-3.0/).\n"
-":money_mouth: Prices from https://yugiohprices.com\n"
-":placard: Bastion Misawa is a character from [Yu-Gi-Oh! "
-"GX](https://yugipedia.com/wiki/Bastion_Misawa).\n"
-"\n"
-"**Bastion has mostly been funded out-of-pocket for years.**\n"
-"<:patreon:895892186841890816> Support us [on "
-"Patreon](https://www.patreon.com/alphakretinbots) and help keep the bot "
-"online!\n"
-"<:kofi:927373724959789096> Ko-fi also works for [one-time "
-"donations](https://ko-fi.com/dawnbrandbots).\n"
-"\n"
-":tools: An update is being worked on and rolling out slowly. Features will "
-"be handled by a new bot instance through Slash Commands concurrently with "
-"the old bot."
-msgstr ""
-
-#: src\events\message-ping.ts:51
+#: src\events\message-ping.ts:53
 #, javascript-format
 msgid "Revision: ${ process.env.BOT_REVISION }."
 msgstr ""
@@ -412,6 +389,34 @@ msgstr ""
 
 #: src\events\message-search.ts:179
 msgid "Help translate Bastion at the links above."
+msgstr ""
+
+#: src\events\message-ping.ts:31
+msgid ""
+":question: Help documentation on "
+"[GitHub](https://github.com/DawnbrandBots/bastion-bot), or use `.commands` "
+"and `.help`.\n"
+":green_circle: Licence: [GNU AGPL "
+"3.0+](https://choosealicense.com/licenses/agpl-3.0/).\n"
+":placard: Bastion Misawa is a character from [Yu-Gi-Oh! "
+"GX](https://yugipedia.com/wiki/Bastion_Misawa).\n"
+"<:PRO:1028300625122963567> Sponsored by "
+"[YGOPRODECK](https://ygoprodeck.com). Prices are YGOPRODECK affiliate "
+"links.\n"
+"\n"
+"<:patreon:895892186841890816> Support us [on "
+"Patreon](https://www.patreon.com/alphakretinbots) and help keep the bot "
+"online!\n"
+"<:kofi:927373724959789096> Ko-fi also works for [one-time "
+"donations](https://ko-fi.com/dawnbrandbots).\n"
+"\n"
+":tools: Improvements are regularly being worked on and rolled out. The new "
+"search experience is here!\n"
+":robot: New features like Slash Commands are handled by a new bot instance "
+"concurrently with the old bot.\n"
+"\n"
+":speech_balloon: Translations missing? Help translate Bastion on "
+"[GitHub](https://github.com/DawnbrandBots/bastion-bot)."
 msgstr ""
 
 #: src\card.ts:37

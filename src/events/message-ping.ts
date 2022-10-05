@@ -31,14 +31,16 @@ export class PingMessageListener implements Listener<"messageCreate"> {
 					description: t`
 :question: Help documentation on [GitHub](https://github.com/DawnbrandBots/bastion-bot), or use \`.commands\` and \`.help\`.
 :green_circle: Licence: [GNU AGPL 3.0+](https://choosealicense.com/licenses/agpl-3.0/).
-:money_mouth: Prices from https://yugiohprices.com
 :placard: Bastion Misawa is a character from [Yu-Gi-Oh! GX](https://yugipedia.com/wiki/Bastion_Misawa).
+<:PRO:1028300625122963567> Sponsored by [YGOPRODECK](https://ygoprodeck.com). Prices are YGOPRODECK affiliate links.
 
-**Bastion has mostly been funded out-of-pocket for years.**
 <:patreon:895892186841890816> Support us [on Patreon](https://www.patreon.com/alphakretinbots) and help keep the bot online!
 <:kofi:927373724959789096> Ko-fi also works for [one-time donations](https://ko-fi.com/dawnbrandbots).
 
-:tools: An update is being worked on and rolling out slowly. Features will be handled by a new bot instance through Slash Commands concurrently with the old bot.
+:tools: Improvements are regularly being worked on and rolled out. The new search experience is here!
+:robot: New features like Slash Commands are handled by a new bot instance concurrently with the old bot.
+
+:speech_balloon: Translations missing? Help translate Bastion on [GitHub](https://github.com/DawnbrandBots/bastion-bot).
 `,
 					color: Colors.Yellow,
 					author: {
