@@ -758,18 +758,18 @@ msgstr ""
 #: src\commands\deck.ts:122
 msgctxt "command-option"
 msgid "url"
-msgstr ""
+msgstr "URL"
 
 #: src\commands\deck.ts:128
 msgctxt "command-option"
 msgid "file"
-msgstr ""
+msgstr "파일"
 
 #: src\commands\deck.ts:134
 #: src\commands\deck.ts:140
 msgctxt "command-option"
 msgid "deck"
-msgstr ""
+msgstr "덱"
 
 #: src\commands\deck.ts:146
 msgctxt "command-option"
@@ -786,14 +786,14 @@ msgstr ""
 #: src\commands\search.ts:35
 msgctxt "command-option"
 msgid "name"
-msgstr ""
+msgstr "이름"
 
 #: src\commands\art.ts:41
 #: src\commands\price.ts:69
 #: src\commands\search.ts:45
 msgctxt "command-option"
 msgid "password"
-msgstr ""
+msgstr "패스워드"
 
 #: src\commands\art.ts:53
 #: src\commands\price.ts:81
@@ -990,42 +990,42 @@ msgstr "핑"
 #: src\commands\ygoprodeck.ts:24
 msgctxt "command-name"
 msgid "ygoprodeck"
-msgstr ""
+msgstr "YGOPRODECK"
 
 #: src\commands\yugipedia.ts:24
 msgctxt "command-name"
 msgid "yugipedia"
-msgstr ""
+msgstr "Yugipedia"
 
 #: src\commands\help.ts:49
 msgctxt "command-name"
 msgid "help"
-msgstr ""
+msgstr "도움말"
 
 #: src\commands\deck.ts:115
 msgctxt "command-name"
 msgid "deck"
-msgstr ""
+msgstr "덱"
 
 #: src\commands\search.ts:30
 msgctxt "command-name"
 msgid "search"
-msgstr ""
+msgstr "검색"
 
 #: src\commands\locale.ts:25
 msgctxt "command-name"
 msgid "locale"
-msgstr ""
+msgstr "지역"
 
 #: src\commands\random.ts:25
 msgctxt "command-name"
 msgid "random"
-msgstr ""
+msgstr "무작위"
 
 #: src\commands\price.ts:54
 msgctxt "command-name"
 msgid "price"
-msgstr ""
+msgstr "가격"
 
 #: src\commands\art.ts:27
 msgctxt "command-description"
@@ -1050,7 +1050,7 @@ msgstr "Yugipedia에서 검색하고 링크를 출력합니다."
 #: src\commands\help.ts:50
 msgctxt "command-description"
 msgid "Get help with a Slash Command."
-msgstr ""
+msgstr "슬래시 명령에 도움을 받으십시오."
 
 #: src\commands\deck.ts:118
 msgctxt "command-description"
@@ -1058,38 +1058,40 @@ msgid ""
 "Display a deck list from ydke:// or .ydk format, exported from a number of "
 "deck building programs."
 msgstr ""
+"여러 덱 제작 프로그램에서 내보낸 덱 목록을"
+"ydke:// 또는 .ydk 형식으로 표시합니다."
 
 #: src\commands\search.ts:31
 msgctxt "command-description"
 msgid "Find all information on a card!"
-msgstr ""
+msgstr "카드의 모든 정보를 찾으세요!"
 
 #: src\commands\locale.ts:26
 msgctxt "command-description"
 msgid "Check or set Bastion's locale for this channel or server."
-msgstr ""
+msgstr "이 채널 또는 서버에 대한 Bastion의 지역을 확인하거나 설정합니다."
 
 #: src\commands\random.ts:26
 msgctxt "command-description"
 msgid "Get a random Yu-Gi-Oh! card."
-msgstr ""
+msgstr "유희왕 카드를 무작위로 받으십시오."
 
 #: src\commands\price.ts:55
 msgctxt "command-description"
 msgid "Display the price for a card!"
-msgstr ""
+msgstr "카드 가격 표시"
 
 #: src\commands\locale.ts:43
 msgctxt "command-option-choice"
 msgid "channel"
-msgstr ""
+msgstr "채널"
 
 #: src\commands\locale.ts:44
 msgctxt "command-option-choice"
 msgid "server"
-msgstr ""
+msgstr "서버"
 
 #: src\commands\locale.ts:51
 msgctxt "command-option-choice"
 msgid "Discord default"
-msgstr ""
+msgstr "디스코드 기본값"
