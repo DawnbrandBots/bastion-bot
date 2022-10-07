@@ -271,7 +271,7 @@ msgstr[0] ""
 
 #: src\commands\deck.ts:270
 msgid "Your Deck"
-msgstr ""
+msgstr "덱"
 
 #: src\commands\deck.ts:275
 #, javascript-format
@@ -281,7 +281,7 @@ msgstr[0] ""
 
 #: src\commands\deck.ts:282
 msgid "Main Deck (continued)"
-msgstr ""
+msgstr "메인 덱 (계속)"
 
 #: src\commands\deck.ts:289
 #, javascript-format
@@ -291,7 +291,7 @@ msgstr[0] ""
 
 #: src\commands\deck.ts:296
 msgid "Extra Deck (continued)"
-msgstr ""
+msgstr "엑스트라 덱 (계속)"
 
 #: src\commands\deck.ts:303
 #, javascript-format
@@ -301,11 +301,11 @@ msgstr[0] ""
 
 #: src\commands\deck.ts:310
 msgid "Side Deck (continued)"
-msgstr ""
+msgstr "사이드 덱 (계속)"
 
 #: src\commands\deck.ts:400
 msgid "Error: Your deck is empty."
-msgstr ""
+msgstr "오류: 덱이 비어 있습니다."
 
 #: src\events\message-ping.ts:30
 msgid "Free and open source _Yu-Gi-Oh!_ bot"
@@ -341,11 +341,11 @@ msgstr ""
 
 #: src\commands\deck.ts:320
 msgid ".ydk files must have the .ydk extension!"
-msgstr ""
+msgstr ".ydk 파일의 확장자는 .ydk여야 합니다!"
 
 #: src\commands\deck.ts:323
 msgid ".ydk files should not be larger than 1 KB!"
-msgstr ""
+msgstr ".ydk 파일은 1 KB보다 크면 안 됩니다!"
 
 #: src\commands\deck.ts:313
 msgid "ydke URL"
@@ -354,7 +354,7 @@ msgstr ""
 #: src\card.ts:291
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 msgid "**Limit**: ${ limitRegulationDisplay }"
-msgstr ""
+msgstr "**제한**: ${ limitRegulationDisplay }"
 
 #: src\commands\price.ts:38
 msgid "TCGPlayer"
@@ -371,41 +371,41 @@ msgstr ""
 #: src\commands\price.ts:118
 #. TODO: future, determine localisation and relevance status of this error
 msgid "Sorry, I can't find the price for a card with no English name!"
-msgstr ""
+msgstr "죄송합니다. 영어 이름이 없는 카드의 가격을 찾을 수 없습니다!"
 
 #: src\commands\price.ts:159
 msgid "No market price"
-msgstr ""
+msgstr "시장 가격이 없습니다."
 
 #: src\commands\price.ts:167
 #, javascript-format
 msgid "Prices for ${ card.name[resultLanguage] } - ${ vendorName }"
-msgstr ""
+msgstr "${ card.name[resultLanguage] } - ${ vendorName } 가격"
 
 #: src\commands\price.ts:181
 msgid "Could not find prices for `${ name }`!"
-msgstr ""
+msgstr "`${ name }`의 가격을 찾을 수 없습니다!"
 
 #: src\commands\deck.ts:418
 #. prepare interaction button for FTP upload
 msgid "Upload to YGOPRODECK"
-msgstr ""
+msgstr "YGOPRODECK에 업로드"
 
 #: src\commands\deck.ts:469
 #. disable original button
 #. prepare row to disable button on original message
 msgid "Upload Complete"
-msgstr ""
+msgstr "업로드 완료"
 
 #: src\commands\deck.ts:456
 msgid "Deck upload failed!"
-msgstr ""
+msgstr "덱 업로드 실패!"
 
 #: src\commands\deck.ts:477
 #. reply in affirmation
 #, javascript-format
 msgid "Deck successfully uploaded to <${ url }>!"
-msgstr ""
+msgstr "덱이 <${ url }>에 업로드되었습니다!"
 
 #: src\events\message-search.ts:169
 msgid ":robot: The new Bastion search experience is here!"
@@ -417,6 +417,8 @@ msgid ""
 "New search works in threads and voice chats, and will slowly roll out to "
 "all servers. More improvements are coming."
 msgstr ""
+"새 검색은 스레드 및 음성 대화에서 작동하며, 모든 서버에 천천히 롤아웃됩니다."
+"더 많은 개선이 오고 있습니다."
 
 #: src\events\message-search.ts:178
 msgid ":speech_balloon: Translations missing?"
@@ -424,7 +426,7 @@ msgstr ""
 
 #: src\events\message-search.ts:179
 msgid "Help translate Bastion at the links above."
-msgstr ""
+msgstr "위 링크에서 Bastion 번역을 도와주세요."
 
 #: src\card.ts:37
 msgctxt "monster-type-race"
@@ -753,12 +755,12 @@ msgstr "페이지"
 #: src\commands\help.ts:52
 msgctxt "command-option"
 msgid "command"
-msgstr ""
+msgstr "명령"
 
 #: src\commands\deck.ts:122
 msgctxt "command-option"
 msgid "url"
-msgstr "URL"
+msgstr ""
 
 #: src\commands\deck.ts:128
 msgctxt "command-option"
@@ -774,12 +776,12 @@ msgstr "덱"
 #: src\commands\deck.ts:146
 msgctxt "command-option"
 msgid "public"
-msgstr ""
+msgstr "공개"
 
 #: src\commands\deck.ts:153
 msgctxt "command-option"
 msgid "stacked"
-msgstr ""
+msgstr "다량"
 
 #: src\commands\art.ts:31
 #: src\commands\price.ts:59
@@ -990,12 +992,12 @@ msgstr "핑"
 #: src\commands\ygoprodeck.ts:24
 msgctxt "command-name"
 msgid "ygoprodeck"
-msgstr "YGOPRODECK"
+msgstr ""
 
 #: src\commands\yugipedia.ts:24
 msgctxt "command-name"
 msgid "yugipedia"
-msgstr "Yugipedia"
+msgstr ""
 
 #: src\commands\help.ts:49
 msgctxt "command-name"
@@ -1015,7 +1017,7 @@ msgstr "검색"
 #: src\commands\locale.ts:25
 msgctxt "command-name"
 msgid "locale"
-msgstr "지역"
+msgstr "로케일"
 
 #: src\commands\random.ts:25
 msgctxt "command-name"
@@ -1069,7 +1071,7 @@ msgstr "카드의 모든 정보를 찾으세요!"
 #: src\commands\locale.ts:26
 msgctxt "command-description"
 msgid "Check or set Bastion's locale for this channel or server."
-msgstr "이 채널 또는 서버에 대한 Bastion의 지역을 확인하거나 설정합니다."
+msgstr "이 채널 또는 서버에 대한 Bastion의 로케일을 확인하거나 설정합니다."
 
 #: src\commands\random.ts:26
 msgctxt "command-description"
