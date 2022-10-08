@@ -51,7 +51,7 @@
 		"ttag-cli": "^1.10.1"
 	},
 	"resolutions": {
-		"@types/node": "^16.11.60",
+		"@types/node": "^16.11.63",
 		"gettext-parser": "^6.0.0"
 	},
 	"babel": {
