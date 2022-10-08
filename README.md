@@ -4,23 +4,15 @@
 [<img src="https://cdn.discordapp.com/avatars/383854640694820865/fab10204c193d0bc3d48169d11245a1a.png" alt="Bastion avatar" align="right" />](https://yugipedia.com/wiki/Bastion_Misawa)
 
 A free and open-source Discord bot for looking up cards and other useful information about the
-_Yu-Gi-Oh! Trading Card Game_ and _Official Card Game_. This is the repository for the rewrite
+_Yu-Gi-Oh! Trading Card Game_ and _Official Card Game_. This is the repository for the new instance
 to take advantage of new features offered by Discord and improve reliability.
 
-Features implemented here will be gradually rolled out to the live bot. For documentation, please
-refer to the old [Bastion Classic](https://github.com/AlphaKretin/bastion-bot) repository.
+The new instance runs concurrently with the old instance.
+Features implemented here will be gradually rolled out to the live bot. For most documentation, please
+refer to the old [Bastion Classic](https://github.com/AlphaKretin/bastion-bot) repository. For
+Slash Command documentation, look in [`docs/commands`](/docs/commands).
 
-## Roadmap and rationale
-
-Throughout 2021, Discord has introduced a number of new features at a faster pace than ever before,
-including application interactions and threads. These require a major update to Bastion because the
-old underlying library to work with Discord is not keeping pace with the new direction of Discord.
-Furthermore, Discord is [enforcing the use of Slash Commands](https://support-dev.discord.com/hc/en-us/articles/4404772028055)
-over traditional message-based commands for verified bots, effective April 2022.
-
-We will apply for message content privileges to retain the inline `<>` card searching feature, but
-the final arbiter for that feature will be Discord. In the meantime, we will progressively migrate
-as many Bastion commands as possible to the new Slash Command system.
+Thanks to [YGOPRODECK](https://ygoprodeck.com/) for sponsoring Bastion. Prices provided by Bastion are YGOPRODECK affiliate links.
 
 ## Discord permissions
 
@@ -33,15 +25,17 @@ the link above to invite it, you will need to reinvite with the above link.** Yo
 - Send Messages in Threads
 - Embed Links: Bastion displays card information in a Discord rich embed.
 - Attach Files: Bastion attaches card images for trivia.
-- Read Message History
-- Use External Emojis: Bastion ues certain emojis for Yu-Gi-Oh icons in its embeds.
+- Read Message History: Bastion replies to messages that request card search.
+- Use External Emojis: Bastion uses certain emojis for Yu-Gi-Oh icons in its embeds.
 - Add Reactions: Bastion uses "reaction buttons" for advanced control of outputs.
 
 If you do not want Bastion to be used in a channel, deny it the View Channel permission.
-Otherwise, all of the above permissions must be granted to Bastion in each channel it is
+Otherwise, all of the above permissions **must** be granted to Bastion in each channel it is
 available in for it to work correctly.
-If you do not want Slash Commands to be used in a channel, deny the Use Application Commands
-permission for the individuals or roles in question.
+
+If you do not want Slash Commands to be used in a channel, this can be managed per command in the Integrations tab of
+your server settings. Alternatively, you can blanket deny the Use Application Commands permission for the individuals
+or roles in question, but this will apply to all bots.
 
 ## Support server
 
@@ -55,6 +49,13 @@ can be run with or without [Docker](https://docs.docker.com/get-docker/).
 It uses [Discord.js](https://discord.js.org/) to talk to Discord.
 
 Please use Australian English spellings.
+
+### Translations
+
+Bastion intends to be fully localised to all regions with official Yu-Gi-Oh! releases.
+Translation work is _incomplete_ and we appreciate any translator help. The localisation
+files are in the [`translations`](/translations) directory; for more information,
+please see the [documentation for translators](/docs/translations.md).
 
 ## Privacy
 
