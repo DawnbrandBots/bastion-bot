@@ -1,3 +1,5 @@
+# Bastion Discord bot privacy policy
+
 The software that drives operation of the Bastion Discord Bot ("Bastion") collects some data in the course of its operation. Some of that data is used by the people who operate Bastion ("the operators"). Here we seek to describe how data is collected and used by Bastion and the operators, so that you can decide if you are comfortable with the level of privacy involved in using Bastion.
 
 When you invite Bastion to a Discord server, Bastion reads the name, ID, and member count of that server. This is recorded privately for the reference of the operators. Details about individual servers will not be shared with third parties.
