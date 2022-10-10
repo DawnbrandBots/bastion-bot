@@ -209,14 +209,18 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		if (message.author.bot) {
 			return;
 		}
-		// New functionality activated only in select servers, or in threads and voice chats that the old bot can't see
+		// New functionality activated only in select servers, direct messages, threads, voice chats
 		if (
 			!(
-				(message.guildId && this.abdeploy.has(message.guildId)) ||
+				!message.guildId ||
+				this.abdeploy.has(message.guildId) ||
 				message.channel.isThread() ||
 				message.channel.isVoiceBased()
 			)
 		) {
+			return;
+		}
+		if (!message.guildId && process.env.BOT_NO_DIRECT_MESSAGE_SEARCH) {
 			return;
 		}
 		const delimiter = getDelimiter(message);
