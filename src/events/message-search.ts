@@ -1,5 +1,14 @@
 import { rules } from "discord-markdown";
-import { EmbedBuilder, FormattingPatterns, Message } from "discord.js";
+import {
+	DiscordAPIError,
+	EmbedBuilder,
+	EmojiIdentifierResolvable,
+	FormattingPatterns,
+	Message,
+	MessageReaction,
+	PermissionsBitField,
+	RESTJSONErrorCodes
+} from "discord.js";
 import { parserFor, ParserRules } from "simple-markdown";
 import { inject, injectable } from "tsyringe";
 import { t, useLocale } from "ttag";
@@ -230,7 +239,8 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		}
 		this.log("info", message, JSON.stringify(inputs));
 		inputs = inputs.slice(0, 3);
-		message.react("🕙").catch(error => this.log("warn", message, error));
+		message.channel.sendTyping();
+		this.addReaction(message, "🕙");
 		const language = await this.locales.getM(message);
 		const promises = inputs
 			.map(input => [input, ...inputToGetCardArguments(input, language)] as const)
@@ -261,9 +271,37 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			}
 		}
 		this.recentCache.set(message, replies);
-		message.reactions.cache
-			.get("🕙")
-			?.users.remove(message.client.user)
-			.catch(error => this.log("warn", message, error));
+		this.removeReaction(message, "🕙");
+	}
+
+	async addReaction(message: Message, reaction: EmojiIdentifierResolvable): Promise<MessageReaction | undefined> {
+		if (message.inGuild() && message.guild.members.me) {
+			if (!message.guild.members.me.permissionsIn(message.channel).has(PermissionsBitField.Flags.AddReactions)) {
+				return;
+			}
+		}
+		try {
+			return await message.react(reaction);
+		} catch (error) {
+			if (
+				error instanceof DiscordAPIError &&
+				(error.code === RESTJSONErrorCodes.MissingPermissions ||
+					error.code === RESTJSONErrorCodes.ReactionWasBlocked)
+			) {
+				this.log("info", message, error);
+			} else {
+				this.log("warn", message, error);
+			}
+		}
+	}
+
+	async removeReaction(message: Message, reaction: string): Promise<MessageReaction | undefined> {
+		try {
+			return await message.reactions.cache.get(reaction)?.users.remove(message.client.user);
+		} catch (error) {
+			if (!(error instanceof DiscordAPIError && error.code === RESTJSONErrorCodes.UnknownMessage)) {
+				this.log("warn", message, error);
+			}
+		}
 	}
 }
