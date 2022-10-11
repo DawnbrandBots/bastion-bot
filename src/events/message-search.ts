@@ -209,14 +209,12 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		if (message.author.bot) {
 			return;
 		}
-		// New functionality activated only in select servers, direct messages, threads, voice chats
+		// Deactivate new functionality in select servers
+		// Always active in direct messages, threads, voice chats
 		if (
-			!(
-				!message.guildId ||
-				this.abdeploy.has(message.guildId) ||
-				message.channel.isThread() ||
-				message.channel.isVoiceBased()
-			)
+			(message.guildId && this.abdeploy.has(message.guildId)) ||
+			!message.channel.isThread() ||
+			!message.channel.isVoiceBased()
 		) {
 			return;
 		}
