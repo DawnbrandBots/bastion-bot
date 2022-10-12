@@ -212,8 +212,9 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		// Deactivate new functionality in select servers
 		// Always active in direct messages, threads, voice chats
 		if (
-			(message.guildId && this.abdeploy.has(message.guildId)) ||
-			!message.channel.isThread() ||
+			message.guildId &&
+			this.abdeploy.has(message.guildId) &&
+			!message.channel.isThread() &&
 			!message.channel.isVoiceBased()
 		) {
 			return;
