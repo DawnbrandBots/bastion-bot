@@ -9,7 +9,7 @@ to take advantage of new features offered by Discord and improve reliability.
 
 The new instance runs concurrently with the old instance.
 Features implemented here will be gradually rolled out to the live bot.
-New `<>` card search documentation is [**here**](/docs/card-search.md).
+**New `<>` card search documentation is [here](/docs/card-search.md).**
 For Slash Command documentation, look in [`docs/commands`](/docs/commands).
 For everything else, please refer to the old [Bastion Classic](https://github.com/AlphaKretin/bastion-bot) repository.
 
