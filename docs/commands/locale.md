@@ -65,6 +65,5 @@ reply with the missing permission if missing. Otherwise, if authorised, the spec
 
 ## Next steps
 
-See [#46](https://github.com/DawnbrandBots/bastion-bot/issues/46) and [#47](https://github.com/DawnbrandBots/bastion-bot/issues/47).
-Other than implementing the translations in full, permission control for `/locale set` could
-alternatively be controlled by a role instead.
+- Fully translate Bastion.
+- Permission control for `/locale set` could alternatively be controlled by a role instead.
