@@ -8,9 +8,10 @@ _Yu-Gi-Oh! Trading Card Game_ and _Official Card Game_. This is the repository f
 to take advantage of new features offered by Discord and improve reliability.
 
 The new instance runs concurrently with the old instance.
-Features implemented here will be gradually rolled out to the live bot. For most documentation, please
-refer to the old [Bastion Classic](https://github.com/AlphaKretin/bastion-bot) repository. For
-Slash Command documentation, look in [`docs/commands`](/docs/commands).
+Features implemented here will be gradually rolled out to the live bot.
+**New `<>` card search documentation is [here](/docs/card-search.md).**
+For Slash Command documentation, look in [`docs/commands`](/docs/commands).
+For everything else, please refer to the old [Bastion Classic](https://github.com/AlphaKretin/bastion-bot) repository.
 
 Thanks to [YGOPRODECK](https://ygoprodeck.com/) for sponsoring Bastion. Prices provided by Bastion are YGOPRODECK affiliate links.
 
@@ -19,8 +20,7 @@ Thanks to [YGOPRODECK](https://ygoprodeck.com/) for sponsoring Bastion. Prices p
 Please make sure you use an [invite link](https://discord.com/api/oauth2/authorize?client_id=383854640694820865&permissions=274878285888&scope=bot%20applications.commands)
 that automatically grants the following permissions.
 
-- Create slash commands. **If Bastion joined your server after March 22, 2021, and you did not use
-the link above to invite it, you will need to reinvite with the above link.** You do not need to kick the bot.
+- Create commands in a server
 - Send Messages
 - Send Messages in Threads
 - Embed Links: Bastion displays card information in a Discord rich embed.
