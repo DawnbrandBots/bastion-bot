@@ -76,7 +76,7 @@ msgstr ""
 #: src\card.ts:243
 #, javascript-format
 msgid "Password: ${ card.password } | Not yet released"
-msgstr ""
+msgstr "Senha: ${ card.password } | Not yet released"
 
 #: src\card.ts:245
 msgid "Not yet released"

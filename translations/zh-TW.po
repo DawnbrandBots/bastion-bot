@@ -69,25 +69,25 @@ msgstr "卡片密碼: ${ card.password } | 官方編號${ card.konami_id }"
 
 #: src\card.ts:241
 msgid "No password | Konami ID #${ card.konami_id }"
-msgstr ""
+msgstr "無卡密 | 官方編號${ card.konami_id }"
 
 #: src\card.ts:243
 #, javascript-format
 msgid "Password: ${ card.password } | Not yet released"
-msgstr ""
+msgstr "卡片密碼: ${ card.password } | 未發行"
 
 #: src\card.ts:245
 msgid "Not yet released"
-msgstr ""
+msgstr "未發行"
 
 #: src\card.ts:249
 #, javascript-format
 msgid "Fake password: ${ card.fake_password }"
-msgstr ""
+msgstr "假卡密: ${ card.fake_password }"
 
 #: src\utils.ts:33
 msgid ":tools: This command is in development."
-msgstr ""
+msgstr ":tools: 這個指令正在開發中"
 
 #: src\events\message-search.ts:172
 #: src\utils.ts:34
