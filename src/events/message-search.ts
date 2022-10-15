@@ -228,7 +228,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			return;
 		}
 		this.log("info", message, JSON.stringify(inputs));
-		inputs = inputs.slice(0, 3);
+		inputs = [...new Set(inputs)].slice(0, 3); // remove duplicates, then select first three
 		message.react("🕙").catch(error => this.log("warn", message, error));
 		const language = await this.locales.getM(message);
 		const promises = inputs
