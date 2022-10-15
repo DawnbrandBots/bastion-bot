@@ -35,7 +35,11 @@ Duplicate cards in the deck are compressed into one line, counting how many time
 
 Bastion will upload an attachment containing the deck in YDK format, as well as printing the deck as a YDKE URL at the bottom of the output embed. This allows for conversion between the two formats, or if the reply is public, for other users to download the shared deck.
 
+The reply also has a button to upload the deck to [YGOPRODECK](https://ygoprodeck.com/deckbuilder/). This button is only live for one minute and only the command user may press this button.
+
 ### Limitations
 
 - With `stacked` false, the section headings overflow the width of a column and wrap, harming aesthetics and readability.
 - Error messages from the `ydeck` package are unclear and unlocalised
+- Commonly-used fake passwords for alternative artworks of cards are not yet supported (they still work for uploading) [#157](https://github.com/DawnbrandBots/bastion-bot/issues/157)
+- It is possible to submit a deck that cannot be displayed [#189](https://github.com/DawnbrandBots/bastion-bot/issues/189)

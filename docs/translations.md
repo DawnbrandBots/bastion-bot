@@ -16,20 +16,21 @@ that have an official Yu-Gi-Oh! release, unless there is a compelling reason oth
 - ko (한국어)
 - zh-CN (中文) and zh-TW (繁體中文) should have interface text translated together.
 
-Bastion has several systems for localizations. Translations for card text are part of the card data.
+Translations for card text are part of the card data.
 
-Slash Command names, descriptions, and options are provided to Discord when the commands are
-registered. It is the responsibility of Discord to display these to users correctly based on the
-user's language setting, which is in beta as of writing. How these translations are organized in
-Bastion's codebase is to be determined.
-
-Finally, the localization that Bastion uses in its messages when replying to user commands is
+All Bastion user interface localisations (Slash Command interfaces, messages, card embeds) are
 obtained from a `gettext`-like system called [ttag](https://ttag.js.org/). These translations are
 stored in standard `.po` files, which can be edited in your favourite text editor or a variety of
-offline and online tools. These are stored in the `translations` directory of the repository.
+offline and online tools. These are stored in the `translations` directory of this repository.
+
+Slash Command names, descriptions, and options are provided to Discord when the commands are
+registered. Discord is responsible for displaying these to users based on the
+user's language setting.
 
 For strings labelled "command-name" and "command-option", Discord enforces a rule in the spirit of
 the original English strings, [prohibiting spaces and majuscule characters if they exist in the locale](https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-naming).
+
+## For developers
 
 To start a translation for a new `LOCALE`, run this in the repository root after installing
 dependencies to create the template, or ask a maintainer to create this file for you.

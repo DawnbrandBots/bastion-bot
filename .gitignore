@@ -111,3 +111,8 @@ dist
 
 # Windows
 Thumbs.db
+
+# SQLite databases
+*.db3
+*.db3-shm
+*.db3-wal
