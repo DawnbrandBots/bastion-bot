@@ -277,7 +277,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 	async addReaction(message: Message, reaction: EmojiIdentifierResolvable): Promise<MessageReaction | undefined> {
 		if (message.inGuild() && message.guild.members.me) {
 			if (!message.guild.members.me.permissionsIn(message.channel).has(PermissionsBitField.Flags.AddReactions)) {
-				this.log("info", message, "No permission to add reactions");
+				this.log("info", message, "Missing permissions to add reactions");
 				return;
 			}
 		}
