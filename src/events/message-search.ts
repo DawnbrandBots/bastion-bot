@@ -300,7 +300,9 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		try {
 			return await message.reactions.cache.get(reaction)?.users.remove(message.client.user);
 		} catch (error) {
-			if (!(error instanceof DiscordAPIError && error.code === RESTJSONErrorCodes.UnknownMessage)) {
+			if (error instanceof DiscordAPIError && error.code === RESTJSONErrorCodes.UnknownMessage) {
+				this.log("info", message, "Message deleted before removing reaction");
+			} else {
 				this.log("warn", message, error);
 			}
 		}
