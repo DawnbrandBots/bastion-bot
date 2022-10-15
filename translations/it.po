@@ -6,33 +6,33 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src\card.ts:253
+#: src\card.ts:271
 msgid ":link: Links"
 msgstr ""
 
-#: src\card.ts:254
+#: src\card.ts:272
 #, javascript-format
 msgid ""
 "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
 "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
 
-#: src\card.ts:257
+#: src\card.ts:275
 #, javascript-format
 msgid "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
 
-#: src\card.ts:317
+#: src\card.ts:335
 #, javascript-format
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 msgstr "**Tipo**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:319
+#: src\card.ts:337
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 msgstr "**Attributo**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
-#: src\card.ts:323
+#: src\card.ts:341
 msgid ""
 "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
 "card.def }"
@@ -40,14 +40,14 @@ msgstr ""
 "**Rango**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
 "card.def }"
 
-#: src\card.ts:326
+#: src\card.ts:344
 #, javascript-format
 msgid ""
 "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
 "Arrows**: ${ arrows }"
 msgstr ""
 
-#: src\card.ts:328
+#: src\card.ts:346
 #, javascript-format
 msgid ""
 "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
@@ -56,14 +56,31 @@ msgstr ""
 "Livello**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
 "${ card.def }"
 
-#: src\card.ts:335
+#: src\card.ts:353
 msgid "**Pendulum Scale**: ${ formattedScale }"
 msgstr "**Valore Pendulum**: ${ formattedScale }"
 
-#: src\card.ts:355
-#: src\card.ts:373
+#: src\card.ts:239
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
+msgstr ""
+
+#: src\card.ts:241
+msgid "No password | Konami ID #${ card.konami_id }"
+msgstr ""
+
+#: src\card.ts:243
+#, javascript-format
+msgid "Password: ${ card.password } | Not yet released"
+msgstr ""
+
+#: src\card.ts:245
+msgid "Not yet released"
+msgstr ""
+
+#: src\card.ts:249
+#, javascript-format
+msgid "Fake password: ${ card.fake_password }"
 msgstr ""
 
 #: src\utils.ts:33
@@ -125,7 +142,7 @@ msgstr ""
 #: src\commands\art.ts:97
 #: src\commands\price.ts:148
 #: src\commands\search.ts:90
-#: src\events\message-search.ts:238
+#: src\events\message-search.ts:241
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr ""
@@ -134,64 +151,64 @@ msgstr ""
 msgid "Could not find art for `${ name }`!"
 msgstr ""
 
-#: src\commands\deck.ts:236
+#: src\commands\deck.ts:245
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:239
+#: src\commands\deck.ts:248
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:242
+#: src\commands\deck.ts:251
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:270
+#: src\commands\deck.ts:279
 msgid "Your Deck"
 msgstr ""
 
-#: src\commands\deck.ts:275
+#: src\commands\deck.ts:284
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:282
+#: src\commands\deck.ts:291
 msgid "Main Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:289
+#: src\commands\deck.ts:298
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:296
+#: src\commands\deck.ts:305
 msgid "Extra Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:303
+#: src\commands\deck.ts:312
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:310
+#: src\commands\deck.ts:319
 msgid "Side Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:400
+#: src\commands\deck.ts:409
 msgid "Error: Your deck is empty."
 msgstr ""
 
@@ -308,19 +325,19 @@ msgstr ""
 msgid "Revision: ${ process.env.BOT_REVISION }."
 msgstr ""
 
-#: src\commands\deck.ts:320
+#: src\commands\deck.ts:329
 msgid ".ydk files must have the .ydk extension!"
 msgstr ""
 
-#: src\commands\deck.ts:323
+#: src\commands\deck.ts:332
 msgid ".ydk files should not be larger than 1 KB!"
 msgstr ""
 
-#: src\commands\deck.ts:313
+#: src\commands\deck.ts:322
 msgid "ydke URL"
 msgstr ""
 
-#: src\card.ts:291
+#: src\card.ts:309
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 msgid "**Limit**: ${ limitRegulationDisplay }"
 msgstr ""
@@ -355,22 +372,22 @@ msgstr ""
 msgid "Could not find prices for `${ name }`!"
 msgstr ""
 
-#: src\commands\deck.ts:418
+#: src\commands\deck.ts:427
 #. prepare interaction button for FTP upload
 msgid "Upload to YGOPRODECK"
 msgstr ""
 
-#: src\commands\deck.ts:469
+#: src\commands\deck.ts:478
 #. disable original button
 #. prepare row to disable button on original message
 msgid "Upload Complete"
 msgstr ""
 
-#: src\commands\deck.ts:456
+#: src\commands\deck.ts:465
 msgid "Deck upload failed!"
 msgstr ""
 
-#: src\commands\deck.ts:477
+#: src\commands\deck.ts:486
 #. reply in affirmation
 #, javascript-format
 msgid "Deck successfully uploaded to <${ url }>!"
@@ -698,18 +715,18 @@ msgctxt "attribute"
 msgid "DIVINE"
 msgstr "DIVINO"
 
-#: src\card.ts:341
-#: src\card.ts:352
+#: src\card.ts:359
+#: src\card.ts:370
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "Testo carta"
 
-#: src\card.ts:346
+#: src\card.ts:364
 msgctxt "card-embed"
 msgid "Pendulum Effect"
 msgstr "Effetto Pendulum"
 
-#: src\card.ts:368
+#: src\card.ts:385
 msgctxt "card-embed"
 msgid "Card Effect"
 msgstr ""
