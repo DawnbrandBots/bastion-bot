@@ -389,7 +389,7 @@ msgstr ""
 
 #: src\events\message-search.ts:179
 msgid "Help translate Bastion at the links above."
-msgstr ""
+msgstr "このボットの翻訳プロジェクトへは上のリンクから。"
 
 #: src\events\message-ping.ts:31
 msgid ""
@@ -823,7 +823,7 @@ msgstr ""
 #: src\locale.ts:50
 msgctxt "command-option-description"
 msgid "The output language for the card embed, overriding other settings."
-msgstr ""
+msgstr "カード情報の表示言語を設定します。デフォルトの設定より優先されます。"
 
 #: src\locale.ts:70
 msgctxt "command-option-description"
@@ -838,12 +838,12 @@ msgstr ""
 #: src\commands\ygoprodeck.ts:30
 msgctxt "command-option-description"
 msgid "The name or password of the card you're looking for."
-msgstr ""
+msgstr "検索したいカードの名前、あるいはパスワード"
 
 #: src\commands\yugipedia.ts:30
 msgctxt "command-option-description"
 msgid "The name of the Yugipedia page you want to search for."
-msgstr ""
+msgstr "検索したいYugipediaのページの名前"
 
 #: src\commands\deck.ts:125
 msgctxt "command-option-description"
