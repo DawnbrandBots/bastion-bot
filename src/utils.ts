@@ -1,8 +1,17 @@
 import { SlashCommandStringOption } from "@discordjs/builders";
-import { CacheType, ChatInputCommandInteraction, EmbedBuilder, Guild, GuildCacheMessage, Message } from "discord.js";
+import {
+	AutocompleteInteraction,
+	CacheType,
+	ChatInputCommandInteraction,
+	CommandInteraction,
+	EmbedBuilder,
+	Guild,
+	GuildCacheMessage,
+	Message
+} from "discord.js";
 import { gettext, t, useLocale } from "ttag";
 
-export function serializeServer(server: Guild): string {
+export function serialiseServer(server: Guild): string {
 	if ("name" in server) {
 		const createdAt = new Date(server.createdAt).toISOString();
 		return `${server.name} (${server.id}) [${server.memberCount}] ${createdAt} by <@${server.ownerId}>`;
@@ -11,11 +20,14 @@ export function serializeServer(server: Guild): string {
 	}
 }
 
-export function serializeCommand(interaction: ChatInputCommandInteraction, extras?: Record<string, unknown>): string {
+export function serialiseInteraction(
+	interaction: CommandInteraction | AutocompleteInteraction,
+	extras?: Record<string, unknown>
+): string {
 	return JSON.stringify({
-		channel: interaction.channel?.id,
+		channel: interaction.channelId,
 		message: interaction.id,
-		guild: interaction.guild?.id,
+		guild: interaction.guildId,
 		author: interaction.user.id,
 		id: interaction.commandId,
 		command: interaction.commandName,
