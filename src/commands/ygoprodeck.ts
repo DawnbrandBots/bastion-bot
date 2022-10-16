@@ -1,10 +1,10 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction } from "discord.js";
-import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { Command } from "../Command";
+import fetch from "../fetch";
 import { buildLocalisedCommand, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";

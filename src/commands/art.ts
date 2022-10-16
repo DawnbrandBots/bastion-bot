@@ -2,12 +2,12 @@ import { SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandBu
 import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction } from "discord.js";
-import fetch from "node-fetch";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { CardLookupType, getCard } from "../card";
 import { Command } from "../Command";
 import { CardSchema } from "../definitions/yaml-yugi";
+import fetch from "../fetch";
 import { buildLocalisedCommand, getInputLangStringOption, Locale, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";

@@ -1,9 +1,9 @@
 import { Static } from "@sinclair/typebox";
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { parseDocument } from "htmlparser2";
-import fetch from "node-fetch";
 import { c, t, useLocale } from "ttag";
 import { CardSchema, LimitRegulation } from "./definitions/yaml-yugi";
+import fetch from "./fetch";
 import { Locale } from "./locale";
 
 /**

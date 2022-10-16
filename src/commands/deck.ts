@@ -21,7 +21,6 @@ import {
 	DiscordjsErrorCodes,
 	EmbedBuilder
 } from "discord.js";
-import fetch from "node-fetch";
 import { Readable } from "stream";
 import { inject, injectable } from "tsyringe";
 import { c, msgid, ngettext, t, useLocale } from "ttag";
@@ -30,6 +29,7 @@ import { parseURL, toURL, TypedDeck } from "ydke";
 import { parseAndExpandRuby } from "../card";
 import { Command } from "../Command";
 import { CardSchema } from "../definitions/yaml-yugi";
+import fetch from "../fetch";
 import { COMMAND_LOCALIZATIONS, Locale, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
