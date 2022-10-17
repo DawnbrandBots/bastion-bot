@@ -30,7 +30,7 @@ const parser = parserFor(ourRules);
 // https://discord.com/developers/docs/reference#message-formatting-formats
 const mentionPatterns = (
 	["UserWithOptionalNickname", "Channel", "Role", "SlashCommand", "Emoji", "Timestamp"] as const
-).map(key => new RegExp(FormattingPatterns[key], "g"));
+).map(key => new RegExp(FormattingPatterns[key], `${FormattingPatterns[key].flags}g`));
 
 export function cleanMessageMarkup(message: string): string {
 	// Remove the above markup elements
