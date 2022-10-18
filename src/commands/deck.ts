@@ -182,6 +182,15 @@ export class DeckCommand extends Command {
 				if (card?.password) {
 					cardMemo.set(card.password, card);
 				}
+				if (card?.fake_password) {
+					if (Array.isArray(card.fake_password)) {
+						for (const password of card.fake_password) {
+							cardMemo.set(password, card);
+						}
+					} else {
+						cardMemo.set(card.fake_password, card);
+					}
+				}
 			}
 			return cardMemo;
 		}

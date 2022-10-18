@@ -39,7 +39,7 @@ const parser = parserFor(ourRules);
 // https://discord.com/developers/docs/reference#message-formatting-formats
 const mentionPatterns = (
 	["UserWithOptionalNickname", "Channel", "Role", "SlashCommand", "Emoji", "Timestamp"] as const
-).map(key => new RegExp(FormattingPatterns[key], "g"));
+).map(key => new RegExp(FormattingPatterns[key], `${FormattingPatterns[key].flags}g`));
 
 export function cleanMessageMarkup(message: string): string {
 	// Remove the above markup elements
@@ -218,14 +218,13 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		if (message.author.bot) {
 			return;
 		}
-		// New functionality activated only in select servers, direct messages, threads, voice chats
+		// Deactivate new functionality in select servers
+		// Always active in direct messages, threads, voice chats
 		if (
-			!(
-				!message.guildId ||
-				this.abdeploy.has(message.guildId) ||
-				message.channel.isThread() ||
-				message.channel.isVoiceBased()
-			)
+			message.guildId &&
+			this.abdeploy.has(message.guildId) &&
+			!message.channel.isThread() &&
+			!message.channel.isVoiceBased()
 		) {
 			return;
 		}
@@ -238,7 +237,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			return;
 		}
 		this.log("info", message, JSON.stringify(inputs));
-		inputs = inputs.slice(0, 3);
+		inputs = [...new Set(inputs)].slice(0, 3); // remove duplicates, then select first three
 		message.channel.sendTyping();
 		this.addReaction(message, "🕙");
 		const language = await this.locales.getM(message);

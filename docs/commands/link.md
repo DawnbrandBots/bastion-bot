@@ -37,5 +37,4 @@ Rivalry/Gozen Rulings | https://img.yugioh-card.com/ygo_cms/ygo/all/uploads/Card
 In no particular order:
 
 - We're always willing to add more useful links to this list should they arise.
-- i18n of the link names may be difficult because the Discord Slash Command interface has poor native support for i18n.
-- i18n support for the contents of the links may also be difficult, as the resources may not have a direct equivalent in another language.
+- Improve usefulness of the command for non-Anglophones.

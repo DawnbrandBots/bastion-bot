@@ -89,7 +89,6 @@ The following information is displayed:
 
 In no particular order:
 
-- add pricing information
 - handle alternative artworks
 - add a button to pull up more matches like the old `.match` or `.search`
 - depending on how alternative artworks are handled, add a button to display those too

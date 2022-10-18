@@ -32,8 +32,7 @@ export class ABDeploy {
 	}
 
 	has(server: Snowflake): boolean {
-		// If no file has been read, then always allow
-		return this.registry?.has(server) ?? true;
+		return !!this.registry?.has(server);
 	}
 
 	/**
