@@ -82,7 +82,7 @@ msgstr "未發行"
 
 #: src\card.ts:249
 #, javascript-format
-msgid "Fake password: ${ card.fake_password }"
+msgid "Placeholder ID: ${ card.fake_password }"
 msgstr "假卡密: ${ card.fake_password }"
 
 #: src\utils.ts:33

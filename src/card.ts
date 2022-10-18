@@ -246,7 +246,7 @@ function formatFooter(card: Static<typeof CardSchema>): EmbedFooterOptions {
 	}
 	if (card.fake_password) {
 		text += "\n";
-		text += t`Fake password: ${card.fake_password}`;
+		text += t`Placeholder ID: ${card.fake_password}`;
 	}
 	return { text };
 }

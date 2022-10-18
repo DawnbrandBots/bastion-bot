@@ -82,7 +82,7 @@ msgstr ""
 
 #: src\card.ts:249
 #, javascript-format
-msgid "Fake password: ${ card.fake_password }"
+msgid "Placeholder ID: ${ card.fake_password }"
 msgstr ""
 
 #: src\utils.ts:33
