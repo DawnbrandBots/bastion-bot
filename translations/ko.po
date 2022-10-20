@@ -71,7 +71,7 @@ msgstr "패스워드: ${ card.password } | 코나미 ID #${ card.konami_id }"
 
 #: src\card.ts:241
 msgid "No password | Konami ID #${ card.konami_id }"
-msgstr ""
+msgstr "패스워드 없음 | 코나미 ID #${ card.konami_id }"
 
 #: src\card.ts:243
 #, javascript-format
@@ -80,12 +80,12 @@ msgstr "패스워드: ${ card.password } | Not yet released"
 
 #: src\card.ts:245
 msgid "Not yet released"
-msgstr ""
+msgstr "발매되지 않았습니다."
 
 #: src\card.ts:249
 #, javascript-format
 msgid "Placeholder ID: ${ card.fake_password }"
-msgstr ""
+msgstr "플레이스홀더 ID: ${ card.fake_password }"
 
 #: src\utils.ts:33
 msgid ":tools: This command is in development."
@@ -155,7 +155,7 @@ msgstr "일치하는 카드를 찾을 수 없습니다. : `${ input }`!"
 
 #: src\commands\art.ts:107
 msgid "Could not find art for `${ name }`!"
-msgstr "일치하는 이미지를 찾을 수 없습니다. : `${ name }`!"
+msgstr "일치하는 일러스트를 찾을 수 없습니다. : `${ name }`!"
 
 #: src\commands\locale.ts:70
 #, javascript-format
@@ -331,7 +331,7 @@ msgstr ""
 #: src\events\message-ping.ts:53
 #, javascript-format
 msgid "Revision: ${ process.env.BOT_REVISION }."
-msgstr ""
+msgstr "수정: ${ process.env.BOT_REVISION }."
 
 #: src\commands\deck.ts:329
 msgid ".ydk files must have the .ydk extension!"
@@ -403,7 +403,7 @@ msgstr "덱이 <${ url }>에 업로드되었습니다!"
 
 #: src\events\message-search.ts:169
 msgid ":robot: The new Bastion search experience is here!"
-msgstr ""
+msgstr ":로봇: 새 Bastion 검색 체험이 나왔습니다!"
 
 #: src\events\message-search.ts:174
 #. eslint-disable-next-line prefer-template
@@ -414,7 +414,7 @@ msgstr "새 검색은 스레드 및 음성 대화에서 작동하며, 모든 서
 
 #: src\events\message-search.ts:178
 msgid ":speech_balloon: Translations missing?"
-msgstr ""
+msgstr ":말풍선: 번역이 누락되었습니까?"
 
 #: src\events\message-search.ts:179
 msgid "Help translate Bastion at the links above."
@@ -872,27 +872,27 @@ msgstr "검색할 Yugipedia 페이지의 이름입니다."
 #: src\commands\help.ts:55
 msgctxt "command-option-description"
 msgid "The name of a specific Slash Command."
-msgstr ""
+msgstr "특정 단축 명령의 이름입니다."
 
 #: src\commands\deck.ts:125
 msgctxt "command-option-description"
 msgid "View a deck by entering a ydke:// URL."
-msgstr ""
+msgstr "ydke:// URL을 입력하여 덱을 봅니다."
 
 #: src\commands\deck.ts:131
 msgctxt "command-option-description"
 msgid "View a deck by uploading a .ydk file."
-msgstr ""
+msgstr "ydk 파일을 업로드 후 덱을 봅니다."
 
 #: src\commands\deck.ts:137
 msgctxt "command-option-description"
 msgid "The ydke:// URL of the deck you want to view."
-msgstr ""
+msgstr "보려는 덱의 ydke:// URL입니다."
 
 #: src\commands\deck.ts:143
 msgctxt "command-option-description"
 msgid "The .ydk file of the deck you want to view."
-msgstr ""
+msgstr "보려는 덱의 ydk 파일입니다."
 
 #: src\commands\deck.ts:149
 msgctxt "command-option-description"
@@ -900,6 +900,8 @@ msgid ""
 "Whether to display the deck details publicly in chat. This is false by "
 "default."
 msgstr ""
+"대화에서 덱 세부 정보를 공개적으로 표시할지 여부입니다."
+"이것은 기본적으로 거짓입니다."
 
 #: src\commands\deck.ts:156
 msgctxt "command-option-description"
@@ -911,93 +913,93 @@ msgstr ""
 #: src\commands\art.ts:32
 msgctxt "command-option-description"
 msgid "Display the art for the card with this name."
-msgstr ""
+msgstr "이 이름으로 카드에 대한 일러스트를 표시합니다."
 
 #: src\commands\art.ts:37
 #: src\commands\price.ts:65
 #: src\commands\search.ts:41
 msgctxt "command-option-description"
 msgid "Card name, fuzzy matching supported."
-msgstr ""
+msgstr "카드 이름, 퍼지 매칭이 지원됩니다."
 
 #: src\commands\art.ts:42
 msgctxt "command-option-description"
 msgid "Display the art for the card with this password."
-msgstr ""
+msgstr "이 패스워드로 카드의 일러스트를 표시합니다."
 
 #: src\commands\art.ts:48
 #: src\commands\price.ts:76
 #: src\commands\search.ts:52
 msgctxt "command-option-description"
 msgid "Card password, the eight-digit number printed on the bottom left corner."
-msgstr ""
+msgstr "카드 패스워드, 왼쪽 하단에 인쇄된 8자리 숫자."
 
 #: src\commands\art.ts:54
 msgctxt "command-option-description"
 msgid "Display the art for the card with this official database ID."
-msgstr ""
+msgstr "이 공식 데이터베이스 ID로 카드의 일러스트를 표시합니다."
 
 #: src\commands\art.ts:59
 #: src\commands\price.ts:87
 #: src\commands\search.ts:63
 msgctxt "command-option-description"
 msgid "Konami's official card database identifier."
-msgstr ""
+msgstr "코나미의 공식 카드 데이터베이스 식별자입니다."
 
 #: src\commands\search.ts:36
 msgctxt "command-option-description"
 msgid "Find all information for the card with this name."
-msgstr ""
+msgstr "이 이름으로 카드에 대한 모든 정보를 찾습니다."
 
 #: src\commands\search.ts:46
 msgctxt "command-option-description"
 msgid "Find all information for the card with this password."
-msgstr ""
+msgstr "이 패스워드로 카드에 대한 모든 정보를 찾습니다."
 
 #: src\commands\search.ts:58
 msgctxt "command-option-description"
 msgid "Find all information for the card with this official database ID."
-msgstr ""
+msgstr "이 공식 데이터베이스 ID로 카드에 대한 모든 정보를 찾습니다."
 
 #: src\commands\locale.ts:31
 msgctxt "command-option-description"
 msgid "Check Bastion's locale setting for this channel or server."
-msgstr ""
+msgstr "이 채널 또는 서버에 대한 Bastion의 로케일 설정을 확인하십시오."
 
 #: src\commands\locale.ts:36
 msgctxt "command-option-description"
 msgid "Override Bastion's locale for this channel or server."
-msgstr ""
+msgstr "이 채널 또는 서버에 대한 Bastion의 로케일을 재정의하십시오."
 
 #: src\commands\locale.ts:41
 msgctxt "command-option-description"
 msgid "Edit just this channel or the whole server?"
-msgstr ""
+msgstr "이 채널만 편집하시겠습니까? 아니면 전체 서버만 편집하시겠습니까?"
 
 #: src\commands\locale.ts:49
 msgctxt "command-option-description"
 msgid "The new default language to use in this channel or server."
-msgstr ""
+msgstr "이 채널 또는 서버에서 사용할 새 기본 언어입니다."
 
 #: src\commands\price.ts:60
 msgctxt "command-option-description"
 msgid "Display the price for the card with this name."
-msgstr ""
+msgstr "이 이름으로 카드 가격을 표시합니다."
 
 #: src\commands\price.ts:70
 msgctxt "command-option-description"
 msgid "Display the price for the card with this password."
-msgstr ""
+msgstr "이 패스워드로 카드 가격을 표시합니다."
 
 #: src\commands\price.ts:82
 msgctxt "command-option-description"
 msgid "Display the price for the card with this official database ID."
-msgstr ""
+msgstr "이 공식 데이터베이스 ID로 카드 가격을 표시합니다."
 
 #: src\commands\price.ts:92
 msgctxt "command-option-description"
 msgid "The vendor to fetch the price data from."
-msgstr ""
+msgstr "가격 데이터를 가져올 업체입니다."
 
 #: src\commands\art.ts:26
 msgctxt "command-name"
