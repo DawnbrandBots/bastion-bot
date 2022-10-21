@@ -414,7 +414,7 @@ msgstr "새 검색은 스레드 및 음성 대화에서 작동하며, 모든 서
 
 #: src\events\message-search.ts:178
 msgid ":speech_balloon: Translations missing?"
-msgstr ":말풍선: 번역이 누락되었습니까?"
+msgstr ":💬: 번역이 누락되었습니까?"
 
 #: src\events\message-search.ts:179
 msgid "Help translate Bastion at the links above."
