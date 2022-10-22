@@ -91,7 +91,7 @@ msgstr "플레이스홀더 ID: ${ card.fake_password }"
 msgid "🛠️ This command is in development."
 msgstr "🛠️ 이 명령은 개발 중입니다."
 
-#: src\events\message-search.ts:181
+#: src\events\message-search.ts:182
 #: src\utils.ts:34
 msgid ""
 "📨 Please send feedback to [our issue "
@@ -148,7 +148,7 @@ msgstr "찾으시려던 것을 찾으셨나요? 저희를 지원해 주시는 �
 #: src\commands\art.ts:97
 #: src\commands\price.ts:148
 #: src\commands\search.ts:90
-#: src\events\message-search.ts:251
+#: src\events\message-search.ts:267
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr "일치하는 카드를 찾을 수 없습니다. : `${ input }`!"
@@ -401,22 +401,22 @@ msgstr "덱 업로드 실패!"
 msgid "Deck successfully uploaded to <${ url }>!"
 msgstr "덱이 <${ url }>에 업로드되었습니다!"
 
-#: src\events\message-search.ts:178
+#: src\events\message-search.ts:179
 msgid "🤖 The new Bastion search experience is here!"
 msgstr ":로봇: 새 Bastion 검색 체험이 나왔습니다!"
 
-#: src\events\message-search.ts:183
+#: src\events\message-search.ts:184
 #. eslint-disable-next-line prefer-template
 msgid ""
 "New search works in threads and voice chats, and will slowly roll out to "
 "all servers. More improvements are coming."
 msgstr "새 검색은 스레드 및 음성 대화에서 작동하며, 모든 서버에 천천히 롤아웃됩니다.더 많은 개선이 오고 있습니다."
 
-#: src\events\message-search.ts:187
+#: src\events\message-search.ts:188
 msgid "💬 Translations missing?"
 msgstr "💬 번역이 누락되었습니까?"
 
-#: src\events\message-search.ts:188
+#: src\events\message-search.ts:189
 msgid "Help translate Bastion at the links above."
 msgstr "위 링크에서 Bastion 번역을 도와주세요."
 
@@ -445,6 +445,18 @@ msgid ""
 "\n"
 "💬 Translations missing? Help translate Bastion on "
 "[GitHub](https://github.com/DawnbrandBots/bastion-bot)."
+msgstr ""
+
+#: src\events\message-search.ts:261
+#, javascript-format
+msgid ""
+"Search language: **${ localisedInputLanguage }** (${ inputLanguage }). "
+"Check defaults with </locale get:${ _id }> and configure with </locale "
+"set:${ _id }>"
+msgstr ""
+
+#: src\events\message-search.ts:264
+msgid "Search type: ${ localisedType }"
 msgstr ""
 
 #: src\card.ts:37
@@ -738,12 +750,12 @@ msgctxt "card-embed"
 msgid "Card Effect"
 msgstr "카드 효과"
 
-#: src\locale.ts:47
+#: src\locale.ts:48
 msgctxt "command-option"
 msgid "result-language"
 msgstr "출력언어"
 
-#: src\locale.ts:67
+#: src\locale.ts:68
 msgctxt "command-option"
 msgid "input-language"
 msgstr "입력언어"
@@ -848,12 +860,12 @@ msgctxt "command-option"
 msgid "vendor"
 msgstr ""
 
-#: src\locale.ts:50
+#: src\locale.ts:51
 msgctxt "command-option-description"
 msgid "The output language for the card embed, overriding other settings."
 msgstr "다른 설정을 재정의하는 카드 임베드의 출력 언어입니다."
 
-#: src\locale.ts:70
+#: src\locale.ts:71
 msgctxt "command-option-description"
 msgid "The language to search in, defaulting to the result language."
 msgstr "검색할 언어로, 기본적으로 출력 언어로 설정됩니다."

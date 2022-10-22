@@ -89,7 +89,7 @@ msgstr "假卡密: ${ card.fake_password }"
 msgid "🛠️ This command is in development."
 msgstr "🛠️ 這個指令正在開發中"
 
-#: src\events\message-search.ts:181
+#: src\events\message-search.ts:182
 #: src\utils.ts:34
 msgid ""
 "📨 Please send feedback to [our issue "
@@ -144,7 +144,7 @@ msgstr ""
 #: src\commands\art.ts:97
 #: src\commands\price.ts:148
 #: src\commands\search.ts:90
-#: src\events\message-search.ts:251
+#: src\events\message-search.ts:267
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr "查無此卡：`${ input }`"
@@ -389,22 +389,22 @@ msgstr ""
 msgid "Deck successfully uploaded to <${ url }>!"
 msgstr ""
 
-#: src\events\message-search.ts:178
+#: src\events\message-search.ts:179
 msgid "🤖 The new Bastion search experience is here!"
 msgstr ""
 
-#: src\events\message-search.ts:183
+#: src\events\message-search.ts:184
 #. eslint-disable-next-line prefer-template
 msgid ""
 "New search works in threads and voice chats, and will slowly roll out to "
 "all servers. More improvements are coming."
 msgstr ""
 
-#: src\events\message-search.ts:187
+#: src\events\message-search.ts:188
 msgid "💬 Translations missing?"
 msgstr ""
 
-#: src\events\message-search.ts:188
+#: src\events\message-search.ts:189
 msgid "Help translate Bastion at the links above."
 msgstr ""
 
@@ -433,6 +433,18 @@ msgid ""
 "\n"
 "💬 Translations missing? Help translate Bastion on "
 "[GitHub](https://github.com/DawnbrandBots/bastion-bot)."
+msgstr ""
+
+#: src\events\message-search.ts:261
+#, javascript-format
+msgid ""
+"Search language: **${ localisedInputLanguage }** (${ inputLanguage }). "
+"Check defaults with </locale get:${ _id }> and configure with </locale "
+"set:${ _id }>"
+msgstr ""
+
+#: src\events\message-search.ts:264
+msgid "Search type: ${ localisedType }"
 msgstr ""
 
 #: src\card.ts:37
@@ -726,12 +738,12 @@ msgctxt "card-embed"
 msgid "Card Effect"
 msgstr "卡片效果"
 
-#: src\locale.ts:47
+#: src\locale.ts:48
 msgctxt "command-option"
 msgid "result-language"
 msgstr ""
 
-#: src\locale.ts:67
+#: src\locale.ts:68
 msgctxt "command-option"
 msgid "input-language"
 msgstr ""
@@ -836,12 +848,12 @@ msgctxt "command-option"
 msgid "vendor"
 msgstr ""
 
-#: src\locale.ts:50
+#: src\locale.ts:51
 msgctxt "command-option-description"
 msgid "The output language for the card embed, overriding other settings."
 msgstr ""
 
-#: src\locale.ts:70
+#: src\locale.ts:71
 msgctxt "command-option-description"
 msgid "The language to search in, defaulting to the result language."
 msgstr ""

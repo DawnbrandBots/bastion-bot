@@ -21,6 +21,7 @@ export const LOCALE_CHOICES = [
 ] as const;
 export const LOCALES = LOCALE_CHOICES.map(c => c.value);
 export type Locale = ArrayElement<typeof LOCALES>;
+export const LOCALES_MAP = new Map(LOCALE_CHOICES.map(c => [c.value, c.name] as const));
 export const COMMAND_LOCALIZATIONS = [
 	{ gettext: "es", discord: DiscordLocale.SpanishES },
 	{ gettext: "fr", discord: DiscordLocale.French },
