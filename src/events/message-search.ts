@@ -175,16 +175,16 @@ function addExplainer(embeds: EmbedBuilder | EmbedBuilder[], locale: Locale): Em
 		embeds = [embeds];
 	}
 	embeds[embeds.length - 1].addFields({
-		name: t`:robot: The new Bastion search experience is here!`,
+		name: t`🤖 The new Bastion search experience is here!`,
 		value:
 			// eslint-disable-next-line prefer-template
-			t`:incoming_envelope: Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!` +
+			t`📨 Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!` +
 			"\n" +
 			t`New search works in threads and voice chats, and will slowly roll out to all servers. More improvements are coming.`
 	});
 	if (locale !== "en") {
 		embeds[embeds.length - 1].addFields({
-			name: t`:speech_balloon: Translations missing?`,
+			name: t`💬 Translations missing?`,
 			value: t`Help translate Bastion at the links above.`
 		});
 	}

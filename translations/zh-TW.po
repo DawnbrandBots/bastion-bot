@@ -7,7 +7,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src\card.ts:271
-msgid ":link: Links"
+msgid "🔗 Links"
 msgstr "鏈接"
 
 #: src\card.ts:272
@@ -86,13 +86,13 @@ msgid "Placeholder ID: ${ card.fake_password }"
 msgstr "假卡密: ${ card.fake_password }"
 
 #: src\utils.ts:33
-msgid ":tools: This command is in development."
-msgstr ":tools: 這個指令正在開發中"
+msgid "🛠️ This command is in development."
+msgstr "🛠️ 這個指令正在開發中"
 
-#: src\events\message-search.ts:172
+#: src\events\message-search.ts:181
 #: src\utils.ts:34
 msgid ""
-":incoming_envelope: Please send feedback to [our issue "
+"📨 Please send feedback to [our issue "
 "tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support "
 "server](https://discord.gg/4aFuPyuE96)!"
 msgstr ""
@@ -144,7 +144,7 @@ msgstr ""
 #: src\commands\art.ts:97
 #: src\commands\price.ts:148
 #: src\commands\search.ts:90
-#: src\events\message-search.ts:241
+#: src\events\message-search.ts:251
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr "查無此卡：`${ input }`"
@@ -389,33 +389,32 @@ msgstr ""
 msgid "Deck successfully uploaded to <${ url }>!"
 msgstr ""
 
-#: src\events\message-search.ts:169
-msgid ":robot: The new Bastion search experience is here!"
+#: src\events\message-search.ts:178
+msgid "🤖 The new Bastion search experience is here!"
 msgstr ""
 
-#: src\events\message-search.ts:174
+#: src\events\message-search.ts:183
 #. eslint-disable-next-line prefer-template
 msgid ""
 "New search works in threads and voice chats, and will slowly roll out to "
 "all servers. More improvements are coming."
 msgstr ""
 
-#: src\events\message-search.ts:178
-msgid ":speech_balloon: Translations missing?"
+#: src\events\message-search.ts:187
+msgid "💬 Translations missing?"
 msgstr ""
 
-#: src\events\message-search.ts:179
+#: src\events\message-search.ts:188
 msgid "Help translate Bastion at the links above."
 msgstr ""
 
 #: src\events\message-ping.ts:31
 msgid ""
-":question: Help documentation on "
+"❓ Help documentation on "
 "[GitHub](https://github.com/DawnbrandBots/bastion-bot), or use `.commands` "
 "and `.help`.\n"
-":green_circle: Licence: [GNU AGPL "
-"3.0+](https://choosealicense.com/licenses/agpl-3.0/).\n"
-":placard: Bastion Misawa is a character from [Yu-Gi-Oh! "
+"🟢 Licence: [GNU AGPL 3.0+](https://choosealicense.com/licenses/agpl-3.0/).\n"
+"🪧 Bastion Misawa is a character from [Yu-Gi-Oh! "
 "GX](https://yugipedia.com/wiki/Bastion_Misawa).\n"
 "<:PRO:1028300625122963567> Sponsored by "
 "[YGOPRODECK](https://ygoprodeck.com). Prices are YGOPRODECK affiliate "
@@ -427,12 +426,12 @@ msgid ""
 "<:kofi:927373724959789096> Ko-fi also works for [one-time "
 "donations](https://ko-fi.com/dawnbrandbots).\n"
 "\n"
-":tools: Improvements are regularly being worked on and rolled out. The new "
+"🛠️ Improvements are regularly being worked on and rolled out. The new "
 "search experience is here!\n"
-":robot: New features like Slash Commands are handled by a new bot instance "
+"🤖 New features like Slash Commands are handled by a new bot instance "
 "concurrently with the old bot.\n"
 "\n"
-":speech_balloon: Translations missing? Help translate Bastion on "
+"💬 Translations missing? Help translate Bastion on "
 "[GitHub](https://github.com/DawnbrandBots/bastion-bot)."
 msgstr ""
 

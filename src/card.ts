@@ -268,7 +268,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 		.setThumbnail(`${process.env.IMAGE_HOST}/${card.password}.png`);
 
 	const links = {
-		name: t`:link: Links`,
+		name: t`🔗 Links`,
 		value: t`[Official Konami DB](${official}) | [OCG Rulings](${rulings}) | [Yugipedia](${yugipedia}) | [YGOPRODECK](${ygoprodeck})`
 	};
 	if (card.konami_id === null) {

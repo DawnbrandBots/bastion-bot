@@ -29,18 +29,18 @@ export class PingMessageListener implements Listener<"messageCreate"> {
 				const embed: APIEmbed = {
 					title: t`Free and open source _Yu-Gi-Oh!_ bot`,
 					description: t`
-:question: Help documentation on [GitHub](https://github.com/DawnbrandBots/bastion-bot), or use \`.commands\` and \`.help\`.
-:green_circle: Licence: [GNU AGPL 3.0+](https://choosealicense.com/licenses/agpl-3.0/).
-:placard: Bastion Misawa is a character from [Yu-Gi-Oh! GX](https://yugipedia.com/wiki/Bastion_Misawa).
+❓ Help documentation on [GitHub](https://github.com/DawnbrandBots/bastion-bot), or use \`.commands\` and \`.help\`.
+🟢 Licence: [GNU AGPL 3.0+](https://choosealicense.com/licenses/agpl-3.0/).
+🪧 Bastion Misawa is a character from [Yu-Gi-Oh! GX](https://yugipedia.com/wiki/Bastion_Misawa).
 <:PRO:1028300625122963567> Sponsored by [YGOPRODECK](https://ygoprodeck.com). Prices are YGOPRODECK affiliate links.
 
 <:patreon:895892186841890816> Support us [on Patreon](https://www.patreon.com/alphakretinbots) and help keep the bot online!
 <:kofi:927373724959789096> Ko-fi also works for [one-time donations](https://ko-fi.com/dawnbrandbots).
 
-:tools: Improvements are regularly being worked on and rolled out. The new search experience is here!
-:robot: New features like Slash Commands are handled by a new bot instance concurrently with the old bot.
+🛠️ Improvements are regularly being worked on and rolled out. The new search experience is here!
+🤖 New features like Slash Commands are handled by a new bot instance concurrently with the old bot.
 
-:speech_balloon: Translations missing? Help translate Bastion on [GitHub](https://github.com/DawnbrandBots/bastion-bot).
+💬 Translations missing? Help translate Bastion on [GitHub](https://github.com/DawnbrandBots/bastion-bot).
 `,
 					color: Colors.Yellow,
 					author: {

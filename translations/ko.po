@@ -7,8 +7,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src\card.ts:271
-msgid ":link: Links"
-msgstr ":link: 링크"
+msgid "🔗 Links"
+msgstr "🔗 링크"
 
 #: src\card.ts:272
 #, javascript-format
@@ -88,18 +88,18 @@ msgid "Placeholder ID: ${ card.fake_password }"
 msgstr "플레이스홀더 ID: ${ card.fake_password }"
 
 #: src\utils.ts:33
-msgid ":tools: This command is in development."
-msgstr ":tools: 이 명령은 개발 중입니다."
+msgid "🛠️ This command is in development."
+msgstr "🛠️ 이 명령은 개발 중입니다."
 
-#: src\events\message-search.ts:172
+#: src\events\message-search.ts:181
 #: src\utils.ts:34
 msgid ""
-":incoming_envelope: Please send feedback to [our issue "
+"📨 Please send feedback to [our issue "
 "tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support "
 "server](https://discord.gg/4aFuPyuE96)!"
 msgstr ""
-":incoming_envelope: [문제 추적기](https://github.com/DawnbrandBots/bastion-bot) "
-"또는 [지원 서버](https://discord.gg/4aFuPyuE96)로 피드백을 보내주십시오!"
+"📨 [문제 추적기](https://github.com/DawnbrandBots/bastion-bot) 또는 [지원 "
+"서버](https://discord.gg/4aFuPyuE96)로 피드백을 보내주십시오!"
 
 #: src\utils.ts:45
 msgid "Please consider supporting us!"
@@ -148,7 +148,7 @@ msgstr "찾으시려던 것을 찾으셨나요? 저희를 지원해 주시는 �
 #: src\commands\art.ts:97
 #: src\commands\price.ts:148
 #: src\commands\search.ts:90
-#: src\events\message-search.ts:241
+#: src\events\message-search.ts:251
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr "일치하는 카드를 찾을 수 없습니다. : `${ input }`!"
@@ -401,33 +401,32 @@ msgstr "덱 업로드 실패!"
 msgid "Deck successfully uploaded to <${ url }>!"
 msgstr "덱이 <${ url }>에 업로드되었습니다!"
 
-#: src\events\message-search.ts:169
-msgid ":robot: The new Bastion search experience is here!"
+#: src\events\message-search.ts:178
+msgid "🤖 The new Bastion search experience is here!"
 msgstr ":로봇: 새 Bastion 검색 체험이 나왔습니다!"
 
-#: src\events\message-search.ts:174
+#: src\events\message-search.ts:183
 #. eslint-disable-next-line prefer-template
 msgid ""
 "New search works in threads and voice chats, and will slowly roll out to "
 "all servers. More improvements are coming."
 msgstr "새 검색은 스레드 및 음성 대화에서 작동하며, 모든 서버에 천천히 롤아웃됩니다.더 많은 개선이 오고 있습니다."
 
-#: src\events\message-search.ts:178
-msgid ":speech_balloon: Translations missing?"
+#: src\events\message-search.ts:187
+msgid "💬 Translations missing?"
 msgstr "💬 번역이 누락되었습니까?"
 
-#: src\events\message-search.ts:179
+#: src\events\message-search.ts:188
 msgid "Help translate Bastion at the links above."
 msgstr "위 링크에서 Bastion 번역을 도와주세요."
 
 #: src\events\message-ping.ts:31
 msgid ""
-":question: Help documentation on "
+"❓ Help documentation on "
 "[GitHub](https://github.com/DawnbrandBots/bastion-bot), or use `.commands` "
 "and `.help`.\n"
-":green_circle: Licence: [GNU AGPL "
-"3.0+](https://choosealicense.com/licenses/agpl-3.0/).\n"
-":placard: Bastion Misawa is a character from [Yu-Gi-Oh! "
+"🟢 Licence: [GNU AGPL 3.0+](https://choosealicense.com/licenses/agpl-3.0/).\n"
+"🪧 Bastion Misawa is a character from [Yu-Gi-Oh! "
 "GX](https://yugipedia.com/wiki/Bastion_Misawa).\n"
 "<:PRO:1028300625122963567> Sponsored by "
 "[YGOPRODECK](https://ygoprodeck.com). Prices are YGOPRODECK affiliate "
@@ -439,12 +438,12 @@ msgid ""
 "<:kofi:927373724959789096> Ko-fi also works for [one-time "
 "donations](https://ko-fi.com/dawnbrandbots).\n"
 "\n"
-":tools: Improvements are regularly being worked on and rolled out. The new "
+"🛠️ Improvements are regularly being worked on and rolled out. The new "
 "search experience is here!\n"
-":robot: New features like Slash Commands are handled by a new bot instance "
+"🤖 New features like Slash Commands are handled by a new bot instance "
 "concurrently with the old bot.\n"
 "\n"
-":speech_balloon: Translations missing? Help translate Bastion on "
+"💬 Translations missing? Help translate Bastion on "
 "[GitHub](https://github.com/DawnbrandBots/bastion-bot)."
 msgstr ""
 
@@ -899,9 +898,7 @@ msgctxt "command-option-description"
 msgid ""
 "Whether to display the deck details publicly in chat. This is false by "
 "default."
-msgstr ""
-"대화에서 덱 세부 정보를 공개적으로 표시할지 여부입니다."
-"이것은 기본적으로 거짓입니다."
+msgstr "대화에서 덱 세부 정보를 공개적으로 표시할지 여부입니다.이것은 기본적으로 거짓입니다."
 
 #: src\commands\deck.ts:156
 msgctxt "command-option-description"

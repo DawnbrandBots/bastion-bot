@@ -30,8 +30,8 @@ export function addNotice(embeds: EmbedBuilder | EmbedBuilder[]): EmbedBuilder[]
 	}
 	embeds[embeds.length - 1].addFields([
 		{
-			name: t`:tools: This command is in development.`,
-			value: t`:incoming_envelope: Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!`
+			name: t`🛠️ This command is in development.`,
+			value: t`📨 Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!`
 		}
 	]);
 	return embeds;
