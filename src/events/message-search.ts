@@ -283,11 +283,12 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		try {
 			return await message.react(reaction);
 		} catch (error) {
-			if (
-				error instanceof DiscordAPIError &&
-				(error.code === RESTJSONErrorCodes.MissingPermissions ||
-					error.code === RESTJSONErrorCodes.ReactionWasBlocked)
-			) {
+			const userConfigurationErrors: unknown[] = [
+				RESTJSONErrorCodes.MissingPermissions,
+				RESTJSONErrorCodes.ReactionWasBlocked, // blocking Bastion prevents reacting to author messages
+				RESTJSONErrorCodes.MissingAccess // must have Read Message History to react to messages
+			];
+			if (error instanceof DiscordAPIError && userConfigurationErrors.includes(error.code)) {
 				this.log("info", message, error);
 			} else {
 				this.log("warn", message, error);
