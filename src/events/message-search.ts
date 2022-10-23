@@ -11,11 +11,11 @@ import {
 } from "discord.js";
 import { parserFor, ParserRules } from "simple-markdown";
 import { inject, injectable } from "tsyringe";
-import { t, useLocale } from "ttag";
+import { c, t, useLocale } from "ttag";
 import { Listener } from ".";
 import { ABDeploy } from "../abdeploy";
 import { createCardEmbed, getCard } from "../card";
-import { Locale, LocaleProvider, LOCALES } from "../locale";
+import { Locale, LocaleProvider, LOCALES, LOCALES_MAP } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { RecentMessageCache } from "../message-cache";
 import { Metrics } from "../metrics";
@@ -155,6 +155,7 @@ export function inputToGetCardArguments(input: string, defaultLanguage: Locale) 
 		} else {
 			resultLanguage = defaultLanguage;
 		}
+		return [resultLanguage, type, searchTerm, inputLanguage] as const;
 	} else {
 		const matchText = input.match(TEXT_REGEX);
 		if (matchText && matchText.groups) {
@@ -166,8 +167,8 @@ export function inputToGetCardArguments(input: string, defaultLanguage: Locale) 
 			// Should never happen
 			throw new Error(input);
 		}
+		return [resultLanguage, type, searchTerm, inputLanguage] as const;
 	}
-	return [resultLanguage, type, searchTerm, inputLanguage] as const;
 }
 
 function addExplainer(embeds: EmbedBuilder | EmbedBuilder[], locale: Locale): EmbedBuilder[] {
@@ -191,6 +192,9 @@ function addExplainer(embeds: EmbedBuilder | EmbedBuilder[], locale: Locale): Em
 	return embeds;
 }
 
+// Same hack as in card.ts
+const rc = c;
+
 @injectable()
 export class SearchMessageListener implements Listener<"messageCreate"> {
 	readonly type = "messageCreate";
@@ -209,7 +213,8 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			channel: message.channelId,
 			message: message.id,
 			guild: message.guildId,
-			author: message.author.id
+			author: message.author.id,
+			ping: message.client.ws.ping
 		};
 		this.#logger[level](JSON.stringify(context), ...args);
 	}
@@ -241,22 +246,33 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		message.channel.sendTyping().catch(error => this.log("info", message, error));
 		this.addReaction(message, "🕙");
 		const language = await this.locales.getM(message);
-		const promises = inputs
-			.map(input => [input, ...inputToGetCardArguments(input, language)] as const)
-			.map(([input, resultLanguage, ...args]) =>
-				getCard(...args).then(async card => {
-					useLocale(resultLanguage);
-					let reply;
-					if (!card) {
-						reply = await message.reply({ content: t`Could not find a card matching \`${input}\`!` });
-					} else {
-						let embeds = createCardEmbed(card, resultLanguage);
-						embeds = addFunding(addExplainer(embeds, resultLanguage));
-						reply = await message.reply({ embeds });
-					}
-					return [card, reply] as const;
-				})
-			);
+		const promises = inputs.map(async input => {
+			const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
+			const card = await getCard(type, searchTerm, inputLanguage);
+			useLocale(resultLanguage);
+			let reply;
+			if (!card) {
+				let context = "\n";
+				if (type === "name") {
+					const localisedInputLanguage = LOCALES_MAP.get(inputLanguage);
+					// Note: nonfunctional in development or preview because those bots do not have global commands.
+					// To test functionality in development or preview, fetch guild commands and search them instead.
+					const id = message.client.application.commands.cache.find(cmd => cmd.name === "locale")?.id ?? 0;
+					context += t`Search language: **${localisedInputLanguage}** (${inputLanguage}). Check defaults with </locale get:${id}> and configure with </locale set:${id}>`;
+				} else {
+					const localisedType = rc("command-option").gettext(type);
+					context += t`Search type: ${localisedType}`;
+				}
+				reply = await message.reply({
+					content: t`Could not find a card matching \`${input}\`!` + context
+				});
+			} else {
+				let embeds = createCardEmbed(card, resultLanguage);
+				embeds = addFunding(addExplainer(embeds, resultLanguage));
+				reply = await message.reply({ embeds });
+			}
+			return [card, reply] as const;
+		});
 		const results = await Promise.allSettled(promises);
 		const replies = [];
 		for (const [i, result] of results.entries()) {
