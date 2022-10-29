@@ -403,7 +403,7 @@ msgstr "덱이 <${ url }>에 업로드되었습니다!"
 
 #: src\events\message-search.ts:179
 msgid "🤖 The new Bastion search experience is here!"
-msgstr ":로봇: 새 Bastion 검색 체험이 나왔습니다!"
+msgstr "🤖 새 Bastion 검색 체험이 나왔습니다!"
 
 #: src\events\message-search.ts:184
 #. eslint-disable-next-line prefer-template
