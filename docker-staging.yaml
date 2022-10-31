@@ -6,7 +6,6 @@ services:
     environment:
       DEBUG: "*"
       DISCORD_TOKEN:
-      SEARCH_API:
       API_URL:
       IMAGE_HOST:
       FTP_URL:

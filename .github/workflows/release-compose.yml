@@ -42,7 +42,6 @@ jobs:
           # docker/metadata-action type=sha,format=long
           DOCKER_TAG: sha-${{ github.event.inputs.revision || github.sha }}
           DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
-          SEARCH_API: ${{ secrets.SEARCH_API }}
           API_URL: ${{ secrets.API_URL_INTERNAL }}
           IMAGE_HOST: ${{ secrets.IMAGE_HOST }}
           FTP_URL: ${{ secrets.FTP_URL }}

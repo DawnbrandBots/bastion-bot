@@ -3,7 +3,7 @@ import { ChatInputCommandInteraction, EmbedBuilder, EmbedFooterOptions } from "d
 import { parseDocument } from "htmlparser2";
 import fetch from "node-fetch";
 import { c, t, useLocale } from "ttag";
-import { CardSchema, LimitRegulation } from "./definitions/yaml-yugi";
+import { CardSchema, LimitRegulation } from "./definitions";
 import { Locale } from "./locale";
 
 /**
@@ -125,12 +125,11 @@ const Icon = {
 export type CardLookupType = "name" | "password" | "konami-id" | "kid";
 
 export async function getCard(
-	useNew: boolean,
 	type: CardLookupType,
 	input: string,
 	lang?: Locale
 ): Promise<Static<typeof CardSchema> | undefined> {
-	let url = useNew ? `${process.env.API_URL}/ocg-tcg` : `${process.env.SEARCH_API}/yaml-yugi`;
+	let url = `${process.env.API_URL}/ocg-tcg`;
 	input = encodeURIComponent(input);
 	if (type === "password") {
 		url += `/card/password/${input}`;

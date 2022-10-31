@@ -35,7 +35,7 @@ export class RandomCommand extends Command {
 
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		await interaction.deferReply();
-		const response = await fetch(`${process.env.SEARCH_API}/yaml-yugi/random`);
+		const response = await fetch(`${process.env.API_URL}/ocg-tcg/random`);
 		const cards = await response.json();
 		const lang = await this.locales.get(interaction);
 		let embeds = createCardEmbed(cards[0], lang);

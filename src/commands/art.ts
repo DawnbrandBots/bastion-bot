@@ -7,7 +7,7 @@ import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { CardLookupType, getCard } from "../card";
 import { Command } from "../Command";
-import { CardSchema } from "../definitions/yaml-yugi";
+import { CardSchema } from "../definitions";
 import { buildLocalisedCommand, getInputLangStringOption, Locale, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
@@ -89,7 +89,7 @@ export class ArtCommand extends Command {
 		const resultLanguage = await this.locales.get(interaction);
 		const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
 		// Send out both requests simultaneously
-		const [, card] = await Promise.all([interaction.deferReply(), getCard(true, type, input, inputLanguage)]);
+		const [, card] = await Promise.all([interaction.deferReply(), getCard(type, input, inputLanguage)]);
 		let end: number;
 		if (!card) {
 			end = Date.now();

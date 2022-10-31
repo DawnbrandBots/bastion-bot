@@ -29,7 +29,7 @@ import { typedDeckToYdk, ydkToTypedDeck } from "ydeck";
 import { parseURL, toURL, TypedDeck } from "ydke";
 import { parseAndExpandRuby } from "../card";
 import { Command } from "../Command";
-import { CardSchema } from "../definitions/yaml-yugi";
+import { CardSchema } from "../definitions";
 import { COMMAND_LOCALIZATIONS, Locale, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
@@ -174,7 +174,7 @@ export class DeckCommand extends Command {
 	}
 
 	async getCards(cards: Set<number>): Promise<Map<number, Static<typeof CardSchema>>> {
-		const response = await fetch(`${process.env.SEARCH_API}/yaml-yugi/multi?password=${[...cards].join(",")}`);
+		const response = await fetch(`${process.env.API_URL}/ocg-tcg/multi?password=${[...cards].join(",")}`);
 		if (response.status === 200) {
 			const body: (Static<typeof CardSchema> | null)[] = await response.json();
 			const cardMemo = new Map<number, Static<typeof CardSchema>>();

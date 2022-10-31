@@ -98,7 +98,6 @@ jobs:
       - name: Deploy to Docker Swarm
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          SEARCH_API: ${{ secrets.SEARCH_API }}
           API_URL: ${{ secrets.API_URL_EXTERNAL }}
           IMAGE_HOST: ${{ secrets.IMAGE_HOST }}
           FTP_URL: ${{ secrets.FTP_URL }}
