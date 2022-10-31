@@ -241,8 +241,8 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		if (inputs.length === 0) {
 			return;
 		}
-		// Activate for first six seconds of each minute, or 10% assuming a uniform distribution
-		const useNew = new Date(message.createdTimestamp).getSeconds() < 6;
+		// Activate for first 30 seconds of each minute, or 50% assuming a uniform distribution
+		const useNew = new Date(message.createdTimestamp).getSeconds() < 30;
 		this.log("info", message, JSON.stringify(inputs), useNew);
 		inputs = [...new Set(inputs)].slice(0, 3); // remove duplicates, then select first three
 		message.channel.sendTyping().catch(error => this.log("info", message, error));
