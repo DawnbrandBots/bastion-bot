@@ -8,6 +8,7 @@ services:
       DEBUG: "*"
       DISCORD_TOKEN:
       SEARCH_API:
+      API_URL:
       IMAGE_HOST:
       FTP_URL:
       DISCORD_TOTAL_SHARDS: auto
@@ -20,7 +21,3 @@ services:
     restart: unless-stopped
     logging:
       driver: "${DOCKER_LOG_DRIVER:-journald}"
-networks:
-  default:
-    external: "${DOCKER_EXTERNAL_NETWORK:-true}"
-    name: "${DOCKER_NETWORK:-royal-magical-library_default}"

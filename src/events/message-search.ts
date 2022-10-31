@@ -241,14 +241,16 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		if (inputs.length === 0) {
 			return;
 		}
-		this.log("info", message, JSON.stringify(inputs));
+		// Activate for first six seconds of each minute, or 10% assuming a uniform distribution
+		const useNew = new Date(message.createdTimestamp).getSeconds() < 6;
+		this.log("info", message, JSON.stringify(inputs), useNew);
 		inputs = [...new Set(inputs)].slice(0, 3); // remove duplicates, then select first three
 		message.channel.sendTyping().catch(error => this.log("info", message, error));
 		this.addReaction(message, "🕙");
 		const language = await this.locales.getM(message);
 		const promises = inputs.map(async input => {
 			const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
-			const card = await getCard(type, searchTerm, inputLanguage);
+			const card = await getCard(useNew, type, searchTerm, inputLanguage);
 			useLocale(resultLanguage);
 			let reply;
 			if (!card) {

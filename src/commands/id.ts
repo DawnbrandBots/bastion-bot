@@ -37,7 +37,7 @@ export class IdCommand extends Command {
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const [type, input] = inferInputType(interaction);
 		await interaction.deferReply({ ephemeral: true });
-		const card = await getCard(type, input);
+		const card = await getCard(true, type, input);
 		let end: number;
 		if (!card) {
 			end = Date.now();

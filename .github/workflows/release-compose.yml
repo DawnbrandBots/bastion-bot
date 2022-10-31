@@ -43,13 +43,13 @@ jobs:
           DOCKER_TAG: sha-${{ github.event.inputs.revision || github.sha }}
           DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
           SEARCH_API: ${{ secrets.SEARCH_API }}
+          API_URL: ${{ secrets.API_URL_INTERNAL }}
           IMAGE_HOST: ${{ secrets.IMAGE_HOST }}
           FTP_URL: ${{ secrets.FTP_URL }}
           BOT_LOGGER_WEBHOOK: ${{ secrets.PRODUCTION_LOGGER_WEBHOOK }}
           BOT_PRESENCE: ${{ github.event.inputs.presence }}
           BOT_MOTD: ${{ github.event.inputs.motd }}
           BOT_BIND_MOUNT: ${{ secrets.PRODUCTION_BIND_MOUNT }}
-          DOCKER_EXTERNAL_NETWORK: "false"
         run: |
           docker-compose pull
           docker-compose up -d

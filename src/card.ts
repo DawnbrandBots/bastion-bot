@@ -125,11 +125,12 @@ const Icon = {
 export type CardLookupType = "name" | "password" | "konami-id" | "kid";
 
 export async function getCard(
+	useNew: boolean,
 	type: CardLookupType,
 	input: string,
 	lang?: Locale
 ): Promise<Static<typeof CardSchema> | undefined> {
-	let url = `${process.env.SEARCH_API}/yaml-yugi`; // treated as string instead of string? without forbidden non-null check
+	let url = useNew ? `${process.env.API_URL}/ocg-tcg` : `${process.env.SEARCH_API}/yaml-yugi`;
 	input = encodeURIComponent(input);
 	if (type === "password") {
 		url += `/card/password/${input}`;

@@ -140,7 +140,7 @@ export class PriceCommand extends Command {
 		const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
 		const vendor = interaction.options.getString("vendor", true) as vendorId;
 		// Send out both requests simultaneously
-		const [, card] = await Promise.all([interaction.deferReply(), getCard(type, input, inputLanguage)]);
+		const [, card] = await Promise.all([interaction.deferReply(), getCard(true, type, input, inputLanguage)]);
 		let end: number;
 		if (!card) {
 			end = Date.now();
