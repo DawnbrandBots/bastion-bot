@@ -91,7 +91,7 @@ msgstr "假卡密: ${ card.fake_password }"
 msgid "🛠️ This command is in development."
 msgstr "🛠️ 这个指令正在开发中"
 
-#: src\events\message-search.ts:182
+#: src\events\message-search.ts:181
 #: src\utils.ts:34
 msgid ""
 "📨 Please send feedback to [our issue "
@@ -148,8 +148,8 @@ msgstr "找到你要的东西了吗？请考虑捐助我们！"
 
 #: src\commands\art.ts:97
 #: src\commands\price.ts:148
-#: src\commands\search.ts:90
-#: src\events\message-search.ts:267
+#: src\commands\search.ts:89
+#: src\events\message-search.ts:266
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr "查无此卡：`${ input }`"
@@ -394,22 +394,15 @@ msgstr ""
 msgid "Deck successfully uploaded to <${ url }>!"
 msgstr ""
 
-#: src\events\message-search.ts:179
+#: src\events\message-search.ts:178
 msgid "🤖 The new Bastion search experience is here!"
 msgstr ""
 
-#: src\events\message-search.ts:184
-#. eslint-disable-next-line prefer-template
-msgid ""
-"New search works in threads and voice chats, and will slowly roll out to "
-"all servers. More improvements are coming."
-msgstr ""
-
-#: src\events\message-search.ts:188
+#: src\events\message-search.ts:187
 msgid "💬 Translations missing?"
 msgstr ""
 
-#: src\events\message-search.ts:189
+#: src\events\message-search.ts:188
 msgid "Help translate Bastion at the links above."
 msgstr ""
 
@@ -440,16 +433,24 @@ msgid ""
 "[GitHub](https://github.com/DawnbrandBots/bastion-bot)."
 msgstr ""
 
-#: src\events\message-search.ts:261
+#: src\events\message-search.ts:263
+msgid "Search type: ${ localisedType }"
+msgstr ""
+
+#: src\events\message-search.ts:183
+#. eslint-disable-next-line prefer-template
+msgid ""
+"📚 [__Learn more about how search "
+"works.__](https://github.com/DawnbrandBots/bastion-bot/blob/master/docs/"
+"card-search.md?utm_source=bastion)"
+msgstr ""
+
+#: src\events\message-search.ts:260
 #, javascript-format
 msgid ""
 "Search language: **${ localisedInputLanguage }** (${ inputLanguage }). "
-"Check defaults with </locale get:${ _id }> and configure with </locale "
-"set:${ _id }>"
-msgstr ""
-
-#: src\events\message-search.ts:264
-msgid "Search type: ${ localisedType }"
+"Check defaults with </locale get:${ id }> and configure with </locale "
+"set:${ id }>"
 msgstr ""
 
 #: src\card.ts:37
@@ -759,9 +760,9 @@ msgstr "输入语言"
 #: src\commands\price.ts:64
 #: src\commands\price.ts:74
 #: src\commands\price.ts:86
-#: src\commands\search.ts:40
-#: src\commands\search.ts:50
-#: src\commands\search.ts:62
+#: src\commands\search.ts:39
+#: src\commands\search.ts:49
+#: src\commands\search.ts:61
 msgctxt "command-option"
 msgid "input"
 msgstr "输入"
@@ -809,21 +810,21 @@ msgstr ""
 
 #: src\commands\art.ts:31
 #: src\commands\price.ts:59
-#: src\commands\search.ts:35
+#: src\commands\search.ts:34
 msgctxt "command-option"
 msgid "name"
 msgstr ""
 
 #: src\commands\art.ts:41
 #: src\commands\price.ts:69
-#: src\commands\search.ts:45
+#: src\commands\search.ts:44
 msgctxt "command-option"
 msgid "password"
 msgstr ""
 
 #: src\commands\art.ts:53
 #: src\commands\price.ts:81
-#: src\commands\search.ts:57
+#: src\commands\search.ts:56
 msgctxt "command-option"
 msgid "konami-id"
 msgstr ""
@@ -919,7 +920,7 @@ msgstr ""
 
 #: src\commands\art.ts:37
 #: src\commands\price.ts:65
-#: src\commands\search.ts:41
+#: src\commands\search.ts:40
 msgctxt "command-option-description"
 msgid "Card name, fuzzy matching supported."
 msgstr ""
@@ -931,7 +932,7 @@ msgstr ""
 
 #: src\commands\art.ts:48
 #: src\commands\price.ts:76
-#: src\commands\search.ts:52
+#: src\commands\search.ts:51
 msgctxt "command-option-description"
 msgid "Card password, the eight-digit number printed on the bottom left corner."
 msgstr ""
@@ -943,22 +944,22 @@ msgstr ""
 
 #: src\commands\art.ts:59
 #: src\commands\price.ts:87
-#: src\commands\search.ts:63
+#: src\commands\search.ts:62
 msgctxt "command-option-description"
 msgid "Konami's official card database identifier."
 msgstr ""
 
-#: src\commands\search.ts:36
+#: src\commands\search.ts:35
 msgctxt "command-option-description"
 msgid "Find all information for the card with this name."
 msgstr ""
 
-#: src\commands\search.ts:46
+#: src\commands\search.ts:45
 msgctxt "command-option-description"
 msgid "Find all information for the card with this password."
 msgstr ""
 
-#: src\commands\search.ts:58
+#: src\commands\search.ts:57
 msgctxt "command-option-description"
 msgid "Find all information for the card with this official database ID."
 msgstr ""
@@ -1033,7 +1034,7 @@ msgctxt "command-name"
 msgid "deck"
 msgstr ""
 
-#: src\commands\search.ts:30
+#: src\commands\search.ts:29
 msgctxt "command-name"
 msgid "search"
 msgstr ""
@@ -1043,7 +1044,7 @@ msgctxt "command-name"
 msgid "locale"
 msgstr ""
 
-#: src\commands\random.ts:25
+#: src\commands\random.ts:24
 msgctxt "command-name"
 msgid "random"
 msgstr ""
@@ -1085,7 +1086,7 @@ msgid ""
 "deck building programs."
 msgstr ""
 
-#: src\commands\search.ts:31
+#: src\commands\search.ts:30
 msgctxt "command-description"
 msgid "Find all information on a card!"
 msgstr ""
@@ -1095,7 +1096,7 @@ msgctxt "command-description"
 msgid "Check or set Bastion's locale for this channel or server."
 msgstr ""
 
-#: src\commands\random.ts:26
+#: src\commands\random.ts:25
 msgctxt "command-description"
 msgid "Get a random Yu-Gi-Oh! card."
 msgstr ""

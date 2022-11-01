@@ -9,7 +9,6 @@ import { Command } from "../Command";
 import { buildLocalisedCommand, getResultLangStringOption, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { addFunding, addNotice } from "../utils";
 
 @injectable()
 export class RandomCommand extends Command {
@@ -38,8 +37,7 @@ export class RandomCommand extends Command {
 		const response = await fetch(`${process.env.API_URL}/ocg-tcg/random`);
 		const cards = await response.json();
 		const lang = await this.locales.get(interaction);
-		let embeds = createCardEmbed(cards[0], lang);
-		embeds = addFunding(addNotice(embeds));
+		const embeds = createCardEmbed(cards[0], lang);
 		const end = Date.now();
 		await interaction.editReply({ embeds }); // Actually returns void
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate

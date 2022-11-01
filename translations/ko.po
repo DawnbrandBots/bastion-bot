@@ -91,7 +91,7 @@ msgstr "플레이스홀더 ID: ${ card.fake_password }"
 msgid "🛠️ This command is in development."
 msgstr "🛠️ 이 명령은 개발 중입니다."
 
-#: src\events\message-search.ts:182
+#: src\events\message-search.ts:181
 #: src\utils.ts:34
 msgid ""
 "📨 Please send feedback to [our issue "
@@ -147,8 +147,8 @@ msgstr "찾으시려던 것을 찾으셨나요? 저희를 지원해 주시는 �
 
 #: src\commands\art.ts:97
 #: src\commands\price.ts:148
-#: src\commands\search.ts:90
-#: src\events\message-search.ts:267
+#: src\commands\search.ts:89
+#: src\events\message-search.ts:266
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr "일치하는 카드를 찾을 수 없습니다. : `${ input }`!"
@@ -401,22 +401,15 @@ msgstr "덱 업로드 실패!"
 msgid "Deck successfully uploaded to <${ url }>!"
 msgstr "덱이 <${ url }>에 업로드되었습니다!"
 
-#: src\events\message-search.ts:179
+#: src\events\message-search.ts:178
 msgid "🤖 The new Bastion search experience is here!"
 msgstr "🤖 새 Bastion 검색 체험이 나왔습니다!"
 
-#: src\events\message-search.ts:184
-#. eslint-disable-next-line prefer-template
-msgid ""
-"New search works in threads and voice chats, and will slowly roll out to "
-"all servers. More improvements are coming."
-msgstr "새 검색은 스레드 및 음성 대화에서 작동하며, 모든 서버에 천천히 롤아웃됩니다.더 많은 개선이 오고 있습니다."
-
-#: src\events\message-search.ts:188
+#: src\events\message-search.ts:187
 msgid "💬 Translations missing?"
 msgstr "💬 번역이 누락되었습니까?"
 
-#: src\events\message-search.ts:189
+#: src\events\message-search.ts:188
 msgid "Help translate Bastion at the links above."
 msgstr "위 링크에서 Bastion 번역을 도와주세요."
 
@@ -447,16 +440,24 @@ msgid ""
 "[GitHub](https://github.com/DawnbrandBots/bastion-bot)."
 msgstr ""
 
-#: src\events\message-search.ts:261
+#: src\events\message-search.ts:263
+msgid "Search type: ${ localisedType }"
+msgstr ""
+
+#: src\events\message-search.ts:183
+#. eslint-disable-next-line prefer-template
+msgid ""
+"📚 [__Learn more about how search "
+"works.__](https://github.com/DawnbrandBots/bastion-bot/blob/master/docs/"
+"card-search.md?utm_source=bastion)"
+msgstr ""
+
+#: src\events\message-search.ts:260
 #, javascript-format
 msgid ""
 "Search language: **${ localisedInputLanguage }** (${ inputLanguage }). "
-"Check defaults with </locale get:${ _id }> and configure with </locale "
-"set:${ _id }>"
-msgstr ""
-
-#: src\events\message-search.ts:264
-msgid "Search type: ${ localisedType }"
+"Check defaults with </locale get:${ id }> and configure with </locale "
+"set:${ id }>"
 msgstr ""
 
 #: src\card.ts:37
@@ -766,9 +767,9 @@ msgstr "입력언어"
 #: src\commands\price.ts:64
 #: src\commands\price.ts:74
 #: src\commands\price.ts:86
-#: src\commands\search.ts:40
-#: src\commands\search.ts:50
-#: src\commands\search.ts:62
+#: src\commands\search.ts:39
+#: src\commands\search.ts:49
+#: src\commands\search.ts:61
 msgctxt "command-option"
 msgid "input"
 msgstr "입력"
@@ -816,21 +817,21 @@ msgstr "다량"
 
 #: src\commands\art.ts:31
 #: src\commands\price.ts:59
-#: src\commands\search.ts:35
+#: src\commands\search.ts:34
 msgctxt "command-option"
 msgid "name"
 msgstr "이름"
 
 #: src\commands\art.ts:41
 #: src\commands\price.ts:69
-#: src\commands\search.ts:45
+#: src\commands\search.ts:44
 msgctxt "command-option"
 msgid "password"
 msgstr "패스워드"
 
 #: src\commands\art.ts:53
 #: src\commands\price.ts:81
-#: src\commands\search.ts:57
+#: src\commands\search.ts:56
 msgctxt "command-option"
 msgid "konami-id"
 msgstr ""
@@ -926,7 +927,7 @@ msgstr "이 이름으로 카드에 대한 일러스트를 표시합니다."
 
 #: src\commands\art.ts:37
 #: src\commands\price.ts:65
-#: src\commands\search.ts:41
+#: src\commands\search.ts:40
 msgctxt "command-option-description"
 msgid "Card name, fuzzy matching supported."
 msgstr "카드 이름, 퍼지 매칭이 지원됩니다."
@@ -938,7 +939,7 @@ msgstr "이 패스워드로 카드의 일러스트를 표시합니다."
 
 #: src\commands\art.ts:48
 #: src\commands\price.ts:76
-#: src\commands\search.ts:52
+#: src\commands\search.ts:51
 msgctxt "command-option-description"
 msgid "Card password, the eight-digit number printed on the bottom left corner."
 msgstr "카드 패스워드, 왼쪽 하단에 인쇄된 8자리 숫자."
@@ -950,22 +951,22 @@ msgstr "이 공식 데이터베이스 ID로 카드의 일러스트를 표시합�
 
 #: src\commands\art.ts:59
 #: src\commands\price.ts:87
-#: src\commands\search.ts:63
+#: src\commands\search.ts:62
 msgctxt "command-option-description"
 msgid "Konami's official card database identifier."
 msgstr "코나미의 공식 카드 데이터베이스 식별자입니다."
 
-#: src\commands\search.ts:36
+#: src\commands\search.ts:35
 msgctxt "command-option-description"
 msgid "Find all information for the card with this name."
 msgstr "이 이름으로 카드에 대한 모든 정보를 찾습니다."
 
-#: src\commands\search.ts:46
+#: src\commands\search.ts:45
 msgctxt "command-option-description"
 msgid "Find all information for the card with this password."
 msgstr "이 패스워드로 카드에 대한 모든 정보를 찾습니다."
 
-#: src\commands\search.ts:58
+#: src\commands\search.ts:57
 msgctxt "command-option-description"
 msgid "Find all information for the card with this official database ID."
 msgstr "이 공식 데이터베이스 ID로 카드에 대한 모든 정보를 찾습니다."
@@ -1040,7 +1041,7 @@ msgctxt "command-name"
 msgid "deck"
 msgstr "덱"
 
-#: src\commands\search.ts:30
+#: src\commands\search.ts:29
 msgctxt "command-name"
 msgid "search"
 msgstr "검색"
@@ -1050,7 +1051,7 @@ msgctxt "command-name"
 msgid "locale"
 msgstr "로케일"
 
-#: src\commands\random.ts:25
+#: src\commands\random.ts:24
 msgctxt "command-name"
 msgid "random"
 msgstr "무작위"
@@ -1092,7 +1093,7 @@ msgid ""
 "deck building programs."
 msgstr "여러 덱 제작 프로그램에서 내보낸 덱 목록을ydke:// 또는 .ydk 형식으로 표시합니다."
 
-#: src\commands\search.ts:31
+#: src\commands\search.ts:30
 msgctxt "command-description"
 msgid "Find all information on a card!"
 msgstr "카드의 모든 정보를 찾으세요!"
@@ -1102,7 +1103,7 @@ msgctxt "command-description"
 msgid "Check or set Bastion's locale for this channel or server."
 msgstr "이 채널 또는 서버에 대한 Bastion의 로케일을 확인하거나 설정합니다."
 
-#: src\commands\random.ts:26
+#: src\commands\random.ts:25
 msgctxt "command-description"
 msgid "Get a random Yu-Gi-Oh! card."
 msgstr "유희왕 카드를 무작위로 받으십시오."

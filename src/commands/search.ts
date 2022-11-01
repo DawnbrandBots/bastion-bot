@@ -14,7 +14,6 @@ import {
 } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { addFunding, addNotice } from "../utils";
 
 @injectable()
 export class SearchCommand extends Command {
@@ -89,8 +88,7 @@ export class SearchCommand extends Command {
 			useLocale(resultLanguage);
 			await interaction.editReply({ content: t`Could not find a card matching \`${input}\`!` });
 		} else {
-			let embeds = createCardEmbed(card, resultLanguage);
-			embeds = addFunding(addNotice(embeds));
+			const embeds = createCardEmbed(card, resultLanguage);
 			end = Date.now();
 			await interaction.editReply({ embeds }); // Actually returns void
 		}

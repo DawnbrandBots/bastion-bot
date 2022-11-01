@@ -19,7 +19,6 @@ import { Locale, LocaleProvider, LOCALES, LOCALES_MAP } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { RecentMessageCache } from "../message-cache";
 import { Metrics } from "../metrics";
-import { addFunding } from "../utils";
 
 // Only take certain plugins because we don't need to parse all markup like bolding
 // and the mention parsing is not as well-maintained as discord.js
@@ -171,7 +170,7 @@ export function inputToGetCardArguments(input: string, defaultLanguage: Locale) 
 	}
 }
 
-function addExplainer(embeds: EmbedBuilder | EmbedBuilder[], locale: Locale): EmbedBuilder[] {
+function addExplainer(embeds: EmbedBuilder | EmbedBuilder[], locale: Locale, id: unknown): EmbedBuilder[] {
 	if (!Array.isArray(embeds)) {
 		embeds = [embeds];
 	}
@@ -181,7 +180,7 @@ function addExplainer(embeds: EmbedBuilder | EmbedBuilder[], locale: Locale): Em
 			// eslint-disable-next-line prefer-template
 			t`📨 Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!` +
 			"\n" +
-			t`New search works in threads and voice chats, and will slowly roll out to all servers. More improvements are coming.`
+			t`📚 [__Learn more about how search works.__](https://github.com/DawnbrandBots/bastion-bot/blob/master/docs/card-search.md?utm_source=bastion)`
 	});
 	if (locale !== "en") {
 		embeds[embeds.length - 1].addFields({
@@ -250,14 +249,14 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
 			const card = await getCard(type, searchTerm, inputLanguage);
 			useLocale(resultLanguage);
+			// Note: nonfunctional in development or preview because those bots do not have global commands.
+			// To test functionality in development or preview, fetch guild commands and search them instead.
+			const id = message.client.application.commands.cache.find(cmd => cmd.name === "locale")?.id ?? 0;
 			let reply;
 			if (!card) {
 				let context = "\n";
 				if (type === "name") {
 					const localisedInputLanguage = LOCALES_MAP.get(inputLanguage);
-					// Note: nonfunctional in development or preview because those bots do not have global commands.
-					// To test functionality in development or preview, fetch guild commands and search them instead.
-					const id = message.client.application.commands.cache.find(cmd => cmd.name === "locale")?.id ?? 0;
 					context += t`Search language: **${localisedInputLanguage}** (${inputLanguage}). Check defaults with </locale get:${id}> and configure with </locale set:${id}>`;
 				} else {
 					const localisedType = rc("command-option").gettext(type);
@@ -268,7 +267,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 				});
 			} else {
 				let embeds = createCardEmbed(card, resultLanguage);
-				embeds = addFunding(addExplainer(embeds, resultLanguage));
+				embeds = addExplainer(embeds, resultLanguage, id);
 				reply = await message.reply({ embeds });
 			}
 			return [card, reply] as const;
