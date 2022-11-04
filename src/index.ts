@@ -70,6 +70,12 @@ if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 		container.resolve(Metrics).destroy();
 		container.resolve(SQLiteLocaleProvider).destroy();
 	});
+	process.on("SIGTTIN", signal => {
+		logger.notify(signal);
+	});
+	process.on("SIGTTOU", signal => {
+		logger.notify(signal);
+	});
 	// Implicitly use DISCORD_TOKEN
 	bot.login();
 }
