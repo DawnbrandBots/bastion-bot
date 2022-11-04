@@ -21,6 +21,6 @@ services:
         order: start-first
       placement:
         constraints:
-          node.role: manager
+          - node.role==manager
     logging:
       driver: journald
