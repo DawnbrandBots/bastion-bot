@@ -103,7 +103,7 @@ jobs:
           FTP_URL: ${{ secrets.FTP_URL }}
           DISCORD_TOTAL_SHARDS: 1
         run: |
-          docker kill --signal=SIGTTIN $(docker ps --filter label=com.docker.swarm.service.name=discord-bot_bot --quiet)
+          docker kill --signal=SIGTTIN $(docker ps --filter label=com.docker.swarm.service.name=discord-bot_bot --quiet) || echo No existing container!
           docker stack deploy discord-bot -c <(docker-compose -f docker-staging.yaml config) --prune --with-registry-auth
       - name: Wait for Swarm to converge
         # docker stack deploy does not wait for the service to converge. Issuu's sure-deploy doesn't
