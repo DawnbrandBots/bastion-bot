@@ -3,6 +3,7 @@ import { PingMessageListener } from "../../src/events";
 import { Locale, LocaleProvider } from "../../src/locale";
 
 const { Message: MockMessage, MessageMentions } = jest.createMockFromModule("discord.js");
+const { EventLocker: MockEventLocker } = jest.createMockFromModule("../../src/event-lock");
 
 class MockLocaleProvider extends LocaleProvider {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -24,7 +25,9 @@ class MockLocaleProvider extends LocaleProvider {
 }
 
 describe("Message event listener", () => {
-	const listener = new PingMessageListener(new MockLocaleProvider());
+	const eventLocks = new MockEventLocker();
+	jest.spyOn(eventLocks, "has").mockImplementation(() => true);
+	const listener = new PingMessageListener(new MockLocaleProvider(), eventLocks);
 
 	let message: Message;
 	const user = {};
