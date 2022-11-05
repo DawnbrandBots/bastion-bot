@@ -2,6 +2,7 @@ import { APIEmbed, Colors, Message } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { t, useLocale } from "ttag";
 import { Listener } from ".";
+import { EventLocker } from "../event-lock";
 import { LocaleProvider } from "../locale";
 import { getLogger } from "../logger";
 
@@ -11,7 +12,7 @@ export class PingMessageListener implements Listener<"messageCreate"> {
 
 	#logger = getLogger("events:message:ping");
 
-	constructor(@inject("LocaleProvider") private locales: LocaleProvider) {}
+	constructor(@inject("LocaleProvider") private locales: LocaleProvider, private eventLocks: EventLocker) {}
 
 	async run(message: Message): Promise<void> {
 		if (message.author.bot || message.reference) {
@@ -21,6 +22,18 @@ export class PingMessageListener implements Listener<"messageCreate"> {
 			message.client.user &&
 			message.mentions.has(message.client.user, { ignoreEveryone: true, ignoreRoles: true })
 		) {
+			if (!this.eventLocks.has(message.id, PingMessageListener.name)) {
+				this.#logger.verbose(
+					JSON.stringify({
+						channel: message.channel.id,
+						message: message.id,
+						guild: message.guild?.id,
+						author: message.author.id,
+						skipNoLock: true
+					})
+				);
+				return;
+			}
 			try {
 				const lang = await this.locales.getM(message);
 				useLocale(lang);

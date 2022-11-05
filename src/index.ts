@@ -7,6 +7,7 @@ import { addLocale } from "ttag";
 import { BotFactory } from "./bot";
 import { Command } from "./Command";
 import { classes, registerSlashCommands } from "./commands";
+import { EventLocker } from "./event-lock";
 import { InteractionListener, MessageDeleteListener, PingMessageListener, SearchMessageListener } from "./events";
 import { LocaleProvider, SQLiteLocaleProvider } from "./locale";
 import { getLogger } from "./logger";
@@ -52,6 +53,14 @@ if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 		useValue: abdeployJson
 	});
 
+	const locksDb = process.argv[2]
+		? path.join(process.argv[2], "locks.db3")
+		: path.join(os.tmpdir(), "bastion-locks.db3");
+	logger.info(`Storing event locks in ${localeDb}`);
+	container.register<string>("locksDb", {
+		useValue: locksDb
+	});
+
 	// TTL: 1 minute, sweep every 5 minutes
 	container.registerInstance<RecentMessageCache>(RecentMessageCache, new RecentMessageCache(60000, 300000));
 
@@ -69,12 +78,7 @@ if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 		bot.destroy();
 		container.resolve(Metrics).destroy();
 		container.resolve(SQLiteLocaleProvider).destroy();
-	});
-	process.on("SIGTTIN", signal => {
-		logger.notify(signal);
-	});
-	process.on("SIGTTOU", signal => {
-		logger.notify(signal);
+		container.resolve(EventLocker).destroy();
 	});
 	// Implicitly use DISCORD_TOKEN
 	bot.login();

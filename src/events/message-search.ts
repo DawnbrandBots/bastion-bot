@@ -15,6 +15,7 @@ import { c, t, useLocale } from "ttag";
 import { Listener } from ".";
 import { ABDeploy } from "../abdeploy";
 import { createCardEmbed, getCard } from "../card";
+import { EventLocker } from "../event-lock";
 import { Locale, LocaleProvider, LOCALES, LOCALES_MAP } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { RecentMessageCache } from "../message-cache";
@@ -204,7 +205,8 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		@inject("LocaleProvider") private locales: LocaleProvider,
 		private metrics: Metrics,
 		private recentCache: RecentMessageCache,
-		private abdeploy: ABDeploy
+		private abdeploy: ABDeploy,
+		private eventLocks: EventLocker
 	) {}
 
 	protected log(level: keyof Logger, message: Message, ...args: Parameters<Logger[keyof Logger]>): void {
@@ -233,6 +235,9 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			return;
 		}
 		if (!message.guildId && process.env.BOT_NO_DIRECT_MESSAGE_SEARCH) {
+			return;
+		}
+		if (!this.eventLocks.has(message.id, this.type)) {
 			return;
 		}
 		const delimiter = getDelimiter(message);
