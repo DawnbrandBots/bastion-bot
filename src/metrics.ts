@@ -58,6 +58,9 @@ CREATE TABLE IF NOT EXISTS "searches" (
 		resultCard?: Static<typeof CardSchema>,
 		replyMessage?: Message
 	): void {
+		// Neither resultCard nor replyMessage: card lookup failed
+		// No replyMessage: Discord reply failed
+		// Both defined: normal operation
 		const id = searchMessage.id;
 		const guild = searchMessage.guildId;
 		const channel = searchMessage.channelId;
