@@ -737,17 +737,17 @@ msgstr "ペンデュラム効果"
 #: src\card.ts:385
 msgctxt "card-embed"
 msgid "Card Effect"
-msgstr ""
+msgstr "カード効果"
 
 #: src\locale.ts:48
 msgctxt "command-option"
 msgid "result-language"
-msgstr ""
+msgstr "出力用言語"
 
 #: src\locale.ts:68
 msgctxt "command-option"
 msgid "input-language"
-msgstr ""
+msgstr "入力用言語"
 
 #: src\commands\art.ts:36
 #: src\commands\art.ts:46
