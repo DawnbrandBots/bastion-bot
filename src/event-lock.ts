@@ -30,8 +30,7 @@ export class EventLocker {
 	private readonly db: Database;
 	private readonly insertStatement: Statement;
 	private readonly deleteStatement: Statement;
-	// This should be "true", but only enable this at boot in preview first
-	private isActive = !!process.env.BOT_NO_DIRECT_MESSAGE_SEARCH;
+	private isActive = true;
 	private readonly onTTIN: NodeJS.SignalsListener;
 	private readonly onTTOU: NodeJS.SignalsListener;
 
