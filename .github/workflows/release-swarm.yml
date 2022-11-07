@@ -11,6 +11,10 @@ on:
         description: "Help message addendum"
         required: false
         default: ""
+      revision:
+        description: "GitHub commit SHA"
+        required: false
+        default: ""
 
 jobs:
   release:
@@ -28,6 +32,8 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      # Save some time between container up and Slash Command deployment
+      - run: docker pull ghcr.io/${{ github.repository }}:sha-${{ github.event.inputs.revision || github.sha }}
       - name: Download wait script
         # https://github.com/docker/cli/issues/373
         # Pinned to the latest version at the time of creation so we can manually verify new versions
@@ -50,14 +56,18 @@ jobs:
       - name: Deploy to Docker Swarm
         env:
           # docker/metadata-action type=sha,format=long
-          DOCKER_TAG: sha-${{ github.sha }}
+          DOCKER_TAG: sha-${{ github.event.inputs.revision || github.sha }}
           DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
-          DISCORD_TOTAL_SHARDS: ${{ steps.shards.outputs.count }}
-          DOCKER_EXTERNAL_NETWORK: "false"
+          API_URL: ${{ secrets.API_URL_INTERNAL }}
+          IMAGE_HOST: ${{ secrets.IMAGE_HOST }}
+          FTP_URL: ${{ secrets.FTP_URL }}
+          BOT_LOGGER_WEBHOOK: ${{ secrets.PRODUCTION_LOGGER_WEBHOOK }}
           BOT_PRESENCE: ${{ github.event.inputs.presence }}
           BOT_MOTD: ${{ github.event.inputs.motd }}
+          BOT_BIND_MOUNT: ${{ secrets.PRODUCTION_BIND_MOUNT }}
         run: |
-          docker stack deploy discord-bot -c <(docker-compose config) --prune --with-registry-auth
+          docker kill --signal=SIGTTIN $(docker ps --filter label=com.docker.swarm.service.name=bastion_bot --quiet) || echo No existing container!
+          docker stack deploy bastion -c <(docker-compose config) --prune --with-registry-auth
       - name: Wait for Swarm to converge
         # docker stack deploy does not wait for the service to converge. Issuu's sure-deploy doesn't
         # seem to verify if all replicas are actually running and not preparing, but the previously
@@ -67,10 +77,11 @@ jobs:
         # to stay online for each swarm node to be authorized to pull from a private registry.
         # Time out after five minutes.
         run: |
-          ./docker-stack-wait.sh -t 300 discord-bot
+          ./docker-stack-wait.sh -t 300 bastion
+          docker kill --signal=SIGTTOU $(docker ps --filter label=com.docker.swarm.service.name=bastion_bot --quiet)
       - name: Deploy Slash Commands globally
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: |
           docker context use default
-          docker run -e DISCORD_TOKEN ghcr.io/${{ github.repository }}:sha-${{ github.sha }} --deploy-slash
+          docker run -e DISCORD_TOKEN ghcr.io/${{ github.repository }}:sha-${{ github.event.inputs.revision || github.sha }} --deploy-slash
