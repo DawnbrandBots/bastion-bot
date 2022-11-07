@@ -2,12 +2,11 @@ version: "3.9"
 
 services:
   bot:
-    build: .
     image: "ghcr.io/dawnbrandbots/bastion-bot:${DOCKER_TAG:-latest}"
     environment:
       DEBUG: "*"
       DISCORD_TOKEN:
-      SEARCH_API:
+      API_URL:
       IMAGE_HOST:
       FTP_URL:
       DISCORD_TOTAL_SHARDS: auto
@@ -17,10 +16,15 @@ services:
     volumes:
       - ${BOT_BIND_MOUNT}:/var/local/bastion
     command: /var/local/bastion
-    restart: unless-stopped
     logging:
       driver: "${DOCKER_LOG_DRIVER:-journald}"
-networks:
-  default:
-    external: "${DOCKER_EXTERNAL_NETWORK:-true}"
-    name: "${DOCKER_NETWORK:-royal-magical-library_default}"
+    deploy:
+      replicas: 1
+      update_config:
+        order: start-first
+      placement:
+        constraints:
+          - node.role==manager
+    # Compose-only fields
+    build: .
+    restart: unless-stopped

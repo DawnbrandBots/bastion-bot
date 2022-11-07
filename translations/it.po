@@ -6,33 +6,33 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src\card.ts:253
-msgid ":link: Links"
+#: src\card.ts:271
+msgid "🔗 Links"
 msgstr ""
 
-#: src\card.ts:254
+#: src\card.ts:272
 #, javascript-format
 msgid ""
 "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
 "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
 
-#: src\card.ts:257
+#: src\card.ts:275
 #, javascript-format
 msgid "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
 
-#: src\card.ts:317
+#: src\card.ts:335
 #, javascript-format
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 msgstr "**Tipo**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:319
+#: src\card.ts:337
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 msgstr "**Attributo**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
-#: src\card.ts:323
+#: src\card.ts:341
 msgid ""
 "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
 "card.def }"
@@ -40,14 +40,14 @@ msgstr ""
 "**Rango**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
 "card.def }"
 
-#: src\card.ts:326
+#: src\card.ts:344
 #, javascript-format
 msgid ""
 "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
 "Arrows**: ${ arrows }"
 msgstr ""
 
-#: src\card.ts:328
+#: src\card.ts:346
 #, javascript-format
 msgid ""
 "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
@@ -56,24 +56,41 @@ msgstr ""
 "Livello**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
 "${ card.def }"
 
-#: src\card.ts:335
+#: src\card.ts:353
 msgid "**Pendulum Scale**: ${ formattedScale }"
 msgstr "**Valore Pendulum**: ${ formattedScale }"
 
-#: src\card.ts:355
-#: src\card.ts:373
+#: src\card.ts:239
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
 msgstr ""
 
-#: src\utils.ts:33
-msgid ":tools: This command is in development."
+#: src\card.ts:241
+msgid "No password | Konami ID #${ card.konami_id }"
 msgstr ""
 
-#: src\events\message-search.ts:172
+#: src\card.ts:243
+#, javascript-format
+msgid "Password: ${ card.password } | Not yet released"
+msgstr ""
+
+#: src\card.ts:245
+msgid "Not yet released"
+msgstr ""
+
+#: src\card.ts:249
+#, javascript-format
+msgid "Placeholder ID: ${ card.fake_password }"
+msgstr ""
+
+#: src\utils.ts:33
+msgid "🛠️ This command is in development."
+msgstr ""
+
+#: src\events\message-search.ts:181
 #: src\utils.ts:34
 msgid ""
-":incoming_envelope: Please send feedback to [our issue "
+"📨 Please send feedback to [our issue "
 "tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support "
 "server](https://discord.gg/4aFuPyuE96)!"
 msgstr ""
@@ -124,8 +141,8 @@ msgstr ""
 
 #: src\commands\art.ts:97
 #: src\commands\price.ts:148
-#: src\commands\search.ts:90
-#: src\events\message-search.ts:238
+#: src\commands\search.ts:89
+#: src\events\message-search.ts:266
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr ""
@@ -134,64 +151,64 @@ msgstr ""
 msgid "Could not find art for `${ name }`!"
 msgstr ""
 
-#: src\commands\deck.ts:236
+#: src\commands\deck.ts:245
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:239
+#: src\commands\deck.ts:248
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:242
+#: src\commands\deck.ts:251
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:270
+#: src\commands\deck.ts:279
 msgid "Your Deck"
 msgstr ""
 
-#: src\commands\deck.ts:275
+#: src\commands\deck.ts:284
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:282
+#: src\commands\deck.ts:291
 msgid "Main Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:289
+#: src\commands\deck.ts:298
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:296
+#: src\commands\deck.ts:305
 msgid "Extra Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:303
+#: src\commands\deck.ts:312
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src\commands\deck.ts:310
+#: src\commands\deck.ts:319
 msgid "Side Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:400
+#: src\commands\deck.ts:409
 msgid "Error: Your deck is empty."
 msgstr ""
 
@@ -308,19 +325,19 @@ msgstr ""
 msgid "Revision: ${ process.env.BOT_REVISION }."
 msgstr ""
 
-#: src\commands\deck.ts:320
+#: src\commands\deck.ts:329
 msgid ".ydk files must have the .ydk extension!"
 msgstr ""
 
-#: src\commands\deck.ts:323
+#: src\commands\deck.ts:332
 msgid ".ydk files should not be larger than 1 KB!"
 msgstr ""
 
-#: src\commands\deck.ts:313
+#: src\commands\deck.ts:322
 msgid "ydke URL"
 msgstr ""
 
-#: src\card.ts:291
+#: src\card.ts:309
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 msgid "**Limit**: ${ limitRegulationDisplay }"
 msgstr ""
@@ -355,54 +372,46 @@ msgstr ""
 msgid "Could not find prices for `${ name }`!"
 msgstr ""
 
-#: src\commands\deck.ts:418
+#: src\commands\deck.ts:427
 #. prepare interaction button for FTP upload
 msgid "Upload to YGOPRODECK"
 msgstr ""
 
-#: src\commands\deck.ts:469
+#: src\commands\deck.ts:478
 #. disable original button
 #. prepare row to disable button on original message
 msgid "Upload Complete"
 msgstr ""
 
-#: src\commands\deck.ts:456
+#: src\commands\deck.ts:465
 msgid "Deck upload failed!"
 msgstr ""
 
-#: src\commands\deck.ts:477
+#: src\commands\deck.ts:486
 #. reply in affirmation
 #, javascript-format
 msgid "Deck successfully uploaded to <${ url }>!"
 msgstr ""
 
-#: src\events\message-search.ts:169
-msgid ":robot: The new Bastion search experience is here!"
-msgstr ""
-
-#: src\events\message-search.ts:174
-#. eslint-disable-next-line prefer-template
-msgid ""
-"New search works in threads and voice chats, and will slowly roll out to "
-"all servers. More improvements are coming."
-msgstr ""
-
 #: src\events\message-search.ts:178
-msgid ":speech_balloon: Translations missing?"
+msgid "🤖 The new Bastion search experience is here!"
 msgstr ""
 
-#: src\events\message-search.ts:179
+#: src\events\message-search.ts:187
+msgid "💬 Translations missing?"
+msgstr ""
+
+#: src\events\message-search.ts:188
 msgid "Help translate Bastion at the links above."
 msgstr ""
 
 #: src\events\message-ping.ts:31
 msgid ""
-":question: Help documentation on "
+"❓ Help documentation on "
 "[GitHub](https://github.com/DawnbrandBots/bastion-bot), or use `.commands` "
 "and `.help`.\n"
-":green_circle: Licence: [GNU AGPL "
-"3.0+](https://choosealicense.com/licenses/agpl-3.0/).\n"
-":placard: Bastion Misawa is a character from [Yu-Gi-Oh! "
+"🟢 Licence: [GNU AGPL 3.0+](https://choosealicense.com/licenses/agpl-3.0/).\n"
+"🪧 Bastion Misawa is a character from [Yu-Gi-Oh! "
 "GX](https://yugipedia.com/wiki/Bastion_Misawa).\n"
 "<:PRO:1028300625122963567> Sponsored by "
 "[YGOPRODECK](https://ygoprodeck.com). Prices are YGOPRODECK affiliate "
@@ -414,13 +423,33 @@ msgid ""
 "<:kofi:927373724959789096> Ko-fi also works for [one-time "
 "donations](https://ko-fi.com/dawnbrandbots).\n"
 "\n"
-":tools: Improvements are regularly being worked on and rolled out. The new "
+"🛠️ Improvements are regularly being worked on and rolled out. The new "
 "search experience is here!\n"
-":robot: New features like Slash Commands are handled by a new bot instance "
+"🤖 New features like Slash Commands are handled by a new bot instance "
 "concurrently with the old bot.\n"
 "\n"
-":speech_balloon: Translations missing? Help translate Bastion on "
+"💬 Translations missing? Help translate Bastion on "
 "[GitHub](https://github.com/DawnbrandBots/bastion-bot)."
+msgstr ""
+
+#: src\events\message-search.ts:263
+msgid "Search type: ${ localisedType }"
+msgstr ""
+
+#: src\events\message-search.ts:183
+#. eslint-disable-next-line prefer-template
+msgid ""
+"📚 [__Learn more about how search "
+"works.__](https://github.com/DawnbrandBots/bastion-bot/blob/master/docs/"
+"card-search.md?utm_source=bastion)"
+msgstr ""
+
+#: src\events\message-search.ts:260
+#, javascript-format
+msgid ""
+"Search language: **${ localisedInputLanguage }** (${ inputLanguage }). "
+"Check defaults with </locale get:${ id }> and configure with </locale "
+"set:${ id }>"
 msgstr ""
 
 #: src\card.ts:37
@@ -698,28 +727,28 @@ msgctxt "attribute"
 msgid "DIVINE"
 msgstr "DIVINO"
 
-#: src\card.ts:341
-#: src\card.ts:352
+#: src\card.ts:359
+#: src\card.ts:370
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "Testo carta"
 
-#: src\card.ts:346
+#: src\card.ts:364
 msgctxt "card-embed"
 msgid "Pendulum Effect"
 msgstr "Effetto Pendulum"
 
-#: src\card.ts:368
+#: src\card.ts:385
 msgctxt "card-embed"
 msgid "Card Effect"
 msgstr ""
 
-#: src\locale.ts:47
+#: src\locale.ts:48
 msgctxt "command-option"
 msgid "result-language"
 msgstr ""
 
-#: src\locale.ts:67
+#: src\locale.ts:68
 msgctxt "command-option"
 msgid "input-language"
 msgstr ""
@@ -730,9 +759,9 @@ msgstr ""
 #: src\commands\price.ts:64
 #: src\commands\price.ts:74
 #: src\commands\price.ts:86
-#: src\commands\search.ts:40
-#: src\commands\search.ts:50
-#: src\commands\search.ts:62
+#: src\commands\search.ts:39
+#: src\commands\search.ts:49
+#: src\commands\search.ts:61
 msgctxt "command-option"
 msgid "input"
 msgstr ""
@@ -780,21 +809,21 @@ msgstr ""
 
 #: src\commands\art.ts:31
 #: src\commands\price.ts:59
-#: src\commands\search.ts:35
+#: src\commands\search.ts:34
 msgctxt "command-option"
 msgid "name"
 msgstr ""
 
 #: src\commands\art.ts:41
 #: src\commands\price.ts:69
-#: src\commands\search.ts:45
+#: src\commands\search.ts:44
 msgctxt "command-option"
 msgid "password"
 msgstr ""
 
 #: src\commands\art.ts:53
 #: src\commands\price.ts:81
-#: src\commands\search.ts:57
+#: src\commands\search.ts:56
 msgctxt "command-option"
 msgid "konami-id"
 msgstr ""
@@ -824,12 +853,12 @@ msgctxt "command-option"
 msgid "vendor"
 msgstr ""
 
-#: src\locale.ts:50
+#: src\locale.ts:51
 msgctxt "command-option-description"
 msgid "The output language for the card embed, overriding other settings."
 msgstr ""
 
-#: src\locale.ts:70
+#: src\locale.ts:71
 msgctxt "command-option-description"
 msgid "The language to search in, defaulting to the result language."
 msgstr ""
@@ -890,7 +919,7 @@ msgstr ""
 
 #: src\commands\art.ts:37
 #: src\commands\price.ts:65
-#: src\commands\search.ts:41
+#: src\commands\search.ts:40
 msgctxt "command-option-description"
 msgid "Card name, fuzzy matching supported."
 msgstr ""
@@ -902,7 +931,7 @@ msgstr ""
 
 #: src\commands\art.ts:48
 #: src\commands\price.ts:76
-#: src\commands\search.ts:52
+#: src\commands\search.ts:51
 msgctxt "command-option-description"
 msgid "Card password, the eight-digit number printed on the bottom left corner."
 msgstr ""
@@ -914,22 +943,22 @@ msgstr ""
 
 #: src\commands\art.ts:59
 #: src\commands\price.ts:87
-#: src\commands\search.ts:63
+#: src\commands\search.ts:62
 msgctxt "command-option-description"
 msgid "Konami's official card database identifier."
 msgstr ""
 
-#: src\commands\search.ts:36
+#: src\commands\search.ts:35
 msgctxt "command-option-description"
 msgid "Find all information for the card with this name."
 msgstr ""
 
-#: src\commands\search.ts:46
+#: src\commands\search.ts:45
 msgctxt "command-option-description"
 msgid "Find all information for the card with this password."
 msgstr ""
 
-#: src\commands\search.ts:58
+#: src\commands\search.ts:57
 msgctxt "command-option-description"
 msgid "Find all information for the card with this official database ID."
 msgstr ""
@@ -1004,7 +1033,7 @@ msgctxt "command-name"
 msgid "deck"
 msgstr ""
 
-#: src\commands\search.ts:30
+#: src\commands\search.ts:29
 msgctxt "command-name"
 msgid "search"
 msgstr ""
@@ -1014,7 +1043,7 @@ msgctxt "command-name"
 msgid "locale"
 msgstr ""
 
-#: src\commands\random.ts:25
+#: src\commands\random.ts:24
 msgctxt "command-name"
 msgid "random"
 msgstr ""
@@ -1056,7 +1085,7 @@ msgid ""
 "deck building programs."
 msgstr ""
 
-#: src\commands\search.ts:31
+#: src\commands\search.ts:30
 msgctxt "command-description"
 msgid "Find all information on a card!"
 msgstr ""
@@ -1066,7 +1095,7 @@ msgctxt "command-description"
 msgid "Check or set Bastion's locale for this channel or server."
 msgstr ""
 
-#: src\commands\random.ts:26
+#: src\commands\random.ts:25
 msgctxt "command-description"
 msgid "Get a random Yu-Gi-Oh! card."
 msgstr ""

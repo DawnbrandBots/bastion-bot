@@ -55,6 +55,29 @@ export class BotFactory {
 			bot.user?.setActivity(process.env.BOT_PRESENCE || "<card name> to search!");
 		});
 
+		bot.once("ready", () => {
+			let lastEventTimestamp = Date.now();
+			let incidentNotified = false;
+			bot.on("messageCreate", () => void (lastEventTimestamp = Date.now()));
+			setInterval(() => {
+				if (Date.now() - lastEventTimestamp > 60000) {
+					if (!incidentNotified) {
+						logger.warn("⚠️ No messageCreate gateway events received for one minute ⚠️");
+						incidentNotified = true;
+					}
+				} else {
+					if (incidentNotified) {
+						logger.notify("Started receiving messageCreate gateway events again");
+					}
+					incidentNotified = false;
+				}
+			}, 1000);
+			logger.info("Registered messageCreate gateway event frequency early warning canary");
+		});
+
+		// Obtain the snowflakes for all our Slash Commands so they can be mentioned
+		bot.once("ready", async () => void (await bot.application?.commands.fetch()));
+
 		for (const listener of this.listeners) {
 			bot.on(listener.type, (...args) => listener.run(...args));
 		}

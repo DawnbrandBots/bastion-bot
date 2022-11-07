@@ -1,6 +1,6 @@
-import util from "util";
 import debug, { Debug } from "debug";
-import { WebhookClient } from "discord.js";
+import { escapeMarkdown, WebhookClient } from "discord.js";
+import util from "util";
 
 const global = debug("bot");
 
@@ -13,7 +13,7 @@ function withWebhook(log: debug.Debugger): Debug["log"] {
 			webhook
 				.send({
 					username: log.namespace,
-					content: util.format(...args),
+					content: escapeMarkdown(util.format(...args)),
 					allowedMentions: { parse: [] }
 				})
 				.catch(error => {

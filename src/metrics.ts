@@ -2,7 +2,7 @@ import { Static } from "@sinclair/typebox";
 import sqlite, { Database, Statement } from "better-sqlite3";
 import { ChatInputCommandInteraction, Message } from "discord.js";
 import { inject, singleton } from "tsyringe";
-import { CardSchema } from "./definitions/yaml-yugi";
+import { CardSchema } from "./definitions";
 
 @singleton()
 export class Metrics {
@@ -44,8 +44,8 @@ CREATE TABLE IF NOT EXISTS "searches" (
 
 	public writeCommand(interaction: ChatInputCommandInteraction, latency: number): void {
 		const id = interaction.id;
-		const guild = interaction.guild?.id;
-		const channel = interaction.channel?.id;
+		const guild = interaction.guildId;
+		const channel = interaction.channelId;
 		const author = interaction.user.id;
 		const command = interaction.commandName;
 		const args = JSON.stringify(interaction.options.data);

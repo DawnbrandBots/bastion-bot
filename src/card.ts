@@ -1,9 +1,9 @@
 import { Static } from "@sinclair/typebox";
-import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
+import { ChatInputCommandInteraction, EmbedBuilder, EmbedFooterOptions } from "discord.js";
 import { parseDocument } from "htmlparser2";
 import fetch from "node-fetch";
 import { c, t, useLocale } from "ttag";
-import { CardSchema, LimitRegulation } from "./definitions/yaml-yugi";
+import { CardSchema, LimitRegulation } from "./definitions";
 import { Locale } from "./locale";
 
 /**
@@ -129,7 +129,7 @@ export async function getCard(
 	input: string,
 	lang?: Locale
 ): Promise<Static<typeof CardSchema> | undefined> {
-	let url = `${process.env.SEARCH_API}/yaml-yugi`; // treated as string instead of string? without forbidden non-null check
+	let url = `${process.env.API_URL}/ocg-tcg`;
 	input = encodeURIComponent(input);
 	if (type === "password") {
 		url += `/card/password/${input}`;
@@ -233,6 +233,24 @@ function formatCardText(text: Static<typeof CardSchema>["text"], lang: Locale): 
 	return text[lang] || text.en || "\u200b";
 }
 
+function formatFooter(card: Static<typeof CardSchema>): EmbedFooterOptions {
+	let text = "";
+	if (card.password && card.konami_id) {
+		text = t`Password: ${card.password} | Konami ID #${card.konami_id}`;
+	} else if (!card.password && card.konami_id) {
+		text = t`No password | Konami ID #${card.konami_id}`;
+	} else if (card.password && !card.konami_id) {
+		text = t`Password: ${card.password} | Not yet released`;
+	} else {
+		text = t`Not yet released`;
+	}
+	if (card.fake_password) {
+		text += "\n";
+		text += t`Placeholder ID: ${card.fake_password}`;
+	}
+	return { text };
+}
+
 export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): EmbedBuilder[] {
 	useLocale(lang);
 
@@ -250,7 +268,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 		.setThumbnail(`${process.env.IMAGE_HOST}/${card.password}.png`);
 
 	const links = {
-		name: t`:link: Links`,
+		name: t`🔗 Links`,
 		value: t`[Official Konami DB](${official}) | [OCG Rulings](${rulings}) | [Yugipedia](${yugipedia}) | [YGOPRODECK](${ygoprodeck})`
 	};
 	if (card.konami_id === null) {
@@ -351,8 +369,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 				.setColor(Colour.Spell)
 				.addFields({ name: c("card-embed").t`Card Text`, value: formatCardText(card.text, lang) })
 				.addFields(links)
-				// one or both may be null to due data corruption or prereleases
-				.setFooter({ text: t`Password: ${card.password} | Konami ID #${card.konami_id}` });
+				.setFooter(formatFooter(card));
 
 			// exclusive Pendulum return path
 			return [embed, addon];
@@ -369,8 +386,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 	}
 
 	embed.addFields(links);
-	// one or both may be null to due data corruption or prereleases
-	embed.setFooter({ text: t`Password: ${card.password} | Konami ID #${card.konami_id}` });
+	embed.setFooter(formatFooter(card));
 
 	return [embed];
 }

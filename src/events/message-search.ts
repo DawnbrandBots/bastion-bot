@@ -1,16 +1,25 @@
 import { rules } from "discord-markdown";
-import { EmbedBuilder, FormattingPatterns, Message } from "discord.js";
+import {
+	DiscordAPIError,
+	EmbedBuilder,
+	EmojiIdentifierResolvable,
+	FormattingPatterns,
+	Message,
+	MessageReaction,
+	PermissionsBitField,
+	RESTJSONErrorCodes
+} from "discord.js";
 import { parserFor, ParserRules } from "simple-markdown";
 import { inject, injectable } from "tsyringe";
-import { t, useLocale } from "ttag";
+import { c, t, useLocale } from "ttag";
 import { Listener } from ".";
 import { ABDeploy } from "../abdeploy";
 import { createCardEmbed, getCard } from "../card";
-import { Locale, LocaleProvider, LOCALES } from "../locale";
+import { EventLocker } from "../event-lock";
+import { Locale, LocaleProvider, LOCALES, LOCALES_MAP } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { RecentMessageCache } from "../message-cache";
 import { Metrics } from "../metrics";
-import { addFunding } from "../utils";
 
 // Only take certain plugins because we don't need to parse all markup like bolding
 // and the mention parsing is not as well-maintained as discord.js
@@ -30,7 +39,7 @@ const parser = parserFor(ourRules);
 // https://discord.com/developers/docs/reference#message-formatting-formats
 const mentionPatterns = (
 	["UserWithOptionalNickname", "Channel", "Role", "SlashCommand", "Emoji", "Timestamp"] as const
-).map(key => new RegExp(FormattingPatterns[key], "g"));
+).map(key => new RegExp(FormattingPatterns[key], `${FormattingPatterns[key].flags}g`));
 
 export function cleanMessageMarkup(message: string): string {
 	// Remove the above markup elements
@@ -146,6 +155,7 @@ export function inputToGetCardArguments(input: string, defaultLanguage: Locale) 
 		} else {
 			resultLanguage = defaultLanguage;
 		}
+		return [resultLanguage, type, searchTerm, inputLanguage] as const;
 	} else {
 		const matchText = input.match(TEXT_REGEX);
 		if (matchText && matchText.groups) {
@@ -157,30 +167,33 @@ export function inputToGetCardArguments(input: string, defaultLanguage: Locale) 
 			// Should never happen
 			throw new Error(input);
 		}
+		return [resultLanguage, type, searchTerm, inputLanguage] as const;
 	}
-	return [resultLanguage, type, searchTerm, inputLanguage] as const;
 }
 
-function addExplainer(embeds: EmbedBuilder | EmbedBuilder[], locale: Locale): EmbedBuilder[] {
+function addExplainer(embeds: EmbedBuilder | EmbedBuilder[], locale: Locale, id: unknown): EmbedBuilder[] {
 	if (!Array.isArray(embeds)) {
 		embeds = [embeds];
 	}
 	embeds[embeds.length - 1].addFields({
-		name: t`:robot: The new Bastion search experience is here!`,
+		name: t`🤖 The new Bastion search experience is here!`,
 		value:
 			// eslint-disable-next-line prefer-template
-			t`:incoming_envelope: Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!` +
+			t`📨 Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!` +
 			"\n" +
-			t`New search works in threads and voice chats, and will slowly roll out to all servers. More improvements are coming.`
+			t`📚 [__Learn more about how search works.__](https://github.com/DawnbrandBots/bastion-bot/blob/master/docs/card-search.md?utm_source=bastion)`
 	});
 	if (locale !== "en") {
 		embeds[embeds.length - 1].addFields({
-			name: t`:speech_balloon: Translations missing?`,
+			name: t`💬 Translations missing?`,
 			value: t`Help translate Bastion at the links above.`
 		});
 	}
 	return embeds;
 }
+
+// Same hack as in card.ts
+const rc = c;
 
 @injectable()
 export class SearchMessageListener implements Listener<"messageCreate"> {
@@ -192,7 +205,8 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		@inject("LocaleProvider") private locales: LocaleProvider,
 		private metrics: Metrics,
 		private recentCache: RecentMessageCache,
-		private abdeploy: ABDeploy
+		private abdeploy: ABDeploy,
+		private eventLocks: EventLocker
 	) {}
 
 	protected log(level: keyof Logger, message: Message, ...args: Parameters<Logger[keyof Logger]>): void {
@@ -200,7 +214,8 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			channel: message.channelId,
 			message: message.id,
 			guild: message.guildId,
-			author: message.author.id
+			author: message.author.id,
+			ping: message.client.ws.ping
 		};
 		this.#logger[level](JSON.stringify(context), ...args);
 	}
@@ -222,31 +237,46 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		if (!message.guildId && process.env.BOT_NO_DIRECT_MESSAGE_SEARCH) {
 			return;
 		}
+		if (!this.eventLocks.has(message.id, this.type)) {
+			return;
+		}
 		const delimiter = getDelimiter(message);
 		let inputs = preprocess(message.content, delimiter);
 		if (inputs.length === 0) {
 			return;
 		}
 		this.log("info", message, JSON.stringify(inputs));
-		inputs = inputs.slice(0, 3);
-		message.react("🕙").catch(error => this.log("warn", message, error));
+		inputs = [...new Set(inputs)].slice(0, 3); // remove duplicates, then select first three
+		message.channel.sendTyping().catch(error => this.log("info", message, error));
+		this.addReaction(message, "🕙");
 		const language = await this.locales.getM(message);
-		const promises = inputs
-			.map(input => [input, ...inputToGetCardArguments(input, language)] as const)
-			.map(([input, resultLanguage, ...args]) =>
-				getCard(...args).then(async card => {
-					useLocale(resultLanguage);
-					let reply;
-					if (!card) {
-						reply = await message.reply({ content: t`Could not find a card matching \`${input}\`!` });
-					} else {
-						let embeds = createCardEmbed(card, resultLanguage);
-						embeds = addFunding(addExplainer(embeds, resultLanguage));
-						reply = await message.reply({ embeds });
-					}
-					return [card, reply] as const;
-				})
-			);
+		const promises = inputs.map(async input => {
+			const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
+			const card = await getCard(type, searchTerm, inputLanguage);
+			useLocale(resultLanguage);
+			// Note: nonfunctional in development or preview because those bots do not have global commands.
+			// To test functionality in development or preview, fetch guild commands and search them instead.
+			const id = message.client.application.commands.cache.find(cmd => cmd.name === "locale")?.id ?? 0;
+			let reply;
+			if (!card) {
+				let context = "\n";
+				if (type === "name") {
+					const localisedInputLanguage = LOCALES_MAP.get(inputLanguage);
+					context += t`Search language: **${localisedInputLanguage}** (${inputLanguage}). Check defaults with </locale get:${id}> and configure with </locale set:${id}>`;
+				} else {
+					const localisedType = rc("command-option").gettext(type);
+					context += t`Search type: ${localisedType}`;
+				}
+				reply = await message.reply({
+					content: t`Could not find a card matching \`${input}\`!` + context
+				});
+			} else {
+				let embeds = createCardEmbed(card, resultLanguage);
+				embeds = addExplainer(embeds, resultLanguage, id);
+				reply = await message.reply({ embeds });
+			}
+			return [card, reply] as const;
+		});
 		const results = await Promise.allSettled(promises);
 		const replies = [];
 		for (const [i, result] of results.entries()) {
@@ -260,9 +290,41 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			}
 		}
 		this.recentCache.set(message, replies);
-		message.reactions.cache
-			.get("🕙")
-			?.users.remove(message.client.user)
-			.catch(error => this.log("warn", message, error));
+		this.removeReaction(message, "🕙");
+	}
+
+	async addReaction(message: Message, reaction: EmojiIdentifierResolvable): Promise<MessageReaction | undefined> {
+		if (message.inGuild() && message.guild.members.me) {
+			if (!message.guild.members.me.permissionsIn(message.channel).has(PermissionsBitField.Flags.AddReactions)) {
+				this.log("info", message, "Missing permissions to add reactions");
+				return;
+			}
+		}
+		try {
+			return await message.react(reaction);
+		} catch (error) {
+			const userConfigurationErrors: unknown[] = [
+				RESTJSONErrorCodes.MissingPermissions,
+				RESTJSONErrorCodes.ReactionWasBlocked, // blocking Bastion prevents reacting to author messages
+				RESTJSONErrorCodes.MissingAccess // must have Read Message History to react to messages
+			];
+			if (error instanceof DiscordAPIError && userConfigurationErrors.includes(error.code)) {
+				this.log("info", message, error);
+			} else {
+				this.log("warn", message, error);
+			}
+		}
+	}
+
+	async removeReaction(message: Message, reaction: string): Promise<MessageReaction | undefined> {
+		try {
+			return await message.reactions.cache.get(reaction)?.users.remove(message.client.user);
+		} catch (error) {
+			if (error instanceof DiscordAPIError && error.code === RESTJSONErrorCodes.UnknownMessage) {
+				this.log("info", message, "Message deleted before removing reaction");
+			} else {
+				this.log("warn", message, error);
+			}
+		}
 	}
 }

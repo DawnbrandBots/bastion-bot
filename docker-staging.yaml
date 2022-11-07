@@ -6,7 +6,7 @@ services:
     environment:
       DEBUG: "*"
       DISCORD_TOKEN:
-      SEARCH_API:
+      API_URL:
       IMAGE_HOST:
       FTP_URL:
       DISCORD_SHARD: "{{.Task.Slot}}"
@@ -15,12 +15,12 @@ services:
       BOT_PRESENCE: "${BOT_PRESENCE:-}"
       BOT_MOTD: "${BOT_MOTD:-}"
       BOT_NO_DIRECT_MESSAGE_SEARCH: 1
-    deploy:
-      replicas: ${DISCORD_TOTAL_SHARDS}
-    restart: unless-stopped
     logging:
       driver: journald
-networks:
-  default:
-    external: true
-    name: royal-magical-library_default
+    deploy:
+      replicas: ${DISCORD_TOTAL_SHARDS}
+      update_config:
+        order: start-first
+      placement:
+        constraints:
+          - node.role==manager
