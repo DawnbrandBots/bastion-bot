@@ -33,7 +33,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       # Save some time between container up and Slash Command deployment
-      - run: docker pull ghcr.io/${{ github.repository }}:sha-${{ github.event.inputs.revision || github.sha }}
+      - run: docker pull ghcr.io/dawnbrandbots/bastion-bot:sha-${{ github.event.inputs.revision || github.sha }}
       - name: Download wait script
         # https://github.com/docker/cli/issues/373
         # Pinned to the latest version at the time of creation so we can manually verify new versions
@@ -84,4 +84,4 @@ jobs:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: |
           docker context use default
-          docker run -e DISCORD_TOKEN ghcr.io/${{ github.repository }}:sha-${{ github.event.inputs.revision || github.sha }} --deploy-slash
+          docker run -e DISCORD_TOKEN ghcr.io/dawnbrandbots/bastion-bot:sha-${{ github.event.inputs.revision || github.sha }} --deploy-slash
