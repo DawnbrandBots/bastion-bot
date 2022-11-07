@@ -8,14 +8,15 @@ msgstr ""
 
 #: src\card.ts:271
 msgid "🔗 Links"
-msgstr ""
+msgstr "🔗 リンク集"
 
 #: src\card.ts:272
 #, javascript-format
 msgid ""
 "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
 "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
-msgstr ""
+msgstr "[Konami公式カードDB](${ official }) | [OCG公式裁定](${ rulings }) | "
+"[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
 #: src\card.ts:275
 #, javascript-format
