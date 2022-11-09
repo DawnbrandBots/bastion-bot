@@ -1,11 +1,13 @@
 import { rules } from "discord-markdown";
 import {
+	Colors,
 	DiscordAPIError,
 	EmbedBuilder,
 	EmojiIdentifierResolvable,
 	FormattingPatterns,
 	Message,
 	MessageReaction,
+	MessageReplyOptions,
 	PermissionsBitField,
 	RESTJSONErrorCodes
 } from "discord.js";
@@ -192,6 +194,24 @@ function addExplainer(embeds: EmbedBuilder | EmbedBuilder[], locale: Locale, id:
 	return embeds;
 }
 
+function createMisconfigurationEmbed(error: DiscordAPIError, message: Message): EmbedBuilder {
+	return new EmbedBuilder()
+		.setColor(Colors.Red)
+		.setTitle(t`⚠️ I am missing permissions in the channel!`)
+		.setURL(message.url)
+		.setDescription(
+			t`Please have a server administrator [fix this](https://github.com/DawnbrandBots/bastion-bot#discord-permissions).`
+		)
+		.setFooter({ text: error.message });
+}
+
+function prependEmbed(replyOptions: MessageReplyOptions, embed: EmbedBuilder): MessageReplyOptions {
+	return {
+		...replyOptions,
+		embeds: [embed, ...(replyOptions.embeds ?? [])]
+	};
+}
+
 // Same hack as in card.ts
 const rc = c;
 
@@ -257,7 +277,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			// Note: nonfunctional in development or preview because those bots do not have global commands.
 			// To test functionality in development or preview, fetch guild commands and search them instead.
 			const id = message.client.application.commands.cache.find(cmd => cmd.name === "locale")?.id ?? 0;
-			let reply;
+			let replyOptions;
 			if (!card) {
 				let context = "\n";
 				if (type === "name") {
@@ -267,15 +287,31 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 					const localisedType = rc("command-option").gettext(type);
 					context += t`Search type: ${localisedType}`;
 				}
-				reply = await message.reply({
-					content: t`Could not find a card matching \`${input}\`!` + context
-				});
+				replyOptions = { content: t`Could not find a card matching \`${input}\`!` + context };
 			} else {
 				let embeds = createCardEmbed(card, resultLanguage);
 				embeds = addExplainer(embeds, resultLanguage, id);
-				reply = await message.reply({ embeds });
+				replyOptions = { embeds };
 			}
-			return [card, reply] as const;
+			try {
+				const reply = await message.reply(replyOptions);
+				return [card, reply] as const;
+			} catch (error) {
+				const userConfigurationErrors: unknown[] = [
+					RESTJSONErrorCodes.MissingPermissions,
+					RESTJSONErrorCodes.CannotReplyWithoutPermissionToReadMessageHistory,
+					RESTJSONErrorCodes.MissingAccess // missing Send Messages in Threads
+				];
+				if (error instanceof DiscordAPIError && userConfigurationErrors.includes(error.code)) {
+					this.log("info", message, input, error);
+					message.author
+						.send(prependEmbed(replyOptions, createMisconfigurationEmbed(error, message)))
+						.catch(e => this.log("info", message, input, e));
+				} else {
+					this.log("error", message, error);
+				}
+				return [card] as const;
+			}
 		});
 		const results = await Promise.allSettled(promises);
 		const replies = [];
@@ -283,8 +319,11 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			if (result.status === "fulfilled") {
 				const [card, reply] = result.value;
 				this.metrics.writeSearch(message, inputs[i], card, reply);
-				replies.push(reply.id);
+				if (reply) {
+					replies.push(reply.id);
+				}
 			} else {
+				// Exception from getCard
 				this.metrics.writeSearch(message, inputs[i]);
 				this.log("error", message, inputs[i], result.reason);
 			}
