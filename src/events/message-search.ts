@@ -1,5 +1,6 @@
 import { rules } from "discord-markdown";
 import {
+	Colors,
 	DiscordAPIError,
 	EmbedBuilder,
 	EmojiIdentifierResolvable,
@@ -195,7 +196,8 @@ function addExplainer(embeds: EmbedBuilder | EmbedBuilder[], locale: Locale, id:
 
 function createMisconfigurationEmbed(error: DiscordAPIError, message: Message): EmbedBuilder {
 	return new EmbedBuilder()
-		.setTitle(t`I am missing permissions in the channel!`)
+		.setColor(Colors.Red)
+		.setTitle(t`⚠️ I am missing permissions in the channel!`)
 		.setURL(message.url)
 		.setDescription(
 			t`Please have a server administrator [fix this](https://github.com/DawnbrandBots/bastion-bot#discord-permissions).`
