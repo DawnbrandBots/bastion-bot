@@ -89,7 +89,7 @@ msgstr "假卡密: ${ card.fake_password }"
 msgid "🛠️ This command is in development."
 msgstr "🛠️ 這個指令正在開發中"
 
-#: src\events\message-search.ts:181
+#: src\events\message-search.ts:184
 #: src\utils.ts:34
 msgid ""
 "📨 Please send feedback to [our issue "
@@ -144,7 +144,7 @@ msgstr ""
 #: src\commands\art.ts:97
 #: src\commands\price.ts:148
 #: src\commands\search.ts:89
-#: src\events\message-search.ts:266
+#: src\events\message-search.ts:290
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr "查無此卡：`${ input }`"
@@ -232,7 +232,7 @@ msgid ""
 msgstr ""
 
 #: src\commands\ping.ts:40
-#: src\events\message-ping.ts:62
+#: src\events\message-ping.ts:108
 msgid "Total latency: ${ latency } ms"
 msgstr ""
 
@@ -307,16 +307,16 @@ msgid "Error: Your deck is empty."
 msgstr ""
 
 #: src\commands\ping.ts:36
-#: src\events\message-ping.ts:28
+#: src\events\message-ping.ts:43
 #, javascript-format
 msgid "Average WebSocket ping (new instance): ${ ping } ms"
 msgstr ""
 
-#: src\events\message-ping.ts:30
+#: src\events\message-ping.ts:45
 msgid "Free and open source _Yu-Gi-Oh!_ bot"
 msgstr ""
 
-#: src\events\message-ping.ts:53
+#: src\events\message-ping.ts:68
 #, javascript-format
 msgid "Revision: ${ process.env.BOT_REVISION }."
 msgstr ""
@@ -389,19 +389,19 @@ msgstr ""
 msgid "Deck successfully uploaded to <${ url }>!"
 msgstr ""
 
-#: src\events\message-search.ts:178
+#: src\events\message-search.ts:181
 msgid "🤖 The new Bastion search experience is here!"
 msgstr ""
 
-#: src\events\message-search.ts:187
+#: src\events\message-search.ts:190
 msgid "💬 Translations missing?"
 msgstr ""
 
-#: src\events\message-search.ts:188
+#: src\events\message-search.ts:191
 msgid "Help translate Bastion at the links above."
 msgstr ""
 
-#: src\events\message-ping.ts:31
+#: src\events\message-ping.ts:46
 msgid ""
 "❓ Help documentation on "
 "[GitHub](https://github.com/DawnbrandBots/bastion-bot), or use `.commands` "
@@ -428,11 +428,11 @@ msgid ""
 "[GitHub](https://github.com/DawnbrandBots/bastion-bot)."
 msgstr ""
 
-#: src\events\message-search.ts:263
+#: src\events\message-search.ts:288
 msgid "Search type: ${ localisedType }"
 msgstr ""
 
-#: src\events\message-search.ts:183
+#: src\events\message-search.ts:186
 #. eslint-disable-next-line prefer-template
 msgid ""
 "📚 [__Learn more about how search "
@@ -440,12 +440,27 @@ msgid ""
 "card-search.md?utm_source=bastion)"
 msgstr ""
 
-#: src\events\message-search.ts:260
+#: src\events\message-search.ts:285
 #, javascript-format
 msgid ""
 "Search language: **${ localisedInputLanguage }** (${ inputLanguage }). "
 "Check defaults with </locale get:${ id }> and configure with </locale "
 "set:${ id }>"
+msgstr ""
+
+#: src\events\message-ping.ts:91
+msgid "⚠️ You pinged me, but I am missing permissions in the channel!"
+msgstr ""
+
+#: src\events\message-ping.ts:94
+#: src\events\message-search.ts:203
+msgid ""
+"Please have a server administrator [fix "
+"this](https://github.com/DawnbrandBots/bastion-bot#discord-permissions)."
+msgstr ""
+
+#: src\events\message-search.ts:200
+msgid "⚠️ I am missing permissions in the channel!"
 msgstr ""
 
 #: src\card.ts:37

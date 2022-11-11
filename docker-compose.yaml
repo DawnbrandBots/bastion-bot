@@ -2,7 +2,6 @@ version: "3.9"
 
 services:
   bot:
-    build: .
     image: "ghcr.io/dawnbrandbots/bastion-bot:${DOCKER_TAG:-latest}"
     environment:
       DEBUG: "*"
@@ -17,6 +16,15 @@ services:
     volumes:
       - ${BOT_BIND_MOUNT}:/var/local/bastion
     command: /var/local/bastion
-    restart: unless-stopped
     logging:
       driver: "${DOCKER_LOG_DRIVER:-journald}"
+    deploy:
+      replicas: 1
+      update_config:
+        order: start-first
+      placement:
+        constraints:
+          - node.role==manager
+    # Compose-only fields
+    build: .
+    restart: unless-stopped

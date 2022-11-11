@@ -2,6 +2,8 @@
 
 Diosplay the art for a card! _This command is in development._
 
+![Example](../img/command-art.png)
+
 ## Definitions
 
 [**Password**](https://yugipedia.com/wiki/Password): the number printed in the bottom-left corner of a _Yu-Gi-Oh!_ card.

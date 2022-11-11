@@ -50,6 +50,12 @@
 		"ts-jest": "^29.0.3",
 		"ttag-cli": "^1.10.1"
 	},
+	"optionalDependencies": {
+		"bufferutil": "^4.0.7",
+		"erlpack": "discord/erlpack",
+		"utf-8-validate": "^5.0.10",
+		"zlib-sync": "^0.1.7"
+	},
 	"resolutions": {
 		"@types/node": "^16.18.3",
 		"gettext-parser": "^6.0.0"

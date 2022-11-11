@@ -2,6 +2,8 @@
 
 Display the contents of a deck in Discord! _This command is in development._
 
+![Example](../img/command-deck.png)
+
 ## Definitions
 
 **YDKE**: A storage format for Yu-Gi-Oh! decks that can be exported from various deck building applications. They look like URLs, beginning with `ydke://`. An example of a YDKE URL looks like this: `ydke://1xqfAdcanwHXGp8Bd+lHBHfpRwR36UcEX8ZAAl/GQAJfxkACYx3EAzA20AMwNtADMDbQA/liqgQk6AgEJOgIBCToCASxxDUDscQ1A7HENQPw6KgA8OioAPDoqADAqZQA/YmcBf2JnAX9iZwFppv0Aaab9AGmm/QBgAhAAsWp2gTvJf4EkWK+BZFivgWRYr4FBlTqBQZU6gUGVOoFPqRxAcLHcgHCx3IBwsdyAQ==!Vi0OBRXfCwVs1ZQA8GQuALiBCQPBGnIE/gDeA2jWawV9vZ8DoBOYBIPjPgI1tL4EhGVOAbXg4AQBroQB!sjLMBbIyzAWyMswFQ77dAEO+3QBDvt0AJpBCAyaQQgMmkEIDhCV+AIQlfgCEJX4Ab3bvAG927wCBFq4D!`.

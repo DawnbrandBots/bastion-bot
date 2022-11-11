@@ -15,7 +15,12 @@ services:
       BOT_PRESENCE: "${BOT_PRESENCE:-}"
       BOT_MOTD: "${BOT_MOTD:-}"
       BOT_NO_DIRECT_MESSAGE_SEARCH: 1
-    deploy:
-      replicas: ${DISCORD_TOTAL_SHARDS}
     logging:
       driver: journald
+    deploy:
+      replicas: ${DISCORD_TOTAL_SHARDS}
+      update_config:
+        order: start-first
+      placement:
+        constraints:
+          - node.role==manager

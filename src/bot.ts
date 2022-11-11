@@ -35,6 +35,8 @@ export class BotFactory {
 			shards: `${process.env.DISCORD_TOTAL_SHARDS}` === "auto" ? "auto" : isNaN(shard) ? undefined : shard,
 			shardCount: parseInt(`${process.env.DISCORD_TOTAL_SHARDS}`) || undefined,
 			makeCache: Options.cacheWithLimits({
+				GuildEmojiManager: 0,
+				GuildTextThreadManager: 0,
 				MessageManager: 0 // reduce cache per channel from default 200
 			})
 		});
