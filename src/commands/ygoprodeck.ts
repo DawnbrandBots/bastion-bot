@@ -1,20 +1,26 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
-import fetch from "node-fetch";
+import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { AutocompletableCommand } from "../Command";
 import { buildLocalisedCommand, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { editLatency } from "../utils";
+import { editLatency, serialiseInteraction } from "../utils";
+
+export type YGOPRODECKResponse = { error: string } | { suggestions: { name: string; data: number }[] };
 
 @injectable()
 export class YGOPRODECKCommand extends AutocompletableCommand {
 	#logger = getLogger("command:ygoprodeck");
 
-	constructor(metrics: Metrics, @inject("LocaleProvider") private locales: LocaleProvider) {
+	constructor(
+		metrics: Metrics,
+		@inject("LocaleProvider") private locales: LocaleProvider,
+		@inject("got") private got: Got
+	) {
 		super(metrics);
 	}
 
@@ -37,22 +43,27 @@ export class YGOPRODECKCommand extends AutocompletableCommand {
 		return this.#logger;
 	}
 
-	private async search(term: string): Promise<string | { name: string; data: number }[]> {
+	private async search(term: string): Promise<YGOPRODECKResponse> {
 		const url = new URL("https://ygoprodeck.com/api/autocomplete.php");
 		url.searchParams.set("query", term);
-		const response = await (await fetch(url)).json();
-		if ("error" in response) {
-			return response.error;
-		} else {
-			return response.suggestions;
-		}
+		return await this.got(url).json<YGOPRODECKResponse>();
 	}
 
 	async autocomplete(interaction: AutocompleteInteraction): Promise<void> {
 		const term = interaction.options.getFocused();
-		const suggestions = await this.search(term);
-		if (Array.isArray(suggestions)) {
-			await interaction.respond(suggestions.map(({ name }) => ({ name, value: name })).slice(0, 25));
+		try {
+			const start = Date.now();
+			const response = await this.search(term);
+			const latency = Date.now() - start;
+			if ("suggestions" in response) {
+				// Maximum 25 options https://discordjs.guide/slash-commands/autocomplete.html
+				await interaction.respond(response.suggestions.map(({ name }) => ({ name, value: name })).slice(0, 25));
+			}
+			this.metrics.writeCommand(interaction, latency);
+			this.#logger.info(serialiseInteraction(interaction, { autocomplete: term, latency, response }));
+		} catch (error) {
+			this.metrics.writeCommand(interaction, -1);
+			this.#logger.warn(serialiseInteraction(interaction, { autocomplete: term }), error);
 		}
 	}
 
@@ -62,9 +73,10 @@ export class YGOPRODECKCommand extends AutocompletableCommand {
 		useLocale(lang);
 		await interaction.reply(t`Searching YGOPRODECK for \`${term}\`…`);
 		const response = await this.search(term);
-		const result = Array.isArray(response)
-			? `https://ygoprodeck.com/card/?search=${encodeURIComponent(response?.[0]?.data)}`
-			: response;
+		const result =
+			"suggestions" in response
+				? `https://ygoprodeck.com/card/?search=${encodeURIComponent(response.suggestions[0]?.data)}`
+				: response.error;
 		const reply = await interaction.editReply(result);
 		return editLatency(reply, interaction);
 	}

@@ -11,7 +11,7 @@ export abstract class Command {
 
 	// Hack: https://github.com/Microsoft/TypeScript/issues/3841#issuecomment-337560146
 	["constructor"]: typeof Command;
-	constructor(private metrics: Metrics) {}
+	constructor(protected metrics: Metrics) {}
 
 	get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		return this.constructor.meta;
