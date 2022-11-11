@@ -2,6 +2,8 @@
 
 Quickly access links to useful information! _This command is in development._
 
+![Example](../img/command-link.png)
+
 ## Parameters
 
 Name | Required? | Description | Type
