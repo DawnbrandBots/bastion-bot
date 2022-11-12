@@ -100,8 +100,10 @@ export class YugiCommand extends AutocompletableCommand {
 			this.#logger.info(serialiseInteraction(interaction, { page, cached }));
 		} else {
 			try {
+				const start = Date.now();
 				const response = await this.search(page);
-				this.#logger.info(serialiseInteraction(interaction, { page, response }));
+				const latency = Date.now() - start;
+				this.#logger.info(serialiseInteraction(interaction, { page, latency, response }));
 				useLocale(lang);
 				const link = response[3][0];
 				content = link || t`Could not find a Yugipedia page named \`${page}\`.`;
