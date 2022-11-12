@@ -16,7 +16,9 @@ type YGOPRODECKResponse = { error: string } | { suggestions: { name: string; dat
 @injectable()
 export class YGOPRODECKCommand extends AutocompletableCommand {
 	#logger = getLogger("command:ygoprodeck");
+	// Could be a large number of requests due to autocomplete, but each is no more than 1KB
 	private httpCache = new LRUMapWithDelete<string, string>(10000);
+	// Covers well beyond the total number of TCG and OCG cards
 	private suggestionCache = new LRUMap<string, number>(20000);
 
 	constructor(

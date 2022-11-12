@@ -2,6 +2,7 @@ import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builde
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 import { Got } from "got";
+import { LRUMap, LRUMapWithDelete } from "mnemonist";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { AutocompletableCommand } from "../Command";
@@ -15,6 +16,10 @@ type YugipediaResponse = [string, string[], string[], string[]];
 @injectable()
 export class YugiCommand extends AutocompletableCommand {
 	#logger = getLogger("command:yugi");
+	// Could be a large number of requests due to autocomplete, but each is no more than 1KB
+	private httpCache = new LRUMapWithDelete<string, string>(10000);
+	// Covers well beyond the total number of TCG and OCG cards, though Yugipedia has many more pages
+	private linkCache = new LRUMap<string, string>(20000);
 
 	constructor(
 		metrics: Metrics,
@@ -51,6 +56,7 @@ export class YugiCommand extends AutocompletableCommand {
 	private async search(query: string): Promise<YugipediaResponse> {
 		const url = YugiCommand.YUGI_SEARCH + encodeURIComponent(query);
 		return await this.got(url, {
+			cache: this.httpCache,
 			headers: { Accept: "application/json" },
 			throwHttpErrors: true
 		}).json<YugipediaResponse>();
@@ -68,8 +74,15 @@ export class YugiCommand extends AutocompletableCommand {
 			const response = await this.search(page);
 			const latency = Date.now() - start;
 			this.#logger.info(serialiseInteraction(interaction, { autocomplete: page, latency, response }));
+			const options = [];
+			for (let i = 0; i < response[1].length; i++) {
+				const name = response[1][i];
+				const url = response[3][i];
+				this.linkCache.set(name, url);
+				options.push({ name, value: name });
+			}
 			// Slicing is a fail-safe because there shouldn't be more than the Discord limits to begin with
-			await interaction.respond(response[1].map(name => ({ name, value: name })).slice(0, 25));
+			await interaction.respond(options.slice(0, 25));
 			this.metrics.writeCommand(interaction, latency);
 		} catch (error) {
 			this.#logger.warn(serialiseInteraction(interaction, { autocomplete: page }), error);
@@ -81,16 +94,22 @@ export class YugiCommand extends AutocompletableCommand {
 		const page = interaction.options.getString("page", true);
 		const lang = await this.locales.get(interaction);
 		let content;
-		try {
-			const response = await this.search(page);
-			this.#logger.info(serialiseInteraction(interaction, { page, response }));
-			useLocale(lang);
-			const link = response[3][0];
-			content = link || t`Could not find a Yugipedia page named \`${page}\`.`;
-		} catch (error) {
-			this.#logger.warn(serialiseInteraction(interaction, { page }), error);
-			useLocale(lang);
-			content = t`Something went wrong searching Yugipedia for \`${page}\`.`;
+		const cached = this.linkCache.get(page);
+		if (cached) {
+			content = cached;
+			this.#logger.info(serialiseInteraction(interaction, { page, cached }));
+		} else {
+			try {
+				const response = await this.search(page);
+				this.#logger.info(serialiseInteraction(interaction, { page, response }));
+				useLocale(lang);
+				const link = response[3][0];
+				content = link || t`Could not find a Yugipedia page named \`${page}\`.`;
+			} catch (error) {
+				this.#logger.warn(serialiseInteraction(interaction, { page }), error);
+				useLocale(lang);
+				content = t`Something went wrong searching Yugipedia for \`${page}\`.`;
+			}
 		}
 		const reply = await interaction.reply({ content, fetchReply: true });
 		return replyLatency(reply, interaction);
