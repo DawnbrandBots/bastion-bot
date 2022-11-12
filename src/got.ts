@@ -9,6 +9,7 @@ export default function createGotClient(): Got {
 			"User-Agent": `Bastion/${process.env.BOT_REVISION} (https://github.com/DawnbrandBots/bastion-bot) got/${version} (https://github.com/sindresorhus/got)`
 		},
 		timeout: 2500, // Discord interactions must be responded to within three seconds
+		throwHttpErrors: false,
 		retry: {
 			limit: 0
 		}

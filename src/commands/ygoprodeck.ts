@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
-import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction, escapeMarkdown } from "discord.js";
 import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
@@ -8,9 +8,9 @@ import { AutocompletableCommand } from "../Command";
 import { buildLocalisedCommand, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { editLatency, serialiseInteraction } from "../utils";
+import { replyLatency, serialiseInteraction } from "../utils";
 
-export type YGOPRODECKResponse = { error: string } | { suggestions: { name: string; data: number }[] };
+type YGOPRODECKResponse = { error: string } | { suggestions: { name: string; data: number }[] };
 
 @injectable()
 export class YGOPRODECKCommand extends AutocompletableCommand {
@@ -46,7 +46,7 @@ export class YGOPRODECKCommand extends AutocompletableCommand {
 	private async search(term: string): Promise<YGOPRODECKResponse> {
 		const url = new URL("https://ygoprodeck.com/api/autocomplete.php");
 		url.searchParams.set("query", term);
-		return await this.got(url).json<YGOPRODECKResponse>();
+		return await this.got(url, { headers: { Accept: "application/json" } }).json<YGOPRODECKResponse>();
 	}
 
 	async autocomplete(interaction: AutocompleteInteraction): Promise<void> {
@@ -55,29 +55,38 @@ export class YGOPRODECKCommand extends AutocompletableCommand {
 			const start = Date.now();
 			const response = await this.search(term);
 			const latency = Date.now() - start;
+			this.#logger.info(serialiseInteraction(interaction, { autocomplete: term, latency, response }));
 			if ("suggestions" in response) {
 				// Maximum 25 options https://discordjs.guide/slash-commands/autocomplete.html
 				await interaction.respond(response.suggestions.map(({ name }) => ({ name, value: name })).slice(0, 25));
+			} else {
+				await interaction.respond([]);
 			}
 			this.metrics.writeCommand(interaction, latency);
-			this.#logger.info(serialiseInteraction(interaction, { autocomplete: term, latency, response }));
 		} catch (error) {
-			this.metrics.writeCommand(interaction, -1);
 			this.#logger.warn(serialiseInteraction(interaction, { autocomplete: term }), error);
+			this.metrics.writeCommand(interaction, -1);
 		}
 	}
 
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const term = interaction.options.getString("term", true);
-		const lang = await this.locales.get(interaction);
-		useLocale(lang);
-		await interaction.reply(t`Searching YGOPRODECK for \`${term}\`…`);
-		const response = await this.search(term);
-		const result =
-			"suggestions" in response
-				? `https://ygoprodeck.com/card/?search=${encodeURIComponent(response.suggestions[0]?.data)}`
-				: response.error;
-		const reply = await interaction.editReply(result);
-		return editLatency(reply, interaction);
+		let content;
+		try {
+			const response = await this.search(term);
+			this.#logger.info(serialiseInteraction(interaction, { term, response }));
+			content =
+				"suggestions" in response
+					? `https://ygoprodeck.com/card/?search=${encodeURIComponent(response.suggestions[0]?.data)}`
+					: response.error;
+		} catch (error) {
+			this.#logger.warn(serialiseInteraction(interaction, { term }), error);
+			const lang = await this.locales.get(interaction);
+			useLocale(lang);
+			const searchTerm = escapeMarkdown(term);
+			content = t`Something went wrong searching YGOPRODECK for \`${searchTerm}\`.`;
+		}
+		const reply = await interaction.reply({ content, fetchReply: true });
+		return replyLatency(reply, interaction);
 	}
 }
