@@ -6,7 +6,7 @@ export default function createGotClient(): Got {
 	return got.extend({
 		http2: true,
 		headers: {
-			"User-Agent": `Bastion/${process.env.BOT_REVISION} (https://github.com/DawnbrandBots/bastion-bot) got/${version} (https://github.com/sindresorhus/got)`
+			"User-Agent": `Bastion/${process.env.BOT_REVISION} (https://github.com/DawnbrandBots/bastion-bot) got/${version} (https://github.com/sindresorhus/got) Node.js ${process.version}`
 		},
 		timeout: 2500, // Discord interactions must be responded to within three seconds
 		throwHttpErrors: false,

@@ -43,10 +43,10 @@ export class YugiCommand extends AutocompletableCommand {
 		return this.#logger;
 	}
 
-	// https://www.mediawiki.org/wiki/API:Opensearch
+	// https://yugipedia.com/api.php?action=help&modules=opensearch
+	// Match the main search box for the most part
 	private static YUGI_SEARCH =
-		"https://yugipedia.com/api.php?action=opensearch&redirects=resolve" +
-		"&prop=revisions&rvprop=content&format=json&formatversion=2&search=";
+		"https://yugipedia.com/api.php?action=opensearch&format=json&formatversion=2&limit=25&suggest=true&search=";
 
 	private async search(query: string): Promise<YugipediaResponse> {
 		const url = YugiCommand.YUGI_SEARCH + encodeURIComponent(query);
@@ -68,6 +68,7 @@ export class YugiCommand extends AutocompletableCommand {
 			const response = await this.search(page);
 			const latency = Date.now() - start;
 			this.#logger.info(serialiseInteraction(interaction, { autocomplete: page, latency, response }));
+			// Slicing is a fail-safe because there shouldn't be more than the Discord limits to begin with
 			await interaction.respond(response[1].map(name => ({ name, value: name })).slice(0, 25));
 			this.metrics.writeCommand(interaction, latency);
 		} catch (error) {
