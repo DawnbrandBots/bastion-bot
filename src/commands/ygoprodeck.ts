@@ -57,7 +57,7 @@ export class YGOPRODECKCommand extends AutocompletableCommand {
 		}).json<YGOPRODECKResponse>();
 	}
 
-	async autocomplete(interaction: AutocompleteInteraction): Promise<void> {
+	override async autocomplete(interaction: AutocompleteInteraction): Promise<void> {
 		const term = interaction.options.getFocused();
 		try {
 			const start = Date.now();

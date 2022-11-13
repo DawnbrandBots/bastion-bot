@@ -62,7 +62,7 @@ export class YugiCommand extends AutocompletableCommand {
 		}).json<YugipediaResponse>();
 	}
 
-	async autocomplete(interaction: AutocompleteInteraction): Promise<void> {
+	override async autocomplete(interaction: AutocompleteInteraction): Promise<void> {
 		const page = interaction.options.getFocused();
 		if (!page) {
 			// Blank search querystring results in error nosearch from MediaWiki, so don't query.
