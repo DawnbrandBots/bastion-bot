@@ -1,8 +1,8 @@
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
-import { ChatInputCommandInteraction } from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 import { Logger } from "./logger";
 import { Metrics } from "./metrics";
-import { serializeCommand } from "./utils";
+import { serialiseInteraction } from "./utils";
 
 export abstract class Command {
 	static get meta(): RESTPostAPIApplicationCommandsJSONBody {
@@ -11,7 +11,7 @@ export abstract class Command {
 
 	// Hack: https://github.com/Microsoft/TypeScript/issues/3841#issuecomment-337560146
 	["constructor"]: typeof Command;
-	constructor(private metrics: Metrics) {}
+	constructor(protected metrics: Metrics) {}
 
 	get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		return this.constructor.meta;
@@ -37,16 +37,22 @@ export abstract class Command {
 	 */
 	async run(interaction: ChatInputCommandInteraction): Promise<void> {
 		try {
-			this.logger.verbose(serializeCommand(interaction, { event: "attempt", ping: interaction.client.ws.ping }));
+			this.logger.verbose(
+				serialiseInteraction(interaction, { event: "attempt", ping: interaction.client.ws.ping })
+			);
 			const latency = await this.execute(interaction);
-			this.logger.verbose(serializeCommand(interaction, { event: "success", latency }));
+			this.logger.verbose(serialiseInteraction(interaction, { event: "success", latency }));
 			this.metrics.writeCommand(interaction, latency);
 		} catch (error) {
 			this.metrics.writeCommand(interaction, -1);
-			this.logger.error(serializeCommand(interaction), error);
+			this.logger.error(serialiseInteraction(interaction), error);
 			await interaction
 				.followUp("Something went wrong")
-				.catch(e => this.logger.error(serializeCommand(interaction), e));
+				.catch(e => this.logger.error(serialiseInteraction(interaction), e));
 		}
 	}
+}
+
+export abstract class AutocompletableCommand extends Command {
+	abstract autocomplete(interaction: AutocompleteInteraction): Promise<void>;
 }

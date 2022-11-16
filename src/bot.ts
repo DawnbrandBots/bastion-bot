@@ -2,7 +2,7 @@ import { Client, GatewayIntentBits, Options, Partials } from "discord.js";
 import { injectable, injectAll } from "tsyringe";
 import { Listener } from "./events";
 import { getLogger } from "./logger";
-import { serializeServer } from "./utils";
+import { serialiseServer } from "./utils";
 
 @injectable()
 export class BotFactory {
@@ -50,8 +50,8 @@ export class BotFactory {
 			logger.notify(`Shard ${shard} disconnected (${event.code},${event.wasClean}): ${event.reason}`)
 		);
 		bot.on("shardError", (error, shard) => logger.error(`Shard ${shard} error:`, error));
-		bot.on("guildCreate", guild => logger.notify(`Guild create: ${serializeServer(guild)}`));
-		bot.on("guildDelete", guild => logger.notify(`Guild delete: ${serializeServer(guild)}`));
+		bot.on("guildCreate", guild => logger.notify(`Guild create: ${serialiseServer(guild)}`));
+		bot.on("guildDelete", guild => logger.notify(`Guild delete: ${serialiseServer(guild)}`));
 		bot.on("ready", () => {
 			logger.notify(`Logged in as ${bot.user?.tag} - ${bot.user?.id}`);
 			bot.user?.setActivity(process.env.BOT_PRESENCE || "<card name> to search!");
