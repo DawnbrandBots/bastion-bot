@@ -6,6 +6,7 @@ import {
 	EmbedBuilder,
 	RESTPostAPIApplicationCommandsJSONBody,
 	SlashCommandBuilder,
+	SlashCommandIntegerOption,
 	SlashCommandStringOption,
 	SlashCommandSubcommandBuilder
 } from "discord.js";
@@ -185,7 +186,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 					.t`Find all information for the Rush Duel card with this official database ID.`
 		);
 		const konamiIdOption = buildLocalisedCommand(
-			new SlashCommandStringOption().setRequired(true),
+			new SlashCommandIntegerOption().setRequired(true),
 			() => c("command-option").t`input`,
 			() => c("command-option-description").t`Konami's official card database identifier.`
 		);
@@ -198,7 +199,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 			.addStringOption(nameOption)
 			.addStringOption(getInputLangStringOption())
 			.addStringOption(getResultLangStringOption());
-		konamiIdSubcommand.addStringOption(konamiIdOption).addStringOption(getResultLangStringOption());
+		konamiIdSubcommand.addIntegerOption(konamiIdOption).addStringOption(getResultLangStringOption());
 		randomSubcommand.addStringOption(getResultLangStringOption());
 		builder.addSubcommand(searchSubcommand).addSubcommand(konamiIdSubcommand).addSubcommand(randomSubcommand);
 		return builder.toJSON();
@@ -275,7 +276,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 	}
 
 	private async subcommandKonamiId(interaction: ChatInputCommandInteraction<CacheType>): Promise<number> {
-		const input = interaction.options.getString("input", true);
+		const input = interaction.options.getInteger("input", true);
 		// Send out both requests simultaneously
 		const [, card] = await Promise.all([
 			interaction.deferReply(),
