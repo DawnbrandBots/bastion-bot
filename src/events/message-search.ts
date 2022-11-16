@@ -173,7 +173,7 @@ export function inputToGetCardArguments(input: string, defaultLanguage: Locale) 
 	}
 }
 
-function addExplainer(embeds: EmbedBuilder | EmbedBuilder[], locale: Locale, id: unknown): EmbedBuilder[] {
+function addExplainer(embeds: EmbedBuilder | EmbedBuilder[], locale: Locale): EmbedBuilder[] {
 	if (!Array.isArray(embeds)) {
 		embeds = [embeds];
 	}
@@ -274,14 +274,14 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
 			const card = await getCard(type, searchTerm, inputLanguage);
 			useLocale(resultLanguage);
-			// Note: nonfunctional in development or preview because those bots do not have global commands.
-			// To test functionality in development or preview, fetch guild commands and search them instead.
-			const id = message.client.application.commands.cache.find(cmd => cmd.name === "locale")?.id ?? 0;
 			let replyOptions;
 			if (!card) {
 				let context = "\n";
 				if (type === "name") {
 					const localisedInputLanguage = LOCALES_MAP.get(inputLanguage);
+					// Note: nonfunctional in development or preview because those bots do not have global commands.
+					// To test functionality in development or preview, fetch guild commands and search them instead.
+					const id = message.client.application.commands.cache.find(cmd => cmd.name === "locale")?.id ?? 0;
 					context += t`Search language: **${localisedInputLanguage}** (${inputLanguage}). Check defaults with </locale get:${id}> and configure with </locale set:${id}>`;
 				} else {
 					const localisedType = rc("command-option").gettext(type);
@@ -290,7 +290,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 				replyOptions = { content: t`Could not find a card matching \`${input}\`!` + context };
 			} else {
 				let embeds = createCardEmbed(card, resultLanguage);
-				embeds = addExplainer(embeds, resultLanguage, id);
+				embeds = addExplainer(embeds, resultLanguage);
 				replyOptions = { embeds };
 			}
 			try {

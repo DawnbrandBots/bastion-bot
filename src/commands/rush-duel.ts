@@ -10,9 +10,10 @@ import {
 	SlashCommandSubcommandBuilder
 } from "discord.js";
 import { Got } from "got";
+import { LRUMap } from "mnemonist";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
-import { AttributeIcon, Colour, formatCardName, Icon, RaceIcon } from "../card";
+import { AttributeIcon, Colour, formatCardName, formatCardText, Icon, RaceIcon } from "../card";
 import { AutocompletableCommand } from "../Command";
 import { RushCardSchema } from "../definitions/rush";
 import {
@@ -24,6 +25,7 @@ import {
 } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
+import { replyLatency, serialiseInteraction } from "../utils";
 
 const rc = c;
 
@@ -33,7 +35,7 @@ export function createRushCardEmbed(card: Static<typeof RushCardSchema>, lang: L
 	const yugipedia = card.konami_id
 		? `https://yugipedia.com/wiki/${card.konami_id}?utm_source=bastion`
 		: `https://yugipedia.com/wiki/?curid=${card.yugipedia_page_id}&utm_source=bastion`;
-	const rushcard = `https://rushcard.io/card/?search=${card.yugipedia_page_id}`;
+	const rushcard = `https://rushcard.io/card/?search=${card.yugipedia_page_id}&utm_source=bastion`;
 	// Official database, does not work for zh locales
 	const official = `https://www.db.yugioh-card.com/rushdb/card_search.action?ope=2&request_locale=${lang}&cid=${card.konami_id}`;
 	const rulings = `https://www.db.yugioh-card.com/rushdb/faq_search.action?ope=4&request_locale=ja&cid=${card.konami_id}`;
@@ -61,7 +63,7 @@ export function createRushCardEmbed(card: Static<typeof RushCardSchema>, lang: L
 		description += "\n";
 	}
 
-	const embed = new EmbedBuilder().setTitle(formatCardName(card as any, lang)).setURL(rushcard);
+	const embed = new EmbedBuilder().setTitle(formatCardName(card, lang)).setURL(rushcard);
 
 	if (card.card_type === "Monster") {
 		embed.setColor(
@@ -96,26 +98,31 @@ export function createRushCardEmbed(card: Static<typeof RushCardSchema>, lang: L
 		}
 		if ("summoning_condition" in card && card.summoning_condition) {
 			description += "\n\n";
-			description += card.summoning_condition[lang];
+			description += formatCardText(card.summoning_condition, lang);
 		}
 		if ("materials" in card) {
 			description += "\n\n";
-			description += card.materials[lang];
+			description += formatCardText(card.materials, lang);
+		}
+		if (card.monster_type_line.includes("Fusion") && "text" in card) {
+			description += "\n\n";
+			// This is effectively the localised materials line for non-Effect Fusion monsters
+			description += formatCardText(card.text, lang);
 		}
 
 		embed.setDescription(description);
 
 		if ("requirement" in card) {
-			embed.addFields({ name: c("card-embed").t`[REQUIREMENT]`, value: card.requirement[lang] || "\u200b" });
+			embed.addFields({ name: c("card-embed").t`[REQUIREMENT]`, value: formatCardText(card.requirement, lang) });
 			let name = c("card-embed").t`[EFFECT]`;
 			if (card.effect_types?.includes("Continuous")) {
 				name = c("card-embed").t`[CONTINUOUS EFFECT]`;
 			} else if (card.effect_types?.includes("Multi-Choice")) {
 				name = c("card-embed").t`[MULTI-CHOICE EFFECT]`;
 			}
-			embed.addFields({ name, value: card.effect[lang] || "\u200b" });
-		} else if ("text" in card) {
-			embed.addFields({ name: c("card-embed").t`Card Text`, value: card.text[lang] || "\u200b" });
+			embed.addFields({ name, value: formatCardText(card.effect, lang) });
+		} else if ("text" in card && !card.monster_type_line.includes("Fusion")) {
+			embed.addFields({ name: c("card-embed").t`Card Text`, value: formatCardText(card.text, lang) });
 		}
 	} else {
 		// Spells and Traps
@@ -127,8 +134,8 @@ export function createRushCardEmbed(card: Static<typeof RushCardSchema>, lang: L
 		embed.setDescription(`${description}${Icon[card.card_type]} ${localizedProperty} ${Icon[card.property]}`);
 
 		embed.addFields(
-			{ name: c("card-embed").t`[REQUIREMENT]`, value: card.requirement[lang] || "\u200b" },
-			{ name: c("card-embed").t`[EFFECT]`, value: card.effect[lang] || "\u200b" }
+			{ name: c("card-embed").t`[REQUIREMENT]`, value: formatCardText(card.requirement, lang) },
+			{ name: c("card-embed").t`[EFFECT]`, value: formatCardText(card.effect, lang) }
 		);
 	}
 
@@ -143,6 +150,8 @@ export function createRushCardEmbed(card: Static<typeof RushCardSchema>, lang: L
 @injectable()
 export class RushDuelCommand extends AutocompletableCommand {
 	#logger = getLogger("command:rush");
+	// Covers well beyond the total number of Rush Duel cards (in one language)
+	private suggestionCache = new LRUMap<string, Static<typeof RushCardSchema>>(2000);
 
 	constructor(
 		metrics: Metrics,
@@ -199,19 +208,48 @@ export class RushDuelCommand extends AutocompletableCommand {
 		return this.#logger;
 	}
 
-	override autocomplete(interaction: AutocompleteInteraction<CacheType>): Promise<void> {
-		throw new Error("Method not implemented.");
+	private async search(query: string, lang: Locale, count: number): Promise<Static<typeof RushCardSchema>[]> {
+		const url = new URL(`${process.env.API_URL}/rush/search`);
+		url.searchParams.set("name", query);
+		url.searchParams.set("lang", lang);
+		url.searchParams.set("count", `${count}`);
+		return await this.got(url, {
+			headers: { Accept: "application/json" },
+			throwHttpErrors: true
+		}).json<Static<typeof RushCardSchema>[]>();
 	}
 
-	protected override execute(interaction: ChatInputCommandInteraction<CacheType>): Promise<number> {
+	override async autocomplete(interaction: AutocompleteInteraction<CacheType>): Promise<void> {
+		const query = interaction.options.getFocused();
+		if (!query) {
+			await interaction.respond([]);
+			return;
+		}
+		const resultLanguage = await this.locales.get(interaction);
+		const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
+		const start = Date.now();
+		const response = await this.search(query, inputLanguage, 25);
+		const latency = Date.now() - start;
+		this.#logger.info(serialiseInteraction(interaction, { autocomplete: query, latency }));
+		const options = [];
+		for (const card of response) {
+			const name = formatCardName(card, inputLanguage);
+			this.suggestionCache.set(name, card);
+			options.push({ name, value: name });
+		}
+		await interaction.respond(options);
+		this.metrics.writeCommand(interaction, latency);
+	}
+
+	protected override async execute(interaction: ChatInputCommandInteraction<CacheType>): Promise<number> {
 		const subcommand = interaction.options.getSubcommand(true);
 		switch (subcommand) {
 			case "search":
-				return this.subcommandSearch(interaction);
+				return await this.subcommandSearch(interaction);
 			case "konami-id":
-				return this.subcommandKonamiId(interaction);
+				return await this.subcommandKonamiId(interaction);
 			case "random":
-				return this.subcommandRandom(interaction);
+				return await this.subcommandRandom(interaction);
 			default:
 				throw new Error(`Unknown rush-duel subcommand: ${subcommand}`);
 		}
@@ -221,7 +259,19 @@ export class RushDuelCommand extends AutocompletableCommand {
 		const input = interaction.options.getString("input", true);
 		const resultLanguage = await this.locales.get(interaction);
 		const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
-		return -1;
+		let card = this.suggestionCache.get(input);
+		if (card) {
+			this.#logger.info(serialiseInteraction(interaction, { input, cached: card.yugipedia_page_id }));
+		} else {
+			const start = Date.now();
+			const response = await this.search(input, inputLanguage, 1);
+			const latency = Date.now() - start;
+			card = response[0];
+			this.#logger.info(serialiseInteraction(interaction, { input, latency, response: card.yugipedia_page_id }));
+		}
+		const embed = createRushCardEmbed(card, resultLanguage);
+		const reply = await interaction.reply({ embeds: [embed], fetchReply: true });
+		return replyLatency(reply, interaction);
 	}
 
 	private async subcommandKonamiId(interaction: ChatInputCommandInteraction<CacheType>): Promise<number> {

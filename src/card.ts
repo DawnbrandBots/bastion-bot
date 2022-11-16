@@ -4,6 +4,7 @@ import { parseDocument } from "htmlparser2";
 import fetch from "node-fetch";
 import { c, t, useLocale } from "ttag";
 import { CardSchema, LimitRegulation } from "./definitions";
+import { RushCardSchema } from "./definitions/rush";
 import { Locale } from "./locale";
 
 /**
@@ -195,7 +196,7 @@ export function parseAndExpandRuby(html: string): [string, string] {
 	return [rubyless, rubyonly];
 }
 
-export function formatCardName(card: Static<typeof CardSchema>, lang: Locale): string {
+export function formatCardName(card: Static<typeof CardSchema> | Static<typeof RushCardSchema>, lang: Locale): string {
 	const name = card.name[lang]; // TypeScript cannot narrow typing on this without the variable
 	if ((lang === "ja" || lang === "ko") && name?.includes("<ruby>")) {
 		const [rubyless, rubyonly] = parseAndExpandRuby(name);
@@ -218,7 +219,7 @@ function formatOCGNumbering(text: string): string {
 	// - Number 86
 }
 
-function formatCardText(text: Static<typeof CardSchema>["text"], lang: Locale): string {
+export function formatCardText(text: Static<typeof CardSchema>["text"], lang: Locale): string {
 	// Discord cannot take just a blank or spaces, but this zero-width space works
 	if (lang === "ja" || lang === "ko" || lang === "zh-CN" || lang === "zh-TW") {
 		let str = text[lang]; // TypeScript cannot narrow typing on this without the variable
