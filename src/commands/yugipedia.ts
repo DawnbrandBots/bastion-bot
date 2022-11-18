@@ -2,7 +2,7 @@ import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builde
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 import { Got } from "got";
-import { LRUMap, LRUMapWithDelete } from "mnemonist";
+import { LRUMap } from "mnemonist";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { AutocompletableCommand } from "../Command";
@@ -16,8 +16,6 @@ type YugipediaResponse = [string, string[], string[], string[]];
 @injectable()
 export class YugiCommand extends AutocompletableCommand {
 	#logger = getLogger("command:yugi");
-	// Could be a large number of requests due to autocomplete, but each is no more than 1KB
-	private httpCache = new LRUMapWithDelete<string, string>(10000);
 	// Covers well beyond the total number of TCG and OCG cards, though Yugipedia has many more pages
 	private linkCache = new LRUMap<string, string>(20000);
 
@@ -56,7 +54,6 @@ export class YugiCommand extends AutocompletableCommand {
 	private async search(query: string): Promise<YugipediaResponse> {
 		const url = YugiCommand.YUGI_SEARCH + encodeURIComponent(query);
 		return await this.got(url, {
-			cache: this.httpCache,
 			headers: { Accept: "application/json" },
 			throwHttpErrors: true
 		}).json<YugipediaResponse>();

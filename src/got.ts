@@ -5,6 +5,7 @@ import { Agent as HTTPSAgent } from "https";
 
 export default function createGotClient(): Got {
 	// Cache should be managed by each use case
+	// Cache x HTTP/2 is nonfunctional: https://github.com/sindresorhus/got/issues/1743
 	return got.extend({
 		// These are for HTTP/1.1
 		agent: {

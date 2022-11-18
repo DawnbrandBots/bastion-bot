@@ -2,7 +2,7 @@ import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builde
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { AutocompleteInteraction, ChatInputCommandInteraction, escapeMarkdown } from "discord.js";
 import { Got } from "got";
-import { LRUMap, LRUMapWithDelete } from "mnemonist";
+import { LRUMap } from "mnemonist";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { AutocompletableCommand } from "../Command";
@@ -16,8 +16,6 @@ type YGOPRODECKResponse = { error: string } | { suggestions: { name: string; dat
 @injectable()
 export class YGOPRODECKCommand extends AutocompletableCommand {
 	#logger = getLogger("command:ygoprodeck");
-	// Could be a large number of requests due to autocomplete, but each is no more than 1KB
-	private httpCache = new LRUMapWithDelete<string, string>(10000);
 	// Covers well beyond the total number of TCG and OCG cards
 	private suggestionCache = new LRUMap<string, number>(20000);
 
@@ -52,7 +50,6 @@ export class YGOPRODECKCommand extends AutocompletableCommand {
 		const url = new URL("https://ygoprodeck.com/api/autocomplete.php");
 		url.searchParams.set("query", term);
 		return await this.got(url, {
-			cache: this.httpCache,
 			headers: { Accept: "application/json" }
 		}).json<YGOPRODECKResponse>();
 	}
