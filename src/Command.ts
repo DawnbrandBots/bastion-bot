@@ -46,9 +46,17 @@ export abstract class Command {
 		} catch (error) {
 			this.metrics.writeCommand(interaction, -1);
 			this.logger.error(serialiseInteraction(interaction), error);
-			await interaction
-				.followUp("Something went wrong")
-				.catch(e => this.logger.error(serialiseInteraction(interaction), e));
+			let method;
+			if (interaction.replied) {
+				method = "followUp" as const;
+			} else if (interaction.deferred) {
+				method = "editReply" as const;
+			} else {
+				method = "reply" as const;
+			}
+			await interaction[method]("Something went wrong. Please try again later.").catch(e =>
+				this.logger.error(serialiseInteraction(interaction), e)
+			);
 		}
 	}
 }
