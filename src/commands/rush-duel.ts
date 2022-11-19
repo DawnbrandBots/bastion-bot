@@ -64,7 +64,11 @@ export function createRushCardEmbed(card: Static<typeof RushCardSchema>, lang: L
 		description += "\n";
 	}
 
-	const embed = new EmbedBuilder().setTitle(formatCardName(card, lang)).setURL(rushcard);
+	// Filter card name down to alphanumeric characters
+	const probableBasename = (card.name.en ?? "").replaceAll(/\W/g, "");
+	// https://yugipedia.com/wiki/Category:Yu-Gi-Oh!_RUSH_DUEL:_Dawn_of_the_Battle_Royale!!_card_artworks
+	const illustration = `https://yugipedia.com/wiki/Special:Redirect/file/${probableBasename}-DBR-JP-VG-artwork.png?utm_source=bastion`;
+	const embed = new EmbedBuilder().setTitle(formatCardName(card, lang)).setURL(rushcard).setThumbnail(illustration);
 
 	if (card.card_type === "Monster") {
 		embed.setColor(
