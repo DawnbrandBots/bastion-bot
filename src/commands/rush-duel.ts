@@ -291,6 +291,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 
 	private async subcommandKonamiId(interaction: ChatInputCommandInteraction<CacheType>): Promise<number> {
 		const input = interaction.options.getInteger("input", true);
+		this.#logger.info(serialiseInteraction(interaction, { input }));
 		const response = await this.got(`${process.env.API_URL}/rush/${input}`, {
 			headers: { Accept: "application/json" }
 		});
@@ -323,6 +324,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 			headers: { Accept: "application/json" },
 			throwHttpErrors: true
 		}).json<Static<typeof RushCardSchema>[]>();
+		this.#logger.info(serialiseInteraction(interaction, { response: card.yugipedia_page_id }));
 		const lang = await this.locales.get(interaction);
 		const embed = createRushCardEmbed(card, lang);
 		const reply = await interaction.reply({ embeds: addNotice(embed), fetchReply: true });
