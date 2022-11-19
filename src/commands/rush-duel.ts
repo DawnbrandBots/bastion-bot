@@ -26,7 +26,7 @@ import {
 } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { replyLatency, serialiseInteraction } from "../utils";
+import { addNotice, replyLatency, serialiseInteraction } from "../utils";
 
 const rc = c;
 
@@ -226,20 +226,25 @@ export class RushDuelCommand extends AutocompletableCommand {
 			await interaction.respond([]);
 			return;
 		}
-		const resultLanguage = await this.locales.get(interaction);
-		const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
-		const start = Date.now();
-		const response = await this.search(query, inputLanguage, 25);
-		const latency = Date.now() - start;
-		this.#logger.info(serialiseInteraction(interaction, { autocomplete: query, latency }));
-		const options = [];
-		for (const card of response) {
-			const name = formatCardName(card, inputLanguage);
-			this.suggestionCache.set(name, card);
-			options.push({ name, value: name });
+		try {
+			const resultLanguage = await this.locales.get(interaction);
+			const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
+			const start = Date.now();
+			const response = await this.search(query, inputLanguage, 25);
+			const latency = Date.now() - start;
+			this.#logger.info(serialiseInteraction(interaction, { autocomplete: query, latency }));
+			const options = [];
+			for (const card of response) {
+				const name = formatCardName(card, inputLanguage);
+				this.suggestionCache.set(name, card);
+				options.push({ name, value: name });
+			}
+			await interaction.respond(options);
+			this.metrics.writeCommand(interaction, latency);
+		} catch (error) {
+			this.#logger.warn(serialiseInteraction(interaction, { autocomplete: query }), error);
+			this.metrics.writeCommand(interaction, -1);
 		}
-		await interaction.respond(options);
-		this.metrics.writeCommand(interaction, latency);
 	}
 
 	protected override async execute(interaction: ChatInputCommandInteraction<CacheType>): Promise<number> {
@@ -267,48 +272,60 @@ export class RushDuelCommand extends AutocompletableCommand {
 			const start = Date.now();
 			const response = await this.search(input, inputLanguage, 1);
 			const latency = Date.now() - start;
+			if (!response.length) {
+				this.#logger.info(serialiseInteraction(interaction, { input, latency, response: null }));
+				useLocale(resultLanguage);
+				const reply = await interaction.reply({
+					content: t`Could not find a card matching \`${input}\`!`,
+					fetchReply: true
+				});
+				return replyLatency(reply, interaction);
+			}
 			card = response[0];
 			this.#logger.info(serialiseInteraction(interaction, { input, latency, response: card.yugipedia_page_id }));
 		}
 		const embed = createRushCardEmbed(card, resultLanguage);
-		const reply = await interaction.reply({ embeds: [embed], fetchReply: true });
+		const reply = await interaction.reply({ embeds: addNotice(embed), fetchReply: true });
 		return replyLatency(reply, interaction);
 	}
 
 	private async subcommandKonamiId(interaction: ChatInputCommandInteraction<CacheType>): Promise<number> {
 		const input = interaction.options.getInteger("input", true);
-		// Send out both requests simultaneously
-		const [, card] = await Promise.all([
-			interaction.deferReply(),
-			this.got(`${process.env.API_URL}/rush/${input}`, {
-				headers: { Accept: "application/json" },
-				throwHttpErrors: true
-			}).json<Static<typeof RushCardSchema>>()
-		]);
+		const response = await this.got(`${process.env.API_URL}/rush/${input}`, {
+			headers: { Accept: "application/json" }
+		});
 		const lang = await this.locales.get(interaction);
-		const embed = createRushCardEmbed(card, lang);
-		const end = Date.now();
-		await interaction.editReply({ embeds: [embed] }); // Actually returns void
-		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
-		const latency = end - interaction.createdTimestamp;
-		return latency;
+		switch (response.statusCode) {
+			case 404: {
+				useLocale(lang);
+				const reply = await interaction.reply({
+					content: t`Could not find a card matching \`${input}\`!`,
+					fetchReply: true
+				});
+				return replyLatency(reply, interaction);
+			}
+			case 200: {
+				const card = JSON.parse(response.body);
+				const embed = createRushCardEmbed(card, lang);
+				const reply = await interaction.reply({
+					embeds: addNotice(embed),
+					fetchReply: true
+				});
+				return replyLatency(reply, interaction);
+			}
+			default:
+				throw new this.got.HTTPError(response);
+		}
 	}
 
 	private async subcommandRandom(interaction: ChatInputCommandInteraction<CacheType>): Promise<number> {
-		// Send out both requests simultaneously
-		const [, response] = await Promise.all([
-			interaction.deferReply(),
-			this.got(`${process.env.API_URL}/rush/random`, {
-				headers: { Accept: "application/json" },
-				throwHttpErrors: true
-			}).json<Static<typeof RushCardSchema>[]>()
-		]);
+		const [card] = await this.got(`${process.env.API_URL}/rush/random`, {
+			headers: { Accept: "application/json" },
+			throwHttpErrors: true
+		}).json<Static<typeof RushCardSchema>[]>();
 		const lang = await this.locales.get(interaction);
-		const embed = createRushCardEmbed(response[0], lang);
-		const end = Date.now();
-		await interaction.editReply({ embeds: [embed] }); // Actually returns void
-		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
-		const latency = end - interaction.createdTimestamp;
-		return latency;
+		const embed = createRushCardEmbed(card, lang);
+		const reply = await interaction.reply({ embeds: addNotice(embed), fetchReply: true });
+		return replyLatency(reply, interaction);
 	}
 }
