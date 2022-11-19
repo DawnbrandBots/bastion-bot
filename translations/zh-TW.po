@@ -12,9 +12,7 @@ msgstr "鏈接"
 
 #: src\card.ts:272
 #, javascript-format
-msgid ""
-"[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
-"[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
+msgid "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
 
 #: src\card.ts:275
@@ -33,30 +31,18 @@ msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }
 msgstr "**屬性**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
 #: src\card.ts:341
-msgid ""
-"**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
-"card.def }"
-msgstr ""
-"**階級**: ${ Icon.Rank } ${ card.rank } **攻擊力**: ${ card.atk } **守備力**: ${ "
-"card.def }"
+msgid "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
+msgstr "**階級**: ${ Icon.Rank } ${ card.rank } **攻擊力**: ${ card.atk } **守備力**: ${ card.def }"
 
 #: src\card.ts:344
 #, javascript-format
-msgid ""
-"**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
-"Arrows**: ${ arrows }"
-msgstr ""
-"**連接數值**: ${ card.link_arrows.length } **攻擊力**: ${ card.atk } **連接標記**: ${ "
-"arrows }"
+msgid "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link Arrows**: ${ arrows }"
+msgstr "**連接數值**: ${ card.link_arrows.length } **攻擊力**: ${ card.atk } **連接標記**: ${ arrows }"
 
 #: src\card.ts:346
 #, javascript-format
-msgid ""
-"**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
-"${ card.def }"
-msgstr ""
-"**等級**: ${ Icon.Level } ${ card.level } **攻擊力**: ${ card.atk } **守備力**: ${ "
-"card.def }"
+msgid "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
+msgstr "**等級**: ${ Icon.Level } ${ card.level } **攻擊力**: ${ card.atk } **守備力**: ${ card.def }"
 
 #: src\card.ts:353
 msgid "**Pendulum Scale**: ${ formattedScale }"
@@ -85,59 +71,56 @@ msgstr "未發行"
 msgid "Placeholder ID: ${ card.fake_password }"
 msgstr "假卡密: ${ card.fake_password }"
 
-#: src\utils.ts:33
+#: src\utils.ts:45
 msgid "🛠️ This command is in development."
 msgstr "🛠️ 這個指令正在開發中"
 
 #: src\events\message-search.ts:184
-#: src\utils.ts:34
-msgid ""
-"📨 Please send feedback to [our issue "
-"tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support "
-"server](https://discord.gg/4aFuPyuE96)!"
+#: src\utils.ts:46
+msgid "📨 Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!"
 msgstr ""
 
-#: src\utils.ts:45
+#: src\utils.ts:57
 msgid "Please consider supporting us!"
 msgstr ""
 
-#: src\utils.ts:46
+#: src\utils.ts:58
 msgid "Help keep Bastion online!"
 msgstr ""
 
-#: src\utils.ts:47
+#: src\utils.ts:59
 msgid "Please help keep Bastion online!"
 msgstr ""
 
-#: src\utils.ts:48
+#: src\utils.ts:60
 msgid "Was Bastion helpful? Consider supporting us!"
 msgstr ""
 
-#: src\utils.ts:49
+#: src\utils.ts:61
 msgid "Was Bastion helpful? We need your support!"
 msgstr ""
 
-#: src\utils.ts:50
+#: src\utils.ts:62
 msgid "Did you find Bastion useful? Consider supporting us!"
 msgstr ""
 
-#: src\utils.ts:51
+#: src\utils.ts:63
 msgid "Did you find Bastion useful? Help keep it online!"
 msgstr ""
 
-#: src\utils.ts:52
+#: src\utils.ts:64
 msgid "Did you find Bastion useful? We need your support!"
 msgstr ""
 
-#: src\utils.ts:53
+#: src\utils.ts:65
 msgid "Enjoy Bastion? Help keep it online!"
 msgstr ""
 
-#: src\utils.ts:54
+#: src\utils.ts:66
 msgid "Enjoy Bastion? Consider supporting us!"
 msgstr ""
 
-#: src\utils.ts:55
+#: src\utils.ts:67
 msgid "Found what you were looking for? Consider supporting us!"
 msgstr ""
 
@@ -186,15 +169,8 @@ msgstr ""
 msgid "Locale for current channel <#${ channel }> reset to server default."
 msgstr ""
 
-#: src\commands\locale.ts:104
-#, javascript-format
-msgid "Server-wide locale override: ${ _guildOverride }"
-msgstr ""
-
 #: src\commands\locale.ts:109
-msgid ""
-"Sorry, you must have the Manage Channel permission in this channel. If you "
-"think this is an error, contact your server admin or report a bug."
+msgid "Sorry, you must have the Manage Channel permission in this channel. If you think this is an error, contact your server admin or report a bug."
 msgstr ""
 
 #: src\commands\locale.ts:116
@@ -212,23 +188,17 @@ msgid "Server-wide default for community servers is ${ interaction.guildLocale }
 msgstr ""
 
 #: src\commands\locale.ts:124
-msgid ""
-"Sorry, you must have the Manage Server permission to do this. If you think "
-"this is an error, contact your server admin or report a bug."
+msgid "Sorry, you must have the Manage Server permission to do this. If you think this is an error, contact your server admin or report a bug."
 msgstr ""
 
 #: src\commands\locale.ts:131
 #, javascript-format
-msgid ""
-"Locale for this direct message overridden with ${ locale }. Your Discord "
-"setting is ${ interaction.locale }."
+msgid "Locale for this direct message overridden with ${ locale }. Your Discord setting is ${ interaction.locale }."
 msgstr ""
 
 #: src\commands\locale.ts:134
 #, javascript-format
-msgid ""
-"Locale for this direct message reset to Discord default. Your Discord "
-"setting is ${ interaction.locale }."
+msgid "Locale for this direct message reset to Discord default. Your Discord setting is ${ interaction.locale }."
 msgstr ""
 
 #: src\commands\ping.ts:40
@@ -236,17 +206,7 @@ msgstr ""
 msgid "Total latency: ${ latency } ms"
 msgstr ""
 
-#: src\commands\ygoprodeck.ts:55
-#, javascript-format
-msgid "Searching YGOPRODECK for `${ term }`…"
-msgstr ""
-
-#: src\commands\yugipedia.ts:66
-#, javascript-format
-msgid "Searching Yugipedia for `${ page }`…"
-msgstr ""
-
-#: src\commands\yugipedia.ts:69
+#: src\commands\yugipedia.ts:106
 #, javascript-format
 msgid "Could not find a Yugipedia page named `${ page }`."
 msgstr ""
@@ -282,21 +242,9 @@ msgstr[0] ""
 msgid "Main Deck (continued)"
 msgstr ""
 
-#: src\commands\deck.ts:298
-#, javascript-format
-msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
-msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
-msgstr[0] ""
-
 #: src\commands\deck.ts:305
 msgid "Extra Deck (continued)"
 msgstr ""
-
-#: src\commands\deck.ts:312
-#, javascript-format
-msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
-msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
-msgstr[0] ""
 
 #: src\commands\deck.ts:319
 msgid "Side Deck (continued)"
@@ -403,29 +351,18 @@ msgstr ""
 
 #: src\events\message-ping.ts:46
 msgid ""
-"❓ Help documentation on "
-"[GitHub](https://github.com/DawnbrandBots/bastion-bot), or use `.commands` "
-"and `.help`.\n"
+"❓ Help documentation on [GitHub](https://github.com/DawnbrandBots/bastion-bot), or use `.commands` and `.help`.\n"
 "🟢 Licence: [GNU AGPL 3.0+](https://choosealicense.com/licenses/agpl-3.0/).\n"
-"🪧 Bastion Misawa is a character from [Yu-Gi-Oh! "
-"GX](https://yugipedia.com/wiki/Bastion_Misawa).\n"
-"<:PRO:1028300625122963567> Sponsored by "
-"[YGOPRODECK](https://ygoprodeck.com). Prices are YGOPRODECK affiliate "
-"links.\n"
+"🪧 Bastion Misawa is a character from [Yu-Gi-Oh! GX](https://yugipedia.com/wiki/Bastion_Misawa).\n"
+"<:PRO:1028300625122963567> Sponsored by [YGOPRODECK](https://ygoprodeck.com). Prices are YGOPRODECK affiliate links.\n"
 "\n"
-"<:patreon:895892186841890816> Support us [on "
-"Patreon](https://www.patreon.com/alphakretinbots) and help keep the bot "
-"online!\n"
-"<:kofi:927373724959789096> Ko-fi also works for [one-time "
-"donations](https://ko-fi.com/dawnbrandbots).\n"
+"<:patreon:895892186841890816> Support us [on Patreon](https://www.patreon.com/alphakretinbots) and help keep the bot online!\n"
+"<:kofi:927373724959789096> Ko-fi also works for [one-time donations](https://ko-fi.com/dawnbrandbots).\n"
 "\n"
-"🛠️ Improvements are regularly being worked on and rolled out. The new "
-"search experience is here!\n"
-"🤖 New features like Slash Commands are handled by a new bot instance "
-"concurrently with the old bot.\n"
+"🛠️ Improvements are regularly being worked on and rolled out. The new search experience is here!\n"
+"🤖 New features like Slash Commands are handled by a new bot instance concurrently with the old bot.\n"
 "\n"
-"💬 Translations missing? Help translate Bastion on "
-"[GitHub](https://github.com/DawnbrandBots/bastion-bot)."
+"💬 Translations missing? Help translate Bastion on [GitHub](https://github.com/DawnbrandBots/bastion-bot)."
 msgstr ""
 
 #: src\events\message-search.ts:288
@@ -434,18 +371,12 @@ msgstr ""
 
 #: src\events\message-search.ts:186
 #. eslint-disable-next-line prefer-template
-msgid ""
-"📚 [__Learn more about how search "
-"works.__](https://github.com/DawnbrandBots/bastion-bot/blob/master/docs/"
-"card-search.md?utm_source=bastion)"
+msgid "📚 [__Learn more about how search works.__](https://github.com/DawnbrandBots/bastion-bot/blob/master/docs/card-search.md?utm_source=bastion)"
 msgstr ""
 
 #: src\events\message-search.ts:285
 #, javascript-format
-msgid ""
-"Search language: **${ localisedInputLanguage }** (${ inputLanguage }). "
-"Check defaults with </locale get:${ id }> and configure with </locale "
-"set:${ id }>"
+msgid "Search language: **${ localisedInputLanguage }** (${ inputLanguage }). Check defaults with </locale get:${ id }> and configure with </locale set:${ id }>"
 msgstr ""
 
 #: src\events\message-ping.ts:91
@@ -454,13 +385,37 @@ msgstr ""
 
 #: src\events\message-ping.ts:94
 #: src\events\message-search.ts:203
-msgid ""
-"Please have a server administrator [fix "
-"this](https://github.com/DawnbrandBots/bastion-bot#discord-permissions)."
+msgid "Please have a server administrator [fix this](https://github.com/DawnbrandBots/bastion-bot#discord-permissions)."
 msgstr ""
 
 #: src\events\message-search.ts:200
 msgid "⚠️ I am missing permissions in the channel!"
+msgstr ""
+
+#: src\commands\deck.ts:298
+#, javascript-format
+msgid "Extra Deck (${ deck.extra.length } card — ${ countDetail })"
+msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ countDetail })"
+msgstr[0] ""
+
+#: src\commands\deck.ts:312
+#, javascript-format
+msgid "Side Deck (${ deck.side.length } card — ${ countDetail })"
+msgid_plural "Side Deck (${ deck.side.length } cards — ${ countDetail })"
+msgstr[0] ""
+
+#: src\commands\locale.ts:104
+#, javascript-format
+msgid "Server-wide locale override: ${ guildOverride }"
+msgstr ""
+
+#: src\commands\ygoprodeck.ts:104
+#, javascript-format
+msgid "Something went wrong searching YGOPRODECK for `${ searchTerm }`."
+msgstr ""
+
+#: src\commands\yugipedia.ts:110
+msgid "Something went wrong searching Yugipedia for `${ page }`."
 msgstr ""
 
 #: src\card.ts:37
@@ -777,12 +732,12 @@ msgctxt "command-option"
 msgid "input"
 msgstr "輸入"
 
-#: src\commands\ygoprodeck.ts:29
+#: src\commands\ygoprodeck.ts:38
 msgctxt "command-option"
 msgid "term"
 msgstr ""
 
-#: src\commands\yugipedia.ts:29
+#: src\commands\yugipedia.ts:38
 msgctxt "command-option"
 msgid "page"
 msgstr ""
@@ -874,12 +829,7 @@ msgctxt "command-option-description"
 msgid "The language to search in, defaulting to the result language."
 msgstr ""
 
-#: src\commands\ygoprodeck.ts:30
-msgctxt "command-option-description"
-msgid "The name or password of the card you're looking for."
-msgstr ""
-
-#: src\commands\yugipedia.ts:30
+#: src\commands\yugipedia.ts:39
 msgctxt "command-option-description"
 msgid "The name of the Yugipedia page you want to search for."
 msgstr ""
@@ -911,16 +861,12 @@ msgstr ""
 
 #: src\commands\deck.ts:149
 msgctxt "command-option-description"
-msgid ""
-"Whether to display the deck details publicly in chat. This is false by "
-"default."
+msgid "Whether to display the deck details publicly in chat. This is false by default."
 msgstr ""
 
 #: src\commands\deck.ts:156
 msgctxt "command-option-description"
-msgid ""
-"Whether to display the deck sections as one stacked column. This is false "
-"(side-by-side) by default."
+msgid "Whether to display the deck sections as one stacked column. This is false (side-by-side) by default."
 msgstr ""
 
 #: src\commands\art.ts:32
@@ -1014,6 +960,11 @@ msgctxt "command-option-description"
 msgid "The vendor to fetch the price data from."
 msgstr ""
 
+#: src\commands\ygoprodeck.ts:39
+msgctxt "command-option-description"
+msgid "The English name of the card you're looking for."
+msgstr ""
+
 #: src\commands\art.ts:26
 msgctxt "command-name"
 msgid "art"
@@ -1024,12 +975,12 @@ msgctxt "command-name"
 msgid "ping"
 msgstr ""
 
-#: src\commands\ygoprodeck.ts:24
+#: src\commands\ygoprodeck.ts:33
 msgctxt "command-name"
 msgid "ygoprodeck"
 msgstr ""
 
-#: src\commands\yugipedia.ts:24
+#: src\commands\yugipedia.ts:33
 msgctxt "command-name"
 msgid "yugipedia"
 msgstr ""
@@ -1074,12 +1025,12 @@ msgctxt "command-description"
 msgid "Test latency to the new bot instance."
 msgstr ""
 
-#: src\commands\ygoprodeck.ts:25
+#: src\commands\ygoprodeck.ts:34
 msgctxt "command-description"
 msgid "Search the YGOPRODECK card database."
 msgstr ""
 
-#: src\commands\yugipedia.ts:25
+#: src\commands\yugipedia.ts:34
 msgctxt "command-description"
 msgid "Search the Yugipedia wiki for a page and link to it."
 msgstr ""
@@ -1091,9 +1042,7 @@ msgstr ""
 
 #: src\commands\deck.ts:118
 msgctxt "command-description"
-msgid ""
-"Display a deck list from ydke:// or .ydk format, exported from a number of "
-"deck building programs."
+msgid "Display a deck list from ydke:// or .ydk format, exported from a number of deck building programs."
 msgstr ""
 
 #: src\commands\search.ts:30

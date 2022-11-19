@@ -5249,10 +5249,10 @@ tsyringe@^4.7.0:
   dependencies:
     tslib "^1.9.3"
 
-ttag-cli@^1.10.1:
-  version "1.10.1"
-  resolved "https://registry.yarnpkg.com/ttag-cli/-/ttag-cli-1.10.1.tgz#d7f5503936a84c3b6df712bb1b2edb1727097687"
-  integrity sha512-n5Ys6z0epvq9zV5fSHWj3vpwSEeFacvXhVhE3MZJE6wz72ld5oYcWnOW1oRgbpCUsPLQwwPxVhkZynaTm1q6Fg==
+ttag-cli@^1.10.2:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/ttag-cli/-/ttag-cli-1.10.2.tgz#c34f35946d26dc35ea9e5ac99241215af7a3e645"
+  integrity sha512-/2streSON3/hjCkSGM5YTPISa4BOHNC9Mo4cIEjuO6SX7e0s4syylgj7ptgE6mYCHZ1pbtOyZz9c5aPtQ8UHCA==
   dependencies:
     "@babel/core" "^7.12.3"
     "@babel/generator" "^7.12.5"
@@ -5274,7 +5274,7 @@ ttag-cli@^1.10.1:
     chalk "^2.4.2"
     cross-spawn "^5.1.0"
     estree-walker "^2.0.1"
-    gettext-parser "^5.1.2"
+    gettext-parser "^6.0.0"
     hunspell-spellchecker "^1.0.2"
     ignore "^5.1.8"
     koa "^2.13.0"

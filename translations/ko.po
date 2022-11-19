@@ -12,12 +12,8 @@ msgstr "🔗 링크"
 
 #: src\card.ts:272
 #, javascript-format
-msgid ""
-"[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | "
-"[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
-msgstr ""
-"[공식 코나미 DB](${ official }) | [OCG 규칙](${ rulings }) | [Yugipedia](${ "
-"yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
+msgid "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
+msgstr "[공식 코나미 DB](${ official }) | [OCG 규칙](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
 #: src\card.ts:275
 #, javascript-format
@@ -35,30 +31,18 @@ msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }
 msgstr "**속성**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
 #: src\card.ts:341
-msgid ""
-"**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ "
-"card.def }"
-msgstr ""
-"**랭크**: ${ Icon.Rank } ${ card.rank } **공격력**: ${ card.atk } **수비력**: ${ "
-"card.def }"
+msgid "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
+msgstr "**랭크**: ${ Icon.Rank } ${ card.rank } **공격력**: ${ card.atk } **수비력**: ${ card.def }"
 
 #: src\card.ts:344
 #, javascript-format
-msgid ""
-"**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link "
-"Arrows**: ${ arrows }"
-msgstr ""
-"**LINK**: ${ card.link_arrows.length } **공격력**: ${ card.atk } **링크 마커**: ${ "
-"arrows }"
+msgid "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link Arrows**: ${ arrows }"
+msgstr "**LINK**: ${ card.link_arrows.length } **공격력**: ${ card.atk } **링크 마커**: ${ arrows }"
 
 #: src\card.ts:346
 #, javascript-format
-msgid ""
-"**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: "
-"${ card.def }"
-msgstr ""
-"**레벨**: ${ Icon.Level } ${ card.level } **공격력**: ${ card.atk } **수비력**: ${ "
-"card.def }"
+msgid "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
+msgstr "**레벨**: ${ Icon.Level } ${ card.level } **공격력**: ${ card.atk } **수비력**: ${ card.def }"
 
 #: src\card.ts:353
 msgid "**Pendulum Scale**: ${ formattedScale }"
@@ -87,61 +71,56 @@ msgstr "발매되지 않았습니다."
 msgid "Placeholder ID: ${ card.fake_password }"
 msgstr "플레이스홀더 ID: ${ card.fake_password }"
 
-#: src\utils.ts:33
+#: src\utils.ts:45
 msgid "🛠️ This command is in development."
 msgstr "🛠️ 이 명령은 개발 중입니다."
 
 #: src\events\message-search.ts:184
-#: src\utils.ts:34
-msgid ""
-"📨 Please send feedback to [our issue "
-"tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support "
-"server](https://discord.gg/4aFuPyuE96)!"
-msgstr ""
-"📨 [문제 추적기](https://github.com/DawnbrandBots/bastion-bot) 또는 [지원 "
-"서버](https://discord.gg/4aFuPyuE96)로 피드백을 보내주십시오!"
+#: src\utils.ts:46
+msgid "📨 Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!"
+msgstr "📨 [문제 추적기](https://github.com/DawnbrandBots/bastion-bot) 또는 [지원 서버](https://discord.gg/4aFuPyuE96)로 피드백을 보내주십시오!"
 
-#: src\utils.ts:45
+#: src\utils.ts:57
 msgid "Please consider supporting us!"
 msgstr "저희를 지원해 주세요!"
 
-#: src\utils.ts:46
+#: src\utils.ts:58
 msgid "Help keep Bastion online!"
 msgstr "Bastion을 온라인 상태로 유지하는 것을 도와 주세요!"
 
-#: src\utils.ts:47
+#: src\utils.ts:59
 msgid "Please help keep Bastion online!"
 msgstr "저희가 Bastion을 온라인 상태로 유지하는 것을 도와 주세요!"
 
-#: src\utils.ts:48
+#: src\utils.ts:60
 msgid "Was Bastion helpful? Consider supporting us!"
 msgstr "Bastion이 도움이 되었나요? 저희를 지원해 주세요!"
 
-#: src\utils.ts:49
+#: src\utils.ts:61
 msgid "Was Bastion helpful? We need your support!"
 msgstr "Bastion이 도움이 되었나요? 여러분의 지원이 필요해요!"
 
-#: src\utils.ts:50
+#: src\utils.ts:62
 msgid "Did you find Bastion useful? Consider supporting us!"
 msgstr "Bastion이 유용하다고 생각했나요? 저희를 지원해 주시는 건 어떤가요?"
 
-#: src\utils.ts:51
+#: src\utils.ts:63
 msgid "Did you find Bastion useful? Help keep it online!"
 msgstr "Bastion이 유용하다고 생각했나요? 온라인 상태로 유지하는 것을 도와 주세요!"
 
-#: src\utils.ts:52
+#: src\utils.ts:64
 msgid "Did you find Bastion useful? We need your support!"
 msgstr "Bastion이 유용하다고 생각했나요? 여러분의 지원이 필요해요!"
 
-#: src\utils.ts:53
+#: src\utils.ts:65
 msgid "Enjoy Bastion? Help keep it online!"
 msgstr "Bastion을 잘 사용하고 계신가요? 온라인 상태로 유지하는 것을 도와 주세요!"
 
-#: src\utils.ts:54
+#: src\utils.ts:66
 msgid "Enjoy Bastion? Consider supporting us!"
 msgstr "Bastion을 잘 사용하고 계신가요? 저희를 지원해 주시는 건 어떤가요?"
 
-#: src\utils.ts:55
+#: src\utils.ts:67
 msgid "Found what you were looking for? Consider supporting us!"
 msgstr "찾으시려던 것을 찾으셨나요? 저희를 지원해 주시는 건 어떤가요?"
 
@@ -190,18 +169,9 @@ msgstr "현재 채널의 로케일 <#${ channel }> 재정의 ${ locale }."
 msgid "Locale for current channel <#${ channel }> reset to server default."
 msgstr "현재 채널의 로케일 <#${ channel }> 서버 기본값으로 재설정됩니다."
 
-#: src\commands\locale.ts:104
-#, javascript-format
-msgid "Server-wide locale override: ${ _guildOverride }"
-msgstr "서버 전체 로케일 재정의 : ${ _guildOverride }"
-
 #: src\commands\locale.ts:109
-msgid ""
-"Sorry, you must have the Manage Channel permission in this channel. If you "
-"think this is an error, contact your server admin or report a bug."
-msgstr ""
-"죄송합니다. 이 작업을 수행하려면 서버 관리 권한이 있어야 합니다. 이 메시지가 잘못 출력되었다면, 서버 관리자에게 문의하시거나 버그를 "
-"신고해 주세요."
+msgid "Sorry, you must have the Manage Channel permission in this channel. If you think this is an error, contact your server admin or report a bug."
+msgstr "죄송합니다. 이 작업을 수행하려면 서버 관리 권한이 있어야 합니다. 이 메시지가 잘못 출력되었다면, 서버 관리자에게 문의하시거나 버그를 신고해 주세요."
 
 #: src\commands\locale.ts:116
 #, javascript-format
@@ -218,30 +188,18 @@ msgid "Server-wide default for community servers is ${ interaction.guildLocale }
 msgstr "커뮤니티 서버의 서버 전체 기본값은 ${ interaction.guildLocale } 입니다."
 
 #: src\commands\locale.ts:124
-msgid ""
-"Sorry, you must have the Manage Server permission to do this. If you think "
-"this is an error, contact your server admin or report a bug."
-msgstr ""
-"죄송합니다. 이 작업을 수행하려면 서버 관리 권한이 있어야 합니다. 이 메시지가 잘못 출력되었다면, 서버 관리자에게 문의하시거나 버그를 "
-"신고해 주세요."
+msgid "Sorry, you must have the Manage Server permission to do this. If you think this is an error, contact your server admin or report a bug."
+msgstr "죄송합니다. 이 작업을 수행하려면 서버 관리 권한이 있어야 합니다. 이 메시지가 잘못 출력되었다면, 서버 관리자에게 문의하시거나 버그를 신고해 주세요."
 
 #: src\commands\locale.ts:131
 #, javascript-format
-msgid ""
-"Locale for this direct message overridden with ${ locale }. Your Discord "
-"setting is ${ interaction.locale }."
-msgstr ""
-"해당 다이렉트 메시지의 로케일이 ${ locale }로 재정의되었습니다. 당신의 디스코드 설정은 ${ interaction.locale "
-"} 입니다."
+msgid "Locale for this direct message overridden with ${ locale }. Your Discord setting is ${ interaction.locale }."
+msgstr "해당 다이렉트 메시지의 로케일이 ${ locale }로 재정의되었습니다. 당신의 디스코드 설정은 ${ interaction.locale } 입니다."
 
 #: src\commands\locale.ts:134
 #, javascript-format
-msgid ""
-"Locale for this direct message reset to Discord default. Your Discord "
-"setting is ${ interaction.locale }."
-msgstr ""
-"해당 다이렉트 메시지의 로케일은 디스코드 기본값으로 초기화됩니다. 당신의 디스코드 설정은 ${ interaction.locale } "
-"입니다."
+msgid "Locale for this direct message reset to Discord default. Your Discord setting is ${ interaction.locale }."
+msgstr "해당 다이렉트 메시지의 로케일은 디스코드 기본값으로 초기화됩니다. 당신의 디스코드 설정은 ${ interaction.locale } 입니다."
 
 #: src\commands\ping.ts:36
 #: src\events\message-ping.ts:43
@@ -254,17 +212,7 @@ msgstr "평균 WebSocket 핑 (새로운 인스턴스): ${ ping } ms"
 msgid "Total latency: ${ latency } ms"
 msgstr "총 지연 시간: ${ latency } ms"
 
-#: src\commands\ygoprodeck.ts:55
-#, javascript-format
-msgid "Searching YGOPRODECK for `${ term }`…"
-msgstr "YGOPRODECK에서 `${ term }`을(를) 검색하는 중…"
-
-#: src\commands\yugipedia.ts:66
-#, javascript-format
-msgid "Searching Yugipedia for `${ page }`…"
-msgstr "Yugipedia에서 `${ page }`을(를) 검색하는 중…"
-
-#: src\commands\yugipedia.ts:69
+#: src\commands\yugipedia.ts:106
 #, javascript-format
 msgid "Could not find a Yugipedia page named `${ page }`."
 msgstr "일치하는 이름을 Yugipedia 페이지에서 찾을 수 없습니다. : `${ page }`."
@@ -300,21 +248,9 @@ msgstr[0] ""
 msgid "Main Deck (continued)"
 msgstr "메인 덱 (계속)"
 
-#: src\commands\deck.ts:298
-#, javascript-format
-msgid "Extra Deck (${ deck.extra.length } card — ${ _countDetail })"
-msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ _countDetail })"
-msgstr[0] ""
-
 #: src\commands\deck.ts:305
 msgid "Extra Deck (continued)"
 msgstr "엑스트라 덱 (계속)"
-
-#: src\commands\deck.ts:312
-#, javascript-format
-msgid "Side Deck (${ deck.side.length } card — ${ _countDetail2 })"
-msgid_plural "Side Deck (${ deck.side.length } cards — ${ _countDetail2 })"
-msgstr[0] ""
 
 #: src\commands\deck.ts:319
 msgid "Side Deck (continued)"
@@ -415,29 +351,18 @@ msgstr "위 링크에서 Bastion 번역을 도와주세요."
 
 #: src\events\message-ping.ts:46
 msgid ""
-"❓ Help documentation on "
-"[GitHub](https://github.com/DawnbrandBots/bastion-bot), or use `.commands` "
-"and `.help`.\n"
+"❓ Help documentation on [GitHub](https://github.com/DawnbrandBots/bastion-bot), or use `.commands` and `.help`.\n"
 "🟢 Licence: [GNU AGPL 3.0+](https://choosealicense.com/licenses/agpl-3.0/).\n"
-"🪧 Bastion Misawa is a character from [Yu-Gi-Oh! "
-"GX](https://yugipedia.com/wiki/Bastion_Misawa).\n"
-"<:PRO:1028300625122963567> Sponsored by "
-"[YGOPRODECK](https://ygoprodeck.com). Prices are YGOPRODECK affiliate "
-"links.\n"
+"🪧 Bastion Misawa is a character from [Yu-Gi-Oh! GX](https://yugipedia.com/wiki/Bastion_Misawa).\n"
+"<:PRO:1028300625122963567> Sponsored by [YGOPRODECK](https://ygoprodeck.com). Prices are YGOPRODECK affiliate links.\n"
 "\n"
-"<:patreon:895892186841890816> Support us [on "
-"Patreon](https://www.patreon.com/alphakretinbots) and help keep the bot "
-"online!\n"
-"<:kofi:927373724959789096> Ko-fi also works for [one-time "
-"donations](https://ko-fi.com/dawnbrandbots).\n"
+"<:patreon:895892186841890816> Support us [on Patreon](https://www.patreon.com/alphakretinbots) and help keep the bot online!\n"
+"<:kofi:927373724959789096> Ko-fi also works for [one-time donations](https://ko-fi.com/dawnbrandbots).\n"
 "\n"
-"🛠️ Improvements are regularly being worked on and rolled out. The new "
-"search experience is here!\n"
-"🤖 New features like Slash Commands are handled by a new bot instance "
-"concurrently with the old bot.\n"
+"🛠️ Improvements are regularly being worked on and rolled out. The new search experience is here!\n"
+"🤖 New features like Slash Commands are handled by a new bot instance concurrently with the old bot.\n"
 "\n"
-"💬 Translations missing? Help translate Bastion on "
-"[GitHub](https://github.com/DawnbrandBots/bastion-bot)."
+"💬 Translations missing? Help translate Bastion on [GitHub](https://github.com/DawnbrandBots/bastion-bot)."
 msgstr ""
 
 #: src\events\message-search.ts:288
@@ -446,18 +371,12 @@ msgstr ""
 
 #: src\events\message-search.ts:186
 #. eslint-disable-next-line prefer-template
-msgid ""
-"📚 [__Learn more about how search "
-"works.__](https://github.com/DawnbrandBots/bastion-bot/blob/master/docs/"
-"card-search.md?utm_source=bastion)"
+msgid "📚 [__Learn more about how search works.__](https://github.com/DawnbrandBots/bastion-bot/blob/master/docs/card-search.md?utm_source=bastion)"
 msgstr ""
 
 #: src\events\message-search.ts:285
 #, javascript-format
-msgid ""
-"Search language: **${ localisedInputLanguage }** (${ inputLanguage }). "
-"Check defaults with </locale get:${ id }> and configure with </locale "
-"set:${ id }>"
+msgid "Search language: **${ localisedInputLanguage }** (${ inputLanguage }). Check defaults with </locale get:${ id }> and configure with </locale set:${ id }>"
 msgstr ""
 
 #: src\events\message-ping.ts:91
@@ -466,13 +385,37 @@ msgstr ""
 
 #: src\events\message-ping.ts:94
 #: src\events\message-search.ts:203
-msgid ""
-"Please have a server administrator [fix "
-"this](https://github.com/DawnbrandBots/bastion-bot#discord-permissions)."
+msgid "Please have a server administrator [fix this](https://github.com/DawnbrandBots/bastion-bot#discord-permissions)."
 msgstr ""
 
 #: src\events\message-search.ts:200
 msgid "⚠️ I am missing permissions in the channel!"
+msgstr ""
+
+#: src\commands\deck.ts:298
+#, javascript-format
+msgid "Extra Deck (${ deck.extra.length } card — ${ countDetail })"
+msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ countDetail })"
+msgstr[0] ""
+
+#: src\commands\deck.ts:312
+#, javascript-format
+msgid "Side Deck (${ deck.side.length } card — ${ countDetail })"
+msgid_plural "Side Deck (${ deck.side.length } cards — ${ countDetail })"
+msgstr[0] ""
+
+#: src\commands\locale.ts:104
+#, javascript-format
+msgid "Server-wide locale override: ${ guildOverride }"
+msgstr "서버 전체 로케일 재정의 : ${ guildOverride }"
+
+#: src\commands\ygoprodeck.ts:104
+#, javascript-format
+msgid "Something went wrong searching YGOPRODECK for `${ searchTerm }`."
+msgstr ""
+
+#: src\commands\yugipedia.ts:110
+msgid "Something went wrong searching Yugipedia for `${ page }`."
 msgstr ""
 
 #: src\card.ts:37
@@ -789,12 +732,12 @@ msgctxt "command-option"
 msgid "input"
 msgstr "입력"
 
-#: src\commands\ygoprodeck.ts:29
+#: src\commands\ygoprodeck.ts:38
 msgctxt "command-option"
 msgid "term"
 msgstr "용어"
 
-#: src\commands\yugipedia.ts:29
+#: src\commands\yugipedia.ts:38
 msgctxt "command-option"
 msgid "page"
 msgstr "페이지"
@@ -886,12 +829,7 @@ msgctxt "command-option-description"
 msgid "The language to search in, defaulting to the result language."
 msgstr "검색할 언어로, 기본적으로 출력 언어로 설정됩니다."
 
-#: src\commands\ygoprodeck.ts:30
-msgctxt "command-option-description"
-msgid "The name or password of the card you're looking for."
-msgstr "찾으시는 카드의 이름 또는 패스워드입니다."
-
-#: src\commands\yugipedia.ts:30
+#: src\commands\yugipedia.ts:39
 msgctxt "command-option-description"
 msgid "The name of the Yugipedia page you want to search for."
 msgstr "검색할 Yugipedia 페이지의 이름입니다."
@@ -923,16 +861,12 @@ msgstr "보려는 덱의 ydk 파일입니다."
 
 #: src\commands\deck.ts:149
 msgctxt "command-option-description"
-msgid ""
-"Whether to display the deck details publicly in chat. This is false by "
-"default."
+msgid "Whether to display the deck details publicly in chat. This is false by default."
 msgstr "대화에서 덱 세부 정보를 공개적으로 표시할지 여부입니다.이것은 기본적으로 거짓입니다."
 
 #: src\commands\deck.ts:156
 msgctxt "command-option-description"
-msgid ""
-"Whether to display the deck sections as one stacked column. This is false "
-"(side-by-side) by default."
+msgid "Whether to display the deck sections as one stacked column. This is false (side-by-side) by default."
 msgstr ""
 
 #: src\commands\art.ts:32
@@ -1026,6 +960,11 @@ msgctxt "command-option-description"
 msgid "The vendor to fetch the price data from."
 msgstr "가격 데이터를 가져올 업체입니다."
 
+#: src\commands\ygoprodeck.ts:39
+msgctxt "command-option-description"
+msgid "The English name of the card you're looking for."
+msgstr ""
+
 #: src\commands\art.ts:26
 msgctxt "command-name"
 msgid "art"
@@ -1036,12 +975,12 @@ msgctxt "command-name"
 msgid "ping"
 msgstr "핑"
 
-#: src\commands\ygoprodeck.ts:24
+#: src\commands\ygoprodeck.ts:33
 msgctxt "command-name"
 msgid "ygoprodeck"
 msgstr ""
 
-#: src\commands\yugipedia.ts:24
+#: src\commands\yugipedia.ts:33
 msgctxt "command-name"
 msgid "yugipedia"
 msgstr ""
@@ -1086,12 +1025,12 @@ msgctxt "command-description"
 msgid "Test latency to the new bot instance."
 msgstr "새로운 봇 인스턴스의 지연 시간을 테스트합니다."
 
-#: src\commands\ygoprodeck.ts:25
+#: src\commands\ygoprodeck.ts:34
 msgctxt "command-description"
 msgid "Search the YGOPRODECK card database."
 msgstr "YGOPRODECK 카드 데이터베이스에서 검색합니다."
 
-#: src\commands\yugipedia.ts:25
+#: src\commands\yugipedia.ts:34
 msgctxt "command-description"
 msgid "Search the Yugipedia wiki for a page and link to it."
 msgstr "Yugipedia에서 검색하고 링크를 출력합니다."
@@ -1103,9 +1042,7 @@ msgstr "슬래시 명령에 도움을 받으십시오."
 
 #: src\commands\deck.ts:118
 msgctxt "command-description"
-msgid ""
-"Display a deck list from ydke:// or .ydk format, exported from a number of "
-"deck building programs."
+msgid "Display a deck list from ydke:// or .ydk format, exported from a number of deck building programs."
 msgstr "여러 덱 제작 프로그램에서 내보낸 덱 목록을ydke:// 또는 .ydk 형식으로 표시합니다."
 
 #: src\commands\search.ts:30

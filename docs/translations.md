@@ -44,7 +44,7 @@ translated in the program code, run the following command. This should be rerun 
 are new translations that are needed. It will not overwrite existing translations.
 
 ```bash
-yarn ttag update translations/LOCALE.po src/{,**/*}*.ts
+yarn ttag update --foldLength 0 translations/LOCALE.po src/{,**/*}*.ts
 ```
 
 Note: the babel configurations in `package.json` are not strictly necessary but suppress a lot of
@@ -53,7 +53,7 @@ warnings from these commands due to our use of newer language features.
 To update all translation files at once after a code change:
 
 ```bash
-find translations -type f -name '*.po' -exec yarn ttag update {} src/{,**/*}*.ts \;
+find translations -type f -name '*.po' -exec yarn ttag update --foldLength 0 {} src/{,**/*}*.ts \;
 ```
 
 A bug causes ttag to add `msgstr[1] ""`, even for locales without plural forms, as specified by
