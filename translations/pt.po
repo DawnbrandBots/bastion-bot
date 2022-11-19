@@ -6,67 +6,72 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src\card.ts:271
+#: src\card.ts:272
+#: src\commands\rush-duel.ts:45
 msgid "🔗 Links"
 msgstr ""
 
-#: src\card.ts:272
+#: src\card.ts:273
 #, javascript-format
 msgid "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr "[Database oficial da Konami](${ official }) | [Regras no OCG](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
-#: src\card.ts:275
+#: src\card.ts:276
 #, javascript-format
 msgid "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
 
-#: src\card.ts:335
+#: src\card.ts:336
+#: src\commands\rush-duel.ts:91
 #, javascript-format
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 msgstr "**Tipo**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:337
+#: src\card.ts:338
+#: src\commands\rush-duel.ts:93
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 msgstr "**Atributo**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
-#: src\card.ts:341
+#: src\card.ts:342
 msgid "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 msgstr "**Classe**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 
-#: src\card.ts:344
+#: src\card.ts:345
 #, javascript-format
 msgid "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link Arrows**: ${ arrows }"
 msgstr "**Valor Link**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link Flechas Link**: ${ arrows }"
 
-#: src\card.ts:346
+#: src\card.ts:347
+#: src\commands\rush-duel.ts:95
 #, javascript-format
 msgid "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 msgstr "**Nível**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 
-#: src\card.ts:353
+#: src\card.ts:354
 msgid "**Pendulum Scale**: ${ formattedScale }"
 msgstr "**Escala Pêndulo**: ${ formattedScale }"
 
-#: src\card.ts:239
+#: src\card.ts:240
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
 msgstr "Senha: ${ card.password } | Konami ID #${ card.konami_id }"
 
-#: src\card.ts:241
+#: src\card.ts:242
 msgid "No password | Konami ID #${ card.konami_id }"
 msgstr ""
 
-#: src\card.ts:243
+#: src\card.ts:244
 #, javascript-format
 msgid "Password: ${ card.password } | Not yet released"
 msgstr "Senha: ${ card.password } | Not yet released"
 
-#: src\card.ts:245
+#: src\card.ts:246
+#: src\commands\rush-duel.ts:145
 msgid "Not yet released"
 msgstr ""
 
-#: src\card.ts:249
+#: src\card.ts:250
 #, javascript-format
 msgid "Placeholder ID: ${ card.fake_password }"
 msgstr ""
@@ -126,6 +131,8 @@ msgstr "Você encontrou o que procurava? Considere nos apoiar!"
 
 #: src\commands\art.ts:97
 #: src\commands\price.ts:148
+#: src\commands\rush-duel.ts:279
+#: src\commands\rush-duel.ts:303
 #: src\commands\search.ts:89
 #: src\events\message-search.ts:290
 #, javascript-format
@@ -285,7 +292,7 @@ msgstr ""
 msgid "ydke URL"
 msgstr ""
 
-#: src\card.ts:309
+#: src\card.ts:310
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 msgid "**Limit**: ${ limitRegulationDisplay }"
 msgstr ""
@@ -424,296 +431,342 @@ msgstr ""
 msgid "Something went wrong searching Yugipedia for `${ page }`."
 msgstr ""
 
-#: src\card.ts:37
+#: src\commands\rush-duel.ts:46
+#, javascript-format
+msgid "[Official Konami DB](${ official }) | [Rulings (Japanese)](${ rulings }) | [Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
+msgstr "[Database oficial da Konami](${ official }) | [Regras no OCG](${ rulings }) | [Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
+
+#: src\commands\rush-duel.ts:49
+#, javascript-format
+msgid "[Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
+msgstr ""
+
+#: src\commands\rush-duel.ts:63
+msgid "__**LEGEND**__"
+msgstr ""
+
+#: src\commands\rush-duel.ts:98
+msgid "**MAXIMUM ATK**: ${ card.maximum_atk }"
+msgstr ""
+
+#: src\commands\rush-duel.ts:145
+#, javascript-format
+msgid "Konami ID #${ card.konami_id }"
+msgstr ""
+
+#: src\card.ts:38
 msgctxt "monster-type-race"
 msgid "Normal"
 msgstr "Normal"
 
-#: src\card.ts:38
+#: src\card.ts:39
 msgctxt "monster-type-race"
 msgid "Effect"
 msgstr "Efeito"
 
-#: src\card.ts:39
+#: src\card.ts:40
 msgctxt "monster-type-race"
 msgid "Pendulum"
 msgstr "Pêndulo"
 
-#: src\card.ts:40
+#: src\card.ts:41
 msgctxt "monster-type-race"
 msgid "Ritual"
 msgstr "Ritual"
 
-#: src\card.ts:41
+#: src\card.ts:42
 msgctxt "monster-type-race"
 msgid "Fusion"
 msgstr "Fusão"
 
-#: src\card.ts:42
+#: src\card.ts:43
 msgctxt "monster-type-race"
 msgid "Synchro"
 msgstr "Sincro"
 
-#: src\card.ts:43
+#: src\card.ts:44
 msgctxt "monster-type-race"
 msgid "Xyz"
 msgstr "Xyz"
 
-#: src\card.ts:44
+#: src\card.ts:45
 msgctxt "monster-type-race"
 msgid "Link"
 msgstr "Link"
 
-#: src\card.ts:45
+#: src\card.ts:46
 msgctxt "monster-type-race"
 msgid "Tuner"
 msgstr "Regulador"
 
-#: src\card.ts:46
+#: src\card.ts:47
 msgctxt "monster-type-race"
 msgid "Flip"
 msgstr "Virar"
 
-#: src\card.ts:47
+#: src\card.ts:48
 msgctxt "monster-type-race"
 msgid "Toon"
 msgstr "Toon"
 
-#: src\card.ts:48
+#: src\card.ts:49
 msgctxt "monster-type-race"
 msgid "Spirit"
 msgstr "Espírito"
 
-#: src\card.ts:49
+#: src\card.ts:50
 msgctxt "monster-type-race"
 msgid "Union"
 msgstr "União"
 
-#: src\card.ts:50
+#: src\card.ts:51
 msgctxt "monster-type-race"
 msgid "Gemini"
 msgstr "Gêmeo"
 
-#: src\card.ts:65
+#: src\card.ts:66
 msgctxt "monster-type-race"
 msgid "Warrior"
 msgstr "Guerreiro"
 
-#: src\card.ts:66
+#: src\card.ts:67
 msgctxt "monster-type-race"
 msgid "Spellcaster"
 msgstr "Mago"
 
-#: src\card.ts:67
+#: src\card.ts:68
 msgctxt "monster-type-race"
 msgid "Fairy"
 msgstr "Fada"
 
-#: src\card.ts:68
+#: src\card.ts:69
 msgctxt "monster-type-race"
 msgid "Fiend"
 msgstr "Demônio"
 
-#: src\card.ts:69
+#: src\card.ts:70
 msgctxt "monster-type-race"
 msgid "Zombie"
 msgstr "Zumbi"
 
-#: src\card.ts:70
+#: src\card.ts:71
 msgctxt "monster-type-race"
 msgid "Machine"
 msgstr "Máquina"
 
-#: src\card.ts:71
+#: src\card.ts:72
 msgctxt "monster-type-race"
 msgid "Aqua"
 msgstr "Aqua"
 
-#: src\card.ts:72
+#: src\card.ts:73
 msgctxt "monster-type-race"
 msgid "Pyro"
 msgstr "Piro"
 
-#: src\card.ts:73
+#: src\card.ts:74
 msgctxt "monster-type-race"
 msgid "Rock"
 msgstr "Rocha"
 
-#: src\card.ts:74
+#: src\card.ts:75
 msgctxt "monster-type-race"
 msgid "Winged Beast"
 msgstr "Fera Alada"
 
-#: src\card.ts:75
+#: src\card.ts:76
 msgctxt "monster-type-race"
 msgid "Plant"
 msgstr "Planta"
 
-#: src\card.ts:76
+#: src\card.ts:77
 msgctxt "monster-type-race"
 msgid "Insect"
 msgstr "Inseto"
 
-#: src\card.ts:77
+#: src\card.ts:78
 msgctxt "monster-type-race"
 msgid "Thunder"
 msgstr "Trovão"
 
-#: src\card.ts:78
+#: src\card.ts:79
 msgctxt "monster-type-race"
 msgid "Dragon"
 msgstr ""
 
-#: src\card.ts:79
+#: src\card.ts:80
 msgctxt "monster-type-race"
 msgid "Beast"
 msgstr "Fera"
 
-#: src\card.ts:80
+#: src\card.ts:81
 msgctxt "monster-type-race"
 msgid "Beast-Warrior"
 msgstr "Fera Guerreira"
 
-#: src\card.ts:81
+#: src\card.ts:82
 msgctxt "monster-type-race"
 msgid "Dinosaur"
 msgstr "Dinossauro"
 
-#: src\card.ts:82
+#: src\card.ts:83
 msgctxt "monster-type-race"
 msgid "Fish"
 msgstr "Peixe"
 
-#: src\card.ts:83
+#: src\card.ts:84
 msgctxt "monster-type-race"
 msgid "Sea Serpent"
 msgstr "Serpente Marinha"
 
-#: src\card.ts:84
+#: src\card.ts:85
 msgctxt "monster-type-race"
 msgid "Reptile"
 msgstr "Réptil"
 
-#: src\card.ts:85
+#: src\card.ts:86
 msgctxt "monster-type-race"
 msgid "Psychic"
 msgstr "Psíquico"
 
-#: src\card.ts:86
+#: src\card.ts:87
 msgctxt "monster-type-race"
 msgid "Divine-Beast"
 msgstr "Fera Divina"
 
-#: src\card.ts:87
+#: src\card.ts:88
 msgctxt "monster-type-race"
 msgid "Creator God"
 msgstr "Deus Creator"
 
-#: src\card.ts:88
+#: src\card.ts:89
 msgctxt "monster-type-race"
 msgid "Wyrm"
 msgstr "Wyrm"
 
-#: src\card.ts:89
+#: src\card.ts:90
 msgctxt "monster-type-race"
 msgid "Cyberse"
 msgstr "Ciberso"
 
-#: src\card.ts:51
+#: src\card.ts:52
 msgctxt "spell-trap-property"
 msgid "Normal Spell"
 msgstr "Mágia Normal"
 
-#: src\card.ts:52
+#: src\card.ts:53
 msgctxt "spell-trap-property"
 msgid "Continuous Spell"
 msgstr "Magia Contínua"
 
-#: src\card.ts:53
+#: src\card.ts:54
 msgctxt "spell-trap-property"
 msgid "Equip Spell"
 msgstr "Magia de Equipamento"
 
-#: src\card.ts:54
+#: src\card.ts:55
 msgctxt "spell-trap-property"
 msgid "Quick-Play Spell"
 msgstr "Magia Rápida"
 
-#: src\card.ts:55
+#: src\card.ts:56
 msgctxt "spell-trap-property"
 msgid "Field Spell"
 msgstr "Campo Mágico"
 
-#: src\card.ts:56
+#: src\card.ts:57
 msgctxt "spell-trap-property"
 msgid "Ritual Spell"
 msgstr "Magia de Ritual"
 
-#: src\card.ts:57
+#: src\card.ts:58
 msgctxt "spell-trap-property"
 msgid "Normal Trap"
 msgstr "Armadilha Normal"
 
-#: src\card.ts:58
+#: src\card.ts:59
 msgctxt "spell-trap-property"
 msgid "Continuous Trap"
 msgstr "Armadilha Contínua"
 
-#: src\card.ts:59
+#: src\card.ts:60
 msgctxt "spell-trap-property"
 msgid "Counter Trap"
 msgstr "Armadilha de Contra-Ataque"
 
-#: src\card.ts:95
+#: src\card.ts:96
 msgctxt "attribute"
 msgid "EARTH"
 msgstr "TERRA"
 
-#: src\card.ts:96
+#: src\card.ts:97
 msgctxt "attribute"
 msgid "WATER"
 msgstr "ÁGUA"
 
-#: src\card.ts:97
+#: src\card.ts:98
 msgctxt "attribute"
 msgid "FIRE"
 msgstr "FOGO"
 
-#: src\card.ts:98
+#: src\card.ts:99
 msgctxt "attribute"
 msgid "WIND"
 msgstr "VENTO"
 
-#: src\card.ts:99
+#: src\card.ts:100
 msgctxt "attribute"
 msgid "LIGHT"
 msgstr "LUZ"
 
-#: src\card.ts:100
+#: src\card.ts:101
 msgctxt "attribute"
 msgid "DARK"
 msgstr "TREVAS"
 
-#: src\card.ts:101
+#: src\card.ts:102
 msgctxt "attribute"
 msgid "DIVINE"
 msgstr "DIVINO"
 
-#: src\card.ts:359
-#: src\card.ts:370
+#: src\card.ts:360
+#: src\card.ts:371
+#: src\commands\rush-duel.ts:126
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "Texto da carta"
 
-#: src\card.ts:364
+#: src\card.ts:365
 msgctxt "card-embed"
 msgid "Pendulum Effect"
 msgstr "Efeito Pêndulo"
 
-#: src\card.ts:385
+#: src\card.ts:386
 msgctxt "card-embed"
 msgid "Card Effect"
 msgstr "Efeito da Carta"
+
+#: src\commands\rush-duel.ts:117
+#: src\commands\rush-duel.ts:138
+msgctxt "card-embed"
+msgid "[REQUIREMENT]"
+msgstr ""
+
+#: src\commands\rush-duel.ts:118
+#: src\commands\rush-duel.ts:139
+msgctxt "card-embed"
+msgid "[EFFECT]"
+msgstr ""
+
+#: src\commands\rush-duel.ts:120
+msgctxt "card-embed"
+msgid "[CONTINUOUS EFFECT]"
+msgstr ""
+
+#: src\commands\rush-duel.ts:122
+msgctxt "card-embed"
+msgid "[MULTI-CHOICE EFFECT]"
+msgstr ""
 
 #: src\locale.ts:48
 msgctxt "command-option"
@@ -731,6 +784,8 @@ msgstr "idioma-de-entrada"
 #: src\commands\price.ts:64
 #: src\commands\price.ts:74
 #: src\commands\price.ts:86
+#: src\commands\rush-duel.ts:178
+#: src\commands\rush-duel.ts:190
 #: src\commands\search.ts:39
 #: src\commands\search.ts:49
 #: src\commands\search.ts:61
@@ -795,6 +850,7 @@ msgstr ""
 
 #: src\commands\art.ts:53
 #: src\commands\price.ts:81
+#: src\commands\rush-duel.ts:183
 #: src\commands\search.ts:56
 msgctxt "command-option"
 msgid "konami-id"
@@ -823,6 +879,16 @@ msgstr ""
 #: src\commands\price.ts:91
 msgctxt "command-option"
 msgid "vendor"
+msgstr ""
+
+#: src\commands\rush-duel.ts:173
+msgctxt "command-option"
+msgid "search"
+msgstr ""
+
+#: src\commands\rush-duel.ts:195
+msgctxt "command-option"
+msgid "random"
 msgstr ""
 
 #: src\locale.ts:51
@@ -882,6 +948,7 @@ msgstr ""
 
 #: src\commands\art.ts:37
 #: src\commands\price.ts:65
+#: src\commands\rush-duel.ts:179
 #: src\commands\search.ts:40
 msgctxt "command-option-description"
 msgid "Card name, fuzzy matching supported."
@@ -906,6 +973,7 @@ msgstr ""
 
 #: src\commands\art.ts:59
 #: src\commands\price.ts:87
+#: src\commands\rush-duel.ts:191
 #: src\commands\search.ts:62
 msgctxt "command-option-description"
 msgid "Konami's official card database identifier."
@@ -971,6 +1039,21 @@ msgctxt "command-option-description"
 msgid "The English name of the card you're looking for."
 msgstr ""
 
+#: src\commands\rush-duel.ts:174
+msgctxt "command-option-description"
+msgid "Find all information for the Rush Duel card with this name."
+msgstr ""
+
+#: src\commands\rush-duel.ts:185
+msgctxt "command-option-description"
+msgid "Find all information for the Rush Duel card with this official database ID."
+msgstr ""
+
+#: src\commands\rush-duel.ts:196
+msgctxt "command-option-description"
+msgid "Get a random Rush Duel card."
+msgstr ""
+
 #: src\commands\art.ts:26
 msgctxt "command-name"
 msgid "art"
@@ -1021,6 +1104,11 @@ msgctxt "command-name"
 msgid "price"
 msgstr ""
 
+#: src\commands\rush-duel.ts:168
+msgctxt "command-name"
+msgid "rush-duel"
+msgstr ""
+
 #: src\commands\art.ts:27
 msgctxt "command-description"
 msgid "Display the art for a card!"
@@ -1069,6 +1157,11 @@ msgstr ""
 #: src\commands\price.ts:55
 msgctxt "command-description"
 msgid "Display the price for a card!"
+msgstr ""
+
+#: src\commands\rush-duel.ts:169
+msgctxt "command-description"
+msgid "Find information on Rush Duel cards."
 msgstr ""
 
 #: src\commands\locale.ts:43
