@@ -4,6 +4,7 @@ import { parseDocument } from "htmlparser2";
 import fetch from "node-fetch";
 import { c, t, useLocale } from "ttag";
 import { CardSchema, LimitRegulation } from "./definitions";
+import { RushCardSchema } from "./definitions/rush";
 import { Locale } from "./locale";
 
 /**
@@ -20,7 +21,7 @@ import { Locale } from "./locale";
  */
 const rc = c;
 
-const Colour = {
+export const Colour = {
 	Token: 0x8d8693,
 	Spell: 0x1d9e74,
 	Trap: 0xbc5a84,
@@ -61,7 +62,7 @@ c("spell-trap-property").t`Counter Trap`;
 // Guarantee default locale at import time since the resulting strings matter.
 useLocale("en");
 
-const RaceIcon = {
+export const RaceIcon = {
 	[c("monster-type-race").t`Warrior`]: "<:Warrior:602707927224025118>",
 	[c("monster-type-race").t`Spellcaster`]: "<:Spellcaster:602707926834085888>",
 	[c("monster-type-race").t`Fairy`]: "<:Fairy:602707926200614912>",
@@ -91,7 +92,7 @@ const RaceIcon = {
 	//Charisma: "<:Charisma:602707891530629130>"
 };
 
-const AttributeIcon = {
+export const AttributeIcon = {
 	[c("attribute").t`EARTH`]: "<:EARTH:602707925726658570>",
 	[c("attribute").t`WATER`]: "<:WATER:602707927341596691>",
 	[c("attribute").t`FIRE`]: "<:FIRE:602707928255954963>",
@@ -102,7 +103,7 @@ const AttributeIcon = {
 	//LAUGH: "<:LAUGH:602719132567207938>"
 };
 
-const Icon = {
+export const Icon = {
 	Spell: "<:SPELL:623021653580054538>",
 	Trap: "<:TRAP:623021653810741258> ",
 	// Property icons of Spells/Traps
@@ -195,7 +196,7 @@ export function parseAndExpandRuby(html: string): [string, string] {
 	return [rubyless, rubyonly];
 }
 
-function formatCardName(card: Static<typeof CardSchema>, lang: Locale): string {
+export function formatCardName(card: Static<typeof CardSchema> | Static<typeof RushCardSchema>, lang: Locale): string {
 	const name = card.name[lang]; // TypeScript cannot narrow typing on this without the variable
 	if ((lang === "ja" || lang === "ko") && name?.includes("<ruby>")) {
 		const [rubyless, rubyonly] = parseAndExpandRuby(name);
@@ -218,7 +219,7 @@ function formatOCGNumbering(text: string): string {
 	// - Number 86
 }
 
-function formatCardText(text: Static<typeof CardSchema>["text"], lang: Locale): string {
+export function formatCardText(text: Static<typeof CardSchema>["text"], lang: Locale): string {
 	// Discord cannot take just a blank or spaces, but this zero-width space works
 	if (lang === "ja" || lang === "ko" || lang === "zh-CN" || lang === "zh-TW") {
 		let str = text[lang]; // TypeScript cannot narrow typing on this without the variable
