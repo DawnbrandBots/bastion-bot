@@ -23,7 +23,7 @@
 	"dependencies": {
 		"@sinclair/typebox": "^0.25.10",
 		"basic-ftp": "^5.0.2",
-		"better-sqlite3": "^7.6.2",
+		"better-sqlite3": "^8.0.0",
 		"debug": "^4.3.4",
 		"discord-markdown": "2.5.1",
 		"discord.js": "^14.6.0",
