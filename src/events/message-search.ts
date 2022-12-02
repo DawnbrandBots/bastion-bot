@@ -241,7 +241,8 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 	}
 
 	async run(message: Message): Promise<void> {
-		if (message.author.bot) {
+		// ignore system messages as we cannot reply to them
+		if (message.author.bot || message.system) {
 			return;
 		}
 		// Deactivate new functionality in select servers
