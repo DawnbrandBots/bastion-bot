@@ -118,7 +118,7 @@ export function preprocess(
  * 00010000,ja
  */
 const NUMERIC_REGEX = new RegExp(
-	/^(?<kid>%)?\s*(?<number>\d+)\s*(?:,(?<lang>LOCALES))?$/
+	/^(?<kid>%)?\s*(?<number>\d{4,})\s*(?:,(?<lang>LOCALES))?$/
 		.toString()
 		.slice(1, -1)
 		.replace("LOCALES", LOCALES.join("|"))
