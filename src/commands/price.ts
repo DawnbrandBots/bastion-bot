@@ -107,9 +107,12 @@ export class PriceCommand extends Command {
 
 	// TODO: i18n
 	private vendorFormats = {
-		tcgplayer: (price: number): string => `$${price.toFixed(2)}`,
-		cardmarket: (price: number): string => `€${price.toFixed(2)}`,
-		coolstuffinc: (price: number): string => `$${price.toFixed(2)}`
+		tcgplayer: (locale: string): Intl.NumberFormat =>
+			Intl.NumberFormat(locale, { style: "currency", currency: "USD" }),
+		cardmarket: (locale: string): Intl.NumberFormat =>
+			Intl.NumberFormat(locale, { style: "currency", currency: "EUR" }),
+		coolstuffinc: (locale: string): Intl.NumberFormat =>
+			Intl.NumberFormat(locale, { style: "currency", currency: "USD" })
 	};
 
 	async getPrice(card: Static<typeof CardSchema>, vendor: string): Promise<APIPrice | undefined> {
@@ -132,6 +135,19 @@ export class PriceCommand extends Command {
 		}
 		throw new Error((await response.json()).message);
 	}
+
+	private priceLocales = {
+		en: "en-US", // since the price is in USD, en-US makes the most sense for this application regardless of other considerations
+		es: "es-ES",
+		fr: "fr-FR",
+		de: "de-DE",
+		it: "it-IT",
+		pt: "pt-BR", // i believe our pt translations come from br. yugioh is in both br and pt markets though.
+		ja: "ja-JP",
+		ko: "ko-KR",
+		"zh-CN": "zh-CN",
+		"zh-TW": "zh-TW"
+	};
 
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const type = interaction.options.getSubcommand(true) as CardLookupType;
@@ -156,7 +172,10 @@ export class PriceCommand extends Command {
 					prices.set_info
 						.map(s => {
 							const rarity = s.rarity ? ` (${s.rarity})` : s.rarity_short ? ` ${s.rarity_short}` : "";
-							const price = s.price !== null ? this.vendorFormats[vendor](s.price) : t`No market price`;
+							const price =
+								s.price !== null
+									? this.vendorFormats[vendor](this.priceLocales[resultLanguage]).format(s.price)
+									: t`No market price`;
 							return `[${s.set}](${s.url})${rarity}: ${price}`;
 						})
 						.join("\n"),
