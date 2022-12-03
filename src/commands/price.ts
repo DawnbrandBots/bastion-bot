@@ -105,11 +105,11 @@ export class PriceCommand extends Command {
 		return this.#logger;
 	}
 
-	// TODO: i18n
-	private vendorFormats = {
-		tcgplayer: (price: number): string => `$${price.toFixed(2)}`,
-		cardmarket: (price: number): string => `€${price.toFixed(2)}`,
-		coolstuffinc: (price: number): string => `$${price.toFixed(2)}`
+	// specify Record type to avoid repeating type information on each property
+	private vendorFormats: Record<vendorId, (locale: Locale) => Intl.NumberFormat> = {
+		tcgplayer: locale => Intl.NumberFormat(locale, { style: "currency", currency: "USD" }),
+		cardmarket: locale => Intl.NumberFormat(locale, { style: "currency", currency: "EUR" }),
+		coolstuffinc: locale => Intl.NumberFormat(locale, { style: "currency", currency: "USD" })
 	};
 
 	async getPrice(card: Static<typeof CardSchema>, vendor: string): Promise<APIPrice | undefined> {
@@ -156,7 +156,10 @@ export class PriceCommand extends Command {
 					prices.set_info
 						.map(s => {
 							const rarity = s.rarity ? ` (${s.rarity})` : s.rarity_short ? ` ${s.rarity_short}` : "";
-							const price = s.price !== null ? this.vendorFormats[vendor](s.price) : t`No market price`;
+							const price =
+								s.price !== null
+									? this.vendorFormats[vendor](resultLanguage).format(s.price)
+									: t`No market price`;
 							return `[${s.set}](${s.url})${rarity}: ${price}`;
 						})
 						.join("\n"),
