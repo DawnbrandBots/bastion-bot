@@ -26,7 +26,7 @@ export class PingMessageListener implements Listener<"messageCreate"> {
 	}
 
 	async run(message: Message): Promise<void> {
-		if (message.author.bot || message.reference) {
+		if (message.author.bot || message.reference || message.system) {
 			return;
 		}
 		if (
