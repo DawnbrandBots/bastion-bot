@@ -106,7 +106,7 @@ export class PriceCommand extends Command {
 	}
 
 	// specify Record type to avoid repeating type information on each property
-	private vendorFormats: Record<string, (locale: Locale) => Intl.NumberFormat> = {
+	private vendorFormats: Record<vendorId, (locale: Locale) => Intl.NumberFormat> = {
 		tcgplayer: locale => Intl.NumberFormat(locale, { style: "currency", currency: "USD" }),
 		cardmarket: locale => Intl.NumberFormat(locale, { style: "currency", currency: "EUR" }),
 		coolstuffinc: locale => Intl.NumberFormat(locale, { style: "currency", currency: "USD" })
