@@ -445,8 +445,15 @@ export class DeckCommand extends Command {
 
 		const filter = (i: ButtonInteraction): boolean => {
 			this.logger.info(serialiseInteraction(interaction), `click: ${i.user.id}`);
-			// only allow the OP to click
-			return i.user.id === interaction.user.id;
+			if (i.user.id === interaction.user.id) {
+				return true;
+			}
+			useLocale(resultLanguage);
+			i.reply({
+				content: t`Buttons can only be used by the user who called Bastion.`,
+				ephemeral: true
+			});
+			return false;
 		};
 
 		// we don't await this promise, we set up the callback and then let the method complete

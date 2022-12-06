@@ -406,7 +406,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 		const url = videoGameIllustrationURL(card);
 		const hasVideoGameIllustration = await this.checkYugipediaRedirect(url, interaction);
 		const switcher = new ArtSwitcher(card.images, hasVideoGameIllustration ? url : null);
-		const reply = await switcher.reply(interaction);
+		const reply = await switcher.reply(interaction, resultLanguage);
 		return replyLatency(reply, interaction);
 	}
 }
@@ -476,12 +476,19 @@ class ArtSwitcher {
 		this.labelButton.setLabel(this.label);
 	}
 
-	async reply(parentInteraction: ChatInputCommandInteraction): Promise<Message> {
+	async reply(parentInteraction: ChatInputCommandInteraction, resultLanguage: Locale): Promise<Message> {
 		const reply = await parentInteraction.reply({ ...this.replyOptions, fetchReply: true });
 		const filter = (childInteraction: ButtonInteraction): boolean => {
 			this.logger.info(serialiseInteraction(parentInteraction), `click: ${childInteraction.user.id}`);
-			// only allow the OP to click
-			return childInteraction.user.id === parentInteraction.user.id;
+			if (childInteraction.user.id === parentInteraction.user.id) {
+				return true;
+			}
+			useLocale(resultLanguage);
+			childInteraction.reply({
+				content: t`Buttons can only be used by the user who called Bastion.`,
+				ephemeral: true
+			});
+			return false;
 		};
 		// Set up the button handler (don't await) and return the initial reply
 		const awaitOptions = { filter, componentType: ComponentType.Button, time: 60000 } as const;
