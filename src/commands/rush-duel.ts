@@ -484,10 +484,12 @@ class ArtSwitcher {
 				return true;
 			}
 			useLocale(resultLanguage);
-			childInteraction.reply({
-				content: t`Buttons can only be used by the user who called Bastion.`,
-				ephemeral: true
-			});
+			childInteraction
+				.reply({
+					content: t`Buttons can only be used by the user who called Bastion.`,
+					ephemeral: true
+				})
+				.catch(e => this.logger.error(serialiseInteraction(parentInteraction), e));
 			return false;
 		};
 		// Set up the button handler (don't await) and return the initial reply

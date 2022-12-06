@@ -452,7 +452,7 @@ export class DeckCommand extends Command {
 			i.reply({
 				content: t`Buttons can only be used by the user who called Bastion.`,
 				ephemeral: true
-			});
+			}).catch(e => this.logger.error(serialiseInteraction(interaction), e));
 			return false;
 		};
 
