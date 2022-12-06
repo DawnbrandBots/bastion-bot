@@ -2,6 +2,7 @@ import { Static } from "@sinclair/typebox";
 import {
 	ActionRowBuilder,
 	AutocompleteInteraction,
+	BaseMessageOptions,
 	ButtonBuilder,
 	ButtonInteraction,
 	ButtonStyle,
@@ -10,6 +11,7 @@ import {
 	DiscordAPIError,
 	DiscordjsErrorCodes,
 	EmbedBuilder,
+	Message,
 	RESTPostAPIApplicationCommandsJSONBody,
 	SlashCommandBuilder,
 	SlashCommandIntegerOption,
@@ -287,7 +289,9 @@ export class RushDuelCommand extends AutocompletableCommand {
 		}
 	}
 
-	private async subcommandSearch(interaction: ChatInputCommandInteraction): Promise<number> {
+	private async searchCardNameWithCache(
+		interaction: ChatInputCommandInteraction
+	): Promise<number | { input: string; resultLanguage: Locale; card: Static<typeof RushCardSchema> }> {
 		const input = interaction.options.getString("input", true);
 		const resultLanguage = await this.locales.get(interaction);
 		const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
@@ -310,6 +314,15 @@ export class RushDuelCommand extends AutocompletableCommand {
 			card = response[0];
 			this.#logger.info(serialiseInteraction(interaction, { input, latency, response: card.yugipedia_page_id }));
 		}
+		return { input, resultLanguage, card };
+	}
+
+	private async subcommandSearch(interaction: ChatInputCommandInteraction): Promise<number> {
+		const result = await this.searchCardNameWithCache(interaction);
+		if (typeof result === "number") {
+			return result;
+		}
+		const { resultLanguage, card } = result;
 		const embed = createRushCardEmbed(card, resultLanguage);
 		const reply = await interaction.reply({ embeds: addNotice(embed), fetchReply: true });
 		return replyLatency(reply, interaction);
@@ -357,120 +370,144 @@ export class RushDuelCommand extends AutocompletableCommand {
 		return replyLatency(reply, interaction);
 	}
 
-	private async subcommandArt(interaction: ChatInputCommandInteraction): Promise<number> {
-		// Same as search subcommand
-		const input = interaction.options.getString("input", true);
-		const resultLanguage = await this.locales.get(interaction);
-		const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
-		let card = this.suggestionCache.get(input);
-		if (card) {
-			this.#logger.info(serialiseInteraction(interaction, { input, cached: card.yugipedia_page_id }));
-		} else {
-			const start = Date.now();
-			const response = await this.search(input, inputLanguage, 1);
-			const latency = Date.now() - start;
-			if (!response.length) {
-				this.#logger.info(serialiseInteraction(interaction, { input, latency, response: null }));
-				useLocale(resultLanguage);
-				const reply = await interaction.reply({
-					content: t`Could not find a card matching \`${input}\`!`,
-					fetchReply: true
-				});
-				return replyLatency(reply, interaction);
+	private async checkYugipediaRedirect(url: string, interaction: ChatInputCommandInteraction): Promise<boolean> {
+		try {
+			const response = await this.got(url, {
+				method: "HEAD",
+				followRedirect: false,
+				timeout: 2000
+			});
+			if (response.statusCode === 302) {
+				// MediaWiki Special:Redirect/file should only use 302s
+				return true;
+			} else if (response.statusCode !== 404) {
+				this.#logger.warn(serialiseInteraction(interaction, { redirectStatusCode: response.statusCode }));
 			}
-			card = response[0];
-			this.#logger.info(serialiseInteraction(interaction, { input, latency, response: card.yugipedia_page_id }));
+		} catch (error) {
+			this.#logger.warn(serialiseInteraction(interaction), error);
 		}
-		// Find any art available
-		const url = videoGameIllustrationURL(card);
-		const response = await this.got(url, {
-			method: "HEAD",
-			followRedirect: false
-		});
-		const hasMultiple = (card.images?.length ?? 0) > 1;
-		const prevButton = new ButtonBuilder()
-			.setCustomId("prev")
-			.setEmoji("⬅")
-			.setStyle(ButtonStyle.Secondary)
-			.setDisabled(true);
-		const nextButton = new ButtonBuilder()
-			.setCustomId("next")
-			.setEmoji("➡")
-			.setStyle(ButtonStyle.Secondary)
-			.setDisabled(!hasMultiple);
-		const components = [new ActionRowBuilder<ButtonBuilder>().addComponents(prevButton, nextButton)];
-		let replyOptions;
-		if (response.statusCode === 302) {
-			// MediaWiki Special:Redirect/file should only use 302s
-			// Use the same pre-redirect URL as the card embed so Discord uses the same cache on its end
-			replyOptions = {
-				content: `${url}?utm_source=bastion`,
-				components
-			};
-		} else if (response.statusCode !== 404) {
-			replyOptions = { content: `Uh oh` };
-		} else if (!card.images) {
+		return false;
+	}
+
+	private async subcommandArt(interaction: ChatInputCommandInteraction): Promise<number> {
+		const result = await this.searchCardNameWithCache(interaction);
+		if (typeof result === "number") {
+			return result;
+		}
+		const { input, resultLanguage, card } = result;
+		if (!card.images) {
 			useLocale(resultLanguage);
-			replyOptions = {
-				content: t`Could not find art for \`${input}\`!`
-			};
-		} else {
-			replyOptions = {
-				content: `https://yugipedia.com/wiki/Special:Redirect/file/${card.images[0].image}?utm_source=bastion`,
-				components
-			};
+			const reply = await interaction.reply({
+				content: t`Could not find art for \`${input}\`!`,
+				fetchReply: true
+			});
+			return replyLatency(reply, interaction);
 		}
-		const reply = await interaction.reply({ ...replyOptions, fetchReply: true });
-		const replyOptionsConst = replyOptions;
-		const cardConst = card;
-		if (hasMultiple) {
-			let index = 0;
-			const filter = (i: ButtonInteraction): boolean => {
-				this.logger.info(serialiseInteraction(interaction), `click: ${i.user.id}`);
-				// only allow the OP to click
-				return i.user.id === interaction.user.id;
-			};
-			// we don't await this promise, we set up the callback and then let the method complete
-			const awaitOptions = { filter, componentType: ComponentType.Button, time: 60000 } as const;
-			const then = async (i: ButtonInteraction) => {
-				if (i.customId === "prev") {
-					if (index > 0) {
-						index--;
-					}
-				} else {
-					if (index < cardConst.images!.length - 1) {
-						index++;
-					}
-				}
-				prevButton.setDisabled(index === 0);
-				nextButton.setDisabled(index === cardConst.images!.length - 1);
-				(
-					await i.update({
-						components,
-						content: `https://yugipedia.com/wiki/Special:Redirect/file/${
-							cardConst.images![index].image
-						}?utm_source=bastion`
-					})
-				)
-					.awaitMessageComponent(awaitOptions)
-					.then(then)
-					.catch(catcher);
-			};
-			const catcher = async (err: DiscordAPIError) => {
-				// a rejection can just mean the timeout was reached without a response
-				// otherwise, though, we want to treat it as a normal error
-				if (err.code !== DiscordjsErrorCodes.InteractionCollectorError) {
-					this.logger.error(serialiseInteraction(interaction), err);
-				}
-				// disable original buttons, regardless of error source
-				prevButton.setDisabled(true);
-				nextButton.setDisabled(true);
-				interaction
-					.editReply(replyOptionsConst)
-					.catch(e => this.logger.error(serialiseInteraction(interaction), e));
-			};
-			reply.awaitMessageComponent(awaitOptions).then(then).catch(catcher);
-		}
+		const url = videoGameIllustrationURL(card);
+		const hasVideoGameIllustration = await this.checkYugipediaRedirect(url, interaction);
+		const switcher = new ArtSwitcher(card.images, hasVideoGameIllustration ? url : null);
+		const reply = await switcher.reply(interaction);
 		return replyLatency(reply, interaction);
+	}
+}
+
+class ArtSwitcher {
+	private logger = getLogger("command:rush:switcher");
+
+	private readonly labelButton = new ButtonBuilder()
+		.setCustomId("label")
+		.setStyle(ButtonStyle.Primary)
+		.setDisabled(true);
+	private readonly prevButton = new ButtonBuilder()
+		.setCustomId("prev")
+		.setEmoji("⬅")
+		.setStyle(ButtonStyle.Secondary)
+		.setDisabled(true);
+	private readonly nextButton = new ButtonBuilder()
+		.setCustomId("next")
+		.setEmoji("➡")
+		.setStyle(ButtonStyle.Secondary)
+		.setDisabled(true);
+	private readonly components = [
+		new ActionRowBuilder<ButtonBuilder>().addComponents(this.labelButton, this.prevButton, this.nextButton)
+	];
+
+	private index = 0;
+
+	constructor(
+		private readonly images: NonNullable<Static<typeof RushCardSchema>["images"]>,
+		private readonly videoGameIllustration: string | null
+	) {
+		this.labelButton.setLabel(this.label);
+		this.nextButton.setDisabled(images.length === 1);
+	}
+
+	private get label(): string {
+		return `${this.index + 1} / ${this.images.length}`;
+	}
+
+	private get currentImage(): string {
+		// The video game illustration, if it exists, may replace the first image
+		return (
+			(this.index === 0 && this.videoGameIllustration) ||
+			`https://yugipedia.com/wiki/Special:Redirect/file/${this.images[this.index].image}?utm_source=bastion`
+		);
+	}
+
+	private get replyOptions(): BaseMessageOptions {
+		return {
+			content: this.currentImage,
+			components: this.components
+		};
+	}
+
+	private onClick(interaction: ButtonInteraction): void {
+		if (interaction.customId === "prev") {
+			if (this.index > 0) {
+				this.index--;
+			}
+		} else {
+			if (this.index < this.images.length - 1) {
+				this.index++;
+			}
+		}
+		this.prevButton.setDisabled(this.index === 0);
+		this.nextButton.setDisabled(this.index === this.images.length - 1);
+		this.labelButton.setLabel(this.label);
+	}
+
+	async reply(parentInteraction: ChatInputCommandInteraction): Promise<Message> {
+		const reply = await parentInteraction.reply({ ...this.replyOptions, fetchReply: true });
+		const filter = (childInteraction: ButtonInteraction): boolean => {
+			this.logger.info(serialiseInteraction(parentInteraction), `click: ${childInteraction.user.id}`);
+			// only allow the OP to click
+			return childInteraction.user.id === parentInteraction.user.id;
+		};
+		// Set up the button handler (don't await) and return the initial reply
+		const awaitOptions = { filter, componentType: ComponentType.Button, time: 60000 } as const;
+		const then = async (childInteraction: ButtonInteraction): Promise<void> => {
+			this.onClick(childInteraction);
+			// We have to set up the handler again because Discord.js is forcing the maximum number of events to 1
+			// https://github.com/discordjs/discord.js/blob/fb70df817c6566ca100d57ec1878a4573489a43d/packages/discord.js/src/structures/InteractionResponse.js#L30
+			(await childInteraction.update(this.replyOptions))
+				.awaitMessageComponent(awaitOptions)
+				.then(then)
+				.catch(catcher);
+		};
+		const catcher = async (err: DiscordAPIError): Promise<void> => {
+			// a rejection can just mean the timeout was reached without a response
+			// otherwise, though, we want to treat it as a normal error
+			if (err.code !== DiscordjsErrorCodes.InteractionCollectorError) {
+				this.logger.error(serialiseInteraction(parentInteraction), err);
+			}
+			// disable original buttons, regardless of error source
+			this.prevButton.setDisabled(true);
+			this.nextButton.setDisabled(true);
+			parentInteraction
+				.editReply(this.replyOptions)
+				.catch(e => this.logger.error(serialiseInteraction(parentInteraction), e));
+		};
+		reply.awaitMessageComponent(awaitOptions).then(then).catch(catcher);
+		return reply;
 	}
 }
