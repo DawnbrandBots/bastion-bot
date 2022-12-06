@@ -1,9 +1,17 @@
 import { Static } from "@sinclair/typebox";
 import {
+	ActionRowBuilder,
 	AutocompleteInteraction,
-	CacheType,
+	BaseMessageOptions,
+	ButtonBuilder,
+	ButtonInteraction,
+	ButtonStyle,
 	ChatInputCommandInteraction,
+	ComponentType,
+	DiscordAPIError,
+	DiscordjsErrorCodes,
 	EmbedBuilder,
+	Message,
 	RESTPostAPIApplicationCommandsJSONBody,
 	SlashCommandBuilder,
 	SlashCommandIntegerOption,
@@ -30,7 +38,14 @@ import { addNotice, replyLatency, serialiseInteraction } from "../utils";
 
 const rc = c;
 
-export function createRushCardEmbed(card: Static<typeof RushCardSchema>, lang: Locale): EmbedBuilder {
+function videoGameIllustrationURL(card: Static<typeof RushCardSchema>): string {
+	// Filter card name down to alphanumeric characters
+	const probableBasename = (card.name.en ?? "").replaceAll(/\W/g, "");
+	// https://yugipedia.com/wiki/Category:Yu-Gi-Oh!_RUSH_DUEL:_Dawn_of_the_Battle_Royale!!_card_artworks
+	return `https://yugipedia.com/wiki/Special:Redirect/file/${probableBasename}-DBR-JP-VG-artwork.png`;
+}
+
+function createRushCardEmbed(card: Static<typeof RushCardSchema>, lang: Locale): EmbedBuilder {
 	useLocale(lang);
 
 	const yugipedia = card.konami_id
@@ -64,10 +79,7 @@ export function createRushCardEmbed(card: Static<typeof RushCardSchema>, lang: L
 		description += "\n";
 	}
 
-	// Filter card name down to alphanumeric characters
-	const probableBasename = (card.name.en ?? "").replaceAll(/\W/g, "");
-	// https://yugipedia.com/wiki/Category:Yu-Gi-Oh!_RUSH_DUEL:_Dawn_of_the_Battle_Royale!!_card_artworks
-	const illustration = `https://yugipedia.com/wiki/Special:Redirect/file/${probableBasename}-DBR-JP-VG-artwork.png?utm_source=bastion`;
+	const illustration = `${videoGameIllustrationURL(card)}?utm_source=bastion`;
 	const embed = new EmbedBuilder().setTitle(formatCardName(card, lang)).setURL(rushcard).setThumbnail(illustration);
 
 	if (card.card_type === "Monster") {
@@ -199,13 +211,23 @@ export class RushDuelCommand extends AutocompletableCommand {
 			() => c("command-option").t`random`,
 			() => c("command-option-description").t`Get a random Rush Duel card.`
 		);
+		const artSubcommand = buildLocalisedCommand(
+			new SlashCommandSubcommandBuilder(),
+			() => c("command-option").t`art`,
+			() => c("command-option-description").t`Display just the art for the Rush Duel card with this name.`
+		);
 		searchSubcommand
 			.addStringOption(nameOption)
 			.addStringOption(getInputLangStringOption())
 			.addStringOption(getResultLangStringOption());
 		konamiIdSubcommand.addIntegerOption(konamiIdOption).addStringOption(getResultLangStringOption());
 		randomSubcommand.addStringOption(getResultLangStringOption());
-		builder.addSubcommand(searchSubcommand).addSubcommand(konamiIdSubcommand).addSubcommand(randomSubcommand);
+		artSubcommand.addStringOption(nameOption).addStringOption(getInputLangStringOption());
+		builder
+			.addSubcommand(searchSubcommand)
+			.addSubcommand(konamiIdSubcommand)
+			.addSubcommand(randomSubcommand)
+			.addSubcommand(artSubcommand);
 		return builder.toJSON();
 	}
 
@@ -224,7 +246,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 		}).json<Static<typeof RushCardSchema>[]>();
 	}
 
-	override async autocomplete(interaction: AutocompleteInteraction<CacheType>): Promise<void> {
+	override async autocomplete(interaction: AutocompleteInteraction): Promise<void> {
 		const query = interaction.options.getFocused();
 		if (!query) {
 			await interaction.respond([]);
@@ -251,7 +273,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 		}
 	}
 
-	protected override async execute(interaction: ChatInputCommandInteraction<CacheType>): Promise<number> {
+	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const subcommand = interaction.options.getSubcommand(true);
 		switch (subcommand) {
 			case "search":
@@ -260,12 +282,16 @@ export class RushDuelCommand extends AutocompletableCommand {
 				return await this.subcommandKonamiId(interaction);
 			case "random":
 				return await this.subcommandRandom(interaction);
+			case "art":
+				return await this.subcommandArt(interaction);
 			default:
 				throw new Error(`Unknown rush-duel subcommand: ${subcommand}`);
 		}
 	}
 
-	private async subcommandSearch(interaction: ChatInputCommandInteraction<CacheType>): Promise<number> {
+	private async searchCardNameWithCache(
+		interaction: ChatInputCommandInteraction
+	): Promise<number | { input: string; resultLanguage: Locale; card: Static<typeof RushCardSchema> }> {
 		const input = interaction.options.getString("input", true);
 		const resultLanguage = await this.locales.get(interaction);
 		const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
@@ -288,12 +314,21 @@ export class RushDuelCommand extends AutocompletableCommand {
 			card = response[0];
 			this.#logger.info(serialiseInteraction(interaction, { input, latency, response: card.yugipedia_page_id }));
 		}
+		return { input, resultLanguage, card };
+	}
+
+	private async subcommandSearch(interaction: ChatInputCommandInteraction): Promise<number> {
+		const result = await this.searchCardNameWithCache(interaction);
+		if (typeof result === "number") {
+			return result;
+		}
+		const { resultLanguage, card } = result;
 		const embed = createRushCardEmbed(card, resultLanguage);
 		const reply = await interaction.reply({ embeds: addNotice(embed), fetchReply: true });
 		return replyLatency(reply, interaction);
 	}
 
-	private async subcommandKonamiId(interaction: ChatInputCommandInteraction<CacheType>): Promise<number> {
+	private async subcommandKonamiId(interaction: ChatInputCommandInteraction): Promise<number> {
 		const input = interaction.options.getInteger("input", true);
 		this.#logger.info(serialiseInteraction(interaction, { input }));
 		const response = await this.got(`${process.env.API_URL}/rush/${input}`, {
@@ -323,7 +358,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 		}
 	}
 
-	private async subcommandRandom(interaction: ChatInputCommandInteraction<CacheType>): Promise<number> {
+	private async subcommandRandom(interaction: ChatInputCommandInteraction): Promise<number> {
 		const [card] = await this.got(`${process.env.API_URL}/rush/random`, {
 			headers: { Accept: "application/json" },
 			throwHttpErrors: true
@@ -333,5 +368,155 @@ export class RushDuelCommand extends AutocompletableCommand {
 		const embed = createRushCardEmbed(card, lang);
 		const reply = await interaction.reply({ embeds: addNotice(embed), fetchReply: true });
 		return replyLatency(reply, interaction);
+	}
+
+	private async checkYugipediaRedirect(url: string, interaction: ChatInputCommandInteraction): Promise<boolean> {
+		try {
+			const response = await this.got(url, {
+				method: "HEAD",
+				followRedirect: false,
+				timeout: 2000
+			});
+			if (response.statusCode === 302) {
+				// MediaWiki Special:Redirect/file should only use 302s
+				return true;
+			} else if (response.statusCode !== 404) {
+				this.#logger.warn(serialiseInteraction(interaction, { redirectStatusCode: response.statusCode }));
+			}
+		} catch (error) {
+			this.#logger.warn(serialiseInteraction(interaction), error);
+		}
+		return false;
+	}
+
+	private async subcommandArt(interaction: ChatInputCommandInteraction): Promise<number> {
+		const result = await this.searchCardNameWithCache(interaction);
+		if (typeof result === "number") {
+			return result;
+		}
+		const { input, resultLanguage, card } = result;
+		if (!card.images) {
+			useLocale(resultLanguage);
+			const reply = await interaction.reply({
+				content: t`Could not find art for \`${input}\`!`,
+				fetchReply: true
+			});
+			return replyLatency(reply, interaction);
+		}
+		const url = videoGameIllustrationURL(card);
+		const hasVideoGameIllustration = await this.checkYugipediaRedirect(url, interaction);
+		const switcher = new ArtSwitcher(card.images, hasVideoGameIllustration ? url : null);
+		const reply = await switcher.reply(interaction, resultLanguage);
+		return replyLatency(reply, interaction);
+	}
+}
+
+class ArtSwitcher {
+	private logger = getLogger("command:rush:switcher");
+
+	private readonly labelButton = new ButtonBuilder()
+		.setCustomId("label")
+		.setStyle(ButtonStyle.Primary)
+		.setDisabled(true);
+	private readonly prevButton = new ButtonBuilder()
+		.setCustomId("prev")
+		.setEmoji("⬅")
+		.setStyle(ButtonStyle.Secondary)
+		.setDisabled(true);
+	private readonly nextButton = new ButtonBuilder()
+		.setCustomId("next")
+		.setEmoji("➡")
+		.setStyle(ButtonStyle.Secondary)
+		.setDisabled(true);
+	private readonly components = [
+		new ActionRowBuilder<ButtonBuilder>().addComponents(this.labelButton, this.prevButton, this.nextButton)
+	];
+
+	private index = 0;
+
+	constructor(
+		private readonly images: NonNullable<Static<typeof RushCardSchema>["images"]>,
+		private readonly videoGameIllustration: string | null
+	) {
+		this.labelButton.setLabel(this.label);
+		this.nextButton.setDisabled(images.length === 1);
+	}
+
+	private get label(): string {
+		return `${this.index + 1} / ${this.images.length}`;
+	}
+
+	private get currentImage(): string {
+		// The video game illustration, if it exists, may replace the first image
+		return (
+			(this.index === 0 && this.videoGameIllustration) ||
+			`https://yugipedia.com/wiki/Special:Redirect/file/${this.images[this.index].image}?utm_source=bastion`
+		);
+	}
+
+	private get replyOptions(): BaseMessageOptions {
+		return {
+			content: this.currentImage,
+			components: this.components
+		};
+	}
+
+	private onClick(interaction: ButtonInteraction): void {
+		if (interaction.customId === "prev") {
+			if (this.index > 0) {
+				this.index--;
+			}
+		} else {
+			if (this.index < this.images.length - 1) {
+				this.index++;
+			}
+		}
+		this.prevButton.setDisabled(this.index === 0);
+		this.nextButton.setDisabled(this.index === this.images.length - 1);
+		this.labelButton.setLabel(this.label);
+	}
+
+	async reply(parentInteraction: ChatInputCommandInteraction, resultLanguage: Locale): Promise<Message> {
+		const reply = await parentInteraction.reply({ ...this.replyOptions, fetchReply: true });
+		const filter = (childInteraction: ButtonInteraction): boolean => {
+			this.logger.info(serialiseInteraction(parentInteraction), `click: ${childInteraction.user.id}`);
+			if (childInteraction.user.id === parentInteraction.user.id) {
+				return true;
+			}
+			useLocale(resultLanguage);
+			childInteraction
+				.reply({
+					content: t`Buttons can only be used by the user who called Bastion.`,
+					ephemeral: true
+				})
+				.catch(e => this.logger.error(serialiseInteraction(parentInteraction), e));
+			return false;
+		};
+		// Set up the button handler (don't await) and return the initial reply
+		const awaitOptions = { filter, componentType: ComponentType.Button, time: 60000 } as const;
+		const then = async (childInteraction: ButtonInteraction): Promise<void> => {
+			this.onClick(childInteraction);
+			// We have to set up the handler again because Discord.js is forcing the maximum number of events to 1
+			// https://github.com/discordjs/discord.js/blob/fb70df817c6566ca100d57ec1878a4573489a43d/packages/discord.js/src/structures/InteractionResponse.js#L30
+			(await childInteraction.update(this.replyOptions))
+				.awaitMessageComponent(awaitOptions)
+				.then(then)
+				.catch(catcher);
+		};
+		const catcher = async (err: DiscordAPIError): Promise<void> => {
+			// a rejection can just mean the timeout was reached without a response
+			// otherwise, though, we want to treat it as a normal error
+			if (err.code !== DiscordjsErrorCodes.InteractionCollectorError) {
+				this.logger.error(serialiseInteraction(parentInteraction), err);
+			}
+			// disable original buttons, regardless of error source
+			this.prevButton.setDisabled(true);
+			this.nextButton.setDisabled(true);
+			parentInteraction
+				.editReply(this.replyOptions)
+				.catch(e => this.logger.error(serialiseInteraction(parentInteraction), e));
+		};
+		reply.awaitMessageComponent(awaitOptions).then(then).catch(catcher);
+		return reply;
 	}
 }

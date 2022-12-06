@@ -7,7 +7,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src\card.ts:272
-#: src\commands\rush-duel.ts:45
+#: src\commands\rush-duel.ts:60
 msgid "🔗 Links"
 msgstr ""
 
@@ -22,13 +22,13 @@ msgid "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
 
 #: src\card.ts:336
-#: src\commands\rush-duel.ts:91
+#: src\commands\rush-duel.ts:107
 #, javascript-format
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 msgstr "**Tipo**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 
 #: src\card.ts:338
-#: src\commands\rush-duel.ts:93
+#: src\commands\rush-duel.ts:109
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 msgstr "**Atributo**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
@@ -43,7 +43,7 @@ msgid "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Li
 msgstr ""
 
 #: src\card.ts:347
-#: src\commands\rush-duel.ts:95
+#: src\commands\rush-duel.ts:111
 #, javascript-format
 msgid "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 msgstr "**Nivel**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
@@ -67,7 +67,7 @@ msgid "Password: ${ card.password } | Not yet released"
 msgstr ""
 
 #: src\card.ts:246
-#: src\commands\rush-duel.ts:145
+#: src\commands\rush-duel.ts:161
 msgid "Not yet released"
 msgstr ""
 
@@ -131,10 +131,10 @@ msgstr ""
 
 #: src\commands\art.ts:97
 #: src\commands\price.ts:148
-#: src\commands\rush-duel.ts:279
-#: src\commands\rush-duel.ts:303
+#: src\commands\rush-duel.ts:309
+#: src\commands\rush-duel.ts:342
 #: src\commands\search.ts:89
-#: src\events\message-search.ts:290
+#: src\events\message-search.ts:291
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr ""
@@ -314,16 +314,16 @@ msgstr ""
 msgid "Sorry, I can't find the price for a card with no English name!"
 msgstr ""
 
-#: src\commands\price.ts:159
+#: src\commands\price.ts:162
 msgid "No market price"
 msgstr ""
 
-#: src\commands\price.ts:167
+#: src\commands\price.ts:170
 #, javascript-format
 msgid "Prices for ${ card.name[resultLanguage] } - ${ vendorName }"
 msgstr ""
 
-#: src\commands\price.ts:181
+#: src\commands\price.ts:184
 msgid "Could not find prices for `${ name }`!"
 msgstr ""
 
@@ -332,17 +332,17 @@ msgstr ""
 msgid "Upload to YGOPRODECK"
 msgstr ""
 
-#: src\commands\deck.ts:478
+#: src\commands\deck.ts:485
 #. disable original button
 #. prepare row to disable button on original message
 msgid "Upload Complete"
 msgstr ""
 
-#: src\commands\deck.ts:465
+#: src\commands\deck.ts:472
 msgid "Deck upload failed!"
 msgstr ""
 
-#: src\commands\deck.ts:486
+#: src\commands\deck.ts:493
 #. reply in affirmation
 #, javascript-format
 msgid "Deck successfully uploaded to <${ url }>!"
@@ -376,7 +376,7 @@ msgid ""
 "💬 Translations missing? Help translate Bastion on [GitHub](https://github.com/DawnbrandBots/bastion-bot)."
 msgstr ""
 
-#: src\events\message-search.ts:288
+#: src\events\message-search.ts:289
 msgid "Search type: ${ localisedType }"
 msgstr ""
 
@@ -385,7 +385,7 @@ msgstr ""
 msgid "📚 [__Learn more about how search works.__](https://github.com/DawnbrandBots/bastion-bot/blob/master/docs/card-search.md?utm_source=bastion)"
 msgstr ""
 
-#: src\events\message-search.ts:285
+#: src\events\message-search.ts:286
 #, javascript-format
 msgid "Search language: **${ localisedInputLanguage }** (${ inputLanguage }). Check defaults with </locale get:${ id }> and configure with </locale set:${ id }>"
 msgstr ""
@@ -431,27 +431,37 @@ msgstr ""
 msgid "Something went wrong searching Yugipedia for `${ page }`."
 msgstr ""
 
-#: src\commands\rush-duel.ts:46
+#: src\commands\rush-duel.ts:61
 #, javascript-format
 msgid "[Official Konami DB](${ official }) | [Rulings (Japanese)](${ rulings }) | [Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
 msgstr ""
 
-#: src\commands\rush-duel.ts:49
+#: src\commands\rush-duel.ts:64
 #, javascript-format
 msgid "[Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
 msgstr ""
 
-#: src\commands\rush-duel.ts:63
+#: src\commands\rush-duel.ts:78
 msgid "__**LEGEND**__"
 msgstr ""
 
-#: src\commands\rush-duel.ts:98
+#: src\commands\rush-duel.ts:114
 msgid "**MAXIMUM ATK**: ${ card.maximum_atk }"
 msgstr ""
 
-#: src\commands\rush-duel.ts:145
+#: src\commands\rush-duel.ts:161
 #, javascript-format
 msgid "Konami ID #${ card.konami_id }"
+msgstr ""
+
+#: src\commands\deck.ts:453
+#: src\commands\rush-duel.ts:488
+msgid "Buttons can only be used by the user who called Bastion."
+msgstr ""
+
+#: src\commands\rush-duel.ts:401
+#, javascript-format
+msgid "Could not find art for `${ input }`!"
 msgstr ""
 
 #: src\card.ts:38
@@ -731,7 +741,7 @@ msgstr "DIVINIDAD"
 
 #: src\card.ts:360
 #: src\card.ts:371
-#: src\commands\rush-duel.ts:126
+#: src\commands\rush-duel.ts:142
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "Texto de carta"
@@ -746,24 +756,24 @@ msgctxt "card-embed"
 msgid "Card Effect"
 msgstr ""
 
-#: src\commands\rush-duel.ts:117
-#: src\commands\rush-duel.ts:138
+#: src\commands\rush-duel.ts:133
+#: src\commands\rush-duel.ts:154
 msgctxt "card-embed"
 msgid "[REQUIREMENT]"
 msgstr "[REQUISITO]"
 
-#: src\commands\rush-duel.ts:118
-#: src\commands\rush-duel.ts:139
+#: src\commands\rush-duel.ts:134
+#: src\commands\rush-duel.ts:155
 msgctxt "card-embed"
 msgid "[EFFECT]"
 msgstr "[EFECTO]"
 
-#: src\commands\rush-duel.ts:120
+#: src\commands\rush-duel.ts:136
 msgctxt "card-embed"
 msgid "[CONTINUOUS EFFECT]"
 msgstr "[EFECTO CONTINUO]"
 
-#: src\commands\rush-duel.ts:122
+#: src\commands\rush-duel.ts:138
 msgctxt "card-embed"
 msgid "[MULTI-CHOICE EFFECT]"
 msgstr ""
@@ -784,8 +794,8 @@ msgstr ""
 #: src\commands\price.ts:64
 #: src\commands\price.ts:74
 #: src\commands\price.ts:86
-#: src\commands\rush-duel.ts:178
-#: src\commands\rush-duel.ts:190
+#: src\commands\rush-duel.ts:194
+#: src\commands\rush-duel.ts:206
 #: src\commands\search.ts:39
 #: src\commands\search.ts:49
 #: src\commands\search.ts:61
@@ -850,7 +860,7 @@ msgstr ""
 
 #: src\commands\art.ts:53
 #: src\commands\price.ts:81
-#: src\commands\rush-duel.ts:183
+#: src\commands\rush-duel.ts:199
 #: src\commands\search.ts:56
 msgctxt "command-option"
 msgid "konami-id"
@@ -881,14 +891,19 @@ msgctxt "command-option"
 msgid "vendor"
 msgstr ""
 
-#: src\commands\rush-duel.ts:173
+#: src\commands\rush-duel.ts:189
 msgctxt "command-option"
 msgid "search"
 msgstr ""
 
-#: src\commands\rush-duel.ts:195
+#: src\commands\rush-duel.ts:211
 msgctxt "command-option"
 msgid "random"
+msgstr ""
+
+#: src\commands\rush-duel.ts:216
+msgctxt "command-option"
+msgid "art"
 msgstr ""
 
 #: src\locale.ts:51
@@ -948,7 +963,7 @@ msgstr ""
 
 #: src\commands\art.ts:37
 #: src\commands\price.ts:65
-#: src\commands\rush-duel.ts:179
+#: src\commands\rush-duel.ts:195
 #: src\commands\search.ts:40
 msgctxt "command-option-description"
 msgid "Card name, fuzzy matching supported."
@@ -973,7 +988,7 @@ msgstr ""
 
 #: src\commands\art.ts:59
 #: src\commands\price.ts:87
-#: src\commands\rush-duel.ts:191
+#: src\commands\rush-duel.ts:207
 #: src\commands\search.ts:62
 msgctxt "command-option-description"
 msgid "Konami's official card database identifier."
@@ -1039,19 +1054,24 @@ msgctxt "command-option-description"
 msgid "The English name of the card you're looking for."
 msgstr ""
 
-#: src\commands\rush-duel.ts:174
+#: src\commands\rush-duel.ts:190
 msgctxt "command-option-description"
 msgid "Find all information for the Rush Duel card with this name."
 msgstr ""
 
-#: src\commands\rush-duel.ts:185
+#: src\commands\rush-duel.ts:201
 msgctxt "command-option-description"
 msgid "Find all information for the Rush Duel card with this official database ID."
 msgstr ""
 
-#: src\commands\rush-duel.ts:196
+#: src\commands\rush-duel.ts:212
 msgctxt "command-option-description"
 msgid "Get a random Rush Duel card."
+msgstr ""
+
+#: src\commands\rush-duel.ts:217
+msgctxt "command-option-description"
+msgid "Display just the art for the Rush Duel card with this name."
 msgstr ""
 
 #: src\commands\art.ts:26
@@ -1104,7 +1124,7 @@ msgctxt "command-name"
 msgid "price"
 msgstr ""
 
-#: src\commands\rush-duel.ts:168
+#: src\commands\rush-duel.ts:184
 msgctxt "command-name"
 msgid "rush-duel"
 msgstr ""
@@ -1159,7 +1179,7 @@ msgctxt "command-description"
 msgid "Display the price for a card!"
 msgstr ""
 
-#: src\commands\rush-duel.ts:169
+#: src\commands\rush-duel.ts:185
 msgctxt "command-description"
 msgid "Find information on Rush Duel cards."
 msgstr ""
