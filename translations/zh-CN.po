@@ -83,7 +83,7 @@ msgstr "🛠️ 这个指令正在开发中"
 #: src\events\message-search.ts:184
 #: src\utils.ts:46
 msgid "📨 Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!"
-msgstr "📨 如有意见或建议请反馈至[Github issue](https://github.com/DawnbrandBots/bastion-bot)或者[Discord服务器](https://discord.gg/4aFuPyuE96)!"
+msgstr "📨 如有意见或建议请反馈至[GitHub issue](https://github.com/DawnbrandBots/bastion-bot)或者[Discord服务器](https://discord.gg/4aFuPyuE96)!"
 
 #: src\utils.ts:57
 msgid "Please consider supporting us!"
@@ -222,44 +222,56 @@ msgstr "Yugipedia上找不到`${ page }`"
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
-msgstr[0] ""
+msgstr[0] "${ counts.Monster }张怪兽卡"
 
 #: src\commands\deck.ts:248
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
-msgstr[0] ""
+msgstr[0] "${ counts.Spell }张魔法卡"
 
 #: src\commands\deck.ts:251
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
-msgstr[0] ""
+msgstr[0] "${ counts.Trap }张陷阱卡"
 
 #: src\commands\deck.ts:279
 msgid "Your Deck"
-msgstr ""
+msgstr "你的卡组"
 
 #: src\commands\deck.ts:284
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
-msgstr[0] ""
+msgstr[0] "牌组（${ deck.main.length }张 — ${ countDetail }）"
+
+#: src\commands\deck.ts:298
+#, javascript-format
+msgid "Extra Deck (${ deck.extra.length } card — ${ countDetail })"
+msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ countDetail })"
+msgstr[0] "额外卡组（${ deck.extra.length }张 — ${ countDetail }）"
+
+#: src\commands\deck.ts:312
+#, javascript-format
+msgid "Side Deck (${ deck.side.length } card — ${ countDetail })"
+msgid_plural "Side Deck (${ deck.side.length } cards — ${ countDetail })"
+msgstr[0] "备牌（${ deck.side.length }张 — ${ countDetail }）"
 
 #: src\commands\deck.ts:291
 msgid "Main Deck (continued)"
-msgstr ""
+msgstr "牌组（续）"
 
 #: src\commands\deck.ts:305
 msgid "Extra Deck (continued)"
-msgstr ""
+msgstr "额外卡组（续）"
 
 #: src\commands\deck.ts:319
 msgid "Side Deck (continued)"
-msgstr ""
+msgstr "备牌（续）"
 
 #: src\commands\deck.ts:409
 msgid "Error: Your deck is empty."
-msgstr ""
+msgstr "错误：卡组是空的。"
 
 #: src\commands\ping.ts:36
 #: src\events\message-ping.ts:43
@@ -269,12 +281,12 @@ msgstr ""
 
 #: src\events\message-ping.ts:45
 msgid "Free and open source _Yu-Gi-Oh!_ bot"
-msgstr ""
+msgstr "自由开源游戏王聊天机器人"
 
 #: src\events\message-ping.ts:68
 #, javascript-format
 msgid "Revision: ${ process.env.BOT_REVISION }."
-msgstr ""
+msgstr "修订：${ process.env.BOT_REVISION }"
 
 #: src\commands\deck.ts:329
 msgid ".ydk files must have the .ydk extension!"
@@ -291,7 +303,7 @@ msgstr ""
 #: src\card.ts:310
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 msgid "**Limit**: ${ limitRegulationDisplay }"
-msgstr ""
+msgstr "**限制**：${ limitRegulationDisplay }"
 
 #: src\commands\price.ts:38
 msgid "TCGPlayer"
@@ -326,35 +338,35 @@ msgstr ""
 #: src\commands\deck.ts:427
 #. prepare interaction button for FTP upload
 msgid "Upload to YGOPRODECK"
-msgstr ""
+msgstr "上传至YGOPRODECK"
 
 #: src\commands\deck.ts:485
 #. disable original button
 #. prepare row to disable button on original message
 msgid "Upload Complete"
-msgstr ""
+msgstr "上传成功"
 
 #: src\commands\deck.ts:472
 msgid "Deck upload failed!"
-msgstr ""
+msgstr "上传失败"
 
 #: src\commands\deck.ts:493
 #. reply in affirmation
 #, javascript-format
 msgid "Deck successfully uploaded to <${ url }>!"
-msgstr ""
+msgstr "卡组成功上传到<${ url }>!"
 
 #: src\events\message-search.ts:181
 msgid "🤖 The new Bastion search experience is here!"
-msgstr ""
+msgstr "🤖新的搜索功能开通啦~"
 
 #: src\events\message-search.ts:190
 msgid "💬 Translations missing?"
-msgstr ""
+msgstr "💬缺少翻译？"
 
 #: src\events\message-search.ts:191
 msgid "Help translate Bastion at the links above."
-msgstr ""
+msgstr "在以上的网址帮忙翻译Bastion"
 
 #: src\events\message-ping.ts:46
 msgid ""
@@ -374,7 +386,7 @@ msgstr ""
 
 #: src\events\message-search.ts:289
 msgid "Search type: ${ localisedType }"
-msgstr ""
+msgstr "搜索类型：${ localisedType }"
 
 #: src\events\message-search.ts:186
 #. eslint-disable-next-line prefer-template
@@ -399,18 +411,6 @@ msgstr ""
 msgid "⚠️ I am missing permissions in the channel!"
 msgstr ""
 
-#: src\commands\deck.ts:298
-#, javascript-format
-msgid "Extra Deck (${ deck.extra.length } card — ${ countDetail })"
-msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ countDetail })"
-msgstr[0] ""
-
-#: src\commands\deck.ts:312
-#, javascript-format
-msgid "Side Deck (${ deck.side.length } card — ${ countDetail })"
-msgid_plural "Side Deck (${ deck.side.length } cards — ${ countDetail })"
-msgstr[0] ""
-
 #: src\commands\locale.ts:104
 #, javascript-format
 msgid "Server-wide locale override: ${ guildOverride }"
@@ -433,7 +433,7 @@ msgstr "[K社官方数据库](${ official }) | [事务局FAQ](${ rulings }) | [Y
 #: src\commands\rush-duel.ts:64
 #, javascript-format
 msgid "[Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
-msgstr ""
+msgstr "[Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
 
 #: src\commands\rush-duel.ts:78
 msgid "__**LEGEND**__"
@@ -754,7 +754,7 @@ msgstr "卡片效果"
 #: src\commands\rush-duel.ts:154
 msgctxt "card-embed"
 msgid "[REQUIREMENT]"
-msgstr "【效果】"
+msgstr "【条件】"
 
 #: src\commands\rush-duel.ts:134
 #: src\commands\rush-duel.ts:155
