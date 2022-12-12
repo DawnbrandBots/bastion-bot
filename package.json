@@ -44,7 +44,7 @@
 		"@alphakretin/essentials": "^4.0.0",
 		"@types/better-sqlite3": "^7.6.2",
 		"@types/debug": "^4.1.7",
-		"@types/gettext-parser": "^4.0.1",
+		"@types/gettext-parser": "^4.0.2",
 		"@types/jest": "^29.2.3",
 		"@types/node": "^16.18.3",
 		"@types/node-fetch": "^2.6.2",
