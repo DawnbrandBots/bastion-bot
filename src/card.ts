@@ -252,13 +252,20 @@ function formatFooter(card: Static<typeof CardSchema>): EmbedFooterOptions {
 	return { text };
 }
 
+/**
+ * @returns YGOPRODECK card database page for the specified card
+ */
+export function ygoprodeckCard(term: string | number): string {
+	return `https://ygoprodeck.com/card/?search=${encodeURIComponent(term)}&utm_source=bastion`;
+}
+
 export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): EmbedBuilder[] {
 	useLocale(lang);
 
 	const yugipediaPage = card.konami_id ?? encodeURIComponent(`${card.name.en}`);
 	const yugipedia = `https://yugipedia.com/wiki/${yugipediaPage}?utm_source=bastion`;
-	const ygoprodeckTerm = card.password ?? encodeURIComponent(`${card.name.en}`);
-	const ygoprodeck = `https://db.ygoprodeck.com/card/?search=${ygoprodeckTerm}&utm_source=bastion`;
+	const ygoprodeckTerm = card.password ?? `${card.name.en}`;
+	const ygoprodeck = ygoprodeckCard(ygoprodeckTerm);
 	// Official database, does not work for zh locales
 	const official = `https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&request_locale=${lang}&cid=${card.konami_id}`;
 	const rulings = `https://www.db.yugioh-card.com/yugiohdb/faq_search.action?ope=4&request_locale=ja&cid=${card.konami_id}`;

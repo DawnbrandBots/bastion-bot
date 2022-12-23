@@ -5,6 +5,7 @@ import { Got } from "got";
 import { LRUMap } from "mnemonist";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
+import { ygoprodeckCard } from "../card";
 import { AutocompletableCommand } from "../Command";
 import { buildLocalisedCommand, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
@@ -84,7 +85,7 @@ export class YGOPRODECKCommand extends AutocompletableCommand {
 		let content;
 		const cached = this.suggestionCache.get(term);
 		if (cached) {
-			content = `https://ygoprodeck.com/card/?search=${encodeURIComponent(cached)}`;
+			content = ygoprodeckCard(cached);
 			this.#logger.info(serialiseInteraction(interaction, { term, cached }));
 		} else {
 			try {
@@ -92,10 +93,7 @@ export class YGOPRODECKCommand extends AutocompletableCommand {
 				const response = await this.search(term);
 				const latency = Date.now() - start;
 				this.#logger.info(serialiseInteraction(interaction, { term, latency, response }));
-				content =
-					"suggestions" in response
-						? `https://ygoprodeck.com/card/?search=${encodeURIComponent(response.suggestions[0]?.data)}`
-						: response.error;
+				content = "suggestions" in response ? ygoprodeckCard(response.suggestions[0]?.data) : response.error;
 			} catch (error) {
 				this.#logger.warn(serialiseInteraction(interaction, { term }), error);
 				const lang = await this.locales.get(interaction);
