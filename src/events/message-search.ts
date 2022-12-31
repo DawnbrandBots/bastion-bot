@@ -173,27 +173,6 @@ export function inputToGetCardArguments(input: string, defaultLanguage: Locale) 
 	}
 }
 
-function addExplainer(embeds: EmbedBuilder | EmbedBuilder[], locale: Locale): EmbedBuilder[] {
-	if (!Array.isArray(embeds)) {
-		embeds = [embeds];
-	}
-	embeds[embeds.length - 1].addFields({
-		name: t`🤖 The new Bastion search experience is here!`,
-		value:
-			// eslint-disable-next-line prefer-template
-			t`📨 Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!` +
-			"\n" +
-			t`📚 [__Learn more about how search works.__](https://github.com/DawnbrandBots/bastion-bot/blob/master/docs/card-search.md?utm_source=bastion)`
-	});
-	if (locale !== "en") {
-		embeds[embeds.length - 1].addFields({
-			name: t`💬 Translations missing?`,
-			value: t`Help translate Bastion at the links above.`
-		});
-	}
-	return embeds;
-}
-
 function createMisconfigurationEmbed(error: DiscordAPIError, message: Message): EmbedBuilder {
 	return new EmbedBuilder()
 		.setColor(Colors.Red)
@@ -290,8 +269,13 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 				}
 				replyOptions = { content: t`Could not find a card matching \`${input}\`!` + context };
 			} else {
-				let embeds = createCardEmbed(card, resultLanguage);
-				embeds = addExplainer(embeds, resultLanguage);
+				const embeds = createCardEmbed(card, resultLanguage);
+				if (resultLanguage !== "en") {
+					embeds[embeds.length - 1].addFields({
+						name: t`💬 Translations missing?`,
+						value: t`Help translate Bastion at the links above.`
+					});
+				}
 				replyOptions = { embeds };
 			}
 			try {

@@ -6,49 +6,49 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src\card.ts:272
+#: src\card.ts:279
 #: src\commands\rush-duel.ts:60
 msgid "🔗 Links"
 msgstr "🔗 링크"
 
-#: src\card.ts:273
+#: src\card.ts:280
 #, javascript-format
 msgid "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr "[공식 코나미 DB](${ official }) | [OCG 규칙](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
-#: src\card.ts:276
+#: src\card.ts:283
 #, javascript-format
 msgid "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
-#: src\card.ts:336
+#: src\card.ts:343
 #: src\commands\rush-duel.ts:107
 #, javascript-format
 msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 msgstr "**종족**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:338
+#: src\card.ts:345
 #: src\commands\rush-duel.ts:109
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 msgstr "**속성**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
-#: src\card.ts:342
+#: src\card.ts:349
 msgid "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 msgstr "**랭크**: ${ Icon.Rank } ${ card.rank } **공격력**: ${ card.atk } **수비력**: ${ card.def }"
 
-#: src\card.ts:345
+#: src\card.ts:352
 #, javascript-format
 msgid "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link Arrows**: ${ arrows }"
 msgstr "**LINK**: ${ card.link_arrows.length } **공격력**: ${ card.atk } **링크 마커**: ${ arrows }"
 
-#: src\card.ts:347
+#: src\card.ts:354
 #: src\commands\rush-duel.ts:111
 #, javascript-format
 msgid "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 msgstr "**레벨**: ${ Icon.Level } ${ card.level } **공격력**: ${ card.atk } **수비력**: ${ card.def }"
 
-#: src\card.ts:354
+#: src\card.ts:361
 msgid "**Pendulum Scale**: ${ formattedScale }"
 msgstr "**펜듈럼 스케일**: ${ formattedScale }"
 
@@ -80,7 +80,6 @@ msgstr "플레이스홀더 ID: ${ card.fake_password }"
 msgid "🛠️ This command is in development."
 msgstr "🛠️ 이 명령은 개발 중입니다."
 
-#: src\events\message-search.ts:184
 #: src\utils.ts:46
 msgid "📨 Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!"
 msgstr "📨 [문제 추적기](https://github.com/DawnbrandBots/bastion-bot) 또는 [지원 서버](https://discord.gg/4aFuPyuE96)로 피드백을 보내주십시오!"
@@ -134,7 +133,7 @@ msgstr "찾으시려던 것을 찾으셨나요? 저희를 지원해 주시는 �
 #: src\commands\rush-duel.ts:309
 #: src\commands\rush-duel.ts:342
 #: src\commands\search.ts:89
-#: src\events\message-search.ts:291
+#: src\events\message-search.ts:270
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr "일치하는 카드를 찾을 수 없습니다. : `${ input }`!"
@@ -288,7 +287,7 @@ msgstr ".ydk 파일은 1 KB보다 크면 안 됩니다!"
 msgid "ydke URL"
 msgstr ""
 
-#: src\card.ts:310
+#: src\card.ts:317
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 msgid "**Limit**: ${ limitRegulationDisplay }"
 msgstr "**제한**: ${ limitRegulationDisplay }"
@@ -344,15 +343,11 @@ msgstr "덱 업로드 실패!"
 msgid "Deck successfully uploaded to <${ url }>!"
 msgstr "덱이 <${ url }>에 업로드되었습니다!"
 
-#: src\events\message-search.ts:181
-msgid "🤖 The new Bastion search experience is here!"
-msgstr "🤖 새 Bastion 검색 체험이 나왔습니다!"
-
-#: src\events\message-search.ts:190
+#: src\events\message-search.ts:275
 msgid "💬 Translations missing?"
 msgstr "💬 번역이 누락되었습니까?"
 
-#: src\events\message-search.ts:191
+#: src\events\message-search.ts:276
 msgid "Help translate Bastion at the links above."
 msgstr "위 링크에서 Bastion 번역을 도와주세요."
 
@@ -372,16 +367,11 @@ msgid ""
 "💬 Translations missing? Help translate Bastion on [GitHub](https://github.com/DawnbrandBots/bastion-bot)."
 msgstr ""
 
-#: src\events\message-search.ts:289
+#: src\events\message-search.ts:268
 msgid "Search type: ${ localisedType }"
 msgstr ""
 
-#: src\events\message-search.ts:186
-#. eslint-disable-next-line prefer-template
-msgid "📚 [__Learn more about how search works.__](https://github.com/DawnbrandBots/bastion-bot/blob/master/docs/card-search.md?utm_source=bastion)"
-msgstr ""
-
-#: src\events\message-search.ts:286
+#: src\events\message-search.ts:265
 #, javascript-format
 msgid "Search language: **${ localisedInputLanguage }** (${ inputLanguage }). Check defaults with </locale get:${ id }> and configure with </locale set:${ id }>"
 msgstr ""
@@ -391,11 +381,11 @@ msgid "⚠️ You pinged me, but I am missing permissions in the channel!"
 msgstr ""
 
 #: src\events\message-ping.ts:94
-#: src\events\message-search.ts:203
+#: src\events\message-search.ts:182
 msgid "Please have a server administrator [fix this](https://github.com/DawnbrandBots/bastion-bot#discord-permissions)."
 msgstr ""
 
-#: src\events\message-search.ts:200
+#: src\events\message-search.ts:179
 msgid "⚠️ I am missing permissions in the channel!"
 msgstr ""
 
@@ -416,7 +406,7 @@ msgstr[0] ""
 msgid "Server-wide locale override: ${ guildOverride }"
 msgstr "서버 전체 로케일 재정의 : ${ guildOverride }"
 
-#: src\commands\ygoprodeck.ts:104
+#: src\commands\ygoprodeck.ts:102
 #, javascript-format
 msgid "Something went wrong searching YGOPRODECK for `${ searchTerm }`."
 msgstr ""
@@ -449,7 +439,7 @@ msgid "Konami ID #${ card.konami_id }"
 msgstr "코나미 ID #${ card.konami_id }"
 
 #: src\commands\deck.ts:453
-#: src\commands\rush-duel.ts:488
+#: src\commands\rush-duel.ts:489
 msgid "Buttons can only be used by the user who called Bastion."
 msgstr ""
 
@@ -733,19 +723,19 @@ msgctxt "attribute"
 msgid "DIVINE"
 msgstr "신"
 
-#: src\card.ts:360
-#: src\card.ts:371
+#: src\card.ts:367
+#: src\card.ts:378
 #: src\commands\rush-duel.ts:142
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "카드 텍스트"
 
-#: src\card.ts:365
+#: src\card.ts:372
 msgctxt "card-embed"
 msgid "Pendulum Effect"
 msgstr "펜듈럼 효과"
 
-#: src\card.ts:386
+#: src\card.ts:393
 msgctxt "card-embed"
 msgid "Card Effect"
 msgstr "카드 효과"
@@ -797,7 +787,7 @@ msgctxt "command-option"
 msgid "input"
 msgstr "입력"
 
-#: src\commands\ygoprodeck.ts:38
+#: src\commands\ygoprodeck.ts:39
 msgctxt "command-option"
 msgid "term"
 msgstr "용어"
@@ -1043,7 +1033,7 @@ msgctxt "command-option-description"
 msgid "The vendor to fetch the price data from."
 msgstr "가격 데이터를 가져올 업체입니다."
 
-#: src\commands\ygoprodeck.ts:39
+#: src\commands\ygoprodeck.ts:40
 msgctxt "command-option-description"
 msgid "The English name of the card you're looking for."
 msgstr ""
@@ -1078,7 +1068,7 @@ msgctxt "command-name"
 msgid "ping"
 msgstr "핑"
 
-#: src\commands\ygoprodeck.ts:33
+#: src\commands\ygoprodeck.ts:34
 msgctxt "command-name"
 msgid "ygoprodeck"
 msgstr ""
@@ -1133,7 +1123,7 @@ msgctxt "command-description"
 msgid "Test latency to the new bot instance."
 msgstr "새로운 봇 인스턴스의 지연 시간을 테스트합니다."
 
-#: src\commands\ygoprodeck.ts:34
+#: src\commands\ygoprodeck.ts:35
 msgctxt "command-description"
 msgid "Search the YGOPRODECK card database."
 msgstr "YGOPRODECK 카드 데이터베이스에서 검색합니다."
