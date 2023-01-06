@@ -9,12 +9,10 @@ export abstract class Command {
 		throw new Error("Not implemented");
 	}
 
-	// Hack: https://github.com/Microsoft/TypeScript/issues/3841#issuecomment-337560146
-	["constructor"]: typeof Command;
 	constructor(protected metrics: Metrics) {}
 
 	get meta(): RESTPostAPIApplicationCommandsJSONBody {
-		return this.constructor.meta;
+		return (this.constructor as typeof Command).meta;
 	}
 
 	protected abstract get logger(): Logger;
