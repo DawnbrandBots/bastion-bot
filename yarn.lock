@@ -7,8 +7,10 @@
   resolved "https://registry.yarnpkg.com/@alphakretin/eslint-config/-/eslint-config-2.1.0.tgz#4d781bb3c4b287bf309be0f4cbf39509c9f2500f"
   integrity sha512-ajBIesdpkd16ciSyS7+6zEw9INwvTXbtV+bsu/+iXf/DARz2snAEJhErkDtyzHexb/01Kn6fQKc1gXCD1puWog==
 
-"@alphakretin/essentials@../typescript-tooling/essentials":
-  version "5.0.0-alpha"
+"@alphakretin/essentials@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@alphakretin/essentials/-/essentials-5.0.0.tgz#8641bab9d72b50497367b780652e2a20de7fbd9e"
+  integrity sha512-wORioSgvPVR6MB7M4KtDzt95DP/hLRZYVYnPVlKMYOJrjTPpJdBFdWT35Fj/2rT8w7KtwEvcmBRgnMtj8lQFFg==
   dependencies:
     "@alphakretin/eslint-config" "^2.1.0"
     "@tsconfig/node18" "^1.0.1"
