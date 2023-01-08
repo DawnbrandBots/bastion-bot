@@ -2,8 +2,8 @@ import { Message } from "discord.js";
 import { PingMessageListener } from "../../src/events";
 import { Locale, LocaleProvider } from "../../src/locale";
 
-const { Message: MockMessage, MessageMentions } = jest.createMockFromModule("discord.js");
-const { EventLocker: MockEventLocker } = jest.createMockFromModule("../../src/event-lock");
+const { Message: MockMessage, MessageMentions } = jest.createMockFromModule<any>("discord.js");
+const { EventLocker: MockEventLocker } = jest.createMockFromModule<any>("../../src/event-lock");
 
 class MockLocaleProvider extends LocaleProvider {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
