@@ -58,8 +58,7 @@
 		"zlib-sync": "^0.1.7"
 	},
 	"resolutions": {
-		"@types/node": "^18.11.18",
-		"gettext-parser": "^6.0.0"
+		"@types/node": "^18.11.18"
 	},
 	"babel": {
 		"plugins": [
