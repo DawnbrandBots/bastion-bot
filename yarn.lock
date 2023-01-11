@@ -2051,10 +2051,10 @@ babel-plugin-polyfill-regenerator@^0.4.0:
   dependencies:
     "@babel/helper-define-polyfill-provider" "^0.3.2"
 
-babel-plugin-ttag@^1.8.1:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-ttag/-/babel-plugin-ttag-1.8.1.tgz#d15c6e48f8d6569d4b2c0fccbdcb3c14969a7697"
-  integrity sha512-GUxMo29VHFeNGEnhnxv0Zd+yREkT5f2H0/EkJlv4L3j7KkElnBUDfkXVW3X78HAlrrqqQ5S7ymZBBjJeXDE+Kw==
+babel-plugin-ttag@1.8.5:
+  version "1.8.5"
+  resolved "https://registry.yarnpkg.com/babel-plugin-ttag/-/babel-plugin-ttag-1.8.5.tgz#39d92b303734165e70bcec1edbc10a9d85a6cef9"
+  integrity sha512-sUD1XSskVOFKO+jIcy0aSyB2W6XoY28ptGe9EkEPPjU2LYCRtQdPTuvzWT9aE6tM2WtQqz6plGJ97wJp5ybQTw==
   dependencies:
     "@babel/generator" "^7.12.5"
     "@babel/template" "^7.10.4"
@@ -2062,7 +2062,7 @@ babel-plugin-ttag@^1.8.1:
     ajv "6.12.3"
     babel-plugin-macros "^2.8.0"
     dedent "0.6.0"
-    gettext-parser "^5.1.2"
+    gettext-parser "6.0.0"
     mkdirp "^1.0.4"
     plural-forms "^0.5.3"
 
@@ -3130,7 +3130,7 @@ get-stream@^6.0.0:
   resolved "https://registry.yarnpkg.com/get-stream/-/get-stream-6.0.1.tgz#a262d8eef67aced57c2852ad6167526a43cbf7b7"
   integrity sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==
 
-gettext-parser@^5.1.2, gettext-parser@^6.0.0:
+gettext-parser@6.0.0, gettext-parser@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/gettext-parser/-/gettext-parser-6.0.0.tgz#201e61d92c1cc7edf8f6ee3a7e3d6ab1e061b44c"
   integrity sha512-eWFsR78gc/eKnzDgc919Us3cbxQbzxK1L8vAIZrKMQqOUgULyeqmczNlBjTlVTk2FaB7nV9C1oobd/PGBOqNmg==
@@ -5274,10 +5274,10 @@ tsyringe@^4.7.0:
   dependencies:
     tslib "^1.9.3"
 
-ttag-cli@^1.10.2:
-  version "1.10.2"
-  resolved "https://registry.yarnpkg.com/ttag-cli/-/ttag-cli-1.10.2.tgz#c34f35946d26dc35ea9e5ac99241215af7a3e645"
-  integrity sha512-/2streSON3/hjCkSGM5YTPISa4BOHNC9Mo4cIEjuO6SX7e0s4syylgj7ptgE6mYCHZ1pbtOyZz9c5aPtQ8UHCA==
+ttag-cli@^1.10.5:
+  version "1.10.5"
+  resolved "https://registry.yarnpkg.com/ttag-cli/-/ttag-cli-1.10.5.tgz#0aa0d9f248f401de4ed2389d4ee77257cfabbbcc"
+  integrity sha512-rIJ2r3dAd2yExsNOzUQ5Fk6FxqpGZkHf9zdd78qB3yDoDyyE6y0ByxV6MX+Am8VqlJ23HdTC95JtokuJhla9Dg==
   dependencies:
     "@babel/core" "^7.12.3"
     "@babel/generator" "^7.12.5"
@@ -5294,7 +5294,7 @@ ttag-cli@^1.10.2:
     "@babel/preset-typescript" "7.7.0"
     "@babel/template" "^7.10.4"
     ansi "^0.3.1"
-    babel-plugin-ttag "^1.8.1"
+    babel-plugin-ttag "1.8.5"
     babel-preset-const-enum "^1.0.0"
     chalk "^2.4.2"
     cross-spawn "^5.1.0"
