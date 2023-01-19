@@ -1,11 +1,13 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction } from "discord.js";
-import fetch from "node-fetch";
+import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c } from "ttag";
 import { createCardEmbed } from "../card";
 import { Command } from "../Command";
+import { CardSchema } from "../definitions";
 import { buildLocalisedCommand, getResultLangStringOption, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
@@ -14,7 +16,11 @@ import { Metrics } from "../metrics";
 export class RandomCommand extends Command {
 	#logger = getLogger("command:random");
 
-	constructor(metrics: Metrics, @inject("LocaleProvider") private locales: LocaleProvider) {
+	constructor(
+		metrics: Metrics,
+		@inject("LocaleProvider") private locales: LocaleProvider,
+		@inject("got") private got: Got
+	) {
 		super(metrics);
 	}
 
@@ -34,8 +40,8 @@ export class RandomCommand extends Command {
 
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		await interaction.deferReply();
-		const response = await fetch(`${process.env.API_URL}/ocg-tcg/random`);
-		const cards = await response.json();
+		const url = `${process.env.API_URL}/ocg-tcg/random`;
+		const cards = await this.got(url, { throwHttpErrors: true }).json<Static<typeof CardSchema>[]>();
 		const lang = await this.locales.get(interaction);
 		const embeds = createCardEmbed(cards[0], lang);
 		const end = Date.now();

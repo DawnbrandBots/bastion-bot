@@ -240,10 +240,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 		url.searchParams.set("name", query);
 		url.searchParams.set("lang", lang);
 		url.searchParams.set("count", `${count}`);
-		return await this.got(url, {
-			headers: { Accept: "application/json" },
-			throwHttpErrors: true
-		}).json<Static<typeof RushCardSchema>[]>();
+		return await this.got(url, { throwHttpErrors: true }).json<Static<typeof RushCardSchema>[]>();
 	}
 
 	override async autocomplete(interaction: AutocompleteInteraction): Promise<void> {

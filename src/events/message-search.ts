@@ -11,6 +11,7 @@ import {
 	PermissionsBitField,
 	RESTJSONErrorCodes
 } from "discord.js";
+import { Got } from "got";
 import { parserFor, ParserRules } from "simple-markdown";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
@@ -202,6 +203,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 
 	constructor(
 		@inject("LocaleProvider") private locales: LocaleProvider,
+		@inject("got") private got: Got,
 		private metrics: Metrics,
 		private recentCache: RecentMessageCache,
 		private abdeploy: ABDeploy,
@@ -252,7 +254,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		const language = await this.locales.getM(message);
 		const promises = inputs.map(async input => {
 			const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
-			const card = await getCard(type, searchTerm, inputLanguage);
+			const card = await getCard(this.got, type, searchTerm, inputLanguage);
 			useLocale(resultLanguage);
 			let replyOptions;
 			if (!card) {

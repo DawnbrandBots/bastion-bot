@@ -1,7 +1,8 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
-import { injectable } from "tsyringe";
+import { Got } from "got";
+import { inject, injectable } from "tsyringe";
 import { getCard, inferInputType } from "../card";
 import { Command } from "../Command";
 import { getLogger, Logger } from "../logger";
@@ -12,7 +13,7 @@ import { addNotice, searchQueryTypeStringOption } from "../utils";
 export class IdCommand extends Command {
 	#logger = getLogger("command:id");
 
-	constructor(metrics: Metrics) {
+	constructor(metrics: Metrics, @inject("got") private got: Got) {
 		super(metrics);
 	}
 
@@ -37,7 +38,7 @@ export class IdCommand extends Command {
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const [type, input] = inferInputType(interaction);
 		await interaction.deferReply({ ephemeral: true });
-		const card = await getCard(type, input);
+		const card = await getCard(this.got, type, input);
 		let end: number;
 		if (!card) {
 			end = Date.now();

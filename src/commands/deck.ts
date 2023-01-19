@@ -21,7 +21,7 @@ import {
 	DiscordjsErrorCodes,
 	EmbedBuilder
 } from "discord.js";
-import fetch from "node-fetch";
+import { Got } from "got";
 import { Readable } from "stream";
 import { inject, injectable } from "tsyringe";
 import { c, msgid, ngettext, t, useLocale } from "ttag";
@@ -51,7 +51,11 @@ export class DeckCommand extends Command {
 	private ftpUser: string | undefined;
 	private ftpPass: string | undefined;
 
-	constructor(@inject(Metrics) metrics: Metrics, @inject("LocaleProvider") private locales: LocaleProvider) {
+	constructor(
+		@inject(Metrics) metrics: Metrics,
+		@inject("LocaleProvider") private locales: LocaleProvider,
+		@inject("got") private got: Got
+	) {
 		super(metrics);
 		this.ftp = new Client();
 
@@ -174,27 +178,26 @@ export class DeckCommand extends Command {
 	}
 
 	async getCards(cards: Set<number>): Promise<Map<number, Static<typeof CardSchema>>> {
-		const response = await fetch(`${process.env.API_URL}/ocg-tcg/multi?password=${[...cards].join(",")}`);
-		if (response.status === 200) {
-			const body: (Static<typeof CardSchema> | null)[] = await response.json();
-			const cardMemo = new Map<number, Static<typeof CardSchema>>();
-			for (const card of body) {
-				if (card?.password) {
-					cardMemo.set(card.password, card);
-				}
-				if (card?.fake_password) {
-					if (Array.isArray(card.fake_password)) {
-						for (const password of card.fake_password) {
-							cardMemo.set(password, card);
-						}
-					} else {
-						cardMemo.set(card.fake_password, card);
+		const response = await this.got(`${process.env.API_URL}/ocg-tcg/multi?password=${[...cards].join(",")}`, {
+			throwHttpErrors: true
+		});
+		const body: (Static<typeof CardSchema> | null)[] = JSON.parse(response.body);
+		const cardMemo = new Map<number, Static<typeof CardSchema>>();
+		for (const card of body) {
+			if (card?.password) {
+				cardMemo.set(card.password, card);
+			}
+			if (card?.fake_password) {
+				if (Array.isArray(card.fake_password)) {
+					for (const password of card.fake_password) {
+						cardMemo.set(password, card);
 					}
+				} else {
+					cardMemo.set(card.fake_password, card);
 				}
 			}
-			return cardMemo;
 		}
-		throw new Error((await response.json()).message);
+		return cardMemo;
 	}
 
 	async generateProfile(deck: TypedDeck, lang: Locale, inline: boolean, outUrl: string): Promise<EmbedBuilder> {
@@ -331,8 +334,7 @@ export class DeckCommand extends Command {
 		if (deck.size > 1024) {
 			throw new Error(t`.ydk files should not be larger than 1 KB!`);
 		}
-		const file = await fetch(deck.url);
-		const ydk = await file.text();
+		const ydk = await this.got(deck.url).text();
 		return ydkToTypedDeck(ydk);
 	}
 

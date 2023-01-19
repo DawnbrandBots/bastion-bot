@@ -2,7 +2,7 @@ import { SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandBu
 import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction } from "discord.js";
-import fetch from "node-fetch";
+import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { CardLookupType, getCard } from "../card";
@@ -16,7 +16,11 @@ import { Metrics } from "../metrics";
 export class ArtCommand extends Command {
 	#logger = getLogger("command:art");
 
-	constructor(metrics: Metrics, @inject("LocaleProvider") private locales: LocaleProvider) {
+	constructor(
+		metrics: Metrics,
+		@inject("LocaleProvider") private locales: LocaleProvider,
+		@inject("got") private got: Got
+	) {
 		super(metrics);
 	}
 
@@ -71,16 +75,8 @@ export class ArtCommand extends Command {
 
 	async getArt(card: Static<typeof CardSchema>): Promise<string | undefined> {
 		const artUrl = `${process.env.IMAGE_HOST}/${card.password}.png`;
-		const response = await fetch(artUrl, { method: "HEAD" });
-		// 400: Bad syntax, 404: Not found
-		if (response.status === 400 || response.status === 404) {
-			return undefined;
-		}
-		// 200: OK
-		if (response.status === 200) {
-			return artUrl;
-		}
-		throw new Error((await response.json()).message);
+		const response = await this.got.head(artUrl);
+		return response.statusCode === 200 ? artUrl : undefined;
 	}
 
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
@@ -89,7 +85,7 @@ export class ArtCommand extends Command {
 		const resultLanguage = await this.locales.get(interaction);
 		const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
 		// Send out both requests simultaneously
-		const [, card] = await Promise.all([interaction.deferReply(), getCard(type, input, inputLanguage)]);
+		const [, card] = await Promise.all([interaction.deferReply(), getCard(this.got, type, input, inputLanguage)]);
 		let end: number;
 		if (!card) {
 			end = Date.now();
