@@ -1,7 +1,7 @@
 import { Static } from "@sinclair/typebox";
 import { ChatInputCommandInteraction, EmbedBuilder, EmbedFooterOptions } from "discord.js";
+import { Got } from "got";
 import { parseDocument } from "htmlparser2";
-import fetch from "node-fetch";
 import { c, t, useLocale } from "ttag";
 import { CardSchema, LimitRegulation } from "./definitions";
 import { RushCardSchema } from "./definitions/rush";
@@ -126,6 +126,7 @@ export const Icon = {
 export type CardLookupType = "name" | "password" | "konami-id" | "kid";
 
 export async function getCard(
+	got: Got,
 	type: CardLookupType,
 	input: string,
 	lang?: Locale
@@ -142,16 +143,16 @@ export async function getCard(
 			url += `&lang=${lang}`;
 		}
 	}
-	const response = await fetch(url);
-	// 400: Bad syntax, 404: Not found
-	if (response.status === 400 || response.status === 404) {
+	const response = await got(url);
+	// 404: Not found
+	if (response.statusCode === 404) {
 		return undefined;
 	}
 	// 200: OK
-	if (response.status === 200) {
-		return await response.json();
+	if (response.statusCode === 200) {
+		return JSON.parse(response.body);
 	}
-	throw new Error((await response.json()).message);
+	throw new got.HTTPError(response);
 }
 
 function formatLimitRegulation(value: LimitRegulation | null | undefined): number | null {
