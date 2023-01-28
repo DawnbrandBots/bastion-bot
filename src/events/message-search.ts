@@ -1,14 +1,17 @@
 import { rules } from "discord-markdown";
 import {
+	Colors,
 	DiscordAPIError,
 	EmbedBuilder,
 	EmojiIdentifierResolvable,
 	FormattingPatterns,
 	Message,
 	MessageReaction,
+	MessageReplyOptions,
 	PermissionsBitField,
 	RESTJSONErrorCodes
 } from "discord.js";
+import { Got } from "got";
 import { parserFor, ParserRules } from "simple-markdown";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
@@ -116,7 +119,7 @@ export function preprocess(
  * 00010000,ja
  */
 const NUMERIC_REGEX = new RegExp(
-	/^(?<kid>%)?\s*(?<number>\d+)\s*(?:,(?<lang>LOCALES))?$/
+	/^(?<kid>%)?\s*(?<number>\d{4,})\s*(?:,(?<lang>LOCALES))?$/
 		.toString()
 		.slice(1, -1)
 		.replace("LOCALES", LOCALES.join("|"))
@@ -171,25 +174,22 @@ export function inputToGetCardArguments(input: string, defaultLanguage: Locale) 
 	}
 }
 
-function addExplainer(embeds: EmbedBuilder | EmbedBuilder[], locale: Locale, id: unknown): EmbedBuilder[] {
-	if (!Array.isArray(embeds)) {
-		embeds = [embeds];
-	}
-	embeds[embeds.length - 1].addFields({
-		name: t`🤖 The new Bastion search experience is here!`,
-		value:
-			// eslint-disable-next-line prefer-template
-			t`📨 Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!` +
-			"\n" +
-			t`📚 [__Learn more about how search works.__](https://github.com/DawnbrandBots/bastion-bot/blob/master/docs/card-search.md?utm_source=bastion)`
-	});
-	if (locale !== "en") {
-		embeds[embeds.length - 1].addFields({
-			name: t`💬 Translations missing?`,
-			value: t`Help translate Bastion at the links above.`
-		});
-	}
-	return embeds;
+function createMisconfigurationEmbed(error: DiscordAPIError, message: Message): EmbedBuilder {
+	return new EmbedBuilder()
+		.setColor(Colors.Red)
+		.setTitle(t`⚠️ I am missing permissions in the channel!`)
+		.setURL(message.url)
+		.setDescription(
+			t`Please have a server administrator [fix this](https://github.com/DawnbrandBots/bastion-bot#discord-permissions).`
+		)
+		.setFooter({ text: error.message });
+}
+
+function prependEmbed(replyOptions: MessageReplyOptions, embed: EmbedBuilder): MessageReplyOptions {
+	return {
+		...replyOptions,
+		embeds: [embed, ...(replyOptions.embeds ?? [])]
+	};
 }
 
 // Same hack as in card.ts
@@ -203,6 +203,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 
 	constructor(
 		@inject("LocaleProvider") private locales: LocaleProvider,
+		@inject("got") private got: Got,
 		private metrics: Metrics,
 		private recentCache: RecentMessageCache,
 		private abdeploy: ABDeploy,
@@ -221,7 +222,8 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 	}
 
 	async run(message: Message): Promise<void> {
-		if (message.author.bot) {
+		// ignore system messages as we cannot reply to them
+		if (message.author.bot || message.system) {
 			return;
 		}
 		// Deactivate new functionality in select servers
@@ -252,30 +254,51 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		const language = await this.locales.getM(message);
 		const promises = inputs.map(async input => {
 			const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
-			const card = await getCard(type, searchTerm, inputLanguage);
+			const card = await getCard(this.got, type, searchTerm, inputLanguage);
 			useLocale(resultLanguage);
-			// Note: nonfunctional in development or preview because those bots do not have global commands.
-			// To test functionality in development or preview, fetch guild commands and search them instead.
-			const id = message.client.application.commands.cache.find(cmd => cmd.name === "locale")?.id ?? 0;
-			let reply;
+			let replyOptions;
 			if (!card) {
 				let context = "\n";
 				if (type === "name") {
 					const localisedInputLanguage = LOCALES_MAP.get(inputLanguage);
+					// Note: nonfunctional in development or preview because those bots do not have global commands.
+					// To test functionality in development or preview, fetch guild commands and search them instead.
+					const id = message.client.application.commands.cache.find(cmd => cmd.name === "locale")?.id ?? 0;
 					context += t`Search language: **${localisedInputLanguage}** (${inputLanguage}). Check defaults with </locale get:${id}> and configure with </locale set:${id}>`;
 				} else {
 					const localisedType = rc("command-option").gettext(type);
 					context += t`Search type: ${localisedType}`;
 				}
-				reply = await message.reply({
-					content: t`Could not find a card matching \`${input}\`!` + context
-				});
+				replyOptions = { content: t`Could not find a card matching \`${input}\`!` + context };
 			} else {
-				let embeds = createCardEmbed(card, resultLanguage);
-				embeds = addExplainer(embeds, resultLanguage, id);
-				reply = await message.reply({ embeds });
+				const embeds = createCardEmbed(card, resultLanguage);
+				if (resultLanguage !== "en") {
+					embeds[embeds.length - 1].addFields({
+						name: t`💬 Translations missing?`,
+						value: t`Help translate Bastion at the links above.`
+					});
+				}
+				replyOptions = { embeds };
 			}
-			return [card, reply] as const;
+			try {
+				const reply = await message.reply(replyOptions);
+				return [card, reply] as const;
+			} catch (error) {
+				const userConfigurationErrors: unknown[] = [
+					RESTJSONErrorCodes.MissingPermissions,
+					RESTJSONErrorCodes.CannotReplyWithoutPermissionToReadMessageHistory,
+					RESTJSONErrorCodes.MissingAccess // missing Send Messages in Threads
+				];
+				if (error instanceof DiscordAPIError && userConfigurationErrors.includes(error.code)) {
+					this.log("info", message, input, error);
+					message.author
+						.send(prependEmbed(replyOptions, createMisconfigurationEmbed(error, message)))
+						.catch(e => this.log("info", message, input, e));
+				} else {
+					this.log("error", message, error);
+				}
+				return [card] as const;
+			}
 		});
 		const results = await Promise.allSettled(promises);
 		const replies = [];
@@ -283,8 +306,11 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			if (result.status === "fulfilled") {
 				const [card, reply] = result.value;
 				this.metrics.writeSearch(message, inputs[i], card, reply);
-				replies.push(reply.id);
+				if (reply) {
+					replies.push(reply.id);
+				}
 			} else {
+				// Exception from getCard
 				this.metrics.writeSearch(message, inputs[i]);
 				this.log("error", message, inputs[i], result.reason);
 			}

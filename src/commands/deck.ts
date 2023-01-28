@@ -21,7 +21,7 @@ import {
 	DiscordjsErrorCodes,
 	EmbedBuilder
 } from "discord.js";
-import fetch from "node-fetch";
+import { Got } from "got";
 import { Readable } from "stream";
 import { inject, injectable } from "tsyringe";
 import { c, msgid, ngettext, t, useLocale } from "ttag";
@@ -33,7 +33,7 @@ import { CardSchema } from "../definitions";
 import { COMMAND_LOCALIZATIONS, Locale, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { addNotice, serializeCommand, splitText } from "../utils";
+import { addNotice, serialiseInteraction, splitText } from "../utils";
 
 // Same hack as in card.ts
 const rc = c;
@@ -51,7 +51,11 @@ export class DeckCommand extends Command {
 	private ftpUser: string | undefined;
 	private ftpPass: string | undefined;
 
-	constructor(@inject(Metrics) metrics: Metrics, @inject("LocaleProvider") private locales: LocaleProvider) {
+	constructor(
+		@inject(Metrics) metrics: Metrics,
+		@inject("LocaleProvider") private locales: LocaleProvider,
+		@inject("got") private got: Got
+	) {
 		super(metrics);
 		this.ftp = new Client();
 
@@ -174,27 +178,26 @@ export class DeckCommand extends Command {
 	}
 
 	async getCards(cards: Set<number>): Promise<Map<number, Static<typeof CardSchema>>> {
-		const response = await fetch(`${process.env.API_URL}/ocg-tcg/multi?password=${[...cards].join(",")}`);
-		if (response.status === 200) {
-			const body: (Static<typeof CardSchema> | null)[] = await response.json();
-			const cardMemo = new Map<number, Static<typeof CardSchema>>();
-			for (const card of body) {
-				if (card?.password) {
-					cardMemo.set(card.password, card);
-				}
-				if (card?.fake_password) {
-					if (Array.isArray(card.fake_password)) {
-						for (const password of card.fake_password) {
-							cardMemo.set(password, card);
-						}
-					} else {
-						cardMemo.set(card.fake_password, card);
+		const response = await this.got(`${process.env.API_URL}/ocg-tcg/multi?password=${[...cards].join(",")}`, {
+			throwHttpErrors: true
+		});
+		const body: (Static<typeof CardSchema> | null)[] = JSON.parse(response.body);
+		const cardMemo = new Map<number, Static<typeof CardSchema>>();
+		for (const card of body) {
+			if (card?.password) {
+				cardMemo.set(card.password, card);
+			}
+			if (card?.fake_password) {
+				if (Array.isArray(card.fake_password)) {
+					for (const password of card.fake_password) {
+						cardMemo.set(password, card);
 					}
+				} else {
+					cardMemo.set(card.fake_password, card);
 				}
 			}
-			return cardMemo;
 		}
-		throw new Error((await response.json()).message);
+		return cardMemo;
 	}
 
 	async generateProfile(deck: TypedDeck, lang: Locale, inline: boolean, outUrl: string): Promise<EmbedBuilder> {
@@ -331,13 +334,12 @@ export class DeckCommand extends Command {
 		if (deck.size > 1024) {
 			throw new Error(t`.ydk files should not be larger than 1 KB!`);
 		}
-		const file = await fetch(deck.url);
-		const ydk = await file.text();
+		const ydk = await this.got(deck.url).text();
 		return ydkToTypedDeck(ydk);
 	}
 
 	protected log(interaction: ChatInputCommandInteraction, error: Error): void {
-		this.logger.info(serializeCommand(interaction), error);
+		this.logger.info(serialiseInteraction(interaction), error);
 	}
 
 	protected async upload(filename: string, deck: Buffer): Promise<void> {
@@ -404,7 +406,7 @@ export class DeckCommand extends Command {
 		if (deck.main.length + deck.extra.length + deck.side.length < 1) {
 			useLocale(resultLanguage);
 			const end = Date.now();
-			this.logger.info(serializeCommand(interaction), "empty deck");
+			this.logger.info(serialiseInteraction(interaction), "empty deck");
 			await interaction.editReply({
 				content: t`Error: Your deck is empty.`
 			});
@@ -416,7 +418,7 @@ export class DeckCommand extends Command {
 		const outUrl = toURL(deck);
 		const outFile = typedDeckToYdk(deck);
 
-		this.logger.info(serializeCommand(interaction), outUrl);
+		this.logger.info(serialiseInteraction(interaction), outUrl);
 		const content = await this.generateProfile(deck, resultLanguage, !isStacked, outUrl);
 
 		useLocale(resultLanguage);
@@ -444,9 +446,16 @@ export class DeckCommand extends Command {
 		});
 
 		const filter = (i: ButtonInteraction): boolean => {
-			this.logger.info(serializeCommand(interaction), `click: ${i.user.id}`);
-			// only allow the OP to click
-			return i.user.id === interaction.user.id;
+			this.logger.info(serialiseInteraction(interaction), `click: ${i.user.id}`);
+			if (i.user.id === interaction.user.id) {
+				return true;
+			}
+			useLocale(resultLanguage);
+			i.reply({
+				content: t`Buttons can only be used by the user who called Bastion.`,
+				ephemeral: true
+			}).catch(e => this.logger.error(serialiseInteraction(interaction), e));
+			return false;
 		};
 
 		// we don't await this promise, we set up the callback and then let the method complete
@@ -461,7 +470,7 @@ export class DeckCommand extends Command {
 					await this.upload(filename, deckBuffer);
 				} catch (error) {
 					// error must be from Discord.JS or basic-ftp, which we trust to only throw Errors
-					this.logger.error(serializeCommand(interaction), error);
+					this.logger.error(serialiseInteraction(interaction), error);
 					await i.editReply({ content: t`Deck upload failed!` });
 					// Remove button
 					await interaction.editReply({ embeds, files: [attachment], components: [] });
@@ -469,7 +478,7 @@ export class DeckCommand extends Command {
 				}
 
 				const url = `https://ygoprodeck.com/deckbuilder/?u=https://ygoprodeck.com/discord-decks/${filename}`;
-				this.logger.info(serializeCommand(interaction), url);
+				this.logger.info(serialiseInteraction(interaction), url);
 				// disable original button
 				// prepare row to disable button on original message
 				const disabledRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -491,12 +500,12 @@ export class DeckCommand extends Command {
 				// a rejection can just mean the timeout was reached without a response
 				// otherwise, though, we want to treat it as a normal error
 				if (err.code !== DiscordjsErrorCodes.InteractionCollectorError) {
-					this.logger.error(serializeCommand(interaction), err);
+					this.logger.error(serialiseInteraction(interaction), err);
 				}
 				// remove original button, regardless of error source
 				interaction
 					.editReply({ embeds, files: [attachment], components: [] })
-					.catch(e => this.logger.error(serializeCommand(interaction), e));
+					.catch(e => this.logger.error(serialiseInteraction(interaction), e));
 			});
 
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate

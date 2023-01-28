@@ -1,6 +1,7 @@
 import { SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandBuilder } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction } from "discord.js";
+import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { CardLookupType, createCardEmbed, getCard } from "../card";
@@ -19,7 +20,11 @@ import { Metrics } from "../metrics";
 export class SearchCommand extends Command {
 	#logger = getLogger("command:search");
 
-	constructor(metrics: Metrics, @inject("LocaleProvider") private locales: LocaleProvider) {
+	constructor(
+		metrics: Metrics,
+		@inject("LocaleProvider") private locales: LocaleProvider,
+		@inject("got") private got: Got
+	) {
 		super(metrics);
 	}
 
@@ -81,7 +86,7 @@ export class SearchCommand extends Command {
 		const resultLanguage = await this.locales.get(interaction);
 		const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
 		// Send out both requests simultaneously
-		const [, card] = await Promise.all([interaction.deferReply(), getCard(type, input, inputLanguage)]);
+		const [, card] = await Promise.all([interaction.deferReply(), getCard(this.got, type, input, inputLanguage)]);
 		let end: number;
 		if (!card) {
 			end = Date.now();

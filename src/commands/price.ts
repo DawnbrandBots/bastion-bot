@@ -2,7 +2,7 @@ import { SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandBu
 import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
-import fetch from "node-fetch";
+import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { CardLookupType, getCard } from "../card";
@@ -44,7 +44,11 @@ const CHOICES_GLOBAL: Record<vendorId, () => string> = {
 export class PriceCommand extends Command {
 	#logger = getLogger("command:price");
 
-	constructor(metrics: Metrics, @inject("LocaleProvider") private locales: LocaleProvider) {
+	constructor(
+		metrics: Metrics,
+		@inject("LocaleProvider") private locales: LocaleProvider,
+		@inject("got") private got: Got
+	) {
 		super(metrics);
 	}
 
@@ -105,11 +109,11 @@ export class PriceCommand extends Command {
 		return this.#logger;
 	}
 
-	// TODO: i18n
-	private vendorFormats = {
-		tcgplayer: (price: number): string => `$${price.toFixed(2)}`,
-		cardmarket: (price: number): string => `€${price.toFixed(2)}`,
-		coolstuffinc: (price: number): string => `$${price.toFixed(2)}`
+	// specify Record type to avoid repeating type information on each property
+	private vendorFormats: Record<vendorId, (locale: Locale) => Intl.NumberFormat> = {
+		tcgplayer: locale => Intl.NumberFormat(locale, { style: "currency", currency: "USD" }),
+		cardmarket: locale => Intl.NumberFormat(locale, { style: "currency", currency: "EUR" }),
+		coolstuffinc: locale => Intl.NumberFormat(locale, { style: "currency", currency: "USD" })
 	};
 
 	async getPrice(card: Static<typeof CardSchema>, vendor: string): Promise<APIPrice | undefined> {
@@ -121,16 +125,16 @@ export class PriceCommand extends Command {
 		const priceUrl = `https://db.ygoprodeck.com/queries/getPrices.php?cardone=${encodeURIComponent(
 			card.name.en
 		)}&vendor=${vendor}`;
-		const response = await fetch(priceUrl);
+		const response = await this.got(priceUrl);
 		// 400: Bad syntax, 404: Not found
-		if (response.status === 400 || response.status === 404) {
+		if (response.statusCode === 400 || response.statusCode === 404) {
 			return undefined;
 		}
 		// 200: OK
-		if (response.status === 200) {
-			return await response.json();
+		if (response.statusCode === 200) {
+			return JSON.parse(response.body);
 		}
-		throw new Error((await response.json()).message);
+		throw new Error(JSON.parse(response.body).message);
 	}
 
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
@@ -140,7 +144,7 @@ export class PriceCommand extends Command {
 		const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
 		const vendor = interaction.options.getString("vendor", true) as vendorId;
 		// Send out both requests simultaneously
-		const [, card] = await Promise.all([interaction.deferReply(), getCard(type, input, inputLanguage)]);
+		const [, card] = await Promise.all([interaction.deferReply(), getCard(this.got, type, input, inputLanguage)]);
 		let end: number;
 		if (!card) {
 			end = Date.now();
@@ -156,7 +160,10 @@ export class PriceCommand extends Command {
 					prices.set_info
 						.map(s => {
 							const rarity = s.rarity ? ` (${s.rarity})` : s.rarity_short ? ` ${s.rarity_short}` : "";
-							const price = s.price !== null ? this.vendorFormats[vendor](s.price) : t`No market price`;
+							const price =
+								s.price !== null
+									? this.vendorFormats[vendor](resultLanguage).format(s.price)
+									: t`No market price`;
 							return `[${s.set}](${s.url})${rarity}: ${price}`;
 						})
 						.join("\n"),

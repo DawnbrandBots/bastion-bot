@@ -1,9 +1,10 @@
 import { Static } from "@sinclair/typebox";
 import { ChatInputCommandInteraction, EmbedBuilder, EmbedFooterOptions } from "discord.js";
+import { Got } from "got";
 import { parseDocument } from "htmlparser2";
-import fetch from "node-fetch";
 import { c, t, useLocale } from "ttag";
 import { CardSchema, LimitRegulation } from "./definitions";
+import { RushCardSchema } from "./definitions/rush";
 import { Locale } from "./locale";
 
 /**
@@ -20,7 +21,7 @@ import { Locale } from "./locale";
  */
 const rc = c;
 
-const Colour = {
+export const Colour = {
 	Token: 0x8d8693,
 	Spell: 0x1d9e74,
 	Trap: 0xbc5a84,
@@ -61,7 +62,7 @@ c("spell-trap-property").t`Counter Trap`;
 // Guarantee default locale at import time since the resulting strings matter.
 useLocale("en");
 
-const RaceIcon = {
+export const RaceIcon = {
 	[c("monster-type-race").t`Warrior`]: "<:Warrior:602707927224025118>",
 	[c("monster-type-race").t`Spellcaster`]: "<:Spellcaster:602707926834085888>",
 	[c("monster-type-race").t`Fairy`]: "<:Fairy:602707926200614912>",
@@ -91,7 +92,7 @@ const RaceIcon = {
 	//Charisma: "<:Charisma:602707891530629130>"
 };
 
-const AttributeIcon = {
+export const AttributeIcon = {
 	[c("attribute").t`EARTH`]: "<:EARTH:602707925726658570>",
 	[c("attribute").t`WATER`]: "<:WATER:602707927341596691>",
 	[c("attribute").t`FIRE`]: "<:FIRE:602707928255954963>",
@@ -102,7 +103,7 @@ const AttributeIcon = {
 	//LAUGH: "<:LAUGH:602719132567207938>"
 };
 
-const Icon = {
+export const Icon = {
 	Spell: "<:SPELL:623021653580054538>",
 	Trap: "<:TRAP:623021653810741258> ",
 	// Property icons of Spells/Traps
@@ -125,6 +126,7 @@ const Icon = {
 export type CardLookupType = "name" | "password" | "konami-id" | "kid";
 
 export async function getCard(
+	got: Got,
 	type: CardLookupType,
 	input: string,
 	lang?: Locale
@@ -141,16 +143,16 @@ export async function getCard(
 			url += `&lang=${lang}`;
 		}
 	}
-	const response = await fetch(url);
-	// 400: Bad syntax, 404: Not found
-	if (response.status === 400 || response.status === 404) {
+	const response = await got(url);
+	// 404: Not found
+	if (response.statusCode === 404) {
 		return undefined;
 	}
 	// 200: OK
-	if (response.status === 200) {
-		return await response.json();
+	if (response.statusCode === 200) {
+		return JSON.parse(response.body);
 	}
-	throw new Error((await response.json()).message);
+	throw new got.HTTPError(response);
 }
 
 function formatLimitRegulation(value: LimitRegulation | null | undefined): number | null {
@@ -195,7 +197,7 @@ export function parseAndExpandRuby(html: string): [string, string] {
 	return [rubyless, rubyonly];
 }
 
-function formatCardName(card: Static<typeof CardSchema>, lang: Locale): string {
+export function formatCardName(card: Static<typeof CardSchema> | Static<typeof RushCardSchema>, lang: Locale): string {
 	const name = card.name[lang]; // TypeScript cannot narrow typing on this without the variable
 	if ((lang === "ja" || lang === "ko") && name?.includes("<ruby>")) {
 		const [rubyless, rubyonly] = parseAndExpandRuby(name);
@@ -218,7 +220,7 @@ function formatOCGNumbering(text: string): string {
 	// - Number 86
 }
 
-function formatCardText(text: Static<typeof CardSchema>["text"], lang: Locale): string {
+export function formatCardText(text: Static<typeof CardSchema>["text"], lang: Locale): string {
 	// Discord cannot take just a blank or spaces, but this zero-width space works
 	if (lang === "ja" || lang === "ko" || lang === "zh-CN" || lang === "zh-TW") {
 		let str = text[lang]; // TypeScript cannot narrow typing on this without the variable
@@ -251,13 +253,20 @@ function formatFooter(card: Static<typeof CardSchema>): EmbedFooterOptions {
 	return { text };
 }
 
+/**
+ * @returns YGOPRODECK card database page for the specified card
+ */
+export function ygoprodeckCard(term: string | number): string {
+	return `https://ygoprodeck.com/card/?search=${encodeURIComponent(term)}&utm_source=bastion`;
+}
+
 export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): EmbedBuilder[] {
 	useLocale(lang);
 
 	const yugipediaPage = card.konami_id ?? encodeURIComponent(`${card.name.en}`);
 	const yugipedia = `https://yugipedia.com/wiki/${yugipediaPage}?utm_source=bastion`;
-	const ygoprodeckTerm = card.password ?? encodeURIComponent(`${card.name.en}`);
-	const ygoprodeck = `https://db.ygoprodeck.com/card/?search=${ygoprodeckTerm}&utm_source=bastion`;
+	const ygoprodeckTerm = card.password ?? `${card.name.en}`;
+	const ygoprodeck = ygoprodeckCard(ygoprodeckTerm);
 	// Official database, does not work for zh locales
 	const official = `https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&request_locale=${lang}&cid=${card.konami_id}`;
 	const rulings = `https://www.db.yugioh-card.com/yugiohdb/faq_search.action?ope=4&request_locale=ja&cid=${card.konami_id}`;

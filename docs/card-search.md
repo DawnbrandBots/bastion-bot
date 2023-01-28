@@ -5,6 +5,9 @@ conversations to have Bastion fetch the card information for you! Example:
 
 > I sometimes make typos. My favourite monsters are \<blue-eyes white dragon> and \<Dork Magician>. I can't believe \<GG EZ> is the name of a card!
 
+![Search result for above message, part 1](./img/card-search-1.png)
+![Search result for above message, part 2](./img/card-search-2.png)
+
 Unlike old card search, this now works in threads and voice chats!
 There are also new hyperlinks to external websites, up-to-date non-English card text,
 and improved Pendulum Monster display.
@@ -30,9 +33,13 @@ If your search term is just a number, it will be treated as a password. Example:
 
 > The smallest password is \<00002511>, but it used to be <10000>
 
+![Search result for above message](./img/card-search-password.png)
+
 If your search term starts with `%` and is followed by a number, it will be treated as a Konami ID. Example:
 
 > The smallest Konami ID is \<%4007>
+
+![Search result for above message](./img/card-search-konami-id.png)
 
 Note: `#` cannot be used for either option because it conflicts with internal Discord syntax for channel mentions.
 
@@ -47,10 +54,14 @@ configured language setting. Example:
 
 > J'aime \<baguette du monde,fr>
 
+![Search result for above message](./img/card-search-fr-default.png)
+
 To change both the input language and result language, add both at the end, separated by commas, in
 the order `<search term,input language,result language>`. Example:
 
 > I wonder what the Japanese text is for \<blue-eyes white dragon,en,ja>
+
+![Search result for above message](./img/card-search-en-ja.png)
 
 For a full list of supported languages, see the above locale setting link.
 

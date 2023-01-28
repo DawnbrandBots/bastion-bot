@@ -2,7 +2,7 @@ import { Client, GatewayIntentBits, Options, Partials } from "discord.js";
 import { injectable, injectAll } from "tsyringe";
 import { Listener } from "./events";
 import { getLogger } from "./logger";
-import { serializeServer } from "./utils";
+import { serialiseServer } from "./utils";
 
 @injectable()
 export class BotFactory {
@@ -35,6 +35,8 @@ export class BotFactory {
 			shards: `${process.env.DISCORD_TOTAL_SHARDS}` === "auto" ? "auto" : isNaN(shard) ? undefined : shard,
 			shardCount: parseInt(`${process.env.DISCORD_TOTAL_SHARDS}`) || undefined,
 			makeCache: Options.cacheWithLimits({
+				GuildEmojiManager: 0,
+				GuildTextThreadManager: 0,
 				MessageManager: 0 // reduce cache per channel from default 200
 			})
 		});
@@ -44,12 +46,12 @@ export class BotFactory {
 		bot.on("shardReady", shard => logger.notify(`Shard ${shard} ready`));
 		bot.on("shardReconnecting", shard => logger.info(`Shard ${shard} reconnecting`));
 		bot.on("shardResume", (shard, replayed) => logger.info(`Shard ${shard} resumed: ${replayed} events replayed`));
-		bot.on("shardDisconnect", (event, shard) =>
-			logger.notify(`Shard ${shard} disconnected (${event.code},${event.wasClean}): ${event.reason}`)
-		);
+		bot.on("shardDisconnect", (event, shard) => {
+			logger.notify(`Shard ${shard} disconnected (${event.code},${event.wasClean}): ${event.reason}`);
+		});
 		bot.on("shardError", (error, shard) => logger.error(`Shard ${shard} error:`, error));
-		bot.on("guildCreate", guild => logger.notify(`Guild create: ${serializeServer(guild)}`));
-		bot.on("guildDelete", guild => logger.notify(`Guild delete: ${serializeServer(guild)}`));
+		bot.on("guildCreate", guild => logger.notify(`Guild create: ${serialiseServer(guild)}`));
+		bot.on("guildDelete", guild => logger.notify(`Guild delete: ${serialiseServer(guild)}`));
 		bot.on("ready", () => {
 			logger.notify(`Logged in as ${bot.user?.tag} - ${bot.user?.id}`);
 			bot.user?.setActivity(process.env.BOT_PRESENCE || "<card name> to search!");

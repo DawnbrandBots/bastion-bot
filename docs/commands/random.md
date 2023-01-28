@@ -2,6 +2,8 @@
 
 Get a random Yu-Gi-Oh! card. _This command is in development._
 
+![Example](../img/command-random.png)
+
 ## Parameters
 
 Name | Required? | Description | Type

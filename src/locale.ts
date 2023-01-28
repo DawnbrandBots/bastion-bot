@@ -1,7 +1,7 @@
 import { SharedNameAndDescription, SlashCommandStringOption } from "@discordjs/builders";
 import sqlite, { Database, Statement } from "better-sqlite3";
 import { APIApplicationCommandOptionChoice, Locale as DiscordLocale } from "discord-api-types/v10";
-import { ChatInputCommandInteraction, Message, Snowflake } from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction, Message, Snowflake } from "discord.js";
 import { inject, singleton } from "tsyringe";
 import { c, useLocale } from "ttag";
 
@@ -144,7 +144,7 @@ export abstract class LocaleProvider {
 		return (interaction.channel?.isThread() && interaction.channel.parentId) || interaction.channelId;
 	}
 
-	async get(interaction: ChatInputCommandInteraction): Promise<Locale> {
+	async get(interaction: ChatInputCommandInteraction | AutocompleteInteraction): Promise<Locale> {
 		const lang = interaction.options.getString("result-language");
 		if (lang) {
 			// We could verify with this.filter, but that unnecessarily checks through

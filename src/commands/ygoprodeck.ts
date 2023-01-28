@@ -1,20 +1,30 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
-import { ChatInputCommandInteraction } from "discord.js";
-import fetch from "node-fetch";
+import { AutocompleteInteraction, ChatInputCommandInteraction, escapeMarkdown } from "discord.js";
+import { Got } from "got";
+import { LRUMap } from "mnemonist";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
-import { Command } from "../Command";
+import { ygoprodeckCard } from "../card";
+import { AutocompletableCommand } from "../Command";
 import { buildLocalisedCommand, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { editLatency } from "../utils";
+import { replyLatency, serialiseInteraction } from "../utils";
+
+type YGOPRODECKResponse = { error: string } | { suggestions: { name: string; data: number }[] };
 
 @injectable()
-export class YGOPRODECKCommand extends Command {
+export class YGOPRODECKCommand extends AutocompletableCommand {
 	#logger = getLogger("command:ygoprodeck");
+	// Covers well beyond the total number of TCG and OCG cards
+	private suggestionCache = new LRUMap<string, number>(20000);
 
-	constructor(metrics: Metrics, @inject("LocaleProvider") private locales: LocaleProvider) {
+	constructor(
+		metrics: Metrics,
+		@inject("LocaleProvider") private locales: LocaleProvider,
+		@inject("got") private got: Got
+	) {
 		super(metrics);
 	}
 
@@ -25,9 +35,9 @@ export class YGOPRODECKCommand extends Command {
 			() => c("command-description").t`Search the YGOPRODECK card database.`
 		);
 		const option = buildLocalisedCommand(
-			new SlashCommandStringOption().setRequired(true),
+			new SlashCommandStringOption().setRequired(true).setAutocomplete(true),
 			() => c("command-option").t`term`,
-			() => c("command-option-description").t`The name or password of the card you're looking for.`
+			() => c("command-option-description").t`The English name of the card you're looking for.`
 		);
 		builder.addStringOption(option);
 		return builder.toJSON();
@@ -37,24 +47,62 @@ export class YGOPRODECKCommand extends Command {
 		return this.#logger;
 	}
 
-	private async search(term: string): Promise<string> {
-		const url = new URL("https://db.ygoprodeck.com/carddbsearch_name.php");
-		url.searchParams.set("term", term);
-		const response = await (await fetch(url)).json();
-		if ("error" in response) {
-			return response.error;
-		} else {
-			return `https://db.ygoprodeck.com/card/?search=${encodeURIComponent(response.name)}`;
+	private async search(term: string): Promise<YGOPRODECKResponse> {
+		const url = new URL("https://ygoprodeck.com/api/autocomplete.php");
+		url.searchParams.set("query", term);
+		return await this.got(url, {
+			headers: { Accept: "application/json" }
+		}).json<YGOPRODECKResponse>();
+	}
+
+	override async autocomplete(interaction: AutocompleteInteraction): Promise<void> {
+		const term = interaction.options.getFocused();
+		try {
+			const start = Date.now();
+			const response = await this.search(term);
+			const latency = Date.now() - start;
+			this.#logger.info(serialiseInteraction(interaction, { autocomplete: term, latency, response }));
+			if ("suggestions" in response) {
+				const options = [];
+				for (const { name, data } of response.suggestions) {
+					this.suggestionCache.set(name, data);
+					options.push({ name, value: name });
+				}
+				// Maximum 25 options https://discordjs.guide/slash-commands/autocomplete.html
+				await interaction.respond(options.slice(0, 25));
+			} else {
+				await interaction.respond([]);
+			}
+			this.metrics.writeCommand(interaction, latency);
+		} catch (error) {
+			this.#logger.warn(serialiseInteraction(interaction, { autocomplete: term }), error);
+			this.metrics.writeCommand(interaction, -1);
 		}
 	}
 
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const term = interaction.options.getString("term", true);
-		const lang = await this.locales.get(interaction);
-		useLocale(lang);
-		await interaction.reply(t`Searching YGOPRODECK for \`${term}\`…`);
-		const result = await this.search(term);
-		const reply = await interaction.editReply(result);
-		return editLatency(reply, interaction);
+		let content;
+		const cached = this.suggestionCache.get(term);
+		if (cached) {
+			content = ygoprodeckCard(cached);
+			this.#logger.info(serialiseInteraction(interaction, { term, cached }));
+		} else {
+			try {
+				const start = Date.now();
+				const response = await this.search(term);
+				const latency = Date.now() - start;
+				this.#logger.info(serialiseInteraction(interaction, { term, latency, response }));
+				content = "suggestions" in response ? ygoprodeckCard(response.suggestions[0]?.data) : response.error;
+			} catch (error) {
+				this.#logger.warn(serialiseInteraction(interaction, { term }), error);
+				const lang = await this.locales.get(interaction);
+				useLocale(lang);
+				const searchTerm = escapeMarkdown(term);
+				content = t`Something went wrong searching YGOPRODECK for \`${searchTerm}\`.`;
+			}
+		}
+		const reply = await interaction.reply({ content, fetchReply: true });
+		return replyLatency(reply, interaction);
 	}
 }

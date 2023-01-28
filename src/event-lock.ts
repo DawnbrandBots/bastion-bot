@@ -30,8 +30,8 @@ export class EventLocker {
 	private readonly db: Database;
 	private readonly insertStatement: Statement;
 	private readonly deleteStatement: Statement;
-	// This should be "true", but only enable this at boot in preview first
-	private isActive = !!process.env.BOT_NO_DIRECT_MESSAGE_SEARCH;
+	// Should be true but we don't have the RAM for this yet https://github.com/DawnbrandBots/bastion-bot/issues/194
+	private isActive = false;
 	private readonly onTTIN: NodeJS.SignalsListener;
 	private readonly onTTOU: NodeJS.SignalsListener;
 

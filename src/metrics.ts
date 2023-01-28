@@ -1,6 +1,6 @@
 import { Static } from "@sinclair/typebox";
 import sqlite, { Database, Statement } from "better-sqlite3";
-import { ChatInputCommandInteraction, Message } from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction, Message } from "discord.js";
 import { inject, singleton } from "tsyringe";
 import { CardSchema } from "./definitions";
 
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS "searches" (
 		return db;
 	}
 
-	public writeCommand(interaction: ChatInputCommandInteraction, latency: number): void {
+	public writeCommand(interaction: ChatInputCommandInteraction | AutocompleteInteraction, latency: number): void {
 		const id = interaction.id;
 		const guild = interaction.guildId;
 		const channel = interaction.channelId;
@@ -58,6 +58,9 @@ CREATE TABLE IF NOT EXISTS "searches" (
 		resultCard?: Static<typeof CardSchema>,
 		replyMessage?: Message
 	): void {
+		// Neither resultCard nor replyMessage: card lookup failed
+		// No replyMessage: Discord reply failed
+		// Both defined: normal operation
 		const id = searchMessage.id;
 		const guild = searchMessage.guildId;
 		const channel = searchMessage.channelId;
