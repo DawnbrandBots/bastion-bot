@@ -9,12 +9,12 @@ msgstr ""
 #: src\card.ts:279
 #: src\commands\rush-duel.ts:60
 msgid "🔗 Links"
-msgstr ""
+msgstr "🔗 リンク集"
 
 #: src\card.ts:280
 #, javascript-format
 msgid "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
-msgstr ""
+msgstr "[Konami公式カードDB](${ official }) | [OCG公式裁定](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
 #: src\card.ts:283
 #, javascript-format
@@ -349,7 +349,7 @@ msgstr ""
 
 #: src\events\message-search.ts:276
 msgid "Help translate Bastion at the links above."
-msgstr ""
+msgstr "このボットの翻訳プロジェクトへは上のリンクから。"
 
 #: src\events\message-ping.ts:46
 msgid ""
@@ -738,7 +738,7 @@ msgstr "ペンデュラム効果"
 #: src\card.ts:393
 msgctxt "card-embed"
 msgid "Card Effect"
-msgstr ""
+msgstr "カード効果"
 
 #: src\commands\rush-duel.ts:133
 #: src\commands\rush-duel.ts:154
@@ -765,12 +765,12 @@ msgstr "【選択効果】"
 #: src\locale.ts:48
 msgctxt "command-option"
 msgid "result-language"
-msgstr ""
+msgstr "出力用言語"
 
 #: src\locale.ts:68
 msgctxt "command-option"
 msgid "input-language"
-msgstr ""
+msgstr "入力用言語"
 
 #: src\commands\art.ts:36
 #: src\commands\art.ts:46
@@ -878,22 +878,22 @@ msgstr ""
 #: src\commands\rush-duel.ts:189
 msgctxt "command-option"
 msgid "search"
-msgstr ""
+msgstr "検索"
 
 #: src\commands\rush-duel.ts:211
 msgctxt "command-option"
 msgid "random"
-msgstr ""
+msgstr "おみくじ""
 
 #: src\commands\rush-duel.ts:216
 msgctxt "command-option"
 msgid "art"
-msgstr ""
+msgstr "画像"
 
 #: src\locale.ts:51
 msgctxt "command-option-description"
 msgid "The output language for the card embed, overriding other settings."
-msgstr ""
+msgstr "カード情報の表示言語を設定します。デフォルトの設定より優先されます。"
 
 #: src\locale.ts:71
 msgctxt "command-option-description"
@@ -908,7 +908,7 @@ msgstr ""
 #: src\commands\yugipedia.ts:39
 msgctxt "command-option-description"
 msgid "The name of the Yugipedia page you want to search for."
-msgstr ""
+msgstr "検索したいYugipediaのページの名前"
 
 #: src\commands\deck.ts:125
 msgctxt "command-option-description"
@@ -1061,12 +1061,12 @@ msgstr ""
 #: src\commands\art.ts:26
 msgctxt "command-name"
 msgid "art"
-msgstr ""
+msgstr "画像"
 
 #: src\commands\help.ts:49
 msgctxt "command-name"
 msgid "help"
-msgstr ""
+msgstr "使い方"
 
 #: src\commands\ping.ts:23
 msgctxt "command-name"
@@ -1086,27 +1086,27 @@ msgstr ""
 #: src\commands\deck.ts:115
 msgctxt "command-name"
 msgid "deck"
-msgstr ""
+msgstr "デッキ"
 
 #: src\commands\search.ts:29
 msgctxt "command-name"
 msgid "search"
-msgstr ""
+msgstr "検索"
 
 #: src\commands\locale.ts:25
 msgctxt "command-name"
 msgid "locale"
-msgstr ""
+msgstr "言語設定"
 
 #: src\commands\random.ts:24
 msgctxt "command-name"
 msgid "random"
-msgstr ""
+msgstr "おみくじ"
 
 #: src\commands\price.ts:54
 msgctxt "command-name"
 msgid "price"
-msgstr ""
+msgstr "価格"
 
 #: src\commands\rush-duel.ts:184
 msgctxt "command-name"
@@ -1116,27 +1116,27 @@ msgstr ""
 #: src\commands\art.ts:27
 msgctxt "command-description"
 msgid "Display the art for a card!"
-msgstr ""
+msgstr "カードの画像（イラスト）を表示します。"
 
 #: src\commands\help.ts:50
 msgctxt "command-description"
 msgid "Get help with a Slash Command."
-msgstr ""
+msgstr "コマンドの使い方を表示します。"
 
 #: src\commands\ping.ts:24
 msgctxt "command-description"
 msgid "Test latency to the new bot instance."
-msgstr ""
+msgstr "ボットが落ちていないかを確認できます（pingの反応を表示します。）"
 
 #: src\commands\ygoprodeck.ts:35
 msgctxt "command-description"
 msgid "Search the YGOPRODECK card database."
-msgstr ""
+msgstr "YGOPRODECKを検索します。"
 
 #: src\commands\yugipedia.ts:34
 msgctxt "command-description"
 msgid "Search the Yugipedia wiki for a page and link to it."
-msgstr ""
+msgstr "Yugipediaを検索します。"
 
 #: src\commands\deck.ts:118
 msgctxt "command-description"
