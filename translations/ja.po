@@ -883,7 +883,7 @@ msgstr "検索"
 #: src\commands\rush-duel.ts:211
 msgctxt "command-option"
 msgid "random"
-msgstr "おみくじ""
+msgstr "おみくじ"
 
 #: src\commands\rush-duel.ts:216
 msgctxt "command-option"
