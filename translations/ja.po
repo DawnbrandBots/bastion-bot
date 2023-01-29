@@ -86,47 +86,47 @@ msgstr "📨 このボットへのご意見を[イシュートラッカー](http
 
 #: src\utils.ts:57
 msgid "Please consider supporting us!"
-msgstr "このボットをサポートしてくれると嬉しいです！"
+msgstr "このボットの開発をサポートしてくれると嬉しいです！"
 
 #: src\utils.ts:58
 msgid "Help keep Bastion online!"
-msgstr ""
+msgstr "Bastionが稼働し続けられるようにしましょう！"
 
 #: src\utils.ts:59
 msgid "Please help keep Bastion online!"
-msgstr ""
+msgstr "Bastionが稼働し続けられるのはみなさんのおかけです！"
 
 #: src\utils.ts:60
 msgid "Was Bastion helpful? Consider supporting us!"
-msgstr ""
+msgstr "Bastionがお好き？一緒に開発すればもっと好きになりますよ！"
 
 #: src\utils.ts:61
 msgid "Was Bastion helpful? We need your support!"
-msgstr ""
+msgstr "Bastionがお好き？一緒に開発しませんか？"
 
 #: src\utils.ts:62
 msgid "Did you find Bastion useful? Consider supporting us!"
-msgstr ""
+msgstr "Bastionがお役に立ちましたか？このボットの開発をサポートしてくれると嬉しいです！"
 
 #: src\utils.ts:63
 msgid "Did you find Bastion useful? Help keep it online!"
-msgstr ""
+msgstr "Bastionがお役に立ちましたか？Bastionが稼働し続けられるようにしましょう！"
 
 #: src\utils.ts:64
 msgid "Did you find Bastion useful? We need your support!"
-msgstr ""
+msgstr "Bastionがお役に立ちましたか？一緒に開発しませんか？"
 
 #: src\utils.ts:65
 msgid "Enjoy Bastion? Help keep it online!"
-msgstr ""
+msgstr "Bastionがお好き？Bastionが稼働し続けられるようにしましょう！"
 
 #: src\utils.ts:66
 msgid "Enjoy Bastion? Consider supporting us!"
-msgstr ""
+msgstr "Bastionがお好き？このボットの開発をサポートしてくれると嬉しいです！"
 
 #: src\utils.ts:67
 msgid "Found what you were looking for? Consider supporting us!"
-msgstr ""
+msgstr "お探しの情報は見つかりましたか？このボットの開発をサポートしてくれると嬉しいです！"
 
 #: src\commands\art.ts:97
 #: src\commands\price.ts:148
@@ -136,32 +136,32 @@ msgstr ""
 #: src\events\message-search.ts:270
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
-msgstr ""
+msgstr "`${ input }`に一致するカードは見つかりませんでした！"
 
 #: src\commands\art.ts:107
 msgid "Could not find art for `${ name }`!"
-msgstr ""
+msgstr "`${ name }`のカード画像は見つかりませんでした！"
 
 #: src\commands\deck.ts:245
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
-msgstr[0] ""
+msgstr[0] "モンスター ${ counts.Monster } 体"
 
 #: src\commands\deck.ts:248
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
-msgstr[0] ""
+msgstr[0] "魔法 ${ counts.Spell } 枚"
 
 #: src\commands\deck.ts:251
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
-msgstr[0] ""
+msgstr[0] "罠 ${ counts.Trap } 枚"
 
 #: src\commands\deck.ts:279
 msgid "Your Deck"
-msgstr ""
+msgstr "あなたのデッキ"
 
 #: src\commands\deck.ts:284
 #, javascript-format
