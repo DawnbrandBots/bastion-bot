@@ -19,7 +19,7 @@ msgstr "[Konami公式カードDB](${ official }) | [OCG公式裁定](${ rulings 
 #: src\card.ts:283
 #, javascript-format
 msgid "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
-msgstr ""
+msgstr "" # No need to translate this one
 
 #: src\card.ts:343
 #: src\commands\rush-duel.ts:107
@@ -69,7 +69,7 @@ msgstr ""
 #: src\card.ts:246
 #: src\commands\rush-duel.ts:161
 msgid "Not yet released"
-msgstr ""
+msgstr "未発売"
 
 #: src\card.ts:250
 #, javascript-format
@@ -78,15 +78,15 @@ msgstr ""
 
 #: src\utils.ts:45
 msgid "🛠️ This command is in development."
-msgstr ""
+msgstr "🛠️ このコマンドは作成中です。"
 
 #: src\utils.ts:46
 msgid "📨 Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!"
-msgstr ""
+msgstr "📨 このボットへのご意見を[イシュートラッカー](https://github.com/DawnbrandBots/bastion-bot) か [ディスコードサーバ](https://discord.gg/4aFuPyuE96) に届けてもらえると嬉しいです！"
 
 #: src\utils.ts:57
 msgid "Please consider supporting us!"
-msgstr ""
+msgstr "このボットをサポートしてくれると嬉しいです！"
 
 #: src\utils.ts:58
 msgid "Help keep Bastion online!"
