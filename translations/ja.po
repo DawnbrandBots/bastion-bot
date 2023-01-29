@@ -19,7 +19,8 @@ msgstr "[Konami公式カードDB](${ official }) | [OCG公式裁定](${ rulings 
 #: src\card.ts:283
 #, javascript-format
 msgid "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
-msgstr "" # No need to translate this one
+msgstr ""
+# No need to translate this one
 
 #: src\card.ts:343
 #: src\commands\rush-duel.ts:107
