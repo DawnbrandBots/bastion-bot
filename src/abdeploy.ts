@@ -13,7 +13,7 @@ export class ABDeploy {
 	constructor(@inject("abdeployJson") private file: string) {
 		// Promise can resolve after constructor, just don't until next trigger to populate
 		this.update(true);
-		this.interval = setInterval(() => this.update(), 60000);
+		this.interval = setInterval(() => this.update(), 60000).unref();
 	}
 
 	protected async update(initial = false): Promise<void> {

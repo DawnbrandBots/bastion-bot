@@ -73,7 +73,7 @@ export class BotFactory {
 					}
 					incidentNotified = false;
 				}
-			}, 1000);
+			}, 1000).unref();
 			logger.info("Registered messageCreate gateway event frequency early warning canary");
 		});
 

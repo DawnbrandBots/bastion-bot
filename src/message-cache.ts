@@ -11,7 +11,7 @@ export class RecentMessageCache {
 	protected interval: NodeJS.Timer;
 
 	constructor(protected ttlMilliseconds: number, sweepIntervalMilliseconds: number) {
-		this.interval = setInterval(() => this.sweep(), sweepIntervalMilliseconds);
+		this.interval = setInterval(() => this.sweep(), sweepIntervalMilliseconds).unref();
 	}
 
 	set(message: Message, replies: Snowflake[]): void {
