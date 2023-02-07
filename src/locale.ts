@@ -1,7 +1,13 @@
 import { SharedNameAndDescription, SlashCommandStringOption } from "@discordjs/builders";
 import sqlite, { Database, Statement } from "better-sqlite3";
 import { APIApplicationCommandOptionChoice, Locale as DiscordLocale } from "discord-api-types/v10";
-import { AutocompleteInteraction, ChatInputCommandInteraction, Message, Snowflake } from "discord.js";
+import {
+	AutocompleteInteraction,
+	ChatInputCommandInteraction,
+	Message,
+	SlashCommandSubcommandBuilder,
+	Snowflake
+} from "discord.js";
 import { inject, singleton } from "tsyringe";
 import { c, useLocale } from "ttag";
 
@@ -107,6 +113,52 @@ export function getInputLangStringOption(): SlashCommandStringOption {
 		new SlashCommandStringOption(),
 		() => c("command-option").t`input-language`,
 		() => c("command-option-description").t`The language to search in, defaulting to the result language.`
+	);
+}
+
+export function getNameSubcommand(getLocalisedDescription: () => string): SlashCommandSubcommandBuilder {
+	return buildLocalisedCommand(
+		new SlashCommandSubcommandBuilder(),
+		() => c("command-option").t`name`,
+		getLocalisedDescription
+	)
+		.addStringOption(
+			buildLocalisedCommand(
+				new SlashCommandStringOption().setRequired(true),
+				() => c("command-option").t`input`,
+				() => c("command-option-description").t`Card name, fuzzy matching supported.`
+			)
+		)
+		.addStringOption(getInputLangStringOption());
+}
+
+export function getPasswordSubcommand(getLocalisedDescription: () => string): SlashCommandSubcommandBuilder {
+	return buildLocalisedCommand(
+		new SlashCommandSubcommandBuilder(),
+		() => c("command-option").t`password`,
+		getLocalisedDescription
+	).addStringOption(
+		buildLocalisedCommand(
+			new SlashCommandStringOption().setRequired(true),
+			() => c("command-option").t`input`,
+			() =>
+				c("command-option-description")
+					.t`Card password, the eight-digit number printed on the bottom left corner.`
+		)
+	);
+}
+
+export function getKonamiIdSubcommand(getLocalisedDescription: () => string): SlashCommandSubcommandBuilder {
+	return buildLocalisedCommand(
+		new SlashCommandSubcommandBuilder(),
+		() => c("command-option").t`konami-id`,
+		getLocalisedDescription
+	).addStringOption(
+		buildLocalisedCommand(
+			new SlashCommandStringOption().setRequired(true),
+			() => c("command-option").t`input`,
+			() => c("command-option-description").t`Konami's official card database identifier.`
+		)
 	);
 }
 

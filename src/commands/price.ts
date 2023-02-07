@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandBuilder } from "@discordjs/builders";
+import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
@@ -11,7 +11,9 @@ import { CardSchema } from "../definitions";
 import {
 	buildLocalisedChoice,
 	buildLocalisedCommand,
-	getInputLangStringOption,
+	getKonamiIdSubcommand,
+	getNameSubcommand,
+	getPasswordSubcommand,
 	Locale,
 	LocaleProvider
 } from "../locale";
@@ -58,49 +60,20 @@ export class PriceCommand extends Command {
 			() => c("command-name").t`price`,
 			() => c("command-description").t`Display the price for a card!`
 		);
-		const nameSubcommand = buildLocalisedCommand(
-			new SlashCommandSubcommandBuilder(),
-			() => c("command-option").t`name`,
-			() => c("command-option-description").t`Display the price for the card with this name.`
-		);
-		const nameOption = buildLocalisedCommand(
-			new SlashCommandStringOption().setRequired(true),
-			() => c("command-option").t`input`,
-			() => c("command-option-description").t`Card name, fuzzy matching supported.`
-		);
-		const passwordSubcommand = buildLocalisedCommand(
-			new SlashCommandSubcommandBuilder(),
-			() => c("command-option").t`password`,
-			() => c("command-option-description").t`Display the price for the card with this password.`
-		);
-		const passwordOption = buildLocalisedCommand(
-			new SlashCommandStringOption().setRequired(true),
-			() => c("command-option").t`input`,
-			() =>
-				c("command-option-description")
-					.t`Card password, the eight-digit number printed on the bottom left corner.`
-		);
-		const konamiIdSubcommand = buildLocalisedCommand(
-			new SlashCommandSubcommandBuilder(),
-			() => c("command-option").t`konami-id`,
-			() => c("command-option-description").t`Display the price for the card with this official database ID.`
-		);
-		const konamiIdOption = buildLocalisedCommand(
-			new SlashCommandStringOption().setRequired(true),
-			() => c("command-option").t`input`,
-			() => c("command-option-description").t`Konami's official card database identifier.`
-		);
 		const vendorOption = buildLocalisedCommand(
 			new SlashCommandStringOption().setRequired(true),
 			() => c("command-option").t`vendor`,
 			() => c("command-option-description").t`The vendor to fetch the price data from.`
 		).addChoices(...Object.entries(CHOICES_GLOBAL).map(([value, name]) => buildLocalisedChoice(value, name)));
-		nameSubcommand
-			.addStringOption(nameOption)
-			.addStringOption(vendorOption)
-			.addStringOption(getInputLangStringOption());
-		passwordSubcommand.addStringOption(passwordOption).addStringOption(vendorOption);
-		konamiIdSubcommand.addStringOption(konamiIdOption).addStringOption(vendorOption);
+		const nameSubcommand = getNameSubcommand(
+			() => c("command-option-description").t`Display the price for the card with this name.`
+		).addStringOption(vendorOption);
+		const passwordSubcommand = getPasswordSubcommand(
+			() => c("command-option-description").t`Display the price for the card with this password.`
+		).addStringOption(vendorOption);
+		const konamiIdSubcommand = getKonamiIdSubcommand(
+			() => c("command-option-description").t`Display the price for the card with this official database ID.`
+		).addStringOption(vendorOption);
 		builder.addSubcommand(nameSubcommand).addSubcommand(passwordSubcommand).addSubcommand(konamiIdSubcommand);
 		return builder.toJSON();
 	}
