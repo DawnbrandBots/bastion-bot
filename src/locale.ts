@@ -55,26 +55,6 @@ export function getResultLangStringOption(): SlashCommandStringOption {
 	return option;
 }
 
-export function getInputLangStringOption(): SlashCommandStringOption {
-	const option = new SlashCommandStringOption()
-		.setName("input-language")
-		.setDescription("The language to search in, defaulting to the result language.")
-		.setRequired(false)
-		.addChoices(...LOCALE_CHOICES);
-
-	for (const { gettext, discord } of COMMAND_LOCALIZATIONS) {
-		useLocale(gettext);
-		option
-			.setNameLocalization(discord, c("command-option").t`input-language`)
-			.setDescriptionLocalization(
-				discord,
-				c("command-option-description").t`The language to search in, defaulting to the result language.`
-			);
-	}
-
-	return option;
-}
-
 /**
  * Helper for integrating ttag gettext localisations with discord.js builders.
  * @param component SlashCommandBuilder, subcommand builder, option builder, etc.
@@ -120,6 +100,14 @@ export function buildLocalisedChoice<T = string | number>(
 		choice.name_localizations[discord] = getLocalisedName();
 	}
 	return choice;
+}
+
+export function getInputLangStringOption(): SlashCommandStringOption {
+	return buildLocalisedCommand(
+		new SlashCommandStringOption(),
+		() => c("command-option").t`input-language`,
+		() => c("command-option-description").t`The language to search in, defaulting to the result language.`
+	);
 }
 
 /**
