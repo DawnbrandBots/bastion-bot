@@ -1,4 +1,4 @@
-import { SharedNameAndDescription, SlashCommandStringOption } from "@discordjs/builders";
+import { SharedNameAndDescription, SlashCommandIntegerOption, SlashCommandStringOption } from "@discordjs/builders";
 import sqlite, { Database, Statement } from "better-sqlite3";
 import { APIApplicationCommandOptionChoice, Locale as DiscordLocale } from "discord-api-types/v10";
 import {
@@ -137,9 +137,9 @@ export function getPasswordSubcommand(getLocalisedDescription: () => string): Sl
 		new SlashCommandSubcommandBuilder(),
 		() => c("command-option").t`password`,
 		getLocalisedDescription
-	).addStringOption(
+	).addIntegerOption(
 		buildLocalisedCommand(
-			new SlashCommandStringOption().setRequired(true),
+			new SlashCommandIntegerOption().setRequired(true).setMinValue(0).setMaxValue(999999999),
 			() => c("command-option").t`input`,
 			() =>
 				c("command-option-description")
@@ -153,9 +153,9 @@ export function getKonamiIdSubcommand(getLocalisedDescription: () => string): Sl
 		new SlashCommandSubcommandBuilder(),
 		() => c("command-option").t`konami-id`,
 		getLocalisedDescription
-	).addStringOption(
+	).addIntegerOption(
 		buildLocalisedCommand(
-			new SlashCommandStringOption().setRequired(true),
+			new SlashCommandIntegerOption().setRequired(true).setMinValue(4007).setMaxValue(99999),
 			() => c("command-option").t`input`,
 			() => c("command-option-description").t`Konami's official card database identifier.`
 		)
