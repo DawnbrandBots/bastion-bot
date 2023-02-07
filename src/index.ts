@@ -1,30 +1,20 @@
-import fs from "fs";
-import { po } from "gettext-parser";
 import os from "os";
 import path from "path";
 import { container } from "tsyringe";
-import { addLocale } from "ttag";
 import { BotFactory } from "./bot";
 import { Command } from "./Command";
 import { classes, registerSlashCommands } from "./commands";
 import { EventLocker } from "./event-lock";
 import { InteractionListener, MessageDeleteListener, PingMessageListener, SearchMessageListener } from "./events";
 import createGotClient from "./got";
-import { LocaleProvider, SQLiteLocaleProvider } from "./locale";
+import { loadTranslations, LocaleProvider, SQLiteLocaleProvider } from "./locale";
 import { getLogger } from "./logger";
 import { RecentMessageCache } from "./message-cache";
 import { Metrics } from "./metrics";
 
 const logger = getLogger("index");
 
-for (const file of fs.readdirSync("./translations", { withFileTypes: true })) {
-	if (file.isFile() && file.name.endsWith(".po")) {
-		const jsonpo = po.parse(fs.readFileSync(`./translations/${file.name}`));
-		const locale = file.name.split(".po")[0];
-		addLocale(locale, jsonpo);
-		logger.info(`Loaded translations for locale ${locale}`);
-	}
-}
+loadTranslations();
 
 if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 	// We don't need to verify the bigint typing since this CLI operation will safely fail
