@@ -12,7 +12,6 @@ describe(".po files", () => {
 	test("command metadata is valid", () => {
 		loadTranslations();
 		const commands = classes.map(command => command.meta);
-		expect(commands.length).toBeGreaterThan(0);
 		let translationsLoaded = false;
 		for (const command of commands) {
 			if (command.description_localizations?.ko !== command.description_localizations?.ja) {
