@@ -1,7 +1,13 @@
-import { SharedNameAndDescription, SlashCommandStringOption } from "@discordjs/builders";
+import { SharedNameAndDescription, SlashCommandIntegerOption, SlashCommandStringOption } from "@discordjs/builders";
 import sqlite, { Database, Statement } from "better-sqlite3";
 import { APIApplicationCommandOptionChoice, Locale as DiscordLocale } from "discord-api-types/v10";
-import { AutocompleteInteraction, ChatInputCommandInteraction, Message, Snowflake } from "discord.js";
+import {
+	AutocompleteInteraction,
+	ChatInputCommandInteraction,
+	Message,
+	SlashCommandSubcommandBuilder,
+	Snowflake
+} from "discord.js";
 import fs from "fs";
 import { po } from "gettext-parser";
 import { inject, singleton } from "tsyringe";
@@ -72,26 +78,6 @@ export function getResultLangStringOption(): SlashCommandStringOption {
 	return option;
 }
 
-export function getInputLangStringOption(): SlashCommandStringOption {
-	const option = new SlashCommandStringOption()
-		.setName("input-language")
-		.setDescription("The language to search in, defaulting to the result language.")
-		.setRequired(false)
-		.addChoices(...LOCALE_CHOICES);
-
-	for (const { gettext, discord } of COMMAND_LOCALIZATIONS) {
-		useLocale(gettext);
-		option
-			.setNameLocalization(discord, c("command-option").t`input-language`)
-			.setDescriptionLocalization(
-				discord,
-				c("command-option-description").t`The language to search in, defaulting to the result language.`
-			);
-	}
-
-	return option;
-}
-
 /**
  * Helper for integrating ttag gettext localisations with discord.js builders.
  * @param component SlashCommandBuilder, subcommand builder, option builder, etc.
@@ -137,6 +123,65 @@ export function buildLocalisedChoice<T = string | number>(
 		choice.name_localizations[discord] = getLocalisedName();
 	}
 	return choice;
+}
+
+export function getInputLangStringOption(): SlashCommandStringOption {
+	return buildLocalisedCommand(
+		new SlashCommandStringOption().setRequired(false),
+		() => c("command-option").t`input-language`,
+		() => c("command-option-description").t`The language to search in, defaulting to the result language.`
+	).addChoices(...LOCALE_CHOICES);
+}
+
+export function getNameSubcommand(
+	getLocalisedDescription: () => string,
+	requiredStringOption?: SlashCommandStringOption
+): SlashCommandSubcommandBuilder {
+	const builder = buildLocalisedCommand(
+		new SlashCommandSubcommandBuilder(),
+		() => c("command-option").t`name`,
+		getLocalisedDescription
+	).addStringOption(
+		buildLocalisedCommand(
+			new SlashCommandStringOption().setRequired(true),
+			() => c("command-option").t`input`,
+			() => c("command-option-description").t`Card name, fuzzy matching supported.`
+		)
+	);
+	if (requiredStringOption) {
+		builder.addStringOption(requiredStringOption);
+	}
+	return builder.addStringOption(getInputLangStringOption());
+}
+
+export function getPasswordSubcommand(getLocalisedDescription: () => string): SlashCommandSubcommandBuilder {
+	return buildLocalisedCommand(
+		new SlashCommandSubcommandBuilder(),
+		() => c("command-option").t`password`,
+		getLocalisedDescription
+	).addIntegerOption(
+		buildLocalisedCommand(
+			new SlashCommandIntegerOption().setRequired(true).setMinValue(0).setMaxValue(999999999),
+			() => c("command-option").t`input`,
+			() =>
+				c("command-option-description")
+					.t`Card password, the eight-digit number printed on the bottom left corner.`
+		)
+	);
+}
+
+export function getKonamiIdSubcommand(getLocalisedDescription: () => string): SlashCommandSubcommandBuilder {
+	return buildLocalisedCommand(
+		new SlashCommandSubcommandBuilder(),
+		() => c("command-option").t`konami-id`,
+		getLocalisedDescription
+	).addIntegerOption(
+		buildLocalisedCommand(
+			new SlashCommandIntegerOption().setRequired(true).setMinValue(4007).setMaxValue(99999),
+			() => c("command-option").t`input`,
+			() => c("command-option-description").t`Konami's official card database identifier.`
+		)
+	);
 }
 
 /**
