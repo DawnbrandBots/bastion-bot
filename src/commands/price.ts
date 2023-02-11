@@ -66,8 +66,9 @@ export class PriceCommand extends Command {
 			() => c("command-option-description").t`The vendor to fetch the price data from.`
 		).addChoices(...Object.entries(CHOICES_GLOBAL).map(([value, name]) => buildLocalisedChoice(value, name)));
 		const nameSubcommand = getNameSubcommand(
-			() => c("command-option-description").t`Display the price for the card with this name.`
-		).addStringOption(vendorOption);
+			() => c("command-option-description").t`Display the price for the card with this name.`,
+			vendorOption
+		);
 		const passwordSubcommand = getPasswordSubcommand(
 			() => c("command-option-description").t`Display the price for the card with this password.`
 		).addStringOption(vendorOption);

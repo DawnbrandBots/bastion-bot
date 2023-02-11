@@ -116,20 +116,25 @@ export function getInputLangStringOption(): SlashCommandStringOption {
 	);
 }
 
-export function getNameSubcommand(getLocalisedDescription: () => string): SlashCommandSubcommandBuilder {
-	return buildLocalisedCommand(
+export function getNameSubcommand(
+	getLocalisedDescription: () => string,
+	requiredStringOption?: SlashCommandStringOption
+): SlashCommandSubcommandBuilder {
+	const builder = buildLocalisedCommand(
 		new SlashCommandSubcommandBuilder(),
 		() => c("command-option").t`name`,
 		getLocalisedDescription
-	)
-		.addStringOption(
-			buildLocalisedCommand(
-				new SlashCommandStringOption().setRequired(true),
-				() => c("command-option").t`input`,
-				() => c("command-option-description").t`Card name, fuzzy matching supported.`
-			)
+	).addStringOption(
+		buildLocalisedCommand(
+			new SlashCommandStringOption().setRequired(true),
+			() => c("command-option").t`input`,
+			() => c("command-option-description").t`Card name, fuzzy matching supported.`
 		)
-		.addStringOption(getInputLangStringOption());
+	);
+	if (requiredStringOption) {
+		builder.addStringOption(requiredStringOption);
+	}
+	return builder.addStringOption(getInputLangStringOption());
 }
 
 export function getPasswordSubcommand(getLocalisedDescription: () => string): SlashCommandSubcommandBuilder {
