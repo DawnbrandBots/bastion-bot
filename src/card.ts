@@ -125,10 +125,26 @@ export const Icon = {
 // TODO: remove "kid"
 export type CardLookupType = "name" | "password" | "konami-id" | "kid";
 
+export type CardSearchOptions =
+	| {
+			type: "name";
+			input: string;
+			resultLanguage: Locale;
+			inputLanguage: Locale;
+	  }
+	| {
+			type: "password" | "konami-id" | "kid";
+			input: number;
+			resultLanguage: Locale;
+			inputLanguage: Locale;
+	  };
+
 // Determine card search options for commands that use name/password/konami-id subcommands and
 // input-language and result-language options.
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export async function getCardSearchOptions(interaction: ChatInputCommandInteraction, locales: LocaleProvider) {
+export async function getCardSearchOptions(
+	interaction: ChatInputCommandInteraction,
+	locales: LocaleProvider
+): Promise<CardSearchOptions> {
 	const resultLanguage = await locales.get(interaction);
 	const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
 
