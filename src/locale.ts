@@ -110,10 +110,10 @@ export function buildLocalisedChoice<T = string | number>(
 
 export function getInputLangStringOption(): SlashCommandStringOption {
 	return buildLocalisedCommand(
-		new SlashCommandStringOption(),
+		new SlashCommandStringOption().setRequired(false),
 		() => c("command-option").t`input-language`,
 		() => c("command-option-description").t`The language to search in, defaulting to the result language.`
-	);
+	).addChoices(...LOCALE_CHOICES);
 }
 
 export function getNameSubcommand(
