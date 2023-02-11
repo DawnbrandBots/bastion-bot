@@ -19,7 +19,7 @@ import {
 } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { splitText } from "../utils";
+import { replyLatency, splitText } from "../utils";
 
 interface SetInfo {
 	price: number | null;
@@ -114,14 +114,17 @@ export class PriceCommand extends Command {
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const { type, input, resultLanguage, inputLanguage } = await getCardSearchOptions(interaction, this.locales);
 		const vendor = interaction.options.getString("vendor", true) as vendorId;
-		// Send out both requests simultaneously
-		const [, card] = await Promise.all([interaction.deferReply(), getCard(this.got, type, input, inputLanguage)]);
-		let end: number;
+		const card = await getCard(this.got, type, input, inputLanguage);
 		if (!card) {
-			end = Date.now();
 			useLocale(resultLanguage);
-			await interaction.editReply({ content: t`Could not find a card matching \`${input}\`!` });
+			const reply = await interaction.reply({
+				content: t`Could not find a card matching \`${input}\`!`,
+				fetchReply: true
+			});
+			return replyLatency(reply, interaction);
 		} else {
+			await interaction.deferReply();
+			let end: number;
 			const prices = await this.getPrice(card, vendor);
 			if (prices) {
 				useLocale(resultLanguage);
@@ -158,9 +161,9 @@ export class PriceCommand extends Command {
 				end = Date.now();
 				await interaction.editReply({ content: t`Could not find prices for \`${name}\`!` });
 			}
+			// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
+			const latency = end - interaction.createdTimestamp;
+			return latency;
 		}
-		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
-		const latency = end - interaction.createdTimestamp;
-		return latency;
 	}
 }

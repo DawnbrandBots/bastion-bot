@@ -16,6 +16,7 @@ import {
 } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
+import { replyLatency } from "../utils";
 
 @injectable()
 export class SearchCommand extends Command {
@@ -55,18 +56,15 @@ export class SearchCommand extends Command {
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const { type, input, resultLanguage, inputLanguage } = await getCardSearchOptions(interaction, this.locales);
 		const card = await getCard(this.got, type, input, inputLanguage);
-		let end: number;
+		let replyOptions;
 		if (!card) {
-			end = Date.now();
 			useLocale(resultLanguage);
-			await interaction.reply({ content: t`Could not find a card matching \`${input}\`!` });
+			replyOptions = { content: t`Could not find a card matching \`${input}\`!` };
 		} else {
 			const embeds = createCardEmbed(card, resultLanguage);
-			end = Date.now();
-			await interaction.reply({ embeds }); // Actually returns void
+			replyOptions = { embeds };
 		}
-		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
-		const latency = end - interaction.createdTimestamp;
-		return latency;
+		const reply = await interaction.reply({ ...replyOptions, fetchReply: true });
+		return replyLatency(reply, interaction);
 	}
 }

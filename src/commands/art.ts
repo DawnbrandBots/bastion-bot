@@ -17,6 +17,7 @@ import {
 } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
+import { replyLatency } from "../utils";
 
 @injectable()
 export class ArtCommand extends Command {
@@ -61,16 +62,18 @@ export class ArtCommand extends Command {
 
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const { type, input, resultLanguage, inputLanguage } = await getCardSearchOptions(interaction, this.locales);
-		// Send out both requests simultaneously
-		const [, card] = await Promise.all([interaction.deferReply(), getCard(this.got, type, input, inputLanguage)]);
-		let end: number;
+		const card = await getCard(this.got, type, input, inputLanguage);
 		if (!card) {
-			end = Date.now();
 			useLocale(resultLanguage);
-			await interaction.editReply({ content: t`Could not find a card matching \`${input}\`!` });
+			const reply = await interaction.reply({
+				content: t`Could not find a card matching \`${input}\`!`,
+				fetchReply: true
+			});
+			return replyLatency(reply, interaction);
 		} else {
+			await interaction.deferReply();
 			const artUrl = await this.getArt(card);
-			end = Date.now();
+			const end = Date.now();
 			if (artUrl) {
 				// expected embedding of image from URL
 				await interaction.editReply(artUrl); // Actually returns void
@@ -79,9 +82,9 @@ export class ArtCommand extends Command {
 				useLocale(resultLanguage);
 				await interaction.editReply({ content: t`Could not find art for \`${name}\`!` });
 			}
+			// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
+			const latency = end - interaction.createdTimestamp;
+			return latency;
 		}
-		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
-		const latency = end - interaction.createdTimestamp;
-		return latency;
 	}
 }
