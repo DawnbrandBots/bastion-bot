@@ -41,8 +41,8 @@ const rc = c;
 function videoGameIllustrationURL(card: Static<typeof RushCardSchema>): string {
 	// Filter card name down to alphanumeric characters
 	const probableBasename = (card.name.en ?? "").replaceAll(/\W/g, "");
-	// https://yugipedia.com/wiki/Category:Yu-Gi-Oh!_RUSH_DUEL:_Dawn_of_the_Battle_Royale!!_card_artworks
-	return `https://yugipedia.com/wiki/Special:Redirect/file/${probableBasename}-DBR-JP-VG-artwork.png`;
+	// https://yugipedia.com/wiki/Category:Yu-Gi-Oh!_RUSH_DUEL:_Saikyo_Battle_Royale!!_Let%27s_Go!_Go_Rush!!_card_artworks
+	return `https://yugipedia.com/wiki/Special:Redirect/file/${probableBasename}-G002-JP-VG-artwork.png`;
 }
 
 function createRushCardEmbed(card: Static<typeof RushCardSchema>, lang: Locale): EmbedBuilder {
