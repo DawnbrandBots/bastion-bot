@@ -2,8 +2,25 @@ import { SharedNameAndDescription, SlashCommandStringOption } from "@discordjs/b
 import sqlite, { Database, Statement } from "better-sqlite3";
 import { APIApplicationCommandOptionChoice, Locale as DiscordLocale } from "discord-api-types/v10";
 import { AutocompleteInteraction, ChatInputCommandInteraction, Message, Snowflake } from "discord.js";
+import fs from "fs";
+import { po } from "gettext-parser";
 import { inject, singleton } from "tsyringe";
-import { c, useLocale } from "ttag";
+import { addLocale, c, useLocale } from "ttag";
+import { getLogger } from "./logger";
+
+export function loadTranslations(): string[] {
+	const locales = [];
+	for (const file of fs.readdirSync("./translations", { withFileTypes: true })) {
+		if (file.isFile() && file.name.endsWith(".po")) {
+			const jsonpo = po.parse(fs.readFileSync(`./translations/${file.name}`));
+			const locale = file.name.split(".po")[0];
+			addLocale(locale, jsonpo);
+			locales.push(locale);
+			getLogger("locale").info(`Loaded translations for locale ${locale}`);
+		}
+	}
+	return locales;
+}
 
 type ArrayElement<T> = T extends readonly (infer U)[] ? U : never;
 
