@@ -5,7 +5,7 @@ import { parseDocument } from "htmlparser2";
 import { c, t, useLocale } from "ttag";
 import { CardSchema, LimitRegulation } from "./definitions";
 import { RushCardSchema } from "./definitions/rush";
-import { Locale } from "./locale";
+import { Locale, LocaleProvider } from "./locale";
 
 /**
  * There's some neat hacks in this file to achieve dynamic localization at
@@ -125,10 +125,34 @@ export const Icon = {
 // TODO: remove "kid"
 export type CardLookupType = "name" | "password" | "konami-id" | "kid";
 
+// Determine card search options for commands that use name/password/konami-id subcommands and
+// input-language and result-language options.
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export async function getCardSearchOptions(interaction: ChatInputCommandInteraction, locales: LocaleProvider) {
+	const resultLanguage = await locales.get(interaction);
+	const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
+
+	const type = interaction.options.getSubcommand(true) as CardLookupType;
+	if (type === "name") {
+		return {
+			type,
+			input: interaction.options.getString("input", true),
+			resultLanguage,
+			inputLanguage
+		};
+	}
+	return {
+		type,
+		input: interaction.options.getInteger("input", true),
+		resultLanguage,
+		inputLanguage
+	};
+}
+
 export async function getCard(
 	got: Got,
 	type: CardLookupType,
-	input: string,
+	input: string | number,
 	lang?: Locale
 ): Promise<Static<typeof CardSchema> | undefined> {
 	let url = `${process.env.API_URL}/ocg-tcg`;

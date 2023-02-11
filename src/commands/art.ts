@@ -5,7 +5,7 @@ import { ChatInputCommandInteraction } from "discord.js";
 import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
-import { CardLookupType, getCard } from "../card";
+import { getCard, getCardSearchOptions } from "../card";
 import { Command } from "../Command";
 import { CardSchema } from "../definitions";
 import {
@@ -13,7 +13,6 @@ import {
 	getKonamiIdSubcommand,
 	getNameSubcommand,
 	getPasswordSubcommand,
-	Locale,
 	LocaleProvider
 } from "../locale";
 import { getLogger, Logger } from "../logger";
@@ -61,10 +60,7 @@ export class ArtCommand extends Command {
 	}
 
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
-		const type = interaction.options.getSubcommand(true) as CardLookupType;
-		const input = interaction.options.getString("input", true);
-		const resultLanguage = await this.locales.get(interaction);
-		const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
+		const { type, input, resultLanguage, inputLanguage } = await getCardSearchOptions(interaction, this.locales);
 		// Send out both requests simultaneously
 		const [, card] = await Promise.all([interaction.deferReply(), getCard(this.got, type, input, inputLanguage)]);
 		let end: number;

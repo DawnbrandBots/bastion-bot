@@ -4,7 +4,7 @@ import { ChatInputCommandInteraction } from "discord.js";
 import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
-import { CardLookupType, createCardEmbed, getCard } from "../card";
+import { createCardEmbed, getCard, getCardSearchOptions } from "../card";
 import { Command } from "../Command";
 import {
 	buildLocalisedCommand,
@@ -12,7 +12,6 @@ import {
 	getNameSubcommand,
 	getPasswordSubcommand,
 	getResultLangStringOption,
-	Locale,
 	LocaleProvider
 } from "../locale";
 import { getLogger, Logger } from "../logger";
@@ -54,21 +53,17 @@ export class SearchCommand extends Command {
 	}
 
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
-		const type = interaction.options.getSubcommand(true) as CardLookupType;
-		const input = interaction.options.getString("input", true);
-		const resultLanguage = await this.locales.get(interaction);
-		const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
-		// Send out both requests simultaneously
-		const [, card] = await Promise.all([interaction.deferReply(), getCard(this.got, type, input, inputLanguage)]);
+		const { type, input, resultLanguage, inputLanguage } = await getCardSearchOptions(interaction, this.locales);
+		const card = await getCard(this.got, type, input, inputLanguage);
 		let end: number;
 		if (!card) {
 			end = Date.now();
 			useLocale(resultLanguage);
-			await interaction.editReply({ content: t`Could not find a card matching \`${input}\`!` });
+			await interaction.reply({ content: t`Could not find a card matching \`${input}\`!` });
 		} else {
 			const embeds = createCardEmbed(card, resultLanguage);
 			end = Date.now();
-			await interaction.editReply({ embeds }); // Actually returns void
+			await interaction.reply({ embeds }); // Actually returns void
 		}
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
 		const latency = end - interaction.createdTimestamp;
