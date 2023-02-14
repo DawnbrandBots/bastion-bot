@@ -172,84 +172,84 @@ msgstr[0] ""
 
 #: src\commands\deck.ts:291
 msgid "Main Deck (continued)"
-msgstr ""
+msgstr "メインデッキ（続き）"
 
 #: src\commands\deck.ts:305
 msgid "Extra Deck (continued)"
-msgstr ""
+msgstr "エクストラデッキ（続き）"
 
 #: src\commands\deck.ts:319
 msgid "Side Deck (continued)"
-msgstr ""
+msgstr "サイドデッキ（続き）"
 
 #: src\commands\deck.ts:409
 msgid "Error: Your deck is empty."
-msgstr ""
+msgstr "エラー: デッキが空です。"
 
 #: src\commands\locale.ts:70
 #, javascript-format
 msgid "Locale override for this channel: ${ channelOverride }"
-msgstr ""
+msgstr "このチャンネルへの上書き言語設定: ${ channelOverride }"
 
 #: src\commands\locale.ts:74
 msgid "Locale override for this server: ${ guildOverride }"
-msgstr ""
+msgstr "このサーバへの上書き言語設定: ${ guildOverride }"
 
 #: src\commands\locale.ts:77
 #: src\commands\locale.ts:107
 #, javascript-format
 msgid "Discord Community locale for this server: ${ interaction.guildLocale }"
-msgstr ""
+msgstr "このサーバのディスコードコミュニティの言語設定: ${ interaction.guildLocale }"
 
 #: src\commands\locale.ts:81
 msgid "Locale override for this direct message: ${ override }"
-msgstr ""
+msgstr "このダイレクトメッセージへの上書き言語設定: ${ override }"
 
 #: src\commands\locale.ts:84
 #, javascript-format
 msgid "Your Discord locale: ${ interaction.locale }"
-msgstr ""
+msgstr "あなたのディスコードの言語設定: ${ interaction.locale }"
 
 #: src\commands\locale.ts:96
 #, javascript-format
 msgid "Locale for current channel <#${ channel }> overridden with ${ locale }."
-msgstr ""
+msgstr "このチャンネル <#${ channel }> の言語設定は ${ locale } に上書きされています。"
 
 #: src\commands\locale.ts:99
 msgid "Locale for current channel <#${ channel }> reset to server default."
-msgstr ""
+msgstr "このチャンネル <#${ channel }> の言語設定はサーバのデフォルトにリセットされました。"
 
 #: src\commands\locale.ts:109
 msgid "Sorry, you must have the Manage Channel permission in this channel. If you think this is an error, contact your server admin or report a bug."
-msgstr ""
+msgstr "申し訳ありませんが、このチャンネルへの「チャンネルの管理」の権限が必要です。これがバグと考えられる場合は、サーバの管理者へ報告頂くか、バグ報告をして頂ければと思います。"
 
 #: src\commands\locale.ts:116
 #, javascript-format
 msgid "Locale for this server overriden with ${ locale }."
-msgstr ""
+msgstr "このサーバの言語設定が ${ locale } で上書きされました。"
 
 #: src\commands\locale.ts:119
 msgid "Locale for this server reset to Discord Community default."
-msgstr ""
+msgstr "このサーバの言語設定はディスコードコミュニティのデフォルトにリセットされました。"
 
 #: src\commands\locale.ts:122
 #, javascript-format
 msgid "Server-wide default for community servers is ${ interaction.guildLocale }."
-msgstr ""
+msgstr "コミュニティサーバのサーバーでのデフォルト設定は ${ interaction.guildLocale } です。"
 
 #: src\commands\locale.ts:124
 msgid "Sorry, you must have the Manage Server permission to do this. If you think this is an error, contact your server admin or report a bug."
-msgstr ""
+msgstr "申し訳ありませんが、「サーバ管理」の権限が必要です。これがバグと考えられる場合は、サーバの管理者へ報告頂くか、バグ報告をして頂ければと思います。"
 
 #: src\commands\locale.ts:131
 #, javascript-format
 msgid "Locale for this direct message overridden with ${ locale }. Your Discord setting is ${ interaction.locale }."
-msgstr ""
+msgstr "このダイレクトメッセージの言語設定は ${ locale } にて上書きされました。あなたのディスコードの設定は ${ interaction.locale } です。"
 
 #: src\commands\locale.ts:134
 #, javascript-format
 msgid "Locale for this direct message reset to Discord default. Your Discord setting is ${ interaction.locale }."
-msgstr ""
+msgstr "このダイレクトメッセージの言語設定はあなたのディスコードのデフォルトへとリセットされました。あなたのディスコードの設定は ${ interaction.locale } です。"
 
 #: src\commands\ping.ts:36
 #: src\events\message-ping.ts:43
