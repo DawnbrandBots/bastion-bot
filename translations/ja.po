@@ -255,17 +255,17 @@ msgstr "このダイレクトメッセージの言語設定はあなたのディ
 #: src\events\message-ping.ts:43
 #, javascript-format
 msgid "Average WebSocket ping (new instance): ${ ping } ms"
-msgstr ""
+msgstr "平均 WebSocket ping（新インスタンス）: ${ ping } ms"
 
 #: src\commands\ping.ts:40
 #: src\events\message-ping.ts:108
 msgid "Total latency: ${ latency } ms"
-msgstr ""
+msgstr "総レイテンシー: ${ latency } ms"
 
 #: src\commands\yugipedia.ts:106
 #, javascript-format
 msgid "Could not find a Yugipedia page named `${ page }`."
-msgstr ""
+msgstr "`${ page }` という名前のYugipediaのページが見つかりませんでした。"
 
 #: src\events\message-ping.ts:45
 msgid "Free and open source _Yu-Gi-Oh!_ bot"
