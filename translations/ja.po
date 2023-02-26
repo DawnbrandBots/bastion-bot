@@ -312,7 +312,7 @@ msgstr "すみません、英語名が無いカードの値段検索には非対
 
 #: src\commands\price.ts:162
 msgid "No market price"
-msgstr "市場価格未設定"
+msgstr "市場価格不明"
 
 #: src\commands\price.ts:170
 #, javascript-format
@@ -1112,7 +1112,7 @@ msgstr "価格"
 #: src\commands\rush-duel.ts:184
 msgctxt "command-name"
 msgid "rush-duel"
-msgstr ""
+msgstr "ラッシュデュエル"
 
 #: src\commands\art.ts:27
 msgctxt "command-description"
@@ -1142,44 +1142,44 @@ msgstr "Yugipediaを検索します。"
 #: src\commands\deck.ts:118
 msgctxt "command-description"
 msgid "Display a deck list from ydke:// or .ydk format, exported from a number of deck building programs."
-msgstr ""
+msgstr "ydke:// か .ydk 形式のデッキ情報を表示します。（多くのデッキ構築アプリで使われている形式です。）"
 
 #: src\commands\search.ts:30
 msgctxt "command-description"
 msgid "Find all information on a card!"
-msgstr ""
+msgstr "とあるカードのすべての情報を表示します！"
 
 #: src\commands\locale.ts:26
 msgctxt "command-description"
 msgid "Check or set Bastion's locale for this channel or server."
-msgstr ""
+msgstr "このチャンネル（あるいはサーバー）のBastionのロケールを確認（あるいは変更）します。"
 
 #: src\commands\random.ts:25
 msgctxt "command-description"
 msgid "Get a random Yu-Gi-Oh! card."
-msgstr ""
+msgstr "遊戯王カードをランダムに表示します。"
 
 #: src\commands\price.ts:55
 msgctxt "command-description"
 msgid "Display the price for a card!"
-msgstr ""
+msgstr "カードの値段を表示します！"
 
 #: src\commands\rush-duel.ts:185
 msgctxt "command-description"
 msgid "Find information on Rush Duel cards."
-msgstr ""
+msgstr "ラッシュデュエルのカード情報を探します。"
 
 #: src\commands\locale.ts:43
 msgctxt "command-option-choice"
 msgid "channel"
-msgstr ""
+msgstr "チャンネル"
 
 #: src\commands\locale.ts:44
 msgctxt "command-option-choice"
 msgid "server"
-msgstr ""
+msgstr "サーバー"
 
 #: src\commands\locale.ts:51
 msgctxt "command-option-choice"
 msgid "Discord default"
-msgstr ""
+msgstr "ディスコードのデフォルト"
