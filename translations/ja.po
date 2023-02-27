@@ -269,7 +269,7 @@ msgstr "`${ page }` という名前のYugipediaのページが見つかりませ
 
 #: src\events\message-ping.ts:45
 msgid "Free and open source _Yu-Gi-Oh!_ bot"
-msgstr "無料でオープンソースな _Yu-Gi-Oh!_ ボット"
+msgstr "自由でオープンソースな _Yu-Gi-Oh!_ ボット"
 
 #: src\events\message-ping.ts:68
 #, javascript-format
