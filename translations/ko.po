@@ -268,7 +268,7 @@ msgstr "오류: 덱이 비어 있습니다."
 
 #: src\events\message-ping.ts:45
 msgid "Free and open source _Yu-Gi-Oh!_ bot"
-msgstr "무료 오픈 소스 유희왕 봇"
+msgstr "자유-오픈 소스 유희왕 봇"
 
 #: src\events\message-ping.ts:68
 #, javascript-format
@@ -1111,7 +1111,7 @@ msgstr "가격"
 #: src\commands\rush-duel.ts:184
 msgctxt "command-name"
 msgid "rush-duel"
-msgstr "러시 듀얼"
+msgstr "러시듀얼"
 
 #: src\commands\art.ts:27
 msgctxt "command-description"
