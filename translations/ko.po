@@ -14,7 +14,7 @@ msgstr "🔗 링크"
 #: src\card.ts:280
 #, javascript-format
 msgid "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
-msgstr "[공식 코나미 DB](${ official }) | [OCG 규칙](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
+msgstr "[공식 코나미 DB](${ official }) | [OCG 재정](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
 #: src\card.ts:283
 #, javascript-format
@@ -227,18 +227,18 @@ msgstr "일치하는 이름을 Yugipedia 페이지에서 찾을 수 없습니다
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
-msgstr[0] ""
+msgstr[0] "${ counts.Monster } 몬스터"
 
 #: src\commands\deck.ts:248
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
-msgstr[0] ""
+msgstr[0] "${ counts.Spell } 마법"
 
 #: src\commands\deck.ts:251
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
-msgstr[0] ""
+msgstr[0] "${ counts.Trap } 함정"
 
 #: src\commands\deck.ts:279
 msgid "Your Deck"
@@ -248,7 +248,7 @@ msgstr "덱"
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
-msgstr[0] ""
+msgstr[0] "메인 덱 (${ deck.main.length } card — ${ countDetail })"
 
 #: src\commands\deck.ts:291
 msgid "Main Deck (continued)"
@@ -268,7 +268,7 @@ msgstr "오류: 덱이 비어 있습니다."
 
 #: src\events\message-ping.ts:45
 msgid "Free and open source _Yu-Gi-Oh!_ bot"
-msgstr ""
+msgstr "무료 오픈 소스 유희왕 봇"
 
 #: src\events\message-ping.ts:68
 #, javascript-format
@@ -369,37 +369,37 @@ msgstr ""
 
 #: src\events\message-search.ts:268
 msgid "Search type: ${ localisedType }"
-msgstr ""
+msgstr "검색 종류: ${ localisedType }"
 
 #: src\events\message-search.ts:265
 #, javascript-format
 msgid "Search language: **${ localisedInputLanguage }** (${ inputLanguage }). Check defaults with </locale get:${ id }> and configure with </locale set:${ id }>"
-msgstr ""
+msgstr "검색 언어: **${ localisedInputLanguage }** (${ inputLanguage }). </locale get:${ id }>의 기본값을 확인하고 </locale set:${ id }>를 설정합니다."
 
 #: src\events\message-ping.ts:91
 msgid "⚠️ You pinged me, but I am missing permissions in the channel!"
-msgstr ""
+msgstr "⚠️ 당신은 저를 부르셨지만, 해당 채널에서 권한이 없습니다!"
 
 #: src\events\message-ping.ts:94
 #: src\events\message-search.ts:182
 msgid "Please have a server administrator [fix this](https://github.com/DawnbrandBots/bastion-bot#discord-permissions)."
-msgstr ""
+msgstr "서버 관리자에게 문의하십시오 [문제 해결](https://github.com/DawnbrandBots/bastion-bot#discord-permissions)."
 
 #: src\events\message-search.ts:179
 msgid "⚠️ I am missing permissions in the channel!"
-msgstr ""
+msgstr "⚠️ 해당 채널에서 권한이 없습니다!"
 
 #: src\commands\deck.ts:298
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ countDetail })"
-msgstr[0] ""
+msgstr[0] "엑스트라 덱 (${ deck.extra.length } cards — ${ countDetail })"
 
 #: src\commands\deck.ts:312
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ countDetail })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ countDetail })"
-msgstr[0] ""
+msgstr[0] "사이드 덱 (${ deck.side.length } cards — ${ countDetail })"
 
 #: src\commands\locale.ts:104
 #, javascript-format
@@ -409,11 +409,11 @@ msgstr "서버 전체 로케일 재정의 : ${ guildOverride }"
 #: src\commands\ygoprodeck.ts:102
 #, javascript-format
 msgid "Something went wrong searching YGOPRODECK for `${ searchTerm }`."
-msgstr ""
+msgstr "YGOPRODECK을 위해 `${ searchTerm }`을(를) 검색하는 데 문제가 발생하였습니다."
 
 #: src\commands\yugipedia.ts:110
 msgid "Something went wrong searching Yugipedia for `${ page }`."
-msgstr ""
+msgstr "Yugipedia를 위해 `${ page }`을(를) 검색하는 데 문제가 발생하였습니다."
 
 #: src\commands\rush-duel.ts:61
 #, javascript-format
@@ -441,12 +441,12 @@ msgstr "코나미 ID #${ card.konami_id }"
 #: src\commands\deck.ts:453
 #: src\commands\rush-duel.ts:489
 msgid "Buttons can only be used by the user who called Bastion."
-msgstr ""
+msgstr "Bastion은 호출한 사용자만 이용할 수 있습니다."
 
 #: src\commands\rush-duel.ts:401
 #, javascript-format
 msgid "Could not find art for `${ input }`!"
-msgstr ""
+msgstr "`${ input }`에 대한 일러스트를 찾을 수 없습니다!"
 
 #: src\card.ts:38
 msgctxt "monster-type-race"
@@ -848,47 +848,47 @@ msgstr "패스워드"
 #: src\commands\search.ts:56
 msgctxt "command-option"
 msgid "konami-id"
-msgstr ""
+msgstr "코나미 ID"
 
 #: src\commands\locale.ts:30
 msgctxt "command-option"
 msgid "get"
-msgstr ""
+msgstr "가져오기"
 
 #: src\commands\locale.ts:35
 msgctxt "command-option"
 msgid "set"
-msgstr ""
+msgstr "설정"
 
 #: src\commands\locale.ts:40
 msgctxt "command-option"
 msgid "scope"
-msgstr ""
+msgstr "범위"
 
 #: src\commands\locale.ts:48
 msgctxt "command-option"
 msgid "locale"
-msgstr ""
+msgstr "로케일"
 
 #: src\commands\price.ts:91
 msgctxt "command-option"
 msgid "vendor"
-msgstr ""
+msgstr "상점"
 
 #: src\commands\rush-duel.ts:189
 msgctxt "command-option"
 msgid "search"
-msgstr ""
+msgstr "검색"
 
 #: src\commands\rush-duel.ts:211
 msgctxt "command-option"
 msgid "random"
-msgstr ""
+msgstr "무작위"
 
 #: src\commands\rush-duel.ts:216
 msgctxt "command-option"
 msgid "art"
-msgstr ""
+msgstr "일러스트"
 
 #: src\locale.ts:51
 msgctxt "command-option-description"
@@ -1036,27 +1036,27 @@ msgstr "가격 데이터를 가져올 업체입니다."
 #: src\commands\ygoprodeck.ts:40
 msgctxt "command-option-description"
 msgid "The English name of the card you're looking for."
-msgstr ""
+msgstr "찾고 있는 카드명은 영어입니다."
 
 #: src\commands\rush-duel.ts:190
 msgctxt "command-option-description"
 msgid "Find all information for the Rush Duel card with this name."
-msgstr ""
+msgstr "이 이름으로 러시 듀얼 카드에 대한 모든 정보를 찾습니다."
 
 #: src\commands\rush-duel.ts:201
 msgctxt "command-option-description"
 msgid "Find all information for the Rush Duel card with this official database ID."
-msgstr ""
+msgstr "이 공식 데이터베이스 ID로 러시 듀얼 카드에 대한 모든 정보를 찾습니다."
 
 #: src\commands\rush-duel.ts:212
 msgctxt "command-option-description"
 msgid "Get a random Rush Duel card."
-msgstr ""
+msgstr "무작위로 러시 듀얼 카드를 가져옵니다."
 
 #: src\commands\rush-duel.ts:217
 msgctxt "command-option-description"
 msgid "Display just the art for the Rush Duel card with this name."
-msgstr ""
+msgstr "이 이름으로 러시 듀얼 카드에 대한 일러스트만 표시합니다."
 
 #: src\commands\art.ts:26
 msgctxt "command-name"
@@ -1111,7 +1111,7 @@ msgstr "가격"
 #: src\commands\rush-duel.ts:184
 msgctxt "command-name"
 msgid "rush-duel"
-msgstr ""
+msgstr "러시 듀얼"
 
 #: src\commands\art.ts:27
 msgctxt "command-description"
@@ -1166,7 +1166,7 @@ msgstr "카드 가격 표시"
 #: src\commands\rush-duel.ts:185
 msgctxt "command-description"
 msgid "Find information on Rush Duel cards."
-msgstr ""
+msgstr "러시 듀얼 카드 정보 찾기"
 
 #: src\commands\locale.ts:43
 msgctxt "command-option-choice"
