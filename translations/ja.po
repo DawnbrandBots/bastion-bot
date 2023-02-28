@@ -255,38 +255,38 @@ msgstr "このダイレクトメッセージの言語設定はあなたのディ
 #: src\events\message-ping.ts:43
 #, javascript-format
 msgid "Average WebSocket ping (new instance): ${ ping } ms"
-msgstr ""
+msgstr "平均 WebSocket ping（新インスタンス）: ${ ping } ms"
 
 #: src\commands\ping.ts:40
 #: src\events\message-ping.ts:108
 msgid "Total latency: ${ latency } ms"
-msgstr ""
+msgstr "総レイテンシー: ${ latency } ms"
 
 #: src\commands\yugipedia.ts:106
 #, javascript-format
 msgid "Could not find a Yugipedia page named `${ page }`."
-msgstr ""
+msgstr "`${ page }` という名前のYugipediaのページが見つかりませんでした。"
 
 #: src\events\message-ping.ts:45
 msgid "Free and open source _Yu-Gi-Oh!_ bot"
-msgstr ""
+msgstr "自由でオープンソースな _Yu-Gi-Oh!_ ボット"
 
 #: src\events\message-ping.ts:68
 #, javascript-format
 msgid "Revision: ${ process.env.BOT_REVISION }."
-msgstr ""
+msgstr "リビジョン: ${ process.env.BOT_REVISION }."
 
 #: src\commands\deck.ts:329
 msgid ".ydk files must have the .ydk extension!"
-msgstr ""
+msgstr ".ydkファイルには.ydkの拡張子が必要です！"
 
 #: src\commands\deck.ts:332
 msgid ".ydk files should not be larger than 1 KB!"
-msgstr ""
+msgstr ".ydkファイルを 1 KB よりも大きくしないでください！"
 
 #: src\commands\deck.ts:322
 msgid "ydke URL"
-msgstr ""
+msgstr "ydkeのURL"
 
 #: src\card.ts:317
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
@@ -308,45 +308,45 @@ msgstr ""
 #: src\commands\price.ts:118
 #. TODO: future, determine localisation and relevance status of this error
 msgid "Sorry, I can't find the price for a card with no English name!"
-msgstr ""
+msgstr "すみません、英語名が無いカードの値段検索には非対応です！"
 
 #: src\commands\price.ts:162
 msgid "No market price"
-msgstr ""
+msgstr "市場価格不明"
 
 #: src\commands\price.ts:170
 #, javascript-format
 msgid "Prices for ${ card.name[resultLanguage] } - ${ vendorName }"
-msgstr ""
+msgstr "${ vendorName } の ${ card.name[resultLanguage] } の値段"
 
 #: src\commands\price.ts:184
 msgid "Could not find prices for `${ name }`!"
-msgstr ""
+msgstr "`${ name }` の値段を見つけられませんでした！"
 
 #: src\commands\deck.ts:427
 #. prepare interaction button for FTP upload
 msgid "Upload to YGOPRODECK"
-msgstr ""
+msgstr "YGOPRODECKにアップロード"
 
 #: src\commands\deck.ts:485
 #. disable original button
 #. prepare row to disable button on original message
 msgid "Upload Complete"
-msgstr ""
+msgstr "アップロード完了"
 
 #: src\commands\deck.ts:472
 msgid "Deck upload failed!"
-msgstr ""
+msgstr "デッキのアップロードに失敗しました！"
 
 #: src\commands\deck.ts:493
 #. reply in affirmation
 #, javascript-format
 msgid "Deck successfully uploaded to <${ url }>!"
-msgstr ""
+msgstr "<${ url }>にデッキのアップロードを完了しました！"
 
 #: src\events\message-search.ts:275
 msgid "💬 Translations missing?"
-msgstr ""
+msgstr "💬 翻訳が存在しませんか？"
 
 #: src\events\message-search.ts:276
 msgid "Help translate Bastion at the links above."
@@ -1112,7 +1112,7 @@ msgstr "価格"
 #: src\commands\rush-duel.ts:184
 msgctxt "command-name"
 msgid "rush-duel"
-msgstr ""
+msgstr "ラッシュデュエル"
 
 #: src\commands\art.ts:27
 msgctxt "command-description"
@@ -1142,44 +1142,44 @@ msgstr "Yugipediaを検索します。"
 #: src\commands\deck.ts:118
 msgctxt "command-description"
 msgid "Display a deck list from ydke:// or .ydk format, exported from a number of deck building programs."
-msgstr ""
+msgstr "ydke:// か .ydk 形式のデッキ情報を表示します。（多くのデッキ構築アプリで使われている形式です。）"
 
 #: src\commands\search.ts:30
 msgctxt "command-description"
 msgid "Find all information on a card!"
-msgstr ""
+msgstr "とあるカードのすべての情報を表示します！"
 
 #: src\commands\locale.ts:26
 msgctxt "command-description"
 msgid "Check or set Bastion's locale for this channel or server."
-msgstr ""
+msgstr "このチャンネル（あるいはサーバー）のBastionのロケールを確認（あるいは変更）します。"
 
 #: src\commands\random.ts:25
 msgctxt "command-description"
 msgid "Get a random Yu-Gi-Oh! card."
-msgstr ""
+msgstr "遊戯王カードをランダムに表示します。"
 
 #: src\commands\price.ts:55
 msgctxt "command-description"
 msgid "Display the price for a card!"
-msgstr ""
+msgstr "カードの値段を表示します！"
 
 #: src\commands\rush-duel.ts:185
 msgctxt "command-description"
 msgid "Find information on Rush Duel cards."
-msgstr ""
+msgstr "ラッシュデュエルのカード情報を探します。"
 
 #: src\commands\locale.ts:43
 msgctxt "command-option-choice"
 msgid "channel"
-msgstr ""
+msgstr "チャンネル"
 
 #: src\commands\locale.ts:44
 msgctxt "command-option-choice"
 msgid "server"
-msgstr ""
+msgstr "サーバー"
 
 #: src\commands\locale.ts:51
 msgctxt "command-option-choice"
 msgid "Discord default"
-msgstr ""
+msgstr "ディスコードのデフォルト"
