@@ -848,7 +848,7 @@ msgstr "패스워드"
 #: src\commands\search.ts:56
 msgctxt "command-option"
 msgid "konami-id"
-msgstr "코나미ID"
+msgstr "코나미-ID"
 
 #: src\commands\locale.ts:30
 msgctxt "command-option"
