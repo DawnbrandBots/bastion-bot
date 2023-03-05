@@ -110,7 +110,7 @@ export class YugiCommand extends AutocompletableCommand {
 				this.#logger.info(serialiseInteraction(interaction, { page }), error);
 				useLocale(lang);
 				content = t`Something went wrong searching Yugipedia for \`${page}\`.`;
-				content += "\nhttps://twitter.com/Yugipedia/status/1632192728267395072";
+				content += "\nhttps://twitter.com/Yugipedia/status/1632192728267395072\nhttps://discord.gg/e98zgyd";
 			}
 		}
 		const reply = await interaction.reply({ content, fetchReply: true });
