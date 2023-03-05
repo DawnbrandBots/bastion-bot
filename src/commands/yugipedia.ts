@@ -34,7 +34,8 @@ export class YugiCommand extends AutocompletableCommand {
 			() => c("command-description").t`Search the Yugipedia wiki for a page and link to it.`
 		);
 		const option = buildLocalisedCommand(
-			new SlashCommandStringOption().setRequired(true).setAutocomplete(true),
+			// Autocomplete disabled: https://github.com/DawnbrandBots/bastion-bot/issues/293
+			new SlashCommandStringOption().setRequired(true).setAutocomplete(false),
 			() => c("command-option").t`page`,
 			() => c("command-option-description").t`The name of the Yugipedia page you want to search for.`
 		);
@@ -105,9 +106,11 @@ export class YugiCommand extends AutocompletableCommand {
 				const link = response[3][0];
 				content = link || t`Could not find a Yugipedia page named \`${page}\`.`;
 			} catch (error) {
-				this.#logger.warn(serialiseInteraction(interaction, { page }), error);
+				// Level dropped from warn to info: https://github.com/DawnbrandBots/bastion-bot/issues/293
+				this.#logger.info(serialiseInteraction(interaction, { page }), error);
 				useLocale(lang);
 				content = t`Something went wrong searching Yugipedia for \`${page}\`.`;
+				content += "\nhttps://twitter.com/Yugipedia/status/1632192728267395072";
 			}
 		}
 		const reply = await interaction.reply({ content, fetchReply: true });
