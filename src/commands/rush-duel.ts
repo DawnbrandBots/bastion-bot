@@ -387,6 +387,12 @@ export class RushDuelCommand extends AutocompletableCommand {
 	}
 
 	private async subcommandArt(interaction: ChatInputCommandInteraction): Promise<number> {
+		// Disabled: https://github.com/DawnbrandBots/bastion-bot/issues/293
+		await interaction.reply("https://twitter.com/Yugipedia/status/1632192728267395072");
+		return -1;
+	}
+
+	private async subcommandArtDisabled(interaction: ChatInputCommandInteraction): Promise<number> {
 		const result = await this.searchCardNameWithCache(interaction);
 		if (typeof result === "number") {
 			return result;
