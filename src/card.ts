@@ -6,6 +6,7 @@ import { c, t, useLocale } from "ttag";
 import { CardSchema, LimitRegulation } from "./definitions";
 import { RushCardSchema } from "./definitions/rush";
 import { Locale, LocaleProvider } from "./locale";
+import { yugipediaRecoverNotice } from "./utils";
 
 /**
  * There's some neat hacks in this file to achieve dynamic localization at
@@ -418,7 +419,8 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 				.setColor(Colour.Spell)
 				.addFields({ name: c("card-embed").t`Card Text`, value: formatCardText(card.text, lang) })
 				.addFields(links)
-				.setFooter(formatFooter(card));
+				.setFooter(formatFooter(card))
+				.addFields(yugipediaRecoverNotice);
 
 			// exclusive Pendulum return path
 			return [embed, addon];
@@ -436,6 +438,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 
 	embed.addFields(links);
 	embed.setFooter(formatFooter(card));
+	embed.addFields(yugipediaRecoverNotice);
 
 	return [embed];
 }

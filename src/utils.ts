@@ -85,6 +85,11 @@ export function addFunding(embeds: EmbedBuilder | EmbedBuilder[], chance = 0.25)
 	return embeds;
 }
 
+export const yugipediaRecoverNotice = {
+	name: "Yugipedia suffered from a catastrophic data loss, and needs your help getting some of the data back.",
+	value: "https://yugipedia.com/recover?ref=bastion"
+};
+
 /**
  * Compute the interval from command invocation to response for a command based
  * on the reply timestamp. Do not use when the reply must be edited to be considered
