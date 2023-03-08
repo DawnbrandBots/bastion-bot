@@ -14,7 +14,7 @@ msgstr "🔗 링크"
 #: src\card.ts:280
 #, javascript-format
 msgid "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
-msgstr "[공식 코나미 DB](${ official }) | [OCG 재정](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
+msgstr "[코나미 공식 카드 DB](${ official }) | [OCG 공식 재정](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
 #: src\card.ts:283
 #, javascript-format
@@ -69,7 +69,7 @@ msgstr "패스워드: ${ card.password } | Not yet released"
 #: src\card.ts:246
 #: src\commands\rush-duel.ts:161
 msgid "Not yet released"
-msgstr "발매되지 않았습니다."
+msgstr "미발매"
 
 #: src\card.ts:250
 #, javascript-format
@@ -136,44 +136,44 @@ msgstr "찾으시려던 것을 찾으셨나요? 저희를 지원해 주시는 �
 #: src\events\message-search.ts:270
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
-msgstr "일치하는 카드를 찾을 수 없습니다. : `${ input }`!"
+msgstr "`${ input }`에 일치하는 카드를 찾을 수 없습니다!"
 
 #: src\commands\art.ts:107
 msgid "Could not find art for `${ name }`!"
-msgstr "일치하는 일러스트를 찾을 수 없습니다. : `${ name }`!"
+msgstr "`${ name }`의 카드 일러스트를 찾을 수 없습니다!"
 
 #: src\commands\locale.ts:70
 #, javascript-format
 msgid "Locale override for this channel: ${ channelOverride }"
-msgstr "이 채널의 로케일 재정의 : ${ channelOverride }"
+msgstr "이 채널에 대한 언어 설정: ${ channelOverride }"
 
 #: src\commands\locale.ts:74
 msgid "Locale override for this server: ${ guildOverride }"
-msgstr "이 서버의 로케일 재정의 : ${ guildOverride }"
+msgstr "이 서버에 대한 언어 설정: ${ guildOverride }"
 
 #: src\commands\locale.ts:77
 #: src\commands\locale.ts:107
 #, javascript-format
 msgid "Discord Community locale for this server: ${ interaction.guildLocale }"
-msgstr "이 서버의 디스코드 커뮤니티 로케일 : ${ interaction.guildLocale }"
+msgstr "이 서버의 디스코드 커뮤니티의 언어 설정: ${ interaction.guildLocale }"
 
 #: src\commands\locale.ts:81
 msgid "Locale override for this direct message: ${ override }"
-msgstr "이 다이렉트 메시지의 로케일 재정의 : ${ override }"
+msgstr "이 다이렉트 메시지에 대한 언어 설정: ${ override }"
 
 #: src\commands\locale.ts:84
 #, javascript-format
 msgid "Your Discord locale: ${ interaction.locale }"
-msgstr "당신의 디스코드 로케일 : ${ interaction.locale }"
+msgstr "당신의 디스코드 언어 설정: ${ interaction.locale }"
 
 #: src\commands\locale.ts:96
 #, javascript-format
 msgid "Locale for current channel <#${ channel }> overridden with ${ locale }."
-msgstr "현재 채널의 로케일 <#${ channel }> 재정의 ${ locale }."
+msgstr "현재 채널 <#${ channel }> 의 언어 설정은 ${ locale } 으로 재정의되었습니다."
 
 #: src\commands\locale.ts:99
 msgid "Locale for current channel <#${ channel }> reset to server default."
-msgstr "현재 채널의 로케일 <#${ channel }> 서버 기본값으로 재설정됩니다."
+msgstr "현재 채널 <#${ channel }> 의 언어 설정은 서버의 기본값으로 리셋되었습니다."
 
 #: src\commands\locale.ts:109
 msgid "Sorry, you must have the Manage Channel permission in this channel. If you think this is an error, contact your server admin or report a bug."
@@ -182,11 +182,11 @@ msgstr "죄송합니다. 이 작업을 수행하려면 서버 관리 권한이 �
 #: src\commands\locale.ts:116
 #, javascript-format
 msgid "Locale for this server overriden with ${ locale }."
-msgstr "이 서버의 로케일이 재정의되었습니다. ${ locale }."
+msgstr "이 서버의 언어 설정이 ${ locale } 으로 재정의되었습니다."
 
 #: src\commands\locale.ts:119
 msgid "Locale for this server reset to Discord Community default."
-msgstr "이 서버의 로케일이 디스코드 커뮤니티 기본값으로 재설정됩니다."
+msgstr "이 서버의 언어 설정은 디스코드 커뮤니티 기본값으로 리셋되었습니다."
 
 #: src\commands\locale.ts:122
 #, javascript-format
@@ -200,12 +200,12 @@ msgstr "죄송합니다. 이 작업을 수행하려면 서버 관리 권한이 �
 #: src\commands\locale.ts:131
 #, javascript-format
 msgid "Locale for this direct message overridden with ${ locale }. Your Discord setting is ${ interaction.locale }."
-msgstr "해당 다이렉트 메시지의 로케일이 ${ locale }로 재정의되었습니다. 당신의 디스코드 설정은 ${ interaction.locale } 입니다."
+msgstr "해당 다이렉트 메시지의 언어 설정은 ${ locale } 으로 재정의되었습니다. 당신의 디스코드 설정은 ${ interaction.locale } 입니다."
 
 #: src\commands\locale.ts:134
 #, javascript-format
 msgid "Locale for this direct message reset to Discord default. Your Discord setting is ${ interaction.locale }."
-msgstr "해당 다이렉트 메시지의 로케일은 디스코드 기본값으로 초기화됩니다. 당신의 디스코드 설정은 ${ interaction.locale } 입니다."
+msgstr "해당 다이렉트 메시지의 언어 설정은 디스코드 기본값으로 리셋되었습니다. 당신의 디스코드 설정은 ${ interaction.locale } 입니다."
 
 #: src\commands\ping.ts:36
 #: src\events\message-ping.ts:43
@@ -221,24 +221,24 @@ msgstr "총 지연 시간: ${ latency } ms"
 #: src\commands\yugipedia.ts:106
 #, javascript-format
 msgid "Could not find a Yugipedia page named `${ page }`."
-msgstr "일치하는 이름을 Yugipedia 페이지에서 찾을 수 없습니다. : `${ page }`."
+msgstr "`${ page }`라는 이름의 Yugipedia 페이지를 찾을 수 없습니다."
 
 #: src\commands\deck.ts:245
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
-msgstr[0] "${ counts.Monster } 몬스터"
+msgstr[0] "몬스터 ${ counts.Monster } 장"
 
 #: src\commands\deck.ts:248
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
-msgstr[0] "${ counts.Spell } 마법"
+msgstr[0] "마법 ${ counts.Spell } 장"
 
 #: src\commands\deck.ts:251
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
-msgstr[0] "${ counts.Trap } 함정"
+msgstr[0] "함정 ${ counts.Trap } 장"
 
 #: src\commands\deck.ts:279
 msgid "Your Deck"
@@ -264,7 +264,7 @@ msgstr "사이드 덱 (계속)"
 
 #: src\commands\deck.ts:409
 msgid "Error: Your deck is empty."
-msgstr "오류: 덱이 비어 있습니다."
+msgstr "오류: 덱이 비었습니다."
 
 #: src\events\message-ping.ts:45
 msgid "Free and open source _Yu-Gi-Oh!_ bot"
@@ -311,12 +311,12 @@ msgstr "죄송합니다. 영어 이름이 없는 카드의 가격을 찾을 수 
 
 #: src\commands\price.ts:162
 msgid "No market price"
-msgstr "시장 가격이 없습니다."
+msgstr "시장 가격 불명"
 
 #: src\commands\price.ts:170
 #, javascript-format
 msgid "Prices for ${ card.name[resultLanguage] } - ${ vendorName }"
-msgstr "${ card.name[resultLanguage] } - ${ vendorName } 가격"
+msgstr "${ vendorName } 의 ${ card.name[resultLanguage] } 가격"
 
 #: src\commands\price.ts:184
 msgid "Could not find prices for `${ name }`!"
@@ -335,17 +335,17 @@ msgstr "업로드 완료"
 
 #: src\commands\deck.ts:472
 msgid "Deck upload failed!"
-msgstr "덱 업로드 실패!"
+msgstr "덱 업로드에 실패했습니다!"
 
 #: src\commands\deck.ts:493
 #. reply in affirmation
 #, javascript-format
 msgid "Deck successfully uploaded to <${ url }>!"
-msgstr "덱이 <${ url }>에 업로드되었습니다!"
+msgstr "<${ url }>에 덱 업로드를 완료했습니다!"
 
 #: src\events\message-search.ts:275
 msgid "💬 Translations missing?"
-msgstr "💬 번역이 누락되었습니까?"
+msgstr "💬 번역이 존재합니까?"
 
 #: src\events\message-search.ts:276
 msgid "Help translate Bastion at the links above."
