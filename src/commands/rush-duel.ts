@@ -34,7 +34,7 @@ import {
 } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
-import { addNotice, replyLatency, serialiseInteraction, yugipediaRecoverNotice } from "../utils";
+import { addNotice, replyLatency, serialiseInteraction } from "../utils";
 
 const rc = c;
 
@@ -160,7 +160,6 @@ function createRushCardEmbed(card: Static<typeof RushCardSchema>, lang: Locale):
 
 	const footer = card.konami_id ? t`Konami ID #${card.konami_id}` : t`Not yet released`;
 	embed.setFooter({ text: footer });
-	embed.addFields(yugipediaRecoverNotice);
 
 	return embed;
 }
@@ -389,9 +388,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 
 	private async subcommandArt(interaction: ChatInputCommandInteraction): Promise<number> {
 		// Disabled: https://github.com/DawnbrandBots/bastion-bot/issues/293
-		await interaction.reply(
-			"**Yugipedia suffered from a catastrophic data loss, and needs your help getting some of the data back.**\nhttps://yugipedia.com/recover?ref=bastion\nThis command is broken until Yugipedia is restored."
-		);
+		await interaction.reply("https://twitter.com/Yugipedia/status/1632192728267395072\nhttps://discord.gg/e98zgyd");
 		return -1;
 	}
 
