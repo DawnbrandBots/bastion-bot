@@ -44,6 +44,12 @@ const mentionPatterns = (
 	["UserWithOptionalNickname", "Channel", "Role", "SlashCommand", "Emoji", "Timestamp"] as const
 ).map(key => new RegExp(FormattingPatterns[key], `${FormattingPatterns[key].flags}g`));
 
+const undocumentedPatterns = [
+	"<id:browse>", // "Browse Channels"
+	"<id:customize>", // "Customise Community"
+	"<id:home>" // links to community rules channel
+];
+
 export function cleanMessageMarkup(message: string): string {
 	// Remove the above markup elements
 	const nodes = parser(message, { inline: true });
@@ -53,6 +59,9 @@ export function cleanMessageMarkup(message: string): string {
 		.join("");
 	for (const regex of mentionPatterns) {
 		message = message.replaceAll(regex, "");
+	}
+	for (const string of undocumentedPatterns) {
+		message = message.replaceAll(string, "");
 	}
 	return message;
 }
