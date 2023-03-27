@@ -62,6 +62,14 @@ export class LinkCommand extends Command {
 		rivgoz: {
 			name: "Rivalry/Gozen Rulings",
 			result: "https://img.yugioh-card.com/ygo_cms/ygo/all/uploads/CardFAQ_Rivalry-of-Warlords_Gozen-Match-1.pdf"
+		},
+		mdtou: {
+			name: "Master Duel Terms of Use (English)",
+			result: "https://legal.konami.com/games/yugioh_masterduel/terms/tou/ygmd_mb_other_en.html"
+		},
+		mdpp: {
+			name: "Konami Privacy Policy",
+			result: "https://legal.konami.com/games/privacy/view/\nhttps://legal.konami.com/games/android/terms/ad_attention/en/"
 		}
 	};
 
