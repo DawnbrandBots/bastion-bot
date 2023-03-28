@@ -56,16 +56,16 @@ msgstr "**ペンデュラムスケール**: ${ formattedScale }"
 #: src\card.ts:240
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
-msgstr ""
+msgstr "パスワード: ${ card.password } | Konami ID #${ card.konami_id }"
 
 #: src\card.ts:242
 msgid "No password | Konami ID #${ card.konami_id }"
-msgstr ""
+msgstr "パスワード: 未設定 | Konami ID #${ card.konami_id }"
 
 #: src\card.ts:244
 #, javascript-format
 msgid "Password: ${ card.password } | Not yet released"
-msgstr ""
+msgstr "パスワード: ${ card.password } | Konami ID: 未設定"
 
 #: src\card.ts:246
 #: src\commands\rush-duel.ts:161
@@ -384,11 +384,11 @@ msgstr ""
 #: src\events\message-ping.ts:94
 #: src\events\message-search.ts:182
 msgid "Please have a server administrator [fix this](https://github.com/DawnbrandBots/bastion-bot#discord-permissions)."
-msgstr ""
+msgstr "サーバ管理者の方に[この問題](https://github.com/DawnbrandBots/bastion-bot#discord-permissions)の対応をお願いいたします。"
 
 #: src\events\message-search.ts:179
 msgid "⚠️ I am missing permissions in the channel!"
-msgstr ""
+msgstr "⚠️ このチャンネルではこのボットに権限がありません！"
 
 #: src\commands\deck.ts:298
 #, javascript-format
