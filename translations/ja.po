@@ -60,12 +60,12 @@ msgstr "パスワード: ${ card.password } | Konami ID #${ card.konami_id }"
 
 #: src\card.ts:242
 msgid "No password | Konami ID #${ card.konami_id }"
-msgstr "パスワード: 未設定 | Konami ID #${ card.konami_id }"
+msgstr "パスワードなし | Konami ID #${ card.konami_id }"
 
 #: src\card.ts:244
 #, javascript-format
 msgid "Password: ${ card.password } | Not yet released"
-msgstr "パスワード: ${ card.password } | Konami ID: 未設定"
+msgstr "パスワード: ${ card.password } | 未発売"
 
 #: src\card.ts:246
 #: src\commands\rush-duel.ts:161
