@@ -30,7 +30,7 @@
 		"dotenv": "^16.0.3",
 		"gettext-parser": "^6.0.0",
 		"got": "^11.8.6",
-		"htmlparser2": "^8.0.1",
+		"htmlparser2": "^8.0.2",
 		"mnemonist": "^0.39.5",
 		"reflect-metadata": "^0.1.13",
 		"supports-color": "^9.3.1",
