@@ -56,16 +56,16 @@ msgstr "**ペンデュラムスケール**: ${ formattedScale }"
 #: src\card.ts:240
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
-msgstr ""
+msgstr "パスワード: ${ card.password } | Konami ID #${ card.konami_id }"
 
 #: src\card.ts:242
 msgid "No password | Konami ID #${ card.konami_id }"
-msgstr ""
+msgstr "パスワードなし | Konami ID #${ card.konami_id }"
 
 #: src\card.ts:244
 #, javascript-format
 msgid "Password: ${ card.password } | Not yet released"
-msgstr ""
+msgstr "パスワード: ${ card.password } | 未発売"
 
 #: src\card.ts:246
 #: src\commands\rush-duel.ts:161
@@ -384,11 +384,11 @@ msgstr ""
 #: src\events\message-ping.ts:94
 #: src\events\message-search.ts:182
 msgid "Please have a server administrator [fix this](https://github.com/DawnbrandBots/bastion-bot#discord-permissions)."
-msgstr ""
+msgstr "サーバ管理者の方に[この問題](https://github.com/DawnbrandBots/bastion-bot#discord-permissions)の対応をお願いいたします。"
 
 #: src\events\message-search.ts:179
 msgid "⚠️ I am missing permissions in the channel!"
-msgstr ""
+msgstr "⚠️ このチャンネルではこのボットに権限がありません！"
 
 #: src\commands\deck.ts:298
 #, javascript-format
@@ -854,12 +854,12 @@ msgstr ""
 #: src\commands\locale.ts:30
 msgctxt "command-option"
 msgid "get"
-msgstr ""
+msgstr "かくにん"
 
 #: src\commands\locale.ts:35
 msgctxt "command-option"
 msgid "set"
-msgstr ""
+msgstr "せってい"
 
 #: src\commands\locale.ts:40
 msgctxt "command-option"
@@ -869,12 +869,12 @@ msgstr ""
 #: src\commands\locale.ts:48
 msgctxt "command-option"
 msgid "locale"
-msgstr ""
+msgstr "言語設定"
 
 #: src\commands\price.ts:91
 msgctxt "command-option"
 msgid "vendor"
-msgstr ""
+msgstr "販売店"
 
 #: src\commands\rush-duel.ts:189
 msgctxt "command-option"
@@ -889,7 +889,7 @@ msgstr "おみくじ"
 #: src\commands\rush-duel.ts:216
 msgctxt "command-option"
 msgid "art"
-msgstr "画像"
+msgstr "イラスト"
 
 #: src\locale.ts:51
 msgctxt "command-option-description"
@@ -904,7 +904,7 @@ msgstr ""
 #: src\commands\help.ts:55
 msgctxt "command-option-description"
 msgid "The name of a specific Slash Command."
-msgstr ""
+msgstr "とあるスラッシュコマンドの名前"
 
 #: src\commands\yugipedia.ts:39
 msgctxt "command-option-description"
@@ -944,7 +944,7 @@ msgstr ""
 #: src\commands\art.ts:32
 msgctxt "command-option-description"
 msgid "Display the art for the card with this name."
-msgstr ""
+msgstr "この名称のカードのイラストを表示します"
 
 #: src\commands\art.ts:37
 #: src\commands\price.ts:65
@@ -952,24 +952,24 @@ msgstr ""
 #: src\commands\search.ts:40
 msgctxt "command-option-description"
 msgid "Card name, fuzzy matching supported."
-msgstr ""
+msgstr "カード名（あいまい検索に対応しています）"
 
 #: src\commands\art.ts:42
 msgctxt "command-option-description"
 msgid "Display the art for the card with this password."
-msgstr ""
+msgstr "このパスワードのカードのイラストを表示します"
 
 #: src\commands\art.ts:48
 #: src\commands\price.ts:76
 #: src\commands\search.ts:51
 msgctxt "command-option-description"
 msgid "Card password, the eight-digit number printed on the bottom left corner."
-msgstr ""
+msgstr "カードパスワード（カード左下の8桁の数字）"
 
 #: src\commands\art.ts:54
 msgctxt "command-option-description"
 msgid "Display the art for the card with this official database ID."
-msgstr ""
+msgstr "このパスワードのカードのイラストを表示します"
 
 #: src\commands\art.ts:59
 #: src\commands\price.ts:87
@@ -977,97 +977,97 @@ msgstr ""
 #: src\commands\search.ts:62
 msgctxt "command-option-description"
 msgid "Konami's official card database identifier."
-msgstr ""
+msgstr "Konami公式カードDBでのカードID"
 
 #: src\commands\search.ts:35
 msgctxt "command-option-description"
 msgid "Find all information for the card with this name."
-msgstr ""
+msgstr "この名称のカードの情報を表示します"
 
 #: src\commands\search.ts:45
 msgctxt "command-option-description"
 msgid "Find all information for the card with this password."
-msgstr ""
+msgstr "このパスワードのカードの情報を表示します"
 
 #: src\commands\search.ts:57
 msgctxt "command-option-description"
 msgid "Find all information for the card with this official database ID."
-msgstr ""
+msgstr "この公式カードDBのIDを持つカードの情報を表示します"
 
 #: src\commands\locale.ts:31
 msgctxt "command-option-description"
 msgid "Check Bastion's locale setting for this channel or server."
-msgstr ""
+msgstr "このチャンネルかサーバでのBastionの言語設定を表示します"
 
 #: src\commands\locale.ts:36
 msgctxt "command-option-description"
 msgid "Override Bastion's locale for this channel or server."
-msgstr ""
+msgstr "Bastionの言語設定を上書きします"
 
 #: src\commands\locale.ts:41
 msgctxt "command-option-description"
 msgid "Edit just this channel or the whole server?"
-msgstr ""
+msgstr "このチャンネルかサーバ全体の設定を変更しますか？"
 
 #: src\commands\locale.ts:49
 msgctxt "command-option-description"
 msgid "The new default language to use in this channel or server."
-msgstr ""
+msgstr "このチャンネルあるいはサーバ全体で使う新しい言語設定"
 
 #: src\commands\price.ts:60
 msgctxt "command-option-description"
 msgid "Display the price for the card with this name."
-msgstr ""
+msgstr "この名称のカードの価格を表示します"
 
 #: src\commands\price.ts:70
 msgctxt "command-option-description"
 msgid "Display the price for the card with this password."
-msgstr ""
+msgstr "このパスワードのカードの価格を表示します"
 
 #: src\commands\price.ts:82
 msgctxt "command-option-description"
 msgid "Display the price for the card with this official database ID."
-msgstr ""
+msgstr "この公式カードDBのIDを持つカードの価格を表示します"
 
 #: src\commands\price.ts:92
 msgctxt "command-option-description"
 msgid "The vendor to fetch the price data from."
-msgstr ""
+msgstr "価格情報の参照先"
 
 #: src\commands\ygoprodeck.ts:40
 msgctxt "command-option-description"
 msgid "The English name of the card you're looking for."
-msgstr ""
+msgstr "カード名称の英語名"
 
 #: src\commands\rush-duel.ts:190
 msgctxt "command-option-description"
 msgid "Find all information for the Rush Duel card with this name."
-msgstr ""
+msgstr "この名称のラッシュデュエルカードの情報を表示します"
 
 #: src\commands\rush-duel.ts:201
 msgctxt "command-option-description"
 msgid "Find all information for the Rush Duel card with this official database ID."
-msgstr ""
+msgstr "この公式カードDBのIDを持つラッシュデュエルカードの情報を表示します"
 
 #: src\commands\rush-duel.ts:212
 msgctxt "command-option-description"
 msgid "Get a random Rush Duel card."
-msgstr ""
+msgstr "ラッシュデュエル用カードのおみくじ"
 
 #: src\commands\rush-duel.ts:217
 msgctxt "command-option-description"
 msgid "Display just the art for the Rush Duel card with this name."
-msgstr ""
+msgstr "ラッシュデュエル用カードのイラストを表示します"
 
 #: src\commands\art.ts:26
 msgctxt "command-name"
 msgid "art"
-msgstr "画像"
+msgstr "いらすと"
 
 #: src\commands\help.ts:49
 msgctxt "command-name"
 msgid "help"
-msgstr "使い方"
+msgstr "つかいかた"
 
 #: src\commands\ping.ts:23
 msgctxt "command-name"
@@ -1087,17 +1087,17 @@ msgstr ""
 #: src\commands\deck.ts:115
 msgctxt "command-name"
 msgid "deck"
-msgstr "デッキ"
+msgstr "でっき"
 
 #: src\commands\search.ts:29
 msgctxt "command-name"
 msgid "search"
-msgstr "検索"
+msgstr "けんさく"
 
 #: src\commands\locale.ts:25
 msgctxt "command-name"
 msgid "locale"
-msgstr "言語設定"
+msgstr "げんごせってい"
 
 #: src\commands\random.ts:24
 msgctxt "command-name"
@@ -1107,12 +1107,12 @@ msgstr "おみくじ"
 #: src\commands\price.ts:54
 msgctxt "command-name"
 msgid "price"
-msgstr "価格"
+msgstr "かかく"
 
 #: src\commands\rush-duel.ts:184
 msgctxt "command-name"
 msgid "rush-duel"
-msgstr "ラッシュデュエル"
+msgstr "らっしゅ"
 
 #: src\commands\art.ts:27
 msgctxt "command-description"
