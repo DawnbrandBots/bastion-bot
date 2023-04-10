@@ -822,12 +822,12 @@ msgstr "デッキ"
 #: src\commands\deck.ts:146
 msgctxt "command-option"
 msgid "public"
-msgstr "公開"
+msgstr "チャンネルに公開"
 
 #: src\commands\deck.ts:153
 msgctxt "command-option"
 msgid "stacked"
-msgstr ""
+msgstr "一行表示"
 
 #: src\commands\art.ts:31
 #: src\commands\price.ts:59
@@ -904,7 +904,7 @@ msgstr ""
 #: src\commands\help.ts:55
 msgctxt "command-option-description"
 msgid "The name of a specific Slash Command."
-msgstr "とあるスラッシュコマンドの名前"
+msgstr "使い方を表示したいスラッシュコマンドの名前"
 
 #: src\commands\yugipedia.ts:39
 msgctxt "command-option-description"
@@ -939,7 +939,7 @@ msgstr "デッキ内容を自分以外の人にも見せるか否かを設定で
 #: src\commands\deck.ts:156
 msgctxt "command-option-description"
 msgid "Whether to display the deck sections as one stacked column. This is false (side-by-side) by default."
-msgstr "デッキ内容を一行で表示するかを設定できます。デフォルトでは左右の二行に分けて表示します。"
+msgstr "デッキ内容を一行で表示するか否かを設定できます。デフォルトでは左右の二行に分けて表示します。"
 
 #: src\commands\art.ts:32
 msgctxt "command-option-description"
