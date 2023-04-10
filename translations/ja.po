@@ -291,7 +291,7 @@ msgstr "ydkeのURL"
 #: src\card.ts:317
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 msgid "**Limit**: ${ limitRegulationDisplay }"
-msgstr ""
+msgstr "**リミットレギュレーション**: ${ limitRegulationDisplay }"
 
 #: src\commands\price.ts:38
 msgid "TCGPlayer"
@@ -786,12 +786,12 @@ msgstr "入力用言語"
 #: src\commands\search.ts:61
 msgctxt "command-option"
 msgid "input"
-msgstr ""
+msgstr "入力"
 
 #: src\commands\help.ts:52
 msgctxt "command-option"
 msgid "command"
-msgstr ""
+msgstr "コマンド"
 
 #: src\commands\ygoprodeck.ts:39
 msgctxt "command-option"
@@ -834,14 +834,14 @@ msgstr ""
 #: src\commands\search.ts:34
 msgctxt "command-option"
 msgid "name"
-msgstr ""
+msgstr "カード名"
 
 #: src\commands\art.ts:41
 #: src\commands\price.ts:69
 #: src\commands\search.ts:44
 msgctxt "command-option"
 msgid "password"
-msgstr ""
+msgstr "パスワード"
 
 #: src\commands\art.ts:53
 #: src\commands\price.ts:81
@@ -849,27 +849,27 @@ msgstr ""
 #: src\commands\search.ts:56
 msgctxt "command-option"
 msgid "konami-id"
-msgstr ""
+msgstr "Konami ID"
 
 #: src\commands\locale.ts:30
 msgctxt "command-option"
 msgid "get"
-msgstr "かくにん"
+msgstr "確認する"
 
 #: src\commands\locale.ts:35
 msgctxt "command-option"
 msgid "set"
-msgstr "せってい"
+msgstr "設定する"
 
 #: src\commands\locale.ts:40
 msgctxt "command-option"
 msgid "scope"
-msgstr ""
+msgstr "適用範囲"
 
 #: src\commands\locale.ts:48
 msgctxt "command-option"
 msgid "locale"
-msgstr "言語設定"
+msgstr "使用言語"
 
 #: src\commands\price.ts:91
 msgctxt "command-option"
