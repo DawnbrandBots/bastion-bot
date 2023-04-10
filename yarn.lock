@@ -1489,10 +1489,15 @@
   resolved "https://registry.yarnpkg.com/@sapphire/snowflake/-/snowflake-3.4.0.tgz#25c012158a9feea2256c718985dbd6c1859a5022"
   integrity sha512-zZxymtVO6zeXVMPds+6d7gv/OfnCc25M1Z+7ZLB0oPmeMTPeRWVPQSS16oDJy5ZsyCOLj7M6mbZml5gWXcVRNw==
 
-"@sinclair/typebox@^0.25.16", "@sinclair/typebox@^0.25.24":
+"@sinclair/typebox@^0.25.16":
   version "0.25.24"
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.25.24.tgz#8c7688559979f7079aacaf31aa881c3aa410b718"
   integrity sha512-XJfwUVUKDHF5ugKwIcxEgc9k8b7HbznCp6eUfWgu710hMPNIO4aw4/zB5RogDQz8nd6gyCDpU9O/m6qYEWY6yQ==
+
+"@sinclair/typebox@^0.27.2":
+  version "0.27.2"
+  resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.27.2.tgz#d178f8b8845dc6da2d947706549d69fa7a9bf179"
+  integrity sha512-nm4jY2hG2w51Qug+qSw8aSLatstdDy2JA3f6vpJRQttnXcZZ6k+EBzQWPdvW3+tBbw7NPoQ9N287F6PTzGVzMg==
 
 "@sindresorhus/is@^4.0.0":
   version "4.6.0"
