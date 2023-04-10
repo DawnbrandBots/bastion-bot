@@ -168,7 +168,7 @@ msgstr "あなたのデッキ"
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
-msgstr[0] ""
+msgstr[0] "メインデッキ (${ deck.main.length } 枚 — ${ countDetail })"
 
 #: src\commands\deck.ts:291
 msgid "Main Deck (continued)"
@@ -394,13 +394,13 @@ msgstr "⚠️ このチャンネルではこのボットに権限がありま�
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ countDetail })"
-msgstr[0] ""
+msgstr[0] "エクストラデッキ (${ deck.extra.length } 枚 — ${ countDetail })"
 
 #: src\commands\deck.ts:312
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ countDetail })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ countDetail })"
-msgstr[0] ""
+msgstr[0] "サイドデッキ (${ deck.side.length } 枚 — ${ countDetail })"
 
 #: src\commands\locale.ts:104
 #, javascript-format
