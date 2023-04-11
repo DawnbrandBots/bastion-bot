@@ -806,7 +806,7 @@ msgstr "ページ"
 #: src\commands\deck.ts:122
 msgctxt "command-option"
 msgid "url"
-msgstr "URL"
+msgstr "ydke形式のurl"
 
 #: src\commands\deck.ts:128
 msgctxt "command-option"
