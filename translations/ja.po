@@ -899,7 +899,7 @@ msgstr "カード情報の表示言語を設定します。デフォルトの設
 #: src\locale.ts:71
 msgctxt "command-option-description"
 msgid "The language to search in, defaulting to the result language."
-msgstr ""
+msgstr "検索ワードが何語かを指定できます。デフォルトの設定は出力言語と同じです。"
 
 #: src\commands\help.ts:55
 msgctxt "command-option-description"
