@@ -168,7 +168,7 @@ msgstr "あなたのデッキ"
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
-msgstr[0] ""
+msgstr[0] "メインデッキ (${ deck.main.length } 枚 — ${ countDetail })"
 
 #: src\commands\deck.ts:291
 msgid "Main Deck (continued)"
@@ -291,7 +291,7 @@ msgstr "ydkeのURL"
 #: src\card.ts:317
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 msgid "**Limit**: ${ limitRegulationDisplay }"
-msgstr ""
+msgstr "**リミットレギュレーション**: ${ limitRegulationDisplay }"
 
 #: src\commands\price.ts:38
 msgid "TCGPlayer"
@@ -379,7 +379,7 @@ msgstr ""
 
 #: src\events\message-ping.ts:91
 msgid "⚠️ You pinged me, but I am missing permissions in the channel!"
-msgstr ""
+msgstr "⚠️ Pingをもらいましたが、そのチャンネルにはこのボットに権限がありません！"
 
 #: src\events\message-ping.ts:94
 #: src\events\message-search.ts:182
@@ -388,38 +388,38 @@ msgstr "サーバ管理者の方に[この問題](https://github.com/DawnbrandBo
 
 #: src\events\message-search.ts:179
 msgid "⚠️ I am missing permissions in the channel!"
-msgstr "⚠️ このチャンネルではこのボットに権限がありません！"
+msgstr "⚠️ そのチャンネルではこのボットに権限がありません！"
 
 #: src\commands\deck.ts:298
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ countDetail })"
-msgstr[0] ""
+msgstr[0] "エクストラデッキ (${ deck.extra.length } 枚 — ${ countDetail })"
 
 #: src\commands\deck.ts:312
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ countDetail })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ countDetail })"
-msgstr[0] ""
+msgstr[0] "サイドデッキ (${ deck.side.length } 枚 — ${ countDetail })"
 
 #: src\commands\locale.ts:104
 #, javascript-format
 msgid "Server-wide locale override: ${ guildOverride }"
-msgstr ""
+msgstr "サーバー全体への上書き言語設定: ${ guildOverride }"
 
 #: src\commands\ygoprodeck.ts:102
 #, javascript-format
 msgid "Something went wrong searching YGOPRODECK for `${ searchTerm }`."
-msgstr ""
+msgstr "`${ searchTerm }`でYGOPRODECKを検索中に何かエラーが起こったようです。"
 
 #: src\commands\yugipedia.ts:110
 msgid "Something went wrong searching Yugipedia for `${ page }`."
-msgstr ""
+msgstr "`${ page }`でYugipediaを検索中に何かエラーが起こったようです。"
 
 #: src\commands\rush-duel.ts:61
 #, javascript-format
 msgid "[Official Konami DB](${ official }) | [Rulings (Japanese)](${ rulings }) | [Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
-msgstr ""
+msgstr "[Konami公式カードDB](${ official }) | [公式裁定](${ rulings }) | [Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
 
 #: src\commands\rush-duel.ts:64
 #, javascript-format
@@ -442,12 +442,12 @@ msgstr ""
 #: src\commands\deck.ts:453
 #: src\commands\rush-duel.ts:489
 msgid "Buttons can only be used by the user who called Bastion."
-msgstr ""
+msgstr "ボタンはBastionにコマンドを送ったユーザーのみに有効です。"
 
 #: src\commands\rush-duel.ts:401
 #, javascript-format
 msgid "Could not find art for `${ input }`!"
-msgstr ""
+msgstr "`${ input }`のイラストが見つかりませんでした！"
 
 #: src\card.ts:38
 msgctxt "monster-type-race"
@@ -786,12 +786,12 @@ msgstr "入力用言語"
 #: src\commands\search.ts:61
 msgctxt "command-option"
 msgid "input"
-msgstr ""
+msgstr "入力"
 
 #: src\commands\help.ts:52
 msgctxt "command-option"
 msgid "command"
-msgstr ""
+msgstr "コマンド"
 
 #: src\commands\ygoprodeck.ts:39
 msgctxt "command-option"
@@ -801,7 +801,7 @@ msgstr ""
 #: src\commands\yugipedia.ts:38
 msgctxt "command-option"
 msgid "page"
-msgstr ""
+msgstr "ページ"
 
 #: src\commands\deck.ts:122
 msgctxt "command-option"
@@ -811,37 +811,37 @@ msgstr ""
 #: src\commands\deck.ts:128
 msgctxt "command-option"
 msgid "file"
-msgstr ""
+msgstr "ファイル"
 
 #: src\commands\deck.ts:134
 #: src\commands\deck.ts:140
 msgctxt "command-option"
 msgid "deck"
-msgstr ""
+msgstr "デッキ"
 
 #: src\commands\deck.ts:146
 msgctxt "command-option"
 msgid "public"
-msgstr ""
+msgstr "チャンネルに公開"
 
 #: src\commands\deck.ts:153
 msgctxt "command-option"
 msgid "stacked"
-msgstr ""
+msgstr "一行表示"
 
 #: src\commands\art.ts:31
 #: src\commands\price.ts:59
 #: src\commands\search.ts:34
 msgctxt "command-option"
 msgid "name"
-msgstr ""
+msgstr "カード名"
 
 #: src\commands\art.ts:41
 #: src\commands\price.ts:69
 #: src\commands\search.ts:44
 msgctxt "command-option"
 msgid "password"
-msgstr ""
+msgstr "パスワード"
 
 #: src\commands\art.ts:53
 #: src\commands\price.ts:81
@@ -849,27 +849,27 @@ msgstr ""
 #: src\commands\search.ts:56
 msgctxt "command-option"
 msgid "konami-id"
-msgstr ""
+msgstr "コナミid"
 
 #: src\commands\locale.ts:30
 msgctxt "command-option"
 msgid "get"
-msgstr "かくにん"
+msgstr "確認する"
 
 #: src\commands\locale.ts:35
 msgctxt "command-option"
 msgid "set"
-msgstr "せってい"
+msgstr "設定する"
 
 #: src\commands\locale.ts:40
 msgctxt "command-option"
 msgid "scope"
-msgstr ""
+msgstr "適用範囲"
 
 #: src\commands\locale.ts:48
 msgctxt "command-option"
 msgid "locale"
-msgstr "言語設定"
+msgstr "使用言語"
 
 #: src\commands\price.ts:91
 msgctxt "command-option"
@@ -904,7 +904,7 @@ msgstr ""
 #: src\commands\help.ts:55
 msgctxt "command-option-description"
 msgid "The name of a specific Slash Command."
-msgstr "とあるスラッシュコマンドの名前"
+msgstr "使い方を表示したいスラッシュコマンドの名前"
 
 #: src\commands\yugipedia.ts:39
 msgctxt "command-option-description"
@@ -914,32 +914,32 @@ msgstr "検索したいYugipediaのページの名前"
 #: src\commands\deck.ts:125
 msgctxt "command-option-description"
 msgid "View a deck by entering a ydke:// URL."
-msgstr ""
+msgstr "ydke://形式のURLを入力すると、そのデッキ内容を表示します。"
 
 #: src\commands\deck.ts:131
 msgctxt "command-option-description"
 msgid "View a deck by uploading a .ydk file."
-msgstr ""
+msgstr ".ydk形式のファイルをアップロードすると、そのデッキ内容を表示します。"
 
 #: src\commands\deck.ts:137
 msgctxt "command-option-description"
 msgid "The ydke:// URL of the deck you want to view."
-msgstr ""
+msgstr "デッキ内容を表示したいydke://形式のURL"
 
 #: src\commands\deck.ts:143
 msgctxt "command-option-description"
 msgid "The .ydk file of the deck you want to view."
-msgstr ""
+msgstr "デッキ内容を表示したい.ydk形式のファイル"
 
 #: src\commands\deck.ts:149
 msgctxt "command-option-description"
 msgid "Whether to display the deck details publicly in chat. This is false by default."
-msgstr ""
+msgstr "デッキ内容を自分以外の人にも見せるか否かを設定できます。デフォルトでは他の人には非表示になっています。"
 
 #: src\commands\deck.ts:156
 msgctxt "command-option-description"
 msgid "Whether to display the deck sections as one stacked column. This is false (side-by-side) by default."
-msgstr ""
+msgstr "デッキ内容を一行で表示するか否かを設定できます。デフォルトでは左右の二行に分けて表示します。"
 
 #: src\commands\art.ts:32
 msgctxt "command-option-description"
