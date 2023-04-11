@@ -432,7 +432,7 @@ msgstr ""
 
 #: src\commands\rush-duel.ts:114
 msgid "**MAXIMUM ATK**: ${ card.maximum_atk }"
-msgstr "**最大攻撃力**: ${ card.maximum_atk }"
+msgstr ""
 
 #: src\commands\rush-duel.ts:161
 #, javascript-format
@@ -806,7 +806,7 @@ msgstr "ページ"
 #: src\commands\deck.ts:122
 msgctxt "command-option"
 msgid "url"
-msgstr "ydke形式のurl"
+msgstr ""
 
 #: src\commands\deck.ts:128
 msgctxt "command-option"
