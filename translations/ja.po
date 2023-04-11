@@ -849,7 +849,7 @@ msgstr "パスワード"
 #: src\commands\search.ts:56
 msgctxt "command-option"
 msgid "konami-id"
-msgstr "Konami ID"
+msgstr "コナミid"
 
 #: src\commands\locale.ts:30
 msgctxt "command-option"
