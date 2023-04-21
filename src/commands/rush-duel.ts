@@ -22,17 +22,17 @@ import { Got } from "got";
 import { LRUMap } from "mnemonist";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
-import { AttributeIcon, Colour, formatCardName, formatCardText, Icon, RaceIcon } from "../card";
 import { AutocompletableCommand } from "../Command";
+import { AttributeIcon, Colour, Icon, RaceIcon, formatCardName, formatCardText } from "../card";
 import { RushCardSchema } from "../definitions/rush";
 import {
+	Locale,
+	LocaleProvider,
 	buildLocalisedCommand,
 	getInputLangStringOption,
-	getResultLangStringOption,
-	Locale,
-	LocaleProvider
+	getResultLangStringOption
 } from "../locale";
-import { getLogger, Logger } from "../logger";
+import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
 import { addNotice, replyLatency, serialiseInteraction } from "../utils";
 
@@ -387,12 +387,6 @@ export class RushDuelCommand extends AutocompletableCommand {
 	}
 
 	private async subcommandArt(interaction: ChatInputCommandInteraction): Promise<number> {
-		// Disabled: https://github.com/DawnbrandBots/bastion-bot/issues/293
-		await interaction.reply("https://twitter.com/Yugipedia/status/1632192728267395072\nhttps://discord.gg/e98zgyd");
-		return -1;
-	}
-
-	private async subcommandArtDisabled(interaction: ChatInputCommandInteraction): Promise<number> {
 		const result = await this.searchCardNameWithCache(interaction);
 		if (typeof result === "number") {
 			return result;
