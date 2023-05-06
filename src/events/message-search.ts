@@ -221,7 +221,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		private eventLocks: EventLocker
 	) {
 		this.got = got.extend({
-			timeout: 500,
+			timeout: 1000,
 			retry: {
 				limit: 4,
 				// retry immediately, but pass through 0 values that cancel the retry
