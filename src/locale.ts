@@ -271,6 +271,7 @@ export abstract class LocaleProvider {
 	}
 }
 
+type SQLiteLocaleRow = { locale: Locale };
 /**
  * Implementation in two SQLite tables in the same database. With sufficient
  * scale, this would need to be periodically cleaned as guilds and channels are
@@ -314,11 +315,11 @@ CREATE TABLE IF NOT EXISTS "channels" (
 	}
 
 	public async guild(id: Snowflake): Promise<Locale | null> {
-		return this.readGuild.get(id)?.locale || null;
+		return (this.readGuild.get(id) as SQLiteLocaleRow)?.locale || null;
 	}
 
 	public async channel(id: Snowflake): Promise<Locale | null> {
-		return this.readChannel.get(id)?.locale || null;
+		return (this.readChannel.get(id) as SQLiteLocaleRow)?.locale || null;
 	}
 
 	public async setForGuild(id: Snowflake, set: Locale): Promise<void> {
