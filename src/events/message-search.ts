@@ -12,15 +12,15 @@ import {
 	RESTJSONErrorCodes
 } from "discord.js";
 import { Got } from "got";
-import { parserFor, ParserRules } from "simple-markdown";
+import { ParserRules, parserFor } from "simple-markdown";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { Listener } from ".";
 import { ABDeploy } from "../abdeploy";
 import { createCardEmbed, getCard } from "../card";
 import { EventLocker } from "../event-lock";
-import { Locale, LocaleProvider, LOCALES, LOCALES_MAP } from "../locale";
-import { getLogger, Logger } from "../logger";
+import { LOCALES, LOCALES_MAP, Locale, LocaleProvider } from "../locale";
+import { Logger, getLogger } from "../logger";
 import { RecentMessageCache } from "../message-cache";
 import { Metrics } from "../metrics";
 
@@ -210,14 +210,28 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 
 	#logger = getLogger("events:message:search");
 
+	private got: Got;
+
 	constructor(
 		@inject("LocaleProvider") private locales: LocaleProvider,
-		@inject("got") private got: Got,
+		@inject("got") got: Got,
 		private metrics: Metrics,
 		private recentCache: RecentMessageCache,
 		private abdeploy: ABDeploy,
 		private eventLocks: EventLocker
-	) {}
+	) {
+		this.got = got.extend({
+			timeout: 500,
+			retry: {
+				limit: 4,
+				// retry immediately, but pass through 0 values that cancel the retry
+				calculateDelay: ({ attemptCount, error, computedValue }) => {
+					this.#logger.info(`Retry ${attemptCount}: `, error);
+					return Math.min(computedValue, 1);
+				}
+			}
+		});
+	}
 
 	protected log(level: keyof Logger, message: Message, ...args: Parameters<Logger[keyof Logger]>): void {
 		const context = {
