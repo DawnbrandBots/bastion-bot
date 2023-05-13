@@ -3,7 +3,7 @@ import { ChatInputCommandInteraction, EmbedBuilder, EmbedFooterOptions } from "d
 import { Got } from "got";
 import { parseDocument } from "htmlparser2";
 import { c, t, useLocale } from "ttag";
-import { CardSchema, LimitRegulation } from "./definitions";
+import { CardSchema, OCGLimitRegulation, SpeedLimitRegulation } from "./definitions";
 import { RushCardSchema } from "./definitions/rush";
 import { Locale, LocaleProvider } from "./locale";
 
@@ -58,6 +58,12 @@ c("spell-trap-property").t`Ritual Spell`;
 c("spell-trap-property").t`Normal Trap`;
 c("spell-trap-property").t`Continuous Trap`;
 c("spell-trap-property").t`Counter Trap`;
+// SpeedLimitRegulation is not converted to a number for display
+c("limit-regulation").t`Forbidden`;
+c("limit-regulation").t`Limited 1`;
+c("limit-regulation").t`Limited 2`;
+c("limit-regulation").t`Limited 3`;
+c("limit-regulation").t`Unlimited`;
 
 // Guarantee default locale at import time since the resulting strings matter.
 useLocale("en");
@@ -195,7 +201,7 @@ export async function getCard(
 	throw new got.HTTPError(response);
 }
 
-function formatLimitRegulation(value: LimitRegulation | null | undefined): number | null {
+function formatOCGLimitRegulation(value: OCGLimitRegulation | null | undefined): number | null {
 	switch (value) {
 		case "Forbidden":
 			return 0;
@@ -208,6 +214,19 @@ function formatLimitRegulation(value: LimitRegulation | null | undefined): numbe
 		default:
 			return null;
 	}
+}
+
+function formatSpeedLimitRegulation(value: SpeedLimitRegulation | null | undefined): string | null {
+	if (
+		value === "Forbidden" ||
+		value === "Limited 1" ||
+		value === "Limited 2" ||
+		value === "Limited 3" ||
+		value === "Unlimited"
+	) {
+		return rc("limit-regulation").gettext(value);
+	}
+	return null;
 }
 
 export function parseAndExpandRuby(html: string): [string, string] {
@@ -336,9 +355,9 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 	}
 
 	const limitRegulations = [
-		{ label: "TCG: ", value: formatLimitRegulation(card.limit_regulation.tcg) },
-		{ label: "OCG: ", value: formatLimitRegulation(card.limit_regulation.ocg) },
-		{ label: "Speed: ", value: formatLimitRegulation(card.limit_regulation.speed) }
+		{ label: "TCG: ", value: formatOCGLimitRegulation(card.limit_regulation.tcg) },
+		{ label: "OCG: ", value: formatOCGLimitRegulation(card.limit_regulation.ocg) },
+		{ label: "Speed: ", value: formatSpeedLimitRegulation(card.limit_regulation.speed) }
 	];
 	let limitRegulationDisplay: string;
 	if (["ja", "ko", "zh-CN", "zh-TW"].includes(lang)) {
