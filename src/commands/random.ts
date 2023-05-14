@@ -5,11 +5,11 @@ import { ChatInputCommandInteraction } from "discord.js";
 import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c } from "ttag";
-import { createCardEmbed } from "../card";
 import { Command } from "../Command";
+import { createCardEmbed } from "../card";
 import { CardSchema } from "../definitions";
-import { buildLocalisedCommand, getResultLangStringOption, LocaleProvider } from "../locale";
-import { getLogger, Logger } from "../logger";
+import { LocaleProvider, buildLocalisedCommand, getResultLangStringOption } from "../locale";
+import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
 
 @injectable()
@@ -22,6 +22,18 @@ export class RandomCommand extends Command {
 		@inject("got") private got: Got
 	) {
 		super(metrics);
+		this.got = got.extend({
+			throwHttpErrors: true,
+			// Default got behaviour, with logging hooked in https://github.com/sindresorhus/got/tree/v11.8.6#retry
+			retry: {
+				limit: 2,
+				// retry immediately, but pass through 0 values that cancel the retry
+				calculateDelay: ({ attemptCount, error, computedValue }) => {
+					this.#logger.info(`Retry ${attemptCount} (${computedValue} ms): `, error);
+					return computedValue;
+				}
+			}
+		});
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
@@ -41,7 +53,7 @@ export class RandomCommand extends Command {
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		await interaction.deferReply();
 		const url = `${process.env.API_URL}/ocg-tcg/random`;
-		const cards = await this.got(url, { throwHttpErrors: true }).json<Static<typeof CardSchema>[]>();
+		const cards = await this.got(url).json<Static<typeof CardSchema>[]>();
 		const lang = await this.locales.get(interaction);
 		const embeds = createCardEmbed(cards[0], lang);
 		const end = Date.now();

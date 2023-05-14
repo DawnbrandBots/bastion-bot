@@ -210,11 +210,9 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 
 	#logger = getLogger("events:message:search");
 
-	private got: Got;
-
 	constructor(
 		@inject("LocaleProvider") private locales: LocaleProvider,
-		@inject("got") got: Got,
+		@inject("got") private got: Got,
 		private metrics: Metrics,
 		private recentCache: RecentMessageCache,
 		private abdeploy: ABDeploy,
