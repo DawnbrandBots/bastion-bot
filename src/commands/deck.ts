@@ -26,12 +26,12 @@ import { Readable } from "stream";
 import { inject, injectable } from "tsyringe";
 import { c, msgid, ngettext, t, useLocale } from "ttag";
 import { typedDeckToYdk, ydkToTypedDeck } from "ydeck";
-import { parseURL, toURL, TypedDeck } from "ydke";
-import { parseAndExpandRuby } from "../card";
+import { TypedDeck, parseURL, toURL } from "ydke";
 import { Command } from "../Command";
+import { parseAndExpandRuby } from "../card";
 import { CardSchema } from "../definitions";
 import { COMMAND_LOCALIZATIONS, Locale, LocaleProvider } from "../locale";
-import { getLogger, Logger } from "../logger";
+import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
 import { addNotice, serialiseInteraction, splitText } from "../utils";
 
@@ -179,7 +179,8 @@ export class DeckCommand extends Command {
 
 	async getCards(cards: Set<number>): Promise<Map<number, Static<typeof CardSchema>>> {
 		const response = await this.got(`${process.env.API_URL}/ocg-tcg/multi?password=${[...cards].join(",")}`, {
-			throwHttpErrors: true
+			throwHttpErrors: true,
+			timeout: 5000
 		});
 		const body: (Static<typeof CardSchema> | null)[] = JSON.parse(response.body);
 		const cardMemo = new Map<number, Static<typeof CardSchema>>();
