@@ -210,24 +210,22 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 
 	#logger = getLogger("events:message:search");
 
-	private got: Got;
-
 	constructor(
 		@inject("LocaleProvider") private locales: LocaleProvider,
-		@inject("got") got: Got,
+		@inject("got") private got: Got,
 		private metrics: Metrics,
 		private recentCache: RecentMessageCache,
 		private abdeploy: ABDeploy,
 		private eventLocks: EventLocker
 	) {
 		this.got = got.extend({
-			timeout: 1000,
+			// Default got behaviour, with logging hooked in https://github.com/sindresorhus/got/tree/v11.8.6#retry
 			retry: {
-				limit: 4,
+				limit: 2,
 				// retry immediately, but pass through 0 values that cancel the retry
 				calculateDelay: ({ attemptCount, error, computedValue }) => {
-					this.#logger.info(`Retry ${attemptCount}: `, error);
-					return Math.min(computedValue, 1);
+					this.#logger.info(`Retry ${attemptCount} (${computedValue} ms): `, error);
+					return computedValue;
 				}
 			}
 		});
