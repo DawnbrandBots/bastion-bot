@@ -2,7 +2,7 @@ import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ApplicationCommandOptionType, ChatInputCommandInteraction } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { Command } from "../Command";
-import { getLogger, Logger } from "../logger";
+import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
 import { replyLatency } from "../utils";
 
@@ -17,7 +17,7 @@ export class LinkCommand extends Command {
 	static links: Record<string, { name: string; result: string }> = {
 		lftcg: {
 			name: "TCG Banlist",
-			result: "https://www.yugioh-card.com/uk/limited/"
+			result: "https://www.yugioh-card.com/en/limited/"
 		},
 		lfocg: {
 			name: "OCG Banlist",
@@ -37,7 +37,7 @@ export class LinkCommand extends Command {
 		},
 		dmgstep: {
 			name: "Damage Step",
-			result: "https://www.yugioh-card.com/uk/gameplay/damage.html\nhttp://yugipedia.com/wiki/Damage_Step#Cards_and_effects_that_can_be_activated"
+			result: "https://www.yugioh-card.com/eu/play/damage-step-rules/\nhttp://yugipedia.com/wiki/Damage_Step#Cards_and_effects_that_can_be_activated"
 		},
 		linksum: {
 			name: "Link Summons",
@@ -53,7 +53,7 @@ export class LinkCommand extends Command {
 		},
 		atkdef: {
 			name: "ATK/DEF Modification",
-			result: "https://ygorganization.com/atk-def-modification-and-you/"
+			result: "https://ygorganization.com/atkdefmodifierguide/"
 		},
 		nomi: {
 			name: "Special Summon Monsters",
