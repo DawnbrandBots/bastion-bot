@@ -56,7 +56,9 @@
 		"zlib-sync": "^0.1.8"
 	},
 	"resolutions": {
-		"@types/node": "^18.16.19"
+		"@types/node": "^18.16.19",
+		"make-dir": "^4.0.0",
+		"semver": "^7.5.4"
 	},
 	"babel": {
 		"plugins": [
