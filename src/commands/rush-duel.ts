@@ -99,7 +99,6 @@ function createRushCardEmbed(card: Static<typeof RushCardSchema>, lang: Locale):
 
 		const race = card.monster_type_line.split(" /")[0];
 		const raceIcon = RaceIcon[race] || "";
-		// TODO: is approach scalable with custom Rush Fusion races?
 		const localizedMonsterTypeLine = card.monster_type_line
 			.split(" / ")
 			.map(s => rc("monster-type-race").gettext(s))
@@ -147,7 +146,7 @@ function createRushCardEmbed(card: Static<typeof RushCardSchema>, lang: Locale):
 		embed.setColor(Colour[card.card_type]);
 
 		description += "\n"; // don't put \n in a gettext string
-		// TODO: switch to race approach since that's how it's printed for Rush Duel
+
 		const localizedProperty = rc("spell-trap-property").gettext(`${card.property} ${card.card_type}`);
 		embed.setDescription(`${description}${Icon[card.card_type]} ${localizedProperty} ${Icon[card.property]}`);
 
