@@ -6,72 +6,72 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src\card.ts:339
+#: src\card.ts:350
 #: src\commands\rush-duel.ts:60
 msgid "🔗 Links"
 msgstr "🔗 링크"
 
-#: src\card.ts:340
+#: src\card.ts:351
 #, javascript-format
 msgid "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr "[코나미 공식 카드 DB](${ official }) | [OCG 공식 재정](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
-#: src\card.ts:343
+#: src\card.ts:354
 #, javascript-format
 msgid "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
-#: src\card.ts:403
-#: src\commands\rush-duel.ts:107
+#: src\card.ts:415
+#: src\commands\rush-duel.ts:108
 #, javascript-format
 msgid "**Type**: ${ raceIcon } ${ localizedMonsterTypeLine }"
 msgstr "**종족**: ${ raceIcon } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:405
-#: src\commands\rush-duel.ts:109
+#: src\card.ts:417
+#: src\commands\rush-duel.ts:110
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 msgstr "**속성**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
-#: src\card.ts:409
+#: src\card.ts:421
 msgid "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 msgstr "**랭크**: ${ Icon.Rank } ${ card.rank } **공격력**: ${ card.atk } **수비력**: ${ card.def }"
 
-#: src\card.ts:412
+#: src\card.ts:424
 #, javascript-format
 msgid "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link Arrows**: ${ arrows }"
 msgstr "**LINK**: ${ card.link_arrows.length } **공격력**: ${ card.atk } **링크 마커**: ${ arrows }"
 
-#: src\card.ts:414
-#: src\commands\rush-duel.ts:111
+#: src\card.ts:426
+#: src\commands\rush-duel.ts:112
 #, javascript-format
 msgid "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 msgstr "**레벨**: ${ Icon.Level } ${ card.level } **공격력**: ${ card.atk } **수비력**: ${ card.def }"
 
-#: src\card.ts:421
+#: src\card.ts:433
 msgid "**Pendulum Scale**: ${ formattedScale }"
 msgstr "**펜듈럼 스케일**: ${ formattedScale }"
 
-#: src\card.ts:300
+#: src\card.ts:311
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
 msgstr "패스워드: ${ card.password } | 코나미 ID #${ card.konami_id }"
 
-#: src\card.ts:302
+#: src\card.ts:313
 msgid "No password | Konami ID #${ card.konami_id }"
 msgstr "패스워드 없음 | 코나미 ID #${ card.konami_id }"
 
-#: src\card.ts:304
+#: src\card.ts:315
 #, javascript-format
 msgid "Password: ${ card.password } | Not yet released"
 msgstr "패스워드: ${ card.password } | Not yet released"
 
-#: src\card.ts:306
-#: src\commands\rush-duel.ts:161
+#: src\card.ts:317
+#: src\commands\rush-duel.ts:162
 msgid "Not yet released"
 msgstr "미발매"
 
-#: src\card.ts:310
+#: src\card.ts:321
 #, javascript-format
 msgid "Placeholder ID: ${ card.fake_password }"
 msgstr "플레이스홀더 ID: ${ card.fake_password }"
@@ -130,10 +130,10 @@ msgstr "찾으시려던 것을 찾으셨나요? 저희를 지원해 주시는 �
 
 #: src\commands\art.ts:69
 #: src\commands\price.ts:121
-#: src\commands\rush-duel.ts:306
-#: src\commands\rush-duel.ts:339
+#: src\commands\rush-duel.ts:307
+#: src\commands\rush-duel.ts:340
 #: src\commands\search.ts:62
-#: src\events\message-search.ts:295
+#: src\events\message-search.ts:293
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr "`${ input }`에 일치하는 카드를 찾을 수 없습니다!"
@@ -223,46 +223,46 @@ msgstr "총 지연 시간: ${ latency } ms"
 msgid "Could not find a Yugipedia page named `${ page }`."
 msgstr "`${ page }`라는 이름의 Yugipedia 페이지를 찾을 수 없습니다."
 
-#: src\commands\deck.ts:248
+#: src\commands\deck.ts:249
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
 msgstr[0] "몬스터 ${ counts.Monster } 장"
 
-#: src\commands\deck.ts:251
+#: src\commands\deck.ts:252
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
 msgstr[0] "마법 ${ counts.Spell } 장"
 
-#: src\commands\deck.ts:254
+#: src\commands\deck.ts:255
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
 msgstr[0] "함정 ${ counts.Trap } 장"
 
-#: src\commands\deck.ts:282
+#: src\commands\deck.ts:283
 msgid "Your Deck"
 msgstr "덱"
 
-#: src\commands\deck.ts:287
+#: src\commands\deck.ts:288
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
 msgstr[0] "메인 덱 (${ deck.main.length } card — ${ countDetail })"
 
-#: src\commands\deck.ts:294
+#: src\commands\deck.ts:295
 msgid "Main Deck (continued)"
 msgstr "메인 덱 (계속)"
 
-#: src\commands\deck.ts:308
+#: src\commands\deck.ts:309
 msgid "Extra Deck (continued)"
 msgstr "엑스트라 덱 (계속)"
 
-#: src\commands\deck.ts:322
+#: src\commands\deck.ts:323
 msgid "Side Deck (continued)"
 msgstr "사이드 덱 (계속)"
 
-#: src\commands\deck.ts:411
+#: src\commands\deck.ts:412
 msgid "Error: Your deck is empty."
 msgstr "오류: 덱이 비었습니다."
 
@@ -275,19 +275,19 @@ msgstr "자유-오픈 소스 유희왕 봇"
 msgid "Revision: ${ process.env.BOT_REVISION }."
 msgstr "수정: ${ process.env.BOT_REVISION }."
 
-#: src\commands\deck.ts:332
+#: src\commands\deck.ts:333
 msgid ".ydk files must have the .ydk extension!"
 msgstr ".ydk 파일의 확장자는 .ydk여야 합니다!"
 
-#: src\commands\deck.ts:335
+#: src\commands\deck.ts:336
 msgid ".ydk files should not be larger than 1 KB!"
 msgstr ".ydk 파일은 1 KB보다 크면 안 됩니다!"
 
-#: src\commands\deck.ts:325
+#: src\commands\deck.ts:326
 msgid "ydke URL"
 msgstr ""
 
-#: src\card.ts:377
+#: src\card.ts:388
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 msgid "**Limit**: ${ limitRegulationDisplay }"
 msgstr "**제한**: ${ limitRegulationDisplay }"
@@ -322,32 +322,32 @@ msgstr "${ vendorName } 의 ${ card.name[resultLanguage] } 가격"
 msgid "Could not find prices for `${ name }`!"
 msgstr "`${ name }`의 가격을 찾을 수 없습니다!"
 
-#: src\commands\deck.ts:429
+#: src\commands\deck.ts:430
 #. prepare interaction button for FTP upload
 msgid "Upload to YGOPRODECK"
 msgstr "YGOPRODECK에 업로드"
 
-#: src\commands\deck.ts:487
+#: src\commands\deck.ts:488
 #. disable original button
 #. prepare row to disable button on original message
 msgid "Upload Complete"
 msgstr "업로드 완료"
 
-#: src\commands\deck.ts:474
+#: src\commands\deck.ts:475
 msgid "Deck upload failed!"
 msgstr "덱 업로드에 실패했습니다!"
 
-#: src\commands\deck.ts:495
+#: src\commands\deck.ts:496
 #. reply in affirmation
 #, javascript-format
 msgid "Deck successfully uploaded to <${ url }>!"
 msgstr "<${ url }>에 덱 업로드를 완료했습니다!"
 
-#: src\events\message-search.ts:300
+#: src\events\message-search.ts:298
 msgid "💬 Translations missing?"
 msgstr "💬 번역이 존재합니까?"
 
-#: src\events\message-search.ts:301
+#: src\events\message-search.ts:299
 msgid "Help translate Bastion at the links above."
 msgstr "위 링크에서 Bastion 번역을 도와주세요."
 
@@ -367,11 +367,11 @@ msgid ""
 "💬 Translations missing? Help translate Bastion on [GitHub](https://github.com/DawnbrandBots/bastion-bot)."
 msgstr ""
 
-#: src\events\message-search.ts:293
+#: src\events\message-search.ts:291
 msgid "Search type: ${ localisedType }"
 msgstr "검색 종류: ${ localisedType }"
 
-#: src\events\message-search.ts:290
+#: src\events\message-search.ts:288
 #, javascript-format
 msgid "Search language: **${ localisedInputLanguage }** (${ inputLanguage }). Check defaults with </locale get:${ id }> and configure with </locale set:${ id }>"
 msgstr "검색 언어: **${ localisedInputLanguage }** (${ inputLanguage }). </locale get:${ id }>의 기본값을 확인하고 </locale set:${ id }>를 설정합니다."
@@ -389,13 +389,13 @@ msgstr "서버 관리자에게 문의하십시오 [문제 해결](https://github
 msgid "⚠️ I am missing permissions in the channel!"
 msgstr "⚠️ 해당 채널에서 권한이 없습니다!"
 
-#: src\commands\deck.ts:301
+#: src\commands\deck.ts:302
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ countDetail })"
 msgstr[0] "엑스트라 덱 (${ deck.extra.length } cards — ${ countDetail })"
 
-#: src\commands\deck.ts:315
+#: src\commands\deck.ts:316
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ countDetail })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ countDetail })"
@@ -429,21 +429,21 @@ msgstr ""
 msgid "__**LEGEND**__"
 msgstr ""
 
-#: src\commands\rush-duel.ts:114
+#: src\commands\rush-duel.ts:115
 msgid "**MAXIMUM ATK**: ${ card.maximum_atk }"
 msgstr ""
 
-#: src\commands\rush-duel.ts:161
+#: src\commands\rush-duel.ts:162
 #, javascript-format
 msgid "Konami ID #${ card.konami_id }"
 msgstr "코나미 ID #${ card.konami_id }"
 
-#: src\commands\deck.ts:455
-#: src\commands\rush-duel.ts:486
+#: src\commands\deck.ts:456
+#: src\commands\rush-duel.ts:487
 msgid "Buttons can only be used by the user who called Bastion."
 msgstr "Bastion은 호출한 사용자만 이용할 수 있습니다."
 
-#: src\commands\rush-duel.ts:398
+#: src\commands\rush-duel.ts:399
 #, javascript-format
 msgid "Could not find art for `${ input }`!"
 msgstr "`${ input }`에 대한 일러스트를 찾을 수 없습니다!"
@@ -518,272 +518,315 @@ msgctxt "monster-type-race"
 msgid "Gemini"
 msgstr "듀얼"
 
-#: src\card.ts:72
+#: src\card.ts:74
 msgctxt "monster-type-race"
 msgid "Warrior"
 msgstr "전사족"
 
-#: src\card.ts:73
+#: src\card.ts:75
 msgctxt "monster-type-race"
 msgid "Spellcaster"
 msgstr "마법사족"
 
-#: src\card.ts:74
+#: src\card.ts:76
 msgctxt "monster-type-race"
 msgid "Fairy"
 msgstr "천사족"
 
-#: src\card.ts:75
+#: src\card.ts:77
 msgctxt "monster-type-race"
 msgid "Fiend"
 msgstr "악마족"
 
-#: src\card.ts:76
+#: src\card.ts:78
 msgctxt "monster-type-race"
 msgid "Zombie"
 msgstr "언데드족"
 
-#: src\card.ts:77
+#: src\card.ts:79
 msgctxt "monster-type-race"
 msgid "Machine"
 msgstr "기계족"
 
-#: src\card.ts:78
+#: src\card.ts:80
 msgctxt "monster-type-race"
 msgid "Aqua"
 msgstr "물족"
 
-#: src\card.ts:79
+#: src\card.ts:81
 msgctxt "monster-type-race"
 msgid "Pyro"
 msgstr "화염족"
 
-#: src\card.ts:80
+#: src\card.ts:82
 msgctxt "monster-type-race"
 msgid "Rock"
 msgstr "암석족"
 
-#: src\card.ts:81
+#: src\card.ts:83
 msgctxt "monster-type-race"
 msgid "Winged Beast"
 msgstr "비행야수족"
 
-#: src\card.ts:82
+#: src\card.ts:84
 msgctxt "monster-type-race"
 msgid "Plant"
 msgstr "식물족"
 
-#: src\card.ts:83
+#: src\card.ts:85
 msgctxt "monster-type-race"
 msgid "Insect"
 msgstr "곤충족"
 
-#: src\card.ts:84
+#: src\card.ts:86
 msgctxt "monster-type-race"
 msgid "Thunder"
 msgstr "번개족"
 
-#: src\card.ts:85
+#: src\card.ts:87
 msgctxt "monster-type-race"
 msgid "Dragon"
 msgstr "드래곤족"
 
-#: src\card.ts:86
+#: src\card.ts:88
 msgctxt "monster-type-race"
 msgid "Beast"
 msgstr "야수족"
 
-#: src\card.ts:87
+#: src\card.ts:89
 msgctxt "monster-type-race"
 msgid "Beast-Warrior"
 msgstr "야수전사족"
 
-#: src\card.ts:88
+#: src\card.ts:90
 msgctxt "monster-type-race"
 msgid "Dinosaur"
 msgstr "공룡족"
 
-#: src\card.ts:89
+#: src\card.ts:91
 msgctxt "monster-type-race"
 msgid "Fish"
 msgstr "어류족"
 
-#: src\card.ts:90
+#: src\card.ts:92
 msgctxt "monster-type-race"
 msgid "Sea Serpent"
 msgstr "해룡족"
 
-#: src\card.ts:91
+#: src\card.ts:93
 msgctxt "monster-type-race"
 msgid "Reptile"
 msgstr "파충류족"
 
-#: src\card.ts:92
+#: src\card.ts:94
 msgctxt "monster-type-race"
 msgid "Psychic"
 msgstr "사이킥족"
 
-#: src\card.ts:93
+#: src\card.ts:95
 msgctxt "monster-type-race"
 msgid "Divine-Beast"
 msgstr "환신야수족"
 
-#: src\card.ts:94
+#: src\card.ts:96
 msgctxt "monster-type-race"
 msgid "Creator God"
 msgstr "창조신족"
 
-#: src\card.ts:95
+#: src\card.ts:97
 msgctxt "monster-type-race"
 msgid "Wyrm"
 msgstr "환룡족"
 
-#: src\card.ts:96
+#: src\card.ts:98
 msgctxt "monster-type-race"
 msgid "Cyberse"
 msgstr "사이버스족"
 
-#: src\card.ts:52
+#: src\card.ts:53
+#. Exclusive to Rush Duel
+msgctxt "monster-type-race"
+msgid "Maximum"
+msgstr "맥시멈"
+
+#: src\card.ts:99
+msgctxt "monster-type-race"
+msgid "Illusion"
+msgstr "환상마족"
+
+#: src\card.ts:101
+#. Exclusive to Rush Duel
+msgctxt "monster-type-race"
+msgid "Galaxy"
+msgstr "갤럭시족"
+
+#: src\card.ts:103
+#. Rush Duel Fusion
+msgctxt "monster-type-race"
+msgid "Cyborg"
+msgstr "사이보그족"
+
+#: src\card.ts:104
+msgctxt "monster-type-race"
+msgid "Magical Knight"
+msgstr "마도 기사족"
+
+#: src\card.ts:105
+msgctxt "monster-type-race"
+msgid "High Dragon"
+msgstr "하이드래곤족"
+
+#: src\card.ts:106
+msgctxt "monster-type-race"
+msgid "Celestial Warrior"
+msgstr "천계전사족"
+
+#: src\card.ts:107
+msgctxt "monster-type-race"
+msgid "Omega Psychic"
+msgstr "오메가사이킥족"
+
+#: src\card.ts:54
 msgctxt "spell-trap-property"
 msgid "Normal Spell"
 msgstr "일반 마법"
 
-#: src\card.ts:53
+#: src\card.ts:55
 msgctxt "spell-trap-property"
 msgid "Continuous Spell"
 msgstr "지속 마법"
 
-#: src\card.ts:54
+#: src\card.ts:56
 msgctxt "spell-trap-property"
 msgid "Equip Spell"
 msgstr "장착 마법"
 
-#: src\card.ts:55
+#: src\card.ts:57
 msgctxt "spell-trap-property"
 msgid "Quick-Play Spell"
 msgstr "속공 마법"
 
-#: src\card.ts:56
+#: src\card.ts:58
 msgctxt "spell-trap-property"
 msgid "Field Spell"
 msgstr "필드 마법"
 
-#: src\card.ts:57
+#: src\card.ts:59
 msgctxt "spell-trap-property"
 msgid "Ritual Spell"
 msgstr "의식 마법"
 
-#: src\card.ts:58
+#: src\card.ts:60
 msgctxt "spell-trap-property"
 msgid "Normal Trap"
 msgstr "일반 함정"
 
-#: src\card.ts:59
+#: src\card.ts:61
 msgctxt "spell-trap-property"
 msgid "Continuous Trap"
 msgstr "지속 함정"
 
-#: src\card.ts:60
+#: src\card.ts:62
 msgctxt "spell-trap-property"
 msgid "Counter Trap"
 msgstr "카운터 함정"
 
-#: src\card.ts:62
+#: src\card.ts:64
 #. SpeedLimitRegulation is not converted to a number for display
 msgctxt "limit-regulation"
 msgid "Forbidden"
 msgstr ""
 
-#: src\card.ts:63
+#: src\card.ts:65
 msgctxt "limit-regulation"
 msgid "Limited 1"
 msgstr ""
 
-#: src\card.ts:64
+#: src\card.ts:66
 msgctxt "limit-regulation"
 msgid "Limited 2"
 msgstr ""
 
-#: src\card.ts:65
+#: src\card.ts:67
 msgctxt "limit-regulation"
 msgid "Limited 3"
 msgstr ""
 
-#: src\card.ts:66
+#: src\card.ts:68
 msgctxt "limit-regulation"
 msgid "Unlimited"
 msgstr ""
 
-#: src\card.ts:102
+#: src\card.ts:113
 msgctxt "attribute"
 msgid "EARTH"
 msgstr "땅"
 
-#: src\card.ts:103
+#: src\card.ts:114
 msgctxt "attribute"
 msgid "WATER"
 msgstr "물"
 
-#: src\card.ts:104
+#: src\card.ts:115
 msgctxt "attribute"
 msgid "FIRE"
 msgstr "화염"
 
-#: src\card.ts:105
+#: src\card.ts:116
 msgctxt "attribute"
 msgid "WIND"
 msgstr "바람"
 
-#: src\card.ts:106
+#: src\card.ts:117
 msgctxt "attribute"
 msgid "LIGHT"
 msgstr "빛"
 
-#: src\card.ts:107
+#: src\card.ts:118
 msgctxt "attribute"
 msgid "DARK"
 msgstr "어둠"
 
-#: src\card.ts:108
+#: src\card.ts:119
 msgctxt "attribute"
 msgid "DIVINE"
 msgstr "신"
 
-#: src\card.ts:427
-#: src\card.ts:438
-#: src\commands\rush-duel.ts:142
+#: src\card.ts:439
+#: src\card.ts:450
+#: src\commands\rush-duel.ts:143
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "카드 텍스트"
 
-#: src\card.ts:432
+#: src\card.ts:444
 msgctxt "card-embed"
 msgid "Pendulum Effect"
 msgstr "펜듈럼 효과"
 
-#: src\card.ts:453
+#: src\card.ts:465
 msgctxt "card-embed"
 msgid "Card Effect"
 msgstr "카드 효과"
 
-#: src\commands\rush-duel.ts:133
-#: src\commands\rush-duel.ts:154
+#: src\commands\rush-duel.ts:134
+#: src\commands\rush-duel.ts:155
 msgctxt "card-embed"
 msgid "[REQUIREMENT]"
 msgstr "【조건】"
 
-#: src\commands\rush-duel.ts:134
-#: src\commands\rush-duel.ts:155
+#: src\commands\rush-duel.ts:135
+#: src\commands\rush-duel.ts:156
 msgctxt "card-embed"
 msgid "[EFFECT]"
 msgstr "【효과】"
 
-#: src\commands\rush-duel.ts:136
+#: src\commands\rush-duel.ts:137
 msgctxt "card-embed"
 msgid "[CONTINUOUS EFFECT]"
 msgstr "【지속 효과】"
 
-#: src\commands\rush-duel.ts:138
+#: src\commands\rush-duel.ts:139
 msgctxt "card-embed"
 msgid "[MULTI-CHOICE EFFECT]"
 msgstr "【선택 효과】"
@@ -798,8 +841,8 @@ msgctxt "command-option"
 msgid "input-language"
 msgstr "입력언어"
 
-#: src\commands\rush-duel.ts:194
-#: src\commands\rush-duel.ts:206
+#: src\commands\rush-duel.ts:195
+#: src\commands\rush-duel.ts:207
 #: src\locale.ts:147
 #: src\locale.ts:165
 #: src\locale.ts:181
@@ -858,7 +901,7 @@ msgctxt "command-option"
 msgid "password"
 msgstr "패스워드"
 
-#: src\commands\rush-duel.ts:199
+#: src\commands\rush-duel.ts:200
 #: src\locale.ts:176
 msgctxt "command-option"
 msgid "konami-id"
@@ -889,17 +932,17 @@ msgctxt "command-option"
 msgid "vendor"
 msgstr "상점"
 
-#: src\commands\rush-duel.ts:189
+#: src\commands\rush-duel.ts:190
 msgctxt "command-option"
 msgid "search"
 msgstr "검색"
 
-#: src\commands\rush-duel.ts:211
+#: src\commands\rush-duel.ts:212
 msgctxt "command-option"
 msgid "random"
 msgstr "무작위"
 
-#: src\commands\rush-duel.ts:216
+#: src\commands\rush-duel.ts:217
 msgctxt "command-option"
 msgid "art"
 msgstr "일러스트"
@@ -959,7 +1002,7 @@ msgctxt "command-option-description"
 msgid "Display the art for the card with this name."
 msgstr "이 이름으로 카드에 대한 일러스트를 표시합니다."
 
-#: src\commands\rush-duel.ts:195
+#: src\commands\rush-duel.ts:196
 #: src\locale.ts:148
 msgctxt "command-option-description"
 msgid "Card name, fuzzy matching supported."
@@ -980,7 +1023,7 @@ msgctxt "command-option-description"
 msgid "Display the art for the card with this official database ID."
 msgstr "이 공식 데이터베이스 ID로 카드의 일러스트를 표시합니다."
 
-#: src\commands\rush-duel.ts:207
+#: src\commands\rush-duel.ts:208
 #: src\locale.ts:182
 msgctxt "command-option-description"
 msgid "Konami's official card database identifier."
@@ -1046,22 +1089,22 @@ msgctxt "command-option-description"
 msgid "The English name of the card you're looking for."
 msgstr "찾고 있는 카드명은 영어입니다."
 
-#: src\commands\rush-duel.ts:190
+#: src\commands\rush-duel.ts:191
 msgctxt "command-option-description"
 msgid "Find all information for the Rush Duel card with this name."
 msgstr "이 이름으로 러시 듀얼 카드에 대한 모든 정보를 찾습니다."
 
-#: src\commands\rush-duel.ts:201
+#: src\commands\rush-duel.ts:202
 msgctxt "command-option-description"
 msgid "Find all information for the Rush Duel card with this official database ID."
 msgstr "이 공식 데이터베이스 ID로 러시 듀얼 카드에 대한 모든 정보를 찾습니다."
 
-#: src\commands\rush-duel.ts:212
+#: src\commands\rush-duel.ts:213
 msgctxt "command-option-description"
 msgid "Get a random Rush Duel card."
 msgstr "무작위로 러시 듀얼 카드를 가져옵니다."
 
-#: src\commands\rush-duel.ts:217
+#: src\commands\rush-duel.ts:218
 msgctxt "command-option-description"
 msgid "Display just the art for the Rush Duel card with this name."
 msgstr "이 이름으로 러시 듀얼 카드에 대한 일러스트만 표시합니다."
@@ -1106,7 +1149,7 @@ msgctxt "command-name"
 msgid "locale"
 msgstr "로케일"
 
-#: src\commands\random.ts:30
+#: src\commands\random.ts:42
 msgctxt "command-name"
 msgid "random"
 msgstr "무작위"
@@ -1116,7 +1159,7 @@ msgctxt "command-name"
 msgid "price"
 msgstr "가격"
 
-#: src\commands\rush-duel.ts:184
+#: src\commands\rush-duel.ts:185
 msgctxt "command-name"
 msgid "rush-duel"
 msgstr "러시듀얼"
@@ -1161,7 +1204,7 @@ msgctxt "command-description"
 msgid "Check or set Bastion's locale for this channel or server."
 msgstr "이 채널 또는 서버에 대한 Bastion의 로케일을 확인하거나 설정합니다."
 
-#: src\commands\random.ts:31
+#: src\commands\random.ts:43
 msgctxt "command-description"
 msgid "Get a random Yu-Gi-Oh! card."
 msgstr "유희왕 카드를 무작위로 받으십시오."
@@ -1171,7 +1214,7 @@ msgctxt "command-description"
 msgid "Display the price for a card!"
 msgstr "카드 가격 표시"
 
-#: src\commands\rush-duel.ts:185
+#: src\commands\rush-duel.ts:186
 msgctxt "command-description"
 msgid "Find information on Rush Duel cards."
 msgstr "러시 듀얼 카드 정보 찾기"

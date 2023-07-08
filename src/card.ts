@@ -49,6 +49,8 @@ c("monster-type-race").t`Toon`;
 c("monster-type-race").t`Spirit`;
 c("monster-type-race").t`Union`;
 c("monster-type-race").t`Gemini`;
+// Exclusive to Rush Duel
+c("monster-type-race").t`Maximum`;
 c("spell-trap-property").t`Normal Spell`;
 c("spell-trap-property").t`Continuous Spell`;
 c("spell-trap-property").t`Equip Spell`;
@@ -93,7 +95,16 @@ export const RaceIcon = {
 	[c("monster-type-race").t`Divine-Beast`]: "<:DivineBeast:602707925730852874>",
 	[c("monster-type-race").t`Creator God`]: "<:CreatorGod:602707927219961866>",
 	[c("monster-type-race").t`Wyrm`]: "<:Wyrm:602707927068835884>",
-	[c("monster-type-race").t`Cyberse`]: "<:Cyberse:602707927421157376>"
+	[c("monster-type-race").t`Cyberse`]: "<:Cyberse:602707927421157376>",
+	[c("monster-type-race").t`Illusion`]: null,
+	// Exclusive to Rush Duel
+	[c("monster-type-race").t`Galaxy`]: null,
+	// Rush Duel Fusion
+	[c("monster-type-race").t`Cyborg`]: null,
+	[c("monster-type-race").t`Magical Knight`]: null,
+	[c("monster-type-race").t`High Dragon`]: null,
+	[c("monster-type-race").t`Celestial Warrior`]: null,
+	[c("monster-type-race").t`Omega Psychic`]: null
 	//Yokai: "<:Yokai:602707927932993546>",
 	//Charisma: "<:Charisma:602707891530629130>"
 };
