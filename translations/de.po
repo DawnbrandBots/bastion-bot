@@ -24,8 +24,8 @@ msgstr ""
 #: src\card.ts:403
 #: src\commands\rush-duel.ts:107
 #, javascript-format
-msgid "**Type**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
-msgstr "**Typ**: ${ RaceIcon[race] } ${ localizedMonsterTypeLine }"
+msgid "**Type**: ${ raceIcon } ${ localizedMonsterTypeLine }"
+msgstr "**Typ**: ${ raceIcon } ${ localizedMonsterTypeLine }"
 
 #: src\card.ts:405
 #: src\commands\rush-duel.ts:109

@@ -98,13 +98,14 @@ function createRushCardEmbed(card: Static<typeof RushCardSchema>, lang: Locale):
 		);
 
 		const race = card.monster_type_line.split(" /")[0];
+		const raceIcon = RaceIcon[race] || "";
 		// TODO: is approach scalable with custom Rush Fusion races?
 		const localizedMonsterTypeLine = card.monster_type_line
 			.split(" / ")
 			.map(s => rc("monster-type-race").gettext(s))
 			.join(" / ");
 		const localizedAttribute = rc("attribute").gettext(card.attribute);
-		description += t`**Type**: ${RaceIcon[race]} ${localizedMonsterTypeLine}`;
+		description += t`**Type**: ${raceIcon} ${localizedMonsterTypeLine}`;
 		description += "\n";
 		description += t`**Attribute**: ${AttributeIcon[card.attribute]} ${localizedAttribute}`;
 		description += "\n";
