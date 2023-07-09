@@ -44,7 +44,7 @@ or roles in question, but this will apply to all bots.
 ## Contributing
 
 Bastion is written in [TypeScript](https://www.typescriptlang.org/).
-It targets [Node.js](https://nodejs.org/) 16.6+ and
+It targets [Node.js](https://nodejs.org/) 18+ and
 can be run with or without [Docker](https://docs.docker.com/get-docker/).
 It uses [Discord.js](https://discord.js.org/) to talk to Discord.
 
@@ -63,7 +63,7 @@ See [PRIVACY.md](https://github.com/DawnbrandBots/bastion-bot/blob/master/PRIVAC
 
 ## Licence
 
-Copyright © 2021–2022 Luna Brand, Kevin Lu.
+Copyright © 2021–2023 Luna Brand, Kevin Lu.
 See [COPYING](https://github.com/DawnbrandBots/bastion-bot/blob/master/COPYING) for more details.
 
 ```

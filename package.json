@@ -57,6 +57,7 @@
 	},
 	"resolutions": {
 		"@types/node": "^18.16.19",
+		"http2-wrapper": "^2.2.0",
 		"make-dir": "^4.0.0",
 		"semver": "^7.5.4"
 	},
