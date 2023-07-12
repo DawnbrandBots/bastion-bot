@@ -15,7 +15,7 @@ import { SearchCommand } from "./search";
 import { YGOPRODECKCommand } from "./ygoprodeck";
 import { YugiCommand } from "./yugipedia";
 
-export const classes = [
+const productionCommandClasses = [
 	DeckCommand,
 	PingCommand,
 	LinkCommand,
@@ -28,9 +28,15 @@ export const classes = [
 	RandomCommand,
 	HelpCommand,
 	PriceCommand,
-	RushDuelCommand,
-	QueryCommand
+	RushDuelCommand
 ];
+const previewCommandClasses = [QueryCommand];
+
+export const classes = [
+	...productionCommandClasses,
+	...(process.env.BOT_NO_DIRECT_MESSAGE_SEARCH ? previewCommandClasses : [])
+];
+
 export {
 	ArtCommand,
 	DeckCommand,
