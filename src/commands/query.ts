@@ -21,10 +21,7 @@ export class QueryCommand extends Command {
 		@inject("got") private got: Got
 	) {
 		super(metrics);
-		this.got = got.extend({
-			throwHttpErrors: true,
-			timeout: 10000
-		});
+		this.got = got.extend({ timeout: 10000 });
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
@@ -51,13 +48,28 @@ export class QueryCommand extends Command {
 		const query = interaction.options.getString("lucene", true);
 		await interaction.deferReply();
 		const response = await this.got(`${process.env.API_URL}/ocg-tcg/query?q=${encodeURIComponent(query)}`);
-		const cards: Static<typeof CardSchema>[] = JSON.parse(response.body);
-		let content = `Total: ${cards.length}\n`;
-		content += cards
-			.slice(0, 10)
-			.map(card => `1. ${card.name.en}`)
-			.join("\n");
+		let content;
+		if (response.statusCode === 400) {
+			const error = JSON.parse(response.body);
+			content = error.reason;
+			if (error.detail) {
+				content += "\n\n";
+				content += error.detail;
+			}
+		} else if (response.statusCode === 200) {
+			const cards: Static<typeof CardSchema>[] = JSON.parse(response.body);
+			content = `Total: ${cards.length}\n`;
+			content += cards
+				.slice(0, 10)
+				.map(card => `1. ${card.name.en}`)
+				.join("\n");
+		} else {
+			throw new this.got.HTTPError(response);
+		}
+		const end = Date.now();
 		await interaction.editReply({ content });
-		return -2;
+		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
+		const latency = end - interaction.createdTimestamp;
+		return latency;
 	}
 }
