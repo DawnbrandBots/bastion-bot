@@ -8,13 +8,14 @@ import { LinkCommand } from "./link";
 import { LocaleCommand } from "./locale";
 import { PingCommand } from "./ping";
 import { PriceCommand } from "./price";
+import { QueryCommand } from "./query";
 import { RandomCommand } from "./random";
 import { RushDuelCommand } from "./rush-duel";
 import { SearchCommand } from "./search";
 import { YGOPRODECKCommand } from "./ygoprodeck";
 import { YugiCommand } from "./yugipedia";
 
-export const classes = [
+const productionCommandClasses = [
 	DeckCommand,
 	PingCommand,
 	LinkCommand,
@@ -29,20 +30,28 @@ export const classes = [
 	PriceCommand,
 	RushDuelCommand
 ];
+const previewCommandClasses = [QueryCommand];
+
+export const classes = [
+	...productionCommandClasses,
+	...(process.env.BOT_NO_DIRECT_MESSAGE_SEARCH ? previewCommandClasses : [])
+];
+
 export {
+	ArtCommand,
 	DeckCommand,
-	PingCommand,
-	LinkCommand,
-	YugiCommand,
+	HelpCommand,
 	IdCommand,
+	LinkCommand,
+	LocaleCommand,
+	PingCommand,
+	PriceCommand,
+	QueryCommand,
+	RandomCommand,
+	RushDuelCommand,
 	SearchCommand,
 	YGOPRODECKCommand,
-	LocaleCommand,
-	ArtCommand,
-	RandomCommand,
-	HelpCommand,
-	PriceCommand,
-	RushDuelCommand
+	YugiCommand
 };
 
 // Register Slash Commands on CI
