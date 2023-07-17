@@ -121,4 +121,4 @@ jobs:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: |
           docker context use default
-          docker run -e DISCORD_TOKEN ${{ fromJSON(needs.build.outputs.json).tags[0] }} --deploy-slash 381294999729340417
+          docker run -e DISCORD_TOKEN -e BOT_NO_DIRECT_MESSAGE_SEARCH=1 ${{ fromJSON(needs.build.outputs.json).tags[0] }} --deploy-slash 381294999729340417
