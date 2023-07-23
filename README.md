@@ -15,6 +15,11 @@ For everything else, please refer to the old [Bastion Classic](https://github.co
 
 Thanks to [YGOPRODECK](https://ygoprodeck.com/) for sponsoring Bastion. Prices provided by Bastion are YGOPRODECK affiliate links.
 
+[![Compile and test](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/node.js.yml/badge.svg)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/node.js.yml)
+[![Build Docker image and deploy to Swarm](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/docker.yml/badge.svg)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/docker.yml)
+[![Release to production (Compose)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/release-compose.yml/badge.svg)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/release-compose.yml)
+[![CodeQL](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/codeql-analysis.yml)
+
 ## Discord permissions
 
 Please make sure you use an [invite link](https://discord.com/api/oauth2/authorize?client_id=383854640694820865&permissions=274878285888&scope=bot%20applications.commands)
