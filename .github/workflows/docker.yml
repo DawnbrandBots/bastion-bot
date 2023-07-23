@@ -14,6 +14,12 @@ on:
       - .github/workflows/docker.yml
 
 jobs:
+  lint-dockerfile:
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: hadolint/hadolint-action@v3.1.0
   build:
     runs-on: ubuntu-latest
     if: >-
