@@ -71,6 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     if: contains(needs.build.outputs.tags, 'latest')
+    environment: Daichi#3599 (preview)
     steps:
       - uses: actions/checkout@v3
       - uses: docker/login-action@v2
