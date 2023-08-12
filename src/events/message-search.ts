@@ -47,7 +47,8 @@ const mentionPatterns = (
 const undocumentedPatterns = [
 	"<id:browse>", // "Browse Channels"
 	"<id:customize>", // "Customise Community"
-	"<id:home>" // links to community rules channel
+	"<id:home>", // links to community rules channel
+	"<id:guide>" // "Server Guide"
 ];
 
 export function cleanMessageMarkup(message: string): string {
@@ -106,7 +107,7 @@ export function parseSummons(cleanMessage: string, regex: RegExp): string[] {
 
 export function preprocess(
 	message: string,
-	delimiter: typeof DELIMITERS[keyof typeof DELIMITERS] = DELIMITERS.ANGLE
+	delimiter: (typeof DELIMITERS)[keyof typeof DELIMITERS] = DELIMITERS.ANGLE
 ): string[] {
 	message = cleanMessageMarkup(message);
 	if (delimiter.prune) {
