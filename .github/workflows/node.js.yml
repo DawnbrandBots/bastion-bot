@@ -37,3 +37,12 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: yarn lint
+      - name: Install ESLint formatter
+        run: yarn add @microsoft/eslint-formatter-sarif@3.0.0
+      - name: Run ESLint with formatter
+        run: yarn lint --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif
+      - name: Upload ESLint result to GitHub
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: eslint-results.sarif
+          wait-for-processing: true
