@@ -21,12 +21,12 @@
 		"yarn": "1.22.x"
 	},
 	"dependencies": {
-		"@sinclair/typebox": "^0.30.4",
+		"@sinclair/typebox": "^0.31.1",
 		"basic-ftp": "^5.0.3",
-		"better-sqlite3": "^8.5.0",
+		"better-sqlite3": "^8.5.1",
 		"debug": "^4.3.4",
 		"discord-markdown": "2.5.1",
-		"discord.js": "^14.12.1",
+		"discord.js": "^14.13.0",
 		"dotenv": "^16.3.1",
 		"gettext-parser": "^6.0.0",
 		"got": "^11.8.6",
@@ -51,12 +51,11 @@
 	},
 	"optionalDependencies": {
 		"bufferutil": "^4.0.7",
-		"erlpack": "discord/erlpack",
 		"utf-8-validate": "^6.0.3",
 		"zlib-sync": "^0.1.8"
 	},
 	"resolutions": {
-		"@types/node": "^18.16.19",
+		"@types/node": "^18.17.6",
 		"http2-wrapper": "^2.2.0",
 		"make-dir": "^4.0.0",
 		"semver": "^7.5.4"
