@@ -23,4 +23,4 @@ COPY COPYING .
 COPY --from=build /app/dist .
 COPY --from=build /app/translations translations
 USER node
-ENTRYPOINT ["node", "--trace-gc", "--enable-source-maps", "-r", "reflect-metadata", "."]
+ENTRYPOINT ["node", "--enable-source-maps", "-r", "reflect-metadata", "."]
