@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, Options, Partials } from "discord.js";
+import { ActivityType, Client, GatewayIntentBits, Options, Partials } from "discord.js";
 import { injectAll, injectable } from "tsyringe";
 import { Listener } from "./events";
 import { getLogger } from "./logger";
@@ -55,7 +55,8 @@ export class BotFactory {
 		bot.on("guildDelete", guild => logger.notify(`Guild delete: ${serialiseServer(guild)}`));
 		bot.on("ready", () => {
 			logger.notify(`Logged in as ${bot.user?.tag} - ${bot.user?.id}`);
-			bot.user?.setActivity(process.env.BOT_PRESENCE || "<card name> to search!");
+			const state = process.env.BOT_PRESENCE || "🔎 <card name> to search!";
+			bot.user?.setActivity(state, { type: ActivityType.Custom });
 		});
 
 		bot.once("ready", () => {
