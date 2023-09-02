@@ -69,7 +69,7 @@ export class PingMessageListener implements Listener<"messageCreate"> {
 				}
 			};
 			const replyOptions = {
-				content: `${process.env.BOT_MOTD}\n\n${content}`,
+				content: `${process.env.BOT_MOTD}\n\nhttps://discord.com/application-directory/383854640694820865\n${content}`,
 				embeds: [embed]
 			};
 			let response;
