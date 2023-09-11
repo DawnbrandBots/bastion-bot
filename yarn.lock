@@ -1552,10 +1552,10 @@
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.27.8.tgz#6667fac16c436b5434a387a34dedb013198f6e6e"
   integrity sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==
 
-"@sinclair/typebox@^0.31.9":
-  version "0.31.9"
-  resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.31.9.tgz#f6eebba4f3631624d0895283723116d3e1d8d91d"
-  integrity sha512-p73UG4m/1h/1hraNZtabquOkryCbqpqrwok9T3XqPwp8H7V4+t12mzeZLVzxSNvtasI/44f5IZxNwpwjPX+Uwg==
+"@sinclair/typebox@^0.31.14":
+  version "0.31.14"
+  resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.31.14.tgz#0c1f3f8dbb6c866088faab04af7fa7cda7f8e8c3"
+  integrity sha512-2spk0ie6J/4r+nwb55OtBXUn5cZLF9S98fopIjuutBVoq8yLRNh+h8QvMkCjMu5gWBMnnZ/PUSXeHE3xGBPKLQ==
 
 "@sindresorhus/is@^4.0.0":
   version "4.6.0"
