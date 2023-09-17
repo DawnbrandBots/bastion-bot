@@ -433,6 +433,11 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 			description += t`**Pendulum Scale**: ${formattedScale}`;
 		}
 
+		if (card.master_duel_rarity) {
+			description += "\n";
+			description += t`**Master Duel rarity**: ${card.master_duel_rarity}`;
+		}
+
 		embed.setDescription(description);
 
 		if (card.pendulum_effect === undefined) {
