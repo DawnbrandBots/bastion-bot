@@ -46,7 +46,7 @@ msgstr ""
 #: src\commands\rush-duel.ts:112
 #, javascript-format
 msgid "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
-msgstr "Livello**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
+msgstr "**Livello**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 
 #: src\card.ts:433
 msgid "**Pendulum Scale**: ${ formattedScale }"
