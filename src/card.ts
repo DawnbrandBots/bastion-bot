@@ -139,6 +139,13 @@ export const Icon = {
 	Rank: "<:rank:602707927114973185>"
 };
 
+const MasterDuelRarityIcon = {
+	N: "<:Rarity_N_left:1153442945828147231><:Rarity_N_right:1153442947551989791>",
+	R: "<:Rarity_R_left:1153442950655770707><:Rarity_R_right:1153442956141940818>",
+	SR: "<:Rarity_SR_left:1153442958763376651><:Rarity_SR_right:1153442961586130993>",
+	UR: "<:Rarity_UR_left:1153442964505366638><:Rarity_UR_right:1153442966195679325>"
+};
+
 // TODO: remove "kid"
 export type CardLookupType = "name" | "password" | "konami-id" | "kid";
 
@@ -389,6 +396,13 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 		description += "\n";
 	}
 
+	if (card.master_duel_rarity) {
+		const rarity_icon = MasterDuelRarityIcon[card.master_duel_rarity];
+		const localized_rarity = card.master_duel_rarity;
+		description += t`**Master Duel rarity**: ${rarity_icon} ${localized_rarity}`;
+		description += "\n";
+	}
+
 	// TODO: expand with hyperlinks
 	if (card.card_type === "Monster") {
 		embed.setColor(
@@ -431,11 +445,6 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 			const formattedScale = `${Icon.LeftScale}${card.pendulum_scale}/${card.pendulum_scale}${Icon.RightScale}`;
 			description += " ";
 			description += t`**Pendulum Scale**: ${formattedScale}`;
-		}
-
-		if (card.master_duel_rarity) {
-			description += "\n";
-			description += t`**Master Duel rarity**: ${card.master_duel_rarity}`;
 		}
 
 		embed.setDescription(description);
