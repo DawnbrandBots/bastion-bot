@@ -451,7 +451,7 @@ msgstr "`${ input }`에 대한 일러스트를 찾을 수 없습니다!"
 #: src\card.ts:409
 #, javascript-format
 msgid "**Master Duel rarity**: ${ rarity_icon } ${ localized_rarity }"
-msgstr ""
+msgstr "**레어리티 (MD)**: ${ rarity_icon } ${ localized_rarity }"
 
 #: src\card.ts:38
 msgctxt "monster-type-race"
@@ -800,22 +800,22 @@ msgstr "신"
 #: src\card.ts:150
 msgctxt "master-duel-rarity"
 msgid "Common (N)"
-msgstr "노멀（Ｎ）"
+msgstr "N"
 
 #: src\card.ts:151
 msgctxt "master-duel-rarity"
 msgid "Rare (R)"
-msgstr "레어（Ｒ）"
+msgstr "R"
 
 #: src\card.ts:152
 msgctxt "master-duel-rarity"
 msgid "Super Rare (SR)"
-msgstr "슈퍼 레어（ＳＲ）"
+msgstr "SR"
 
 #: src\card.ts:153
 msgctxt "master-duel-rarity"
 msgid "Ultra Rare (UR)"
-msgstr "울트라 레어（ＵＲ）"
+msgstr "UR"
 
 #: src\card.ts:460
 #: src\card.ts:471
