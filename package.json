@@ -60,34 +60,6 @@
 		"make-dir": "^4.0.0",
 		"semver": "^7.5.4"
 	},
-	"babel": {
-		"plugins": [
-			[
-				"@babel/plugin-proposal-decorators",
-				{
-					"legacy": true
-				}
-			],
-			[
-				"@babel/plugin-proposal-class-properties",
-				{
-					"loose": true
-				}
-			],
-			[
-				"@babel/plugin-proposal-private-property-in-object",
-				{
-					"loose": true
-				}
-			],
-			[
-				"@babel/plugin-proposal-private-methods",
-				{
-					"loose": true
-				}
-			]
-		]
-	},
 	"jest": {
 		"clearMocks": true,
 		"collectCoverage": true,

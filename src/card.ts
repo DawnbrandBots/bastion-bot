@@ -146,6 +146,13 @@ const MasterDuelRarityIcon = {
 	UR: "<:Rarity_UR_left:1153442964505366638><:Rarity_UR_right:1153442966195679325>"
 };
 
+const MasterDuelRarityLocalization = {
+	N: () => c("master-duel-rarity").t`Common (N)`,
+	R: () => c("master-duel-rarity").t`Rare (R)`,
+	SR: () => c("master-duel-rarity").t`Super Rare (SR)`,
+	UR: () => c("master-duel-rarity").t`Ultra Rare (UR)`
+};
+
 // TODO: remove "kid"
 export type CardLookupType = "name" | "password" | "konami-id" | "kid";
 
@@ -398,7 +405,7 @@ export function createCardEmbed(card: Static<typeof CardSchema>, lang: Locale): 
 
 	if (card.master_duel_rarity) {
 		const rarity_icon = MasterDuelRarityIcon[card.master_duel_rarity];
-		const localized_rarity = card.master_duel_rarity;
+		const localized_rarity = MasterDuelRarityLocalization[card.master_duel_rarity]();
 		description += t`**Master Duel rarity**: ${rarity_icon} ${localized_rarity}`;
 		description += "\n";
 	}
