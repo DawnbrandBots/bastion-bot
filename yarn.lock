@@ -1999,11 +1999,6 @@ ansi-styles@^5.0.0:
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-5.2.0.tgz#07449690ad45777d1924ac2abb2fc8895dba836b"
   integrity sha512-Cxwpt2SfTzTtXcfOlzGEee8O+c+MmUgGrNiBcXnuWxuFJHe6a5Hz7qwhwe5OgaSYI0IJvkLqWX1ASG+cJOkEiA==
 
-ansi@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/ansi/-/ansi-0.3.1.tgz#0c42d4fb17160d5a9af1e484bace1c66922c1b21"
-  integrity sha512-iFY7JCgHbepc0b82yLaw4IMortylNb6wG4kL+4R0C3iv6i+RHGHux/yUX5BTiRvSX/shMnngjR1YyNMnXEFh5A==
-
 anymatch@^3.0.3, anymatch@~3.1.2:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/anymatch/-/anymatch-3.1.3.tgz#790c58b19ba1720a84205b57c618d5ad8524973e"
@@ -2110,10 +2105,10 @@ babel-plugin-polyfill-regenerator@^0.5.2:
   dependencies:
     "@babel/helper-define-polyfill-provider" "^0.4.2"
 
-babel-plugin-ttag@1.8.5:
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/babel-plugin-ttag/-/babel-plugin-ttag-1.8.5.tgz#39d92b303734165e70bcec1edbc10a9d85a6cef9"
-  integrity sha512-sUD1XSskVOFKO+jIcy0aSyB2W6XoY28ptGe9EkEPPjU2LYCRtQdPTuvzWT9aE6tM2WtQqz6plGJ97wJp5ybQTw==
+babel-plugin-ttag@1.8.9:
+  version "1.8.9"
+  resolved "https://registry.yarnpkg.com/babel-plugin-ttag/-/babel-plugin-ttag-1.8.9.tgz#99d7084386a462159a246b30aa1bb704f8aac25d"
+  integrity sha512-IRCuBtRQ4YFtoQGRRkinZdr0sECwuglF72FxpsSqgGBRicpGA/Ie3bkehl/jM0hP7S2PD5XX53x0QNXR+ZUJ7g==
   dependencies:
     "@babel/generator" "^7.12.5"
     "@babel/template" "^7.10.4"
@@ -5054,7 +5049,7 @@ supports-color@^2.0.0:
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
   integrity sha512-KKNVtd6pCYgPIKU4cp2733HWYCpplQhddZLBUryaAHou723x+FRzQ5Df824Fj+IyyuiQTRoub4SnIFfIcrp70g==
 
-supports-color@^5.0.1, supports-color@^5.3.0:
+supports-color@^5.3.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.5.0.tgz#e2e69a44ac8772f78a1ec0b35b689df6530efc8f"
   integrity sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==
@@ -5257,10 +5252,10 @@ tsyringe@^4.8.0:
   dependencies:
     tslib "^1.9.3"
 
-ttag-cli@^1.10.5:
-  version "1.10.5"
-  resolved "https://registry.yarnpkg.com/ttag-cli/-/ttag-cli-1.10.5.tgz#0aa0d9f248f401de4ed2389d4ee77257cfabbbcc"
-  integrity sha512-rIJ2r3dAd2yExsNOzUQ5Fk6FxqpGZkHf9zdd78qB3yDoDyyE6y0ByxV6MX+Am8VqlJ23HdTC95JtokuJhla9Dg==
+ttag-cli@^1.10.6:
+  version "1.10.6"
+  resolved "https://registry.yarnpkg.com/ttag-cli/-/ttag-cli-1.10.6.tgz#1d66c375fab3a464739636f3c57f2070668b7718"
+  integrity sha512-Nmv3z0p9ct4Xr2fZWH7qlTSH1o3HYYSOKBxLYzDy8gwge3CLZCXpT6qlBruaAaxzZlOr3Tin9wCjcMimCJDTUw==
   dependencies:
     "@babel/core" "^7.12.3"
     "@babel/generator" "^7.12.5"
@@ -5276,8 +5271,7 @@ ttag-cli@^1.10.5:
     "@babel/preset-react" "^7.12.5"
     "@babel/preset-typescript" "7.7.0"
     "@babel/template" "^7.10.4"
-    ansi "^0.3.1"
-    babel-plugin-ttag "1.8.5"
+    babel-plugin-ttag "1.8.9"
     babel-preset-const-enum "^1.0.0"
     chalk "^2.4.2"
     cross-spawn "^5.1.0"
@@ -5295,7 +5289,6 @@ ttag-cli@^1.10.5:
     plural-forms "0.5.3"
     readline-sync "^1.4.7"
     serialize-javascript "^4.0.0"
-    supports-color "^5.0.1"
     svelte "^3.20.1"
     tmp "0.0.33"
     vue-sfc-parser "^0.1.2"
