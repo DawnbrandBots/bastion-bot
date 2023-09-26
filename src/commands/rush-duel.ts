@@ -25,6 +25,7 @@ import { c, t, useLocale } from "ttag";
 import { AutocompletableCommand } from "../Command";
 import { AttributeIcon, Colour, Icon, RaceIcon, formatCardName, formatCardText } from "../card";
 import { RushCardSchema } from "../definitions/rush";
+import { UpdatingLimitRegulationVector } from "../limit-regulation";
 import {
 	Locale,
 	LocaleProvider,
@@ -45,7 +46,11 @@ function videoGameIllustrationURL(card: Static<typeof RushCardSchema>): string {
 	return `https://yugipedia.com/wiki/Special:Redirect/file/${probableBasename}-G002-JP-VG-artwork.png`;
 }
 
-function createRushCardEmbed(card: Static<typeof RushCardSchema>, lang: Locale): EmbedBuilder {
+function createRushCardEmbed(
+	card: Static<typeof RushCardSchema>,
+	lang: Locale,
+	limitRegulation: UpdatingLimitRegulationVector
+): EmbedBuilder {
 	useLocale(lang);
 
 	const yugipedia = card.konami_id
@@ -76,6 +81,12 @@ function createRushCardEmbed(card: Static<typeof RushCardSchema>, lang: Locale):
 	}
 	if (card.legend) {
 		description += t`__**LEGEND**__`;
+		description += "\n";
+	}
+
+	if (card.konami_id) {
+		const limitRegulationDisplay = limitRegulation.get(card.konami_id) ?? 3;
+		description += t`**Limit**: ${limitRegulationDisplay}`;
 		description += "\n";
 	}
 
@@ -173,7 +184,8 @@ export class RushDuelCommand extends AutocompletableCommand {
 	constructor(
 		metrics: Metrics,
 		@inject("LocaleProvider") private locales: LocaleProvider,
-		@inject("got") private got: Got
+		@inject("got") private got: Got,
+		@inject("limitRegulationRush") private limitRegulation: UpdatingLimitRegulationVector
 	) {
 		super(metrics);
 	}
@@ -320,7 +332,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 			return result;
 		}
 		const { resultLanguage, card } = result;
-		const embed = createRushCardEmbed(card, resultLanguage);
+		const embed = createRushCardEmbed(card, resultLanguage, this.limitRegulation);
 		const reply = await interaction.reply({ embeds: addNotice(embed), fetchReply: true });
 		return replyLatency(reply, interaction);
 	}
@@ -343,7 +355,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 			}
 			case 200: {
 				const card = JSON.parse(response.body);
-				const embed = createRushCardEmbed(card, lang);
+				const embed = createRushCardEmbed(card, lang, this.limitRegulation);
 				const reply = await interaction.reply({
 					embeds: addNotice(embed),
 					fetchReply: true
@@ -362,7 +374,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 		}).json<Static<typeof RushCardSchema>[]>();
 		this.#logger.info(serialiseInteraction(interaction, { response: card.yugipedia_page_id }));
 		const lang = await this.locales.get(interaction);
-		const embed = createRushCardEmbed(card, lang);
+		const embed = createRushCardEmbed(card, lang, this.limitRegulation);
 		const reply = await interaction.reply({ embeds: addNotice(embed), fetchReply: true });
 		return replyLatency(reply, interaction);
 	}
