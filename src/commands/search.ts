@@ -4,17 +4,18 @@ import { ChatInputCommandInteraction } from "discord.js";
 import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
-import { createCardEmbed, getCard, getCardSearchOptions } from "../card";
 import { Command } from "../Command";
+import { createCardEmbed, getCard, getCardSearchOptions } from "../card";
+import { UpdatingLimitRegulationVector } from "../limit-regulation";
 import {
+	LocaleProvider,
 	buildLocalisedCommand,
 	getKonamiIdSubcommand,
 	getNameSubcommand,
 	getPasswordSubcommand,
-	getResultLangStringOption,
-	LocaleProvider
+	getResultLangStringOption
 } from "../locale";
-import { getLogger, Logger } from "../logger";
+import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
 import { replyLatency } from "../utils";
 
@@ -25,7 +26,8 @@ export class SearchCommand extends Command {
 	constructor(
 		metrics: Metrics,
 		@inject("LocaleProvider") private locales: LocaleProvider,
-		@inject("got") private got: Got
+		@inject("got") private got: Got,
+		@inject("limitRegulationMasterDuel") private masterDuelLimitRegulation: UpdatingLimitRegulationVector
 	) {
 		super(metrics);
 	}
@@ -61,7 +63,7 @@ export class SearchCommand extends Command {
 			useLocale(resultLanguage);
 			replyOptions = { content: t`Could not find a card matching \`${input}\`!` };
 		} else {
-			const embeds = createCardEmbed(card, resultLanguage);
+			const embeds = createCardEmbed(card, resultLanguage, this.masterDuelLimitRegulation);
 			replyOptions = { embeds };
 		}
 		const reply = await interaction.reply({ ...replyOptions, fetchReply: true });
