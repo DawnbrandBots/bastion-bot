@@ -74,15 +74,18 @@ describe("preprocess message to get inputs", () => {
 	});
 	test("gets one", () => {
 		const inputs = preprocess("<test>");
-		expect(inputs).toEqual(["test"]);
+		expect(inputs).toEqual([{ summon: "test", type: "ocg" }]);
 	});
 	test("clears whitespace", () => {
 		const inputs = preprocess("< test >");
-		expect(inputs).toEqual(["test"]);
+		expect(inputs).toEqual([{ summon: "test", type: "ocg" }]);
 	});
 	test("gets multiple", () => {
 		const inputs = preprocess("<foo> <bar>");
-		expect(inputs).toEqual(["foo", "bar"]);
+		expect(inputs).toEqual([
+			{ summon: "foo", type: "ocg" },
+			{ summon: "bar", type: "ocg" }
+		]);
 	});
 	test("ignores hyperlinks", () => {
 		const inputs = preprocess("<https://www.example.net>");
@@ -104,7 +107,12 @@ describe("preprocess message to get inputs", () => {
 		const inputs = preprocess(
 			"<#12345678901234567> <@!12345678901234567> <big test> <<missed>> < nibiru> <@&12345678901234567> :thonk: <t:1664136104811>\n`<miss>`\n\\`<eternity>`\n<tearlaments\n        lulucaros>\n|| <dark magician> ||\n<dark dragoon >>\n```\n<code talker>\n```\n> <majesty's fiend>"
 		);
-		expect(inputs).toEqual(["big test", "nibiru", "eternity", "dark dragoon"]);
+		expect(inputs).toEqual([
+			{ summon: "big test", type: "ocg" },
+			{ summon: "nibiru", type: "ocg" },
+			{ summon: "eternity", type: "ocg" },
+			{ summon: "dark dragoon", type: "ocg" }
+		]);
 	});
 });
 

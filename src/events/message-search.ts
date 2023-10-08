@@ -12,6 +12,7 @@ import {
 	RESTJSONErrorCodes
 } from "discord.js";
 import { Got } from "got";
+import { Record as ImmutableRecord, OrderedSet } from "immutable";
 import { ParserRules, parserFor } from "simple-markdown";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
@@ -68,11 +69,11 @@ export function cleanMessageMarkup(message: string): string {
 }
 
 const DELIMITERS = {
-	ANGLE: { match: /<([^<\n]+?)>/g, prune: /<<.*?>>/g },
-	SQUARE: { match: /\[([^<\n]+?)\]/g, prune: /\[\[.*?\]\]/g },
-	CC: { match: /=([^<\n]+?)=/g, prune: /==.*?==/g },
-	TRANS: { match: /\)([^<\n]+?)\(/g, prune: null }, // ) (
-	HAVEN: { match: /%([^<\n]+?)\^/g, prune: null } // % ^
+	ANGLE: { match: /(.?)<([^<\n]+?)>(.?)/g, prune: /<<.*?>>/g },
+	SQUARE: { match: /(.?)\[([^<\n]+?)\](.?)/g, prune: /\[\[.*?\]\]/g },
+	CC: { match: /(.?)=([^<\n]+?)=(.?)/g, prune: /==.*?==/g },
+	TRANS: { match: /(.?)\)([^<\n]+?)\((.?)/g, prune: null }, // ) (
+	HAVEN: { match: /(.?)%([^<\n]+?)\^(.?)/g, prune: null } // % ^
 } as const;
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -92,10 +93,26 @@ function getDelimiter(message: Message) {
 	}
 }
 
-export function parseSummons(cleanMessage: string, regex: RegExp): string[] {
+const Summon = ImmutableRecord<{ summon: string; type: "ocg" | "rush" }>({ summon: "", type: "ocg" }, "Summon");
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+function getSummonType(match: RegExpMatchArray) {
+	if (match[1].toLowerCase() === "r" || match[3].toLowerCase() === "r") {
+		return "rush";
+	}
+	return "ocg";
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+function parseSummons(cleanMessage: string, regex: RegExp) {
 	return [...cleanMessage.matchAll(regex)]
-		.map(match => match[1].trim())
-		.filter(summon => {
+		.map(match =>
+			Summon({
+				summon: match[2].trim(),
+				type: getSummonType(match)
+			})
+		)
+		.filter(({ summon }) => {
 			// Ignore matches containing only whitespace or containing the following three tokens
 			if (summon.length === 0) {
 				return false;
@@ -105,15 +122,17 @@ export function parseSummons(cleanMessage: string, regex: RegExp): string[] {
 		});
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function preprocess(
 	message: string,
 	delimiter: (typeof DELIMITERS)[keyof typeof DELIMITERS] = DELIMITERS.ANGLE
-): string[] {
+) {
 	message = cleanMessageMarkup(message);
 	if (delimiter.prune) {
 		message = message.replaceAll(delimiter.prune, "");
 	}
-	return parseSummons(message, delimiter.match);
+	const summons = parseSummons(message, delimiter.match);
+	return OrderedSet(summons).toJS();
 }
 
 /**
@@ -265,12 +284,15 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			return;
 		}
 		const delimiter = getDelimiter(message);
-		let inputs = preprocess(message.content, delimiter);
-		if (inputs.length === 0) {
+		const newInputs = preprocess(message.content, delimiter);
+		if (newInputs.length === 0) {
 			return;
 		}
-		this.log("info", message, JSON.stringify(inputs));
-		inputs = [...new Set(inputs)].slice(0, 3); // remove duplicates, then select first three
+		this.log("info", message, JSON.stringify(newInputs));
+		const inputs = newInputs
+			.filter(({ type }) => type === "ocg")
+			.map(({ summon }) => summon)
+			.slice(0, 3);
 		message.channel.sendTyping().catch(error => this.log("info", message, error));
 		this.addReaction(message, "🕙");
 		const language = await this.locales.getM(message);

@@ -31,6 +31,7 @@
 		"gettext-parser": "^6.0.0",
 		"got": "^11.8.6",
 		"htmlparser2": "^9.0.0",
+		"immutable": "^4.3.4",
 		"mnemonist": "^0.39.5",
 		"reflect-metadata": "^0.1.13",
 		"supports-color": "^9.4.0",
