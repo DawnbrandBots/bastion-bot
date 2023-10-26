@@ -27,7 +27,7 @@ jobs:
         run: |
           SHARDS=$(curl -fsSL https://discord.com/api/gateway/bot -H "Authorization: Bot ${{ secrets.PRODUCTION_DISCORD_TOKEN }}" | jq .shards)
           echo "::set-output name=count::$SHARDS"
-      - uses: docker/login-action@v2
+      - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
