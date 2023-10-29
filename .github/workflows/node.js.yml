@@ -36,9 +36,12 @@ jobs:
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - run: yarn lint
+      - uses: actions/checkout@v4
+        with:
+          repository: xyj-3/sarif-js-sdk
+          path: sarif-js-sdk
       - name: Install ESLint formatter
-        run: yarn add @microsoft/eslint-formatter-sarif@3.0.0
+        run: yarn add file:sarif-js-sdk/packages/eslint-formatter-sarif
       - name: Run ESLint with formatter
         run: yarn lint --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif
       - name: Upload ESLint result to GitHub
