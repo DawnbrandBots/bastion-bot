@@ -17,13 +17,13 @@
 		"lint": "eslint src test"
 	},
 	"engines": {
-		"node": ">=18",
+		"node": ">=20",
 		"yarn": "1.22.x"
 	},
 	"dependencies": {
-		"@sinclair/typebox": "^0.31.15",
+		"@sinclair/typebox": "^0.31.22",
 		"basic-ftp": "^5.0.3",
-		"better-sqlite3": "^8.6.0",
+		"better-sqlite3": "^9.0.0",
 		"debug": "^4.3.4",
 		"discord-markdown": "2.5.1",
 		"discord.js": "^14.13.0",
@@ -35,27 +35,27 @@
 		"reflect-metadata": "^0.1.13",
 		"supports-color": "^9.4.0",
 		"tsyringe": "^4.8.0",
-		"ttag": "^1.7.24",
+		"ttag": "^1.7.25",
 		"ydeck": "^0.2.10",
 		"ydke": "^1.1.0"
 	},
 	"devDependencies": {
-		"@alphakretin/essentials": "^5.1.0",
-		"@types/better-sqlite3": "^7.6.4",
-		"@types/debug": "^4.1.8",
-		"@types/gettext-parser": "^4.0.2",
-		"@types/jest": "^29.5.4",
-		"jest": "^29.6.4",
+		"@alphakretin/essentials": "^6.0.0",
+		"@types/better-sqlite3": "^7.6.6",
+		"@types/debug": "^4.1.10",
+		"@types/gettext-parser": "^4.0.3",
+		"@types/jest": "^29.5.7",
+		"jest": "^29.7.0",
 		"ts-jest": "^29.1.1",
-		"ttag-cli": "^1.10.5"
+		"ttag-cli": "^1.10.6"
 	},
 	"optionalDependencies": {
-		"bufferutil": "^4.0.7",
+		"bufferutil": "^4.0.8",
 		"utf-8-validate": "^6.0.3",
-		"zlib-sync": "^0.1.8"
+		"zlib-sync": "^0.1.9"
 	},
 	"resolutions": {
-		"@types/node": "^18.17.6",
+		"@types/node": "^20.8.10",
 		"http2-wrapper": "^2.2.0",
 		"make-dir": "^4.0.0",
 		"semver": "^7.5.4"

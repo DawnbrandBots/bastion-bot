@@ -7,7 +7,7 @@ import { getLogger } from "./logger";
 export class ABDeploy {
 	#logger = getLogger("abdeploy");
 
-	protected interval: NodeJS.Timer;
+	protected interval: NodeJS.Timeout;
 	protected registry: Set<Snowflake> | null = null;
 
 	constructor(@inject("abdeployJson") private file: string) {

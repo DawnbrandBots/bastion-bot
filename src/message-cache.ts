@@ -8,9 +8,12 @@ import { Message, Snowflake } from "discord.js";
 export class RecentMessageCache {
 	// This could also store the message objects
 	protected map: Map<Snowflake, { createdTimestamp: number; replies: Snowflake[] }> = new Map();
-	protected interval: NodeJS.Timer;
+	protected interval: NodeJS.Timeout;
 
-	constructor(protected ttlMilliseconds: number, sweepIntervalMilliseconds: number) {
+	constructor(
+		protected ttlMilliseconds: number,
+		sweepIntervalMilliseconds: number
+	) {
 		this.interval = setInterval(() => this.sweep(), sweepIntervalMilliseconds).unref();
 	}
 
