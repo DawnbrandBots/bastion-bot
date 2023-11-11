@@ -17,7 +17,7 @@ export class UpdatingLimitRegulationVector {
 		private got: Got,
 		private url: string
 	) {
-		// Promise can resolve after constructor, just don't until next trigger to populate
+		// Promise will resolve after constructor and populate vector
 		this.update(true);
 		this.interval = setInterval(() => this.update(), 60000).unref();
 	}
@@ -54,10 +54,18 @@ export class UpdatingLimitRegulationVector {
 	}
 }
 
-export const rushLimitRegulationVectorFactory: FactoryProvider<UpdatingLimitRegulationVector> = {
+export const limitRegulationRushProvider: FactoryProvider<UpdatingLimitRegulationVector> = {
 	useFactory: container =>
 		new UpdatingLimitRegulationVector(
 			container.resolve("got"),
 			"https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/rush/current.vector.json"
+		)
+};
+
+export const limitRegulationMasterDuelProvider: FactoryProvider<UpdatingLimitRegulationVector> = {
+	useFactory: container =>
+		new UpdatingLimitRegulationVector(
+			container.resolve("got"),
+			"https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/master-duel/current.vector.json"
 		)
 };
