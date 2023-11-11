@@ -1,5 +1,5 @@
 import { Got } from "got";
-import { FactoryProvider } from "tsyringe";
+import { FactoryProvider, instanceCachingFactory } from "tsyringe";
 import { getLogger } from "./logger";
 
 interface LimitRegulationVector {
@@ -54,18 +54,17 @@ export class UpdatingLimitRegulationVector {
 	}
 }
 
-export const limitRegulationRushProvider: FactoryProvider<UpdatingLimitRegulationVector> = {
-	useFactory: container =>
-		new UpdatingLimitRegulationVector(
-			container.resolve("got"),
-			"https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/rush/current.vector.json"
-		)
-};
+class LimitRegulationProvider implements FactoryProvider<UpdatingLimitRegulationVector> {
+	constructor(private url: string) {}
 
-export const limitRegulationMasterDuelProvider: FactoryProvider<UpdatingLimitRegulationVector> = {
-	useFactory: container =>
-		new UpdatingLimitRegulationVector(
-			container.resolve("got"),
-			"https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/master-duel/current.vector.json"
-		)
-};
+	useFactory = instanceCachingFactory(
+		container => new UpdatingLimitRegulationVector(container.resolve("got"), this.url)
+	);
+}
+
+export const limitRegulationRushProvider = new LimitRegulationProvider(
+	"https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/rush/current.vector.json"
+);
+export const limitRegulationMasterDuelProvider = new LimitRegulationProvider(
+	"https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/master-duel/current.vector.json"
+);
