@@ -1,4 +1,4 @@
-ARG NODE_VERSION=18-bullseye
+ARG NODE_VERSION=20-bullseye
 FROM node:${NODE_VERSION} as base
 WORKDIR /app
 COPY package*.json yarn.lock ./
