@@ -82,9 +82,7 @@ function createRushCardEmbed(
 	if (card.legend) {
 		description += t`__**LEGEND**__`;
 		description += "\n";
-	}
-
-	if (card.konami_id) {
+	} else if (card.konami_id) {
 		const limitRegulationDisplay = limitRegulation.get(card.konami_id) ?? 3;
 		description += t`**Limit**: ${limitRegulationDisplay}`;
 		description += "\n";
