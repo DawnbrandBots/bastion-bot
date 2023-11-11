@@ -19,6 +19,7 @@ import { Listener } from ".";
 import { ABDeploy } from "../abdeploy";
 import { createCardEmbed, getCard } from "../card";
 import { EventLocker } from "../event-lock";
+import { UpdatingLimitRegulationVector } from "../limit-regulation";
 import { LOCALES, LOCALES_MAP, Locale, LocaleProvider } from "../locale";
 import { Logger, getLogger } from "../logger";
 import { RecentMessageCache } from "../message-cache";
@@ -214,6 +215,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 	constructor(
 		@inject("LocaleProvider") private locales: LocaleProvider,
 		@inject("got") private got: Got,
+		@inject("limitRegulationMasterDuel") private masterDuelLimitRegulation: UpdatingLimitRegulationVector,
 		private metrics: Metrics,
 		private recentCache: RecentMessageCache,
 		private abdeploy: ABDeploy,
@@ -293,7 +295,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 				}
 				replyOptions = { content: t`Could not find a card matching \`${input}\`!` + context };
 			} else {
-				const embeds = createCardEmbed(card, resultLanguage);
+				const embeds = createCardEmbed(card, resultLanguage, this.masterDuelLimitRegulation);
 				if (resultLanguage !== "en") {
 					embeds[embeds.length - 1].addFields({
 						name: t`💬 Translations missing?`,

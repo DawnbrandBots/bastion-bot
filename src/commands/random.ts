@@ -8,6 +8,7 @@ import { c } from "ttag";
 import { Command } from "../Command";
 import { createCardEmbed } from "../card";
 import { CardSchema } from "../definitions";
+import { UpdatingLimitRegulationVector } from "../limit-regulation";
 import { LocaleProvider, buildLocalisedCommand, getResultLangStringOption } from "../locale";
 import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
@@ -19,7 +20,8 @@ export class RandomCommand extends Command {
 	constructor(
 		metrics: Metrics,
 		@inject("LocaleProvider") private locales: LocaleProvider,
-		@inject("got") private got: Got
+		@inject("got") private got: Got,
+		@inject("limitRegulationMasterDuel") private masterDuelLimitRegulation: UpdatingLimitRegulationVector
 	) {
 		super(metrics);
 		this.got = got.extend({
@@ -55,7 +57,7 @@ export class RandomCommand extends Command {
 		const url = `${process.env.API_URL}/ocg-tcg/random`;
 		const cards = await this.got(url).json<Static<typeof CardSchema>[]>();
 		const lang = await this.locales.get(interaction);
-		const embeds = createCardEmbed(cards[0], lang);
+		const embeds = createCardEmbed(cards[0], lang, this.masterDuelLimitRegulation);
 		const end = Date.now();
 		await interaction.editReply({ embeds }); // Actually returns void
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
