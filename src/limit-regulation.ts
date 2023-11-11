@@ -2,10 +2,15 @@ import { Got } from "got";
 import { FactoryProvider } from "tsyringe";
 import { getLogger } from "./logger";
 
+interface LimitRegulationVector {
+	date: string;
+	regulation: Record<string, number>;
+}
+
 export class UpdatingLimitRegulationVector {
 	#logger = getLogger("limit-regulation");
 
-	protected interval: NodeJS.Timer;
+	protected interval: NodeJS.Timeout;
 	protected vector: Map<number, number> = new Map();
 
 	constructor(
@@ -22,10 +27,12 @@ export class UpdatingLimitRegulationVector {
 		if (initial || new Date().getMinutes() === 0) {
 			this.#logger.info(`Updating from [${this.url}]`);
 			try {
-				const json = await this.got(this.url, { throwHttpErrors: true }).json<Record<string, number>>();
+				const { regulation } = await this.got(this.url, {
+					throwHttpErrors: true
+				}).json<LimitRegulationVector>();
 				this.vector.clear();
-				for (const key in json) {
-					this.vector.set(Number(key), json[key]);
+				for (const key in regulation) {
+					this.vector.set(Number(key), regulation[key]);
 				}
 				this.#logger.info(`Read ${this.vector.size} entries`);
 			} catch (error) {
@@ -51,6 +58,6 @@ export const rushLimitRegulationVectorFactory: FactoryProvider<UpdatingLimitRegu
 	useFactory: container =>
 		new UpdatingLimitRegulationVector(
 			container.resolve("got"),
-			"https://dawnbrandbots.github.io/yaml-yugi/limit-regulation/rush/current.vector.json"
+			"https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/rush/current.vector.json"
 		)
 };

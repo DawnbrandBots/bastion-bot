@@ -63,7 +63,7 @@ if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 		"limitRegulationMasterDuel",
 		new UpdatingLimitRegulationVector(
 			container.resolve("got"),
-			"https://dawnbrandbots.github.io/yaml-yugi/limit-regulation/master-duel/current.vector.json"
+			"https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/master-duel/current.vector.json"
 		)
 	);
 
