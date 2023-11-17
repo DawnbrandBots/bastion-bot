@@ -39,6 +39,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: xyj-3/sarif-js-sdk
+          ref: e23ca2d8dc6d70a7959a2098eba8ac332de907bb
           path: sarif-js-sdk
       - name: Install ESLint formatter
         run: yarn add file:sarif-js-sdk/packages/eslint-formatter-sarif
