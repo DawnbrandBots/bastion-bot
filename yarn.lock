@@ -2126,17 +2126,17 @@ babel-plugin-polyfill-regenerator@^0.5.3:
   dependencies:
     "@babel/helper-define-polyfill-provider" "^0.4.3"
 
-babel-plugin-ttag@1.8.9:
-  version "1.8.9"
-  resolved "https://registry.yarnpkg.com/babel-plugin-ttag/-/babel-plugin-ttag-1.8.9.tgz#99d7084386a462159a246b30aa1bb704f8aac25d"
-  integrity sha512-IRCuBtRQ4YFtoQGRRkinZdr0sECwuglF72FxpsSqgGBRicpGA/Ie3bkehl/jM0hP7S2PD5XX53x0QNXR+ZUJ7g==
+babel-plugin-ttag@1.8.11:
+  version "1.8.11"
+  resolved "https://registry.yarnpkg.com/babel-plugin-ttag/-/babel-plugin-ttag-1.8.11.tgz#df327af0e3513fa43e7a3f1840b2be507ac33dd1"
+  integrity sha512-9XSjFzO0+WF6koZxn7stGTcaQQjQkf+rZCdSsFo+S1sR/1TRKUudRLqAI0PQLaqOLmdmBKUd8byLNrdNb/oH+w==
   dependencies:
     "@babel/generator" "^7.12.5"
     "@babel/template" "^7.10.4"
     "@babel/types" "^7.12.6"
     ajv "6.12.3"
     babel-plugin-macros "^2.8.0"
-    dedent "0.6.0"
+    dedent "1.5.1"
     gettext-parser "6.0.0"
     mkdirp "^1.0.4"
     plural-forms "^0.5.3"
@@ -2598,20 +2598,15 @@ decompress-response@^6.0.0:
   dependencies:
     mimic-response "^3.1.0"
 
-dedent@0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/dedent/-/dedent-0.6.0.tgz#0e6da8f0ce52838ef5cec5c8f9396b0c1b64a3cb"
-  integrity sha512-cSfRWjXJtZQeRuZGVvDrJroCR5V2UvBNUMHsPCdNYzuAG8b9V8aAy3KUcdQrGQPXs17Y+ojbPh1aOCplg9YR9g==
+dedent@1.5.1, dedent@^1.0.0:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/dedent/-/dedent-1.5.1.tgz#4f3fc94c8b711e9bb2800d185cd6ad20f2a90aff"
+  integrity sha512-+LxW+KLWxu3HW3M2w2ympwtqPrqYRzU8fqi6Fhd18fBALe15blJPI/I4+UHveMVG6lJqB4JNd4UG0S5cnVHwIg==
 
 dedent@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/dedent/-/dedent-0.7.0.tgz#2495ddbaf6eb874abb0e1be9df22d2e5a544326c"
   integrity sha512-Q6fKUPqnAHAyhiUgFU7BUzLiv0kd8saH9al7tnu5Q/okj6dnupxyTgFIBjVzJATdfIAm9NAsvXNzjaKa+bxVyA==
-
-dedent@^1.0.0:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/dedent/-/dedent-1.5.1.tgz#4f3fc94c8b711e9bb2800d185cd6ad20f2a90aff"
-  integrity sha512-+LxW+KLWxu3HW3M2w2ympwtqPrqYRzU8fqi6Fhd18fBALe15blJPI/I4+UHveMVG6lJqB4JNd4UG0S5cnVHwIg==
 
 deep-equal@~1.0.1:
   version "1.0.1"
@@ -5277,10 +5272,10 @@ tsyringe@^4.8.0:
   dependencies:
     tslib "^1.9.3"
 
-ttag-cli@^1.10.6:
-  version "1.10.6"
-  resolved "https://registry.yarnpkg.com/ttag-cli/-/ttag-cli-1.10.6.tgz#1d66c375fab3a464739636f3c57f2070668b7718"
-  integrity sha512-Nmv3z0p9ct4Xr2fZWH7qlTSH1o3HYYSOKBxLYzDy8gwge3CLZCXpT6qlBruaAaxzZlOr3Tin9wCjcMimCJDTUw==
+ttag-cli@^1.10.8:
+  version "1.10.8"
+  resolved "https://registry.yarnpkg.com/ttag-cli/-/ttag-cli-1.10.8.tgz#5c741082f261939e52fc3926abebdfe0f307b43a"
+  integrity sha512-PmwkJr4GM5NxiZ3TRaKZudYW++g/GzH2TxMfeLgNxZk4lwjtA3tie1nZJJ9C7NbJVlWziAWY31GhUtVkXuonkg==
   dependencies:
     "@babel/core" "^7.12.3"
     "@babel/generator" "^7.12.5"
@@ -5296,7 +5291,7 @@ ttag-cli@^1.10.6:
     "@babel/preset-react" "^7.12.5"
     "@babel/preset-typescript" "7.7.0"
     "@babel/template" "^7.10.4"
-    babel-plugin-ttag "1.8.9"
+    babel-plugin-ttag "1.8.11"
     babel-preset-const-enum "^1.0.0"
     chalk "^2.4.2"
     cross-spawn "^5.1.0"
