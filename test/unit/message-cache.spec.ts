@@ -1,5 +1,5 @@
 import { Message } from "discord.js";
-import { RecentMessageCache } from "../src/message-cache";
+import { RecentMessageCache } from "../../src/message-cache";
 
 describe("RecentMessageCache", () => {
 	beforeAll(() => {

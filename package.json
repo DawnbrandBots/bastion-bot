@@ -13,7 +13,8 @@
 		"register": "node --enable-source-maps -r dotenv/config -r reflect-metadata dist --deploy-slash",
 		"build": "tsc",
 		"clean": "tsc --build --clean",
-		"test": "jest",
+		"test": "jest test/unit",
+		"test:contract": "jest test/contract",
 		"lint": "eslint src test"
 	},
 	"engines": {
