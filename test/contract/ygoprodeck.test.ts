@@ -13,10 +13,25 @@ describe("YGOPRODECK getCardPrices API contract", () => {
 		client = new PriceClient(got);
 	});
 
-	test.each([
-		["tcgplayer", "Ash Blossom & Joyous Spring"],
-		["cardmarket", "Infinite Impermanence"]
-	] as const)("returns %s card prices for [%s]", async (store, name) => {
+	test.each(
+		[
+			"Dark Magician",
+			"Blue-Eyes White Dragon",
+			"S:P Little Knight",
+			"Ash Blossom & Joyous Spring",
+			"Raigeki",
+			"Called by the Grave",
+			"Infinite Impermanence"
+		]
+			.map(
+				name =>
+					[
+						["tcgplayer", name],
+						["cardmarket", name]
+					] as const
+			)
+			.flat()
+	)("returns %s card prices for [%s]", async (store, name) => {
 		const prices = await client.get(name, store);
 		expect(Array.isArray(prices)).toBe(true);
 		expect(prices.length).toBeGreaterThan(0);
@@ -31,8 +46,10 @@ describe("YGOPRODECK getCardPrices API contract", () => {
 					set_edition: expect.stringMatching(/./)
 				})
 			);
-			const price = Number(printing.set_price);
-			expect(price).toBeGreaterThan(0);
+			// Reported prices above 1000 are formatted with commas, e.g. 1,731.23
+			const price = Number(printing.set_price.replace(",", ""));
+			// 0.00 indicates unknown price
+			expect(price).toBeGreaterThanOrEqual(0);
 			// Should parse and not throw TypeError: Invalid URL (code: ERR_INVALID_URL)
 			new URL(printing.set_url);
 		}
@@ -41,9 +58,16 @@ describe("YGOPRODECK getCardPrices API contract", () => {
 	test.each([
 		["tcgplayer", "asdasdasd"],
 		["cardmarket", "asdasdasd"]
-	] as const)("returns empty array for non-TCG cards (%s)", async (store, name) => {
+	] as const)("does not return prices for non-TCG cards (%s)", async (store, name) => {
 		const prices = await client.get(name, store);
-		expect(Array.isArray(prices)).toBe(true);
-		expect(prices.length).toBe(0);
+		// expect(Array.isArray(prices)).toBe(true);
+		// expect(prices.length).toBe(0);
+		expect(prices).toBeFalsy();
 	});
+});
+
+describe("YGOPRODECK redirection", () => {
+	test.todo("OCG/TCG card");
+	test.todo("Rush Duel card");
+	test.todo("Deck builder");
 });
