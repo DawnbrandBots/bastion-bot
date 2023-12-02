@@ -10,7 +10,7 @@ describe("Healthcheck for /link URLs", () => {
 		got = createGotClient();
 	});
 
-	test.skip.each(Object.values(LinkCommand.links))("$name", async ({ result }) => {
+	test.each(Object.values(LinkCommand.links))("$name", async ({ result }) => {
 		for (const url of result.split("\n")) {
 			const response = await got(url);
 			expect(response.statusCode).toBe(200);
