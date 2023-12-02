@@ -5,21 +5,48 @@ import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
-import { getCard, getCardSearchOptions } from "../card";
 import { Command } from "../Command";
+import { getCard, getCardSearchOptions } from "../card";
 import { CardSchema } from "../definitions";
 import {
+	Locale,
+	LocaleProvider,
 	buildLocalisedChoice,
 	buildLocalisedCommand,
 	getKonamiIdSubcommand,
 	getNameSubcommand,
-	getPasswordSubcommand,
-	Locale,
-	LocaleProvider
+	getPasswordSubcommand
 } from "../locale";
-import { getLogger, Logger } from "../logger";
+import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
 import { replyLatency, splitText } from "../utils";
+
+export interface Price {
+	set_name: string;
+	set_code: string;
+	set_rarity: string;
+	set_price: string;
+	set_url: string;
+	set_edition: string;
+}
+
+@injectable()
+export class PriceClient {
+	constructor(@inject("got") private got: Got) {}
+
+	async get(name: string, store?: "tcgplayer" | "cardmarket"): Promise<Price[]> {
+		const url = new URL("https://ygoprodeck.com/api/card/getCardPrices.php");
+		url.searchParams.set("cardname", name);
+		if (store) {
+			url.searchParams.set("store", store);
+		}
+		const response = await this.got(url, { throwHttpErrors: true });
+		if (response.statusCode === 200) {
+			return JSON.parse(response.body);
+		}
+		throw new this.got.HTTPError(response);
+	}
+}
 
 interface SetInfo {
 	price: number | null;

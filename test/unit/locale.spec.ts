@@ -1,5 +1,5 @@
-import { classes } from "../src/commands";
-import { COMMAND_LOCALIZATIONS, loadTranslations } from "../src/locale";
+import { classes } from "../../src/commands";
+import { COMMAND_LOCALIZATIONS, loadTranslations } from "../../src/locale";
 
 describe(".po files", () => {
 	test("syntax is valid", () => {

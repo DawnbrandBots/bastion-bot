@@ -1,4 +1,4 @@
-import { cleanMessageMarkup, inputToGetCardArguments, preprocess } from "../../src/events/message-search";
+import { cleanMessageMarkup, inputToGetCardArguments, preprocess } from "../../../src/events/message-search";
 
 describe("clean markup", () => {
 	test("cleans > blockQuote", () => {

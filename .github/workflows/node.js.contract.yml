@@ -1,0 +1,32 @@
+# SPDX-FileCopyrightText: © 2023 Kevin Lu
+# SPDX-Licence-Identifier: AGPL-3.0-or-later
+name: Contract tests
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/workflows/node.js.contract.yml
+      - test/contract/**
+  schedule:
+    # Daily after 12:00 UTC, depending on Actions availability
+    - cron: "0 12 * * *"
+permissions: {}
+jobs:
+  contract-test:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+      - run: yarn
+      - run: yarn test:contract
+      - uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
