@@ -120,7 +120,7 @@ export class PriceCommand extends Command {
 				const getLocalisedVendorName = CHOICES_GLOBAL[vendor];
 				const vendorName = getLocalisedVendorName();
 				let profiles = [t`No market price`];
-				if (printings) {
+				if (printings && printings.length) {
 					profiles = splitText(
 						printings
 							.map(card => {
