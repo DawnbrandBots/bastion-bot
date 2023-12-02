@@ -1,3 +1,4 @@
+import debug from "debug";
 import { Got } from "got";
 import MIMEType from "whatwg-mimetype";
 import { LinkCommand } from "../../src/commands/link";
@@ -7,6 +8,7 @@ describe("Healthcheck for /link URLs", () => {
 	let got: Got;
 
 	beforeAll(() => {
+		debug.enable("bot:*");
 		got = createGotClient();
 	});
 

@@ -32,8 +32,6 @@ export interface Price {
 
 @injectable()
 export class PriceClient {
-	#logger = getLogger("client:price");
-
 	constructor(@inject("got") private got: Got) {}
 
 	async get(name: string, store?: "tcgplayer" | "cardmarket"): Promise<Price[]> {
@@ -42,16 +40,7 @@ export class PriceClient {
 		if (store) {
 			url.searchParams.set("store", store);
 		}
-		this.#logger.info(`GET ${url}`);
 		const response = await this.got(url, { throwHttpErrors: true });
-		this.#logger.info({
-			method: response.method,
-			url: response.requestUrl,
-			code: response.statusCode,
-			timings: response.timings,
-			headers: response.rawHeaders,
-			body: response.body
-		});
 		if (response.statusCode === 200) {
 			return JSON.parse(response.body);
 		}

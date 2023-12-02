@@ -60,8 +60,6 @@ describe("YGOPRODECK getCardPrices API contract", () => {
 		["cardmarket", "asdasdasd"]
 	] as const)("does not return prices for non-TCG cards (%s)", async (store, name) => {
 		const prices = await client.get(name, store);
-		// expect(Array.isArray(prices)).toBe(true);
-		// expect(prices.length).toBe(0);
 		expect(prices).toBeFalsy();
 	});
 });
