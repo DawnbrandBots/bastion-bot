@@ -23,6 +23,7 @@ Thanks to [YGOPRODECK](https://ygoprodeck.com/) for sponsoring Bastion. Prices p
 [![Build Docker image and deploy to Swarm](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/docker.yml/badge.svg)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/docker.yml)
 [![Release to production (Compose)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/release-compose.yml/badge.svg)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/release-compose.yml)
 [![CodeQL](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/codeql-analysis.yml)
+[![Contract tests](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/node.js.contract.yml/badge.svg)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/node.js.contract.yml)
 
 ## Discord permissions
 
@@ -53,7 +54,7 @@ or roles in question, but this will apply to all bots.
 ## Contributing
 
 Bastion is written in [TypeScript](https://www.typescriptlang.org/).
-It targets [Node.js](https://nodejs.org/) 18+ and
+It targets [Node.js](https://nodejs.org/) 20+ and
 can be run with or without [Docker](https://docs.docker.com/get-docker/).
 It uses [Discord.js](https://discord.js.org/) to talk to Discord.
 
