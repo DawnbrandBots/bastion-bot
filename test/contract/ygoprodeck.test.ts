@@ -21,6 +21,7 @@ describe("YGOPRODECK getCardPrices API contract", () => {
 			"Ash Blossom & Joyous Spring",
 			"Raigeki",
 			"Called by the Grave",
+			"Ice Dragon's Prison",
 			"Infinite Impermanence"
 		]
 			.map(
