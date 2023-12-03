@@ -1,15 +1,41 @@
+import { AsyncLocalStorage } from "async_hooks";
 import debug, { Debug } from "debug";
-import { escapeMarkdown, WebhookClient } from "discord.js";
+import { AutocompleteInteraction, CommandInteraction, escapeMarkdown, Message, WebhookClient } from "discord.js";
 import util from "util";
+import { serialiseInteraction } from "./utils";
 
 const global = debug("bot");
 
 const webhook = process.env.BOT_LOGGER_WEBHOOK ? new WebhookClient({ url: process.env.BOT_LOGGER_WEBHOOK }) : null;
 
+export const asyncLocalStorage = new AsyncLocalStorage<CommandInteraction | AutocompleteInteraction | Message>();
+
+function contextLog(log: debug.Debugger): Debug["log"] {
+	return function (...args: Parameters<debug.Debugger>) {
+		const context = asyncLocalStorage.getStore();
+		if (context) {
+			if ("commandId" in context) {
+				log(serialiseInteraction(context), ...args);
+			} else {
+				log(
+					JSON.stringify({
+						channel: context.channelId,
+						message: context.id,
+						guild: context.guildId,
+						author: context.author.id
+					}),
+					...args
+				);
+			}
+		} else {
+			log(...args);
+		}
+	};
+}
 function withWebhook(log: debug.Debugger): Debug["log"] {
 	if (webhook) {
 		return function (...args: Parameters<debug.Debugger>) {
-			log(...args);
+			contextLog(log)(...args);
 			webhook
 				.send({
 					username: log.namespace,
@@ -17,11 +43,11 @@ function withWebhook(log: debug.Debugger): Debug["log"] {
 					allowedMentions: { parse: [] }
 				})
 				.catch(error => {
-					log("Failed to notify webhook.", error);
+					contextLog(log)("Failed to notify webhook.", error);
 				});
 		};
 	} else {
-		return log;
+		return contextLog(log);
 	}
 }
 
