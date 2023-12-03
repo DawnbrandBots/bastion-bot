@@ -115,27 +115,24 @@ export class PriceCommand extends Command {
 			});
 		} else {
 			const printings = await this.prices.get(`${card.name.en}`, vendor);
-			if (printings) {
+			if (printings && printings.length) {
 				useLocale(resultLanguage);
 				const getLocalisedVendorName = CHOICES_GLOBAL[vendor];
 				const vendorName = getLocalisedVendorName();
-				let profiles = [t`No market price`];
-				if (printings && printings.length) {
-					profiles = splitText(
-						printings
-							.map(card => {
-								// Reported prices above 1000 are formatted with commas, e.g. 1,731.23
-								const price = Number(card.set_price.replace(",", ""));
-								const formattedPrice =
-									price > 0
-										? `**${this.vendorFormats[vendor](resultLanguage).format(price)}**`
-										: t`No market price`;
-								return `${card.set_code} ${formattedPrice} [${card.set_name}](${card.set_url}) (${card.set_rarity})`;
-							})
-							.join("\n"),
-						4096
-					);
-				}
+				const profiles = splitText(
+					printings
+						.map(card => {
+							// Reported prices above 1000 are formatted with commas, e.g. 1,731.23
+							const price = Number(card.set_price.replace(",", ""));
+							const formattedPrice =
+								price > 0
+									? `**${this.vendorFormats[vendor](resultLanguage).format(price)}**`
+									: t`No market price`;
+							return `${card.set_code} ${formattedPrice} [${card.set_name}](${card.set_url}) (${card.set_rarity})`;
+						})
+						.join("\n"),
+					4096
+				);
 				const embeds = profiles.map(p => {
 					const embed = new EmbedBuilder();
 					embed.setTitle(t`Prices for ${card.name[resultLanguage]} - ${vendorName}`);
