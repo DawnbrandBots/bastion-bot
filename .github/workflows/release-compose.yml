@@ -19,6 +19,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    environment: Bastion#1870 (production)
     steps:
       - uses: actions/checkout@v4
       - uses: docker/login-action@v3
