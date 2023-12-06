@@ -17,12 +17,23 @@ describe("YGOPRODECK getCardPrices API contract", () => {
 		[
 			"Dark Magician",
 			"Blue-Eyes White Dragon",
+			"The Winged Dragon of Ra",
 			"S:P Little Knight",
 			"Ash Blossom & Joyous Spring",
 			"Raigeki",
 			"Called by the Grave",
-			"Ice Dragon's Prison",
-			"Infinite Impermanence"
+			"Infinite Impermanence",
+			"32909498", // Kashtira Fenrir
+			// "74875003", // Ra's Disciple
+			"85327820", // A.I.'s Ritual
+			"83764718", // Monster Reborn
+			"68462976", // Secret Village of the Spellcasters
+			"30748475", // Destructive Daruma Karma Cannon
+			"20899496", // Ice Dragon's Prison
+			// Fake passwords
+			"10000000", // Obelisk the Tormentor
+			"10000020", // Slifer the Sky Dragon
+			"10000080" // The Winged Dragon of Ra - Sphere Mode
 		]
 			.map(
 				name =>

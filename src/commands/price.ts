@@ -1,4 +1,5 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
+import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { Got } from "got";
@@ -6,6 +7,7 @@ import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { Command } from "../Command";
 import { getCard, getCardSearchOptions } from "../card";
+import { CardSchema } from "../definitions";
 import {
 	Locale,
 	LocaleProvider,
@@ -46,6 +48,21 @@ export class PriceClient {
 		}
 		throw new this.got.HTTPError(response);
 	}
+}
+
+// Get the appropriate 'cardname' parameter for the API. Prefer numeric values
+// due to API bugs with processing URL-encoded English card names.
+function resolveKey(card: Static<typeof CardSchema>): string {
+	if (card.password) {
+		return `${card.password}`;
+	}
+	if (typeof card.fake_password === "number") {
+		return `${card.fake_password}`;
+	}
+	if (Array.isArray(card.fake_password) && card.fake_password.length) {
+		return `${card.fake_password[0]}`;
+	}
+	return `${card.name.en}`;
 }
 
 const CHOICES_GLOBAL = {
@@ -114,7 +131,7 @@ export class PriceCommand extends Command {
 				content: t`Could not find a card matching \`${input}\`!`
 			});
 		} else {
-			const printings = await this.prices.get(`${card.name.en}`, vendor);
+			const printings = await this.prices.get(resolveKey(card), vendor);
 			if (printings && printings.length) {
 				useLocale(resultLanguage);
 				const getLocalisedVendorName = CHOICES_GLOBAL[vendor];
