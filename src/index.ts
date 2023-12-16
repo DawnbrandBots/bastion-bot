@@ -55,8 +55,8 @@ if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 
 	container.registerInstance("got", createGotClient());
 
-	// TTL: 1 minute, sweep every 5 minutes
-	container.registerInstance<RecentMessageCache>(RecentMessageCache, new RecentMessageCache(60000, 300000));
+	// TTL: 5 minutes, sweep every 5 minutes
+	container.registerInstance<RecentMessageCache>(RecentMessageCache, new RecentMessageCache(300000, 300000));
 
 	container.register("limitRegulationRush", limitRegulationRushProvider);
 	container.register("limitRegulationMasterDuel", limitRegulationMasterDuelProvider);

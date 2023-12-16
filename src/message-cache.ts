@@ -1,4 +1,5 @@
 import { Message, Snowflake } from "discord.js";
+import { getLogger } from "./logger";
 
 /**
  * In-memory key-value store used by SearchMessageListener to store recent <> card searches
@@ -6,6 +7,8 @@ import { Message, Snowflake } from "discord.js";
  * if the searcher's message is deleted within a specified interval.
  */
 export class RecentMessageCache {
+	#logger = getLogger("message-cache");
+
 	// This could also store the message objects
 	protected map: Map<Snowflake, { createdTimestamp: number; replies: Snowflake[] }> = new Map();
 	protected interval: NodeJS.Timeout;
@@ -30,6 +33,7 @@ export class RecentMessageCache {
 			return;
 		}
 		if (entry.createdTimestamp + this.ttlMilliseconds < Date.now()) {
+			this.#logger.info(`get expired after ${this.ttlMilliseconds} ms: ${entry}`);
 			this.map.delete(message);
 			return;
 		}
@@ -41,12 +45,14 @@ export class RecentMessageCache {
 	}
 
 	protected sweep(): void {
+		this.#logger.info(`sweep on ${this.map.size} entries`);
 		for (const [message, { createdTimestamp }] of this.map) {
 			if (createdTimestamp + this.ttlMilliseconds < Date.now()) {
 				// This is safe to do in the loop as maps have guaranteed order
 				this.map.delete(message);
 			}
 		}
+		this.#logger.info(`sweep finished leaving ${this.map.size} entries`);
 	}
 
 	/**
