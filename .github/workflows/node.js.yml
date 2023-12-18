@@ -41,7 +41,7 @@ jobs:
       - name: Run ESLint with formatter
         run: yarn lint --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif
       - name: Upload ESLint result to GitHub
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: eslint-results.sarif
           wait-for-processing: true
