@@ -33,7 +33,7 @@
 		"got": "^11.8.6",
 		"htmlparser2": "^9.0.0",
 		"mnemonist": "^0.39.5",
-		"reflect-metadata": "^0.1.13",
+		"reflect-metadata": "^0.2.1",
 		"supports-color": "^9.4.0",
 		"tsyringe": "^4.8.0",
 		"ttag": "^1.8.5",
