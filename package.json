@@ -30,7 +30,7 @@
 		"discord.js": "^14.13.0",
 		"dotenv": "^16.3.1",
 		"gettext-parser": "^6.0.0",
-		"got": "^11.8.6",
+		"got": "^14.0.0",
 		"htmlparser2": "^9.0.0",
 		"mnemonist": "^0.39.5",
 		"reflect-metadata": "^0.2.1",
