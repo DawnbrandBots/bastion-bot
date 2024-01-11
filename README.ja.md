@@ -11,12 +11,14 @@ _Yu-Gi-Oh! Trading Card Game_ と「遊☆戯☆王オフィシャルカード�
 
 <!-- The new instance runs concurrently with the old instance.
 Features implemented here will be gradually rolled out to the live bot.
+<!-- I didn't much understand what the instances (new and old ones) and the live bot mean-->
 **New `<>` card search documentation is [here](/docs/card-search.md).**
 For Slash Command documentation, look in [`docs/commands`](/docs/commands).
 For everything else, please refer to the old [Bastion Classic](https://github.com/AlphaKretin/bastion-bot) repository. -->
 新版は旧版と同時に稼働しています。ここで導入された機能は
 
-Thanks to [YGOPRODECK](https://ygoprodeck.com/) for sponsoring Bastion. Prices provided by Bastion are YGOPRODECK affiliate links.
+<!-- Thanks to [YGOPRODECK](https://ygoprodeck.com/) for sponsoring Bastion. Prices provided by Bastion are YGOPRODECK affiliate links.-->
+本ボットは[YGOPRODECK](https://ygoprodeck.com/)の提供でお送りしています。価格情報はYGOPRODECKへのアフィリエイトリンクになっています。
 
 [<img src="https://img.shields.io/badge/invite%20to-discord-brightgreen?style=for-the-badge" alt="Invite to Discord" />](https://discord.com/api/oauth2/authorize?client_id=383854640694820865&permissions=274878285888&scope=bot%20applications.commands)
 &nbsp;
@@ -28,15 +30,22 @@ Thanks to [YGOPRODECK](https://ygoprodeck.com/) for sponsoring Bastion. Prices p
 [![CodeQL](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/codeql-analysis.yml)
 [![Contract tests](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/node.js.contract.yml/badge.svg)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/node.js.contract.yml)
 
-## Discord permissions
+<!--## Discord permissions-->
+## ディスコードでの権限
 
-Please make sure you use an [invite link](https://discord.com/api/oauth2/authorize?client_id=383854640694820865&permissions=274878285888&scope=bot%20applications.commands)
-that automatically grants the following permissions.
+<!--Please make sure you use an [invite link](https://discord.com/api/oauth2/authorize?client_id=383854640694820865&permissions=274878285888&scope=bot%20applications.commands)
+that automatically grants the following permissions.-->
+以下の権限を与える設定になっている[招待リンク](https://discord.com/api/oauth2/authorize?client_id=383854640694820865&permissions=274878285888&scope=bot%20applications.commands)を使ってください。
 
-- Create commands in a server
-- Send Messages
+<!--- Create commands in a server-->
+<!-- Does this permission exist?>
+- サーバ内でコマンドを作成
+<!--- Send Messages-->
+- メッセージを送信
 - Send Messages in Threads
+- スレッドでメッセージを送信
 - Embed Links: Bastion displays card information in a Discord rich embed.
+- 埋め込みリンク（本ボットはカード情報を表現力豊かなディスコードの埋め込みリンク機能を使って表示します。）
 - Attach Files: Bastion attaches card images for trivia.
 - Read Message History: Bastion replies to messages that request card search.
 - Use External Emojis: Bastion uses certain emojis for Yu-Gi-Oh icons in its embeds.
