@@ -7,7 +7,7 @@
 <!-- A free and open-source Discord bot for looking up cards and other useful information about the
 _Yu-Gi-Oh! Trading Card Game_ and _Official Card Game_. This is the repository for the new instance
 to take advantage of new features offered by Discord and improve reliability. -->
-_Yu-Gi-Oh! Trading Card Game_ と _『遊☆戯☆王オフィシャルカードゲーム』_ のカードや便利な情報を調べるための、自由でオープンソースなディスコード上のボットです。本リポジトリはディスコードで提供される新機能の活用や信頼性向上を行うための新版のためのリポジトリです。
+_Yu-Gi-Oh! Trading Card Game_ と「遊☆戯☆王オフィシャルカードゲーム」のカードや便利な情報を調べるための、自由でオープンソースなディスコード上のボットです。本リポジトリはディスコードに追加される新機能の活用や、ボット動作の信頼性向上を行うための新しいバージョンのためのリポジトリです。
 
 <!-- The new instance runs concurrently with the old instance.
 Features implemented here will be gradually rolled out to the live bot.
