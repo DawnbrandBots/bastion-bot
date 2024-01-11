@@ -15,9 +15,14 @@ export class BotFactory {
 	constructor(@injectAll("Listener") private listeners: Listener<any>[]) {}
 
 	createInstance(): Client {
+		Options.createDefault().shardCount;
 		const logger = getLogger("events");
 
+		const defaults = Options.createDefault();
 		const shard = parseInt(`${process.env.DISCORD_SHARD}`) - 1;
+		const shards =
+			`${process.env.DISCORD_TOTAL_SHARDS}` === "auto" ? "auto" : isNaN(shard) ? defaults.shards : shard;
+		const shardCount = parseInt(`${process.env.DISCORD_TOTAL_SHARDS}`) || defaults.shardCount;
 
 		const bot = new Client({
 			intents: [
@@ -32,8 +37,8 @@ export class BotFactory {
 				Partials.Channel, // for direct message events
 				Partials.Message // for message deletion events
 			],
-			shards: `${process.env.DISCORD_TOTAL_SHARDS}` === "auto" ? "auto" : isNaN(shard) ? undefined : shard,
-			shardCount: parseInt(`${process.env.DISCORD_TOTAL_SHARDS}`) || undefined,
+			shards,
+			shardCount,
 			makeCache: Options.cacheWithLimits({
 				GuildEmojiManager: 0,
 				GuildTextThreadManager: 0,
