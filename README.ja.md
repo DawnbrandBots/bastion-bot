@@ -9,11 +9,12 @@ _Yu-Gi-Oh! Trading Card Game_ and _Official Card Game_. This is the repository f
 to take advantage of new features offered by Discord and improve reliability. -->
 _Yu-Gi-Oh! Trading Card Game_ と _『遊☆戯☆王オフィシャルカードゲーム』_ のカードや便利な情報を調べるための、自由でオープンソースなディスコード上のボットです。本リポジトリはディスコードで提供される新機能の活用や信頼性向上を行うための新版のためのリポジトリです。
 
-The new instance runs concurrently with the old instance.
+<!-- The new instance runs concurrently with the old instance.
 Features implemented here will be gradually rolled out to the live bot.
 **New `<>` card search documentation is [here](/docs/card-search.md).**
 For Slash Command documentation, look in [`docs/commands`](/docs/commands).
-For everything else, please refer to the old [Bastion Classic](https://github.com/AlphaKretin/bastion-bot) repository.
+For everything else, please refer to the old [Bastion Classic](https://github.com/AlphaKretin/bastion-bot) repository. -->
+新版は旧版と同時に稼働しています。ここで導入された機能は
 
 Thanks to [YGOPRODECK](https://ygoprodeck.com/) for sponsoring Bastion. Prices provided by Bastion are YGOPRODECK affiliate links.
 
