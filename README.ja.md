@@ -8,15 +8,13 @@
 _Yu-Gi-Oh! Trading Card Game_ and _Official Card Game_. This is the repository for the new instance
 to take advantage of new features offered by Discord and improve reliability. -->
 _Yu-Gi-Oh! Trading Card Game_ と「遊☆戯☆王オフィシャルカードゲーム」のカードや便利な情報を調べるための、自由でオープンソースなディスコード上のボットです。本リポジトリはディスコードに追加される新機能の活用や、ボット動作の信頼性向上を行うための新しいバージョンのためのリポジトリです。
-
 <!-- The new instance runs concurrently with the old instance.
-Features implemented here will be gradually rolled out to the live bot.
+Features implemented here will be gradually rolled out to the live bot.-->
 <!-- I didn't much understand what the instances (new and old ones) and the live bot mean-->
-新版は旧版と同時に稼働しています。ここで導入された機能は実機へと順番に適用されていきます。
-
 <!--**New `<>` card search documentation is [here](/docs/card-search.md).**
 For Slash Command documentation, look in [`docs/commands`](/docs/commands).
 For everything else, please refer to the old [Bastion Classic](https://github.com/AlphaKretin/bastion-bot) repository. -->
+新版は旧版と同時に稼働しています。ここで導入された機能は実機へと順番に適用されていきます。
 **`<>` での新しいカード検索の使い方は[こちら](/docs/card-search.md)です。**
 スラッシュコマンドでのカード検索方法は、[`docs/commands`](/docs/commands)をご参照ください。
 その他については旧版の[Bastionクラシック](https://github.com/AlphaKretin/bastion-bot)リポジトリを参照してください。
@@ -45,30 +43,25 @@ that automatically grants the following permissions.-->
 <!-- - Create commands in a server-->
 <!-- 'Create commands' permission is asked when you select which server to add Bastion along with 'Add a bot to a server' permission. Others are asked later when you authorize them for a certain server you selected.-->
 - コマンドを作成
-<!-- - Send Messages-->
-- メッセージを送信
-<!-- - Send Messages in Threads-->
-- スレッドでメッセージを送信
-<!-- - Embed Links: Bastion displays card information in a Discord rich embed.-->
-- 埋め込みリンク（カード情報を表現力豊かなディスコードの埋め込みリンク機能を使って表示します。）
-<!-- - Attach Files: Bastion attaches card images for trivia.-->
-- ファイルを添付（カード画像を添付することがあります。）
-<!-- - Read Message History: Bastion replies to messages that request card search.-->
-- メッセージ履歴を読む（カード検索のリクエストメッセージにリプライを飛ばします）
-<!-- - Use External Emojis: Bastion uses certain emojis for Yu-Gi-Oh icons in its embeds.-->
-- 外部の絵文字を使用する（埋め込みリンクの中で遊戯王のアイコンとして絵文字をいくつか使います）
-<!-- - Add Reactions: Bastion uses "reaction buttons" for advanced control of outputs.-->
-- リアクションの追加（リアクションボタンを出力のコントロールに使います）
+- メッセージを送信<!-- - Send Messages-->
+- スレッドでメッセージを送信<!-- - Send Messages in Threads-->
+- 埋め込みリンク（カード情報を表現力豊かなディスコードの埋め込みリンク機能を使って表示します。）<!-- - Embed Links: Bastion displays card information in a Discord rich embed.-->
+- ファイルを添付（カード画像を添付することがあります。）<!-- - Attach Files: Bastion attaches card images for trivia.-->
+- メッセージ履歴を読む（カード検索のリクエストメッセージにリプライを飛ばします）<!-- - Read Message History: Bastion replies to messages that request card search.-->
+- 外部の絵文字を使用する（埋め込みリンクの中で遊戯王のアイコンとして絵文字をいくつか使います）<!-- - Use External Emojis: Bastion uses certain emojis for Yu-Gi-Oh icons in its embeds.-->
+- リアクションの追加（リアクションボタンを出力のコントロールに使います）<!-- - Add Reactions: Bastion uses "reaction buttons" for advanced control of outputs.-->
 
 <!-- If you do not want Bastion to be used in a channel, deny it the View Channel permission.
 Otherwise, all of the above permissions **must** be granted to Bastion in each channel it is
 available in for it to work correctly.-->
 特定のチャンネルでのみ本ボットを使いたくない場合は、チャンネルの権限設定にて「チャンネルを見る」の権限を与えないようにしてください。
-そうでない場合は、本ボットが正常に動作するには、上記のすべての権限が本ボットがアクセス可能なそれぞれのチャンネルにて許可**されなければなりません**。
+そうでない場合は、本ボットが正常に動作するには、上記のすべての権限が本ボットがアクセス可能なそれぞれのチャンネルにて**許可されなければなりません**。
 
-If you do not want Slash Commands to be used in a channel, this can be managed per command in the Integrations tab of
+<!-- If you do not want Slash Commands to be used in a channel, this can be managed per command in the Integrations tab of
 your server settings. Alternatively, you can blanket deny the Use Application Commands permission for the individuals
-or roles in question, but this will apply to all bots.
+or roles in question, but this will apply to all bots.-->
+スラッシュコマンドを特定のチャンネルで使いたくない場合は、サーバ設定の「連携サービス」タブから設定できます。
+<!-- I didn't understand the second sentence. So it's left untranslated.>
 
 <!-- ## Support server-->
 ## サポートサーバー
