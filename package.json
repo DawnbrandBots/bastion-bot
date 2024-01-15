@@ -23,7 +23,7 @@
 	},
 	"dependencies": {
 		"@sinclair/typebox": "^0.32.9",
-		"basic-ftp": "^5.0.3",
+		"basic-ftp": "^5.0.4",
 		"better-sqlite3": "^9.2.2",
 		"debug": "^4.3.4",
 		"discord-markdown": "2.5.1",
