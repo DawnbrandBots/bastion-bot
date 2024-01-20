@@ -463,7 +463,7 @@ msgstr "`${ input }`のイラストが見つかりませんでした！"
 #: src\card.ts:409
 #, javascript-format
 msgid "**Master Duel rarity**: ${ rarity_icon } ${ localized_rarity }"
-msgstr ""
+msgstr "**マスターデュエルレアリティ**: ${ rarity_icon } ${ localized_rarity }"
 
 #: src\card.ts:38
 msgctxt "monster-type-race"
