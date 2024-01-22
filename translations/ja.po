@@ -386,7 +386,7 @@ msgstr "検索タイプ: ${ localisedType }"
 #: src\events\message-search.ts:289
 #, javascript-format
 msgid "Search language: **${ localisedInputLanguage }** (${ inputLanguage }). Check defaults with </locale get:${ id }> and configure with </locale set:${ id }>"
-msgstr ""
+msgstr "検索言語: **${ localisedInputLanguage }** (${ inputLanguage })。</locale get:${ id }>で言語設定のデフォルトを確認し、</locale set:${ id }>で設定できます。"
 
 #: src\events\message-ping.ts:91
 msgid "⚠️ You pinged me, but I am missing permissions in the channel!"
@@ -463,7 +463,7 @@ msgstr "`${ input }`のイラストが見つかりませんでした！"
 #: src\card.ts:409
 #, javascript-format
 msgid "**Master Duel rarity**: ${ rarity_icon } ${ localized_rarity }"
-msgstr ""
+msgstr "**マスターデュエルレアリティ**: ${ rarity_icon } ${ localized_rarity }"
 
 #: src\card.ts:38
 msgctxt "monster-type-race"
