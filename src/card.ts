@@ -301,6 +301,14 @@ export function formatCardName(card: Static<typeof CardSchema> | Static<typeof R
 	return name || `${card.name.en}`;
 }
 
+export function getRubylessCardName(name: string | null | undefined, lang: Locale): string | null | undefined {
+	if ((lang === "ja" || lang === "ko") && name?.includes("<ruby>")) {
+		const [rubyless] = parseAndExpandRuby(name);
+		return rubyless;
+	}
+	return name;
+}
+
 function formatOCGNumbering(text: string): string {
 	// Insert newlines before Unicode circled numbers followed by colon if missing
 	return text.replaceAll(/([^\n])([\u{2460}-\u{2473}][:：])/gu, "$1\n$2").trimStart();

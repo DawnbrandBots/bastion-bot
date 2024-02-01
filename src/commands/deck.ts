@@ -28,7 +28,7 @@ import { c, msgid, ngettext, t, useLocale } from "ttag";
 import { typedDeckToYdk, ydkToTypedDeck } from "ydeck";
 import { TypedDeck, parseURL, toURL } from "ydke";
 import { Command } from "../Command";
-import { parseAndExpandRuby } from "../card";
+import { getRubylessCardName } from "../card";
 import { CardSchema } from "../definitions";
 import { COMMAND_LOCALIZATIONS, Locale, LocaleProvider } from "../locale";
 import { Logger, getLogger } from "../logger";
@@ -207,12 +207,7 @@ export class DeckCommand extends Command {
 		const cardMemo = await this.getCards(new Set([...deck.main, ...deck.extra, ...deck.side]));
 		// apply the names to the record of the deck
 		function getName(password: number): string {
-			// very similar to card.ts:formatCardName, but only uses base text and falls back to password
-			const name = cardMemo.get(password)?.name[lang];
-			if ((lang === "ja" || lang === "ko") && name?.includes("<ruby>")) {
-				const [rubyless] = parseAndExpandRuby(name);
-				return rubyless;
-			}
+			const name = getRubylessCardName(cardMemo.get(password)?.name[lang], lang);
 			return name || cardMemo.get(password)?.name.en || `${password}`;
 		}
 		const namedDeck = {

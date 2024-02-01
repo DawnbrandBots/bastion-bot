@@ -5,17 +5,17 @@ import { ChatInputCommandInteraction } from "discord.js";
 import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
-import { getCard, getCardSearchOptions } from "../card";
 import { Command } from "../Command";
+import { getCard, getCardSearchOptions, getRubylessCardName } from "../card";
 import { CardSchema } from "../definitions";
 import {
+	LocaleProvider,
 	buildLocalisedCommand,
 	getKonamiIdSubcommand,
 	getNameSubcommand,
-	getPasswordSubcommand,
-	LocaleProvider
+	getPasswordSubcommand
 } from "../locale";
-import { getLogger, Logger } from "../logger";
+import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
 import { replyLatency } from "../utils";
 
@@ -78,7 +78,7 @@ export class ArtCommand extends Command {
 				// expected embedding of image from URL
 				await interaction.editReply(artUrl); // Actually returns void
 			} else {
-				const name = card.name[resultLanguage] || card.konami_id;
+				const name = getRubylessCardName(card.name[resultLanguage] || `${card.konami_id}`, resultLanguage);
 				useLocale(resultLanguage);
 				await interaction.editReply({ content: t`Could not find art for \`${name}\`!` });
 			}

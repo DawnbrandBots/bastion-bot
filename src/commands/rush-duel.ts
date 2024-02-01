@@ -23,7 +23,7 @@ import { LRUMap } from "mnemonist";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { AutocompletableCommand } from "../Command";
-import { AttributeIcon, Colour, Icon, RaceIcon, formatCardName, formatCardText } from "../card";
+import { AttributeIcon, Colour, Icon, RaceIcon, formatCardName, formatCardText, getRubylessCardName } from "../card";
 import { RushCardSchema } from "../definitions/rush";
 import { UpdatingLimitRegulationVector } from "../limit-regulation";
 import {
@@ -401,11 +401,12 @@ export class RushDuelCommand extends AutocompletableCommand {
 		if (typeof result === "number") {
 			return result;
 		}
-		const { input, resultLanguage, card } = result;
+		const { resultLanguage, card } = result;
 		if (!card.images) {
+			const name = getRubylessCardName(card.name[resultLanguage] || `${card.konami_id}`, resultLanguage);
 			useLocale(resultLanguage);
 			const reply = await interaction.reply({
-				content: t`Could not find art for \`${input}\`!`,
+				content: t`Could not find art for \`${name}\`!`,
 				fetchReply: true
 			});
 			return replyLatency(reply, interaction);
