@@ -29,7 +29,7 @@
 		"discord-markdown": "2.5.1",
 		"discord.js": "^14.14.1",
 		"dotenv": "^16.4.1",
-		"gettext-parser": "^6.0.0",
+		"gettext-parser": "^8.0.0",
 		"got": "^11.8.6",
 		"htmlparser2": "^9.1.0",
 		"mnemonist": "^0.39.7",
