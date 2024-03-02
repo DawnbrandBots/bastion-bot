@@ -6,7 +6,7 @@ import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { Command } from "../Command";
-import { getCard, getCardSearchOptions, getRubylessCardName } from "../card";
+import { getCard, getCardSearchOptions, getRubylessCardName, masterDuelIllustrationURL } from "../card";
 import { CardSchema } from "../definitions";
 import {
 	LocaleProvider,
@@ -17,7 +17,7 @@ import {
 } from "../locale";
 import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
-import { replyLatency } from "../utils";
+import { replyLatency, serialiseInteraction } from "../utils";
 
 @injectable()
 export class ArtCommand extends Command {
@@ -54,10 +54,22 @@ export class ArtCommand extends Command {
 		return this.#logger;
 	}
 
-	async getArt(card: Static<typeof CardSchema>): Promise<string | undefined> {
-		const artUrl = `${process.env.IMAGE_HOST}/${card.password}.png`;
-		const response = await this.got.head(artUrl);
-		return response.statusCode === 200 ? artUrl : undefined;
+	async getArt(
+		card: Static<typeof CardSchema>,
+		interaction: ChatInputCommandInteraction
+	): Promise<string | undefined> {
+		const artUrl = masterDuelIllustrationURL(card);
+		try {
+			const response = await this.got.head(artUrl, { followRedirect: false });
+			if (response.statusCode === 302) {
+				// MediaWiki Special:Redirect/file should only use 302s
+				return artUrl;
+			} else if (response.statusCode !== 404) {
+				this.#logger.warn(serialiseInteraction(interaction, { redirectStatusCode: response.statusCode }));
+			}
+		} catch (error) {
+			this.#logger.warn(serialiseInteraction(interaction), error);
+		}
 	}
 
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
@@ -72,7 +84,7 @@ export class ArtCommand extends Command {
 			return replyLatency(reply, interaction);
 		} else {
 			await interaction.deferReply();
-			const artUrl = await this.getArt(card);
+			const artUrl = await this.getArt(card, interaction);
 			const end = Date.now();
 			if (artUrl) {
 				// expected embedding of image from URL
