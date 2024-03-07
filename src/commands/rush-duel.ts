@@ -411,11 +411,15 @@ export class RushDuelCommand extends AutocompletableCommand {
 			});
 			return replyLatency(reply, interaction);
 		}
+		await interaction.deferReply();
 		const url = videoGameIllustrationURL(card);
 		const hasVideoGameIllustration = await this.checkYugipediaRedirect(url, interaction);
 		const switcher = new ArtSwitcher(card.images, hasVideoGameIllustration ? url : null);
-		const reply = await switcher.reply(interaction, resultLanguage);
-		return replyLatency(reply, interaction);
+		const end = Date.now();
+		await switcher.editReply(interaction, resultLanguage);
+		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
+		const latency = end - interaction.createdTimestamp;
+		return latency;
 	}
 }
 
@@ -484,8 +488,8 @@ class ArtSwitcher {
 		this.labelButton.setLabel(this.label);
 	}
 
-	async reply(parentInteraction: ChatInputCommandInteraction, resultLanguage: Locale): Promise<Message> {
-		const reply = await parentInteraction.reply({ ...this.replyOptions, fetchReply: true });
+	async editReply(parentInteraction: ChatInputCommandInteraction, resultLanguage: Locale): Promise<Message> {
+		const reply = await parentInteraction.editReply(this.replyOptions);
 		const filter = (childInteraction: ButtonInteraction): boolean => {
 			this.logger.info(serialiseInteraction(parentInteraction), `click: ${childInteraction.user.id}`);
 			if (childInteraction.user.id === parentInteraction.user.id) {

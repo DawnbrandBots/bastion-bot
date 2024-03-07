@@ -14,7 +14,7 @@ describe("Healthcheck for /link URLs", () => {
 
 	// Skip Discord CDN links as they are no longer accessible outside Discord after the Authenticated Attachment URL change
 	test.each(
-		Object.values(LinkCommand.links).filter(({ result }) => !result.startsWith("https://cdn.discordapp.com"))
+		Object.values(LinkCommand.links).filter(({ result }) => !result.startsWith("https://cdn.discordapp.com/"))
 	)("$name", async ({ result }) => {
 		for (const url of result.split("\n")) {
 			const response = await got(url);
