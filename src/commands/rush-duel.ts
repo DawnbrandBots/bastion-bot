@@ -520,13 +520,20 @@ class ArtSwitcher {
 			// otherwise, though, we want to treat it as a normal error
 			if (err.code !== DiscordjsErrorCodes.InteractionCollectorError) {
 				this.logger.error(serialiseInteraction(parentInteraction), err);
+			} else {
+				this.logger.verbose(serialiseInteraction(parentInteraction), err);
+				if (err.message.split("reason: ")[1].toLowerCase().includes("delete")) {
+					return;
+				}
 			}
-			// disable original buttons, regardless of error source
+			// disable original buttons, except when deleted since there's nothing toe dit
 			this.prevButton.setDisabled(true);
 			this.nextButton.setDisabled(true);
-			parentInteraction
-				.editReply(this.replyOptions)
-				.catch(e => this.logger.error(serialiseInteraction(parentInteraction), e));
+			try {
+				await parentInteraction.editReply(this.replyOptions);
+			} catch (e) {
+				this.logger.error(serialiseInteraction(parentInteraction), e);
+			}
 		};
 		reply.awaitMessageComponent(awaitOptions).then(then).catch(catcher);
 		return reply;
