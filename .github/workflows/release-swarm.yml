@@ -60,7 +60,6 @@ jobs:
           DOCKER_TAG: sha-${{ github.event.inputs.revision || github.sha }}
           DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
           API_URL: ${{ secrets.API_URL_INTERNAL }}
-          IMAGE_HOST: ${{ secrets.IMAGE_HOST }}
           FTP_URL: ${{ secrets.FTP_URL }}
           BOT_LOGGER_WEBHOOK: ${{ secrets.PRODUCTION_LOGGER_WEBHOOK }}
           BOT_PRESENCE: ${{ github.event.inputs.presence }}

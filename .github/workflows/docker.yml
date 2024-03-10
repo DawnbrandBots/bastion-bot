@@ -99,7 +99,6 @@ jobs:
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           API_URL: ${{ secrets.API_URL_EXTERNAL }}
-          IMAGE_HOST: ${{ secrets.IMAGE_HOST }}
           FTP_URL: ${{ secrets.FTP_URL }}
           DISCORD_TOTAL_SHARDS: 1
         run: |

@@ -7,7 +7,6 @@ services:
       DEBUG: "*"
       DISCORD_TOKEN:
       API_URL:
-      IMAGE_HOST:
       FTP_URL:
       DISCORD_TOTAL_SHARDS: auto
       BOT_LOGGER_WEBHOOK: "${BOT_LOGGER_WEBHOOK:-}"

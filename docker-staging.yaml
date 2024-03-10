@@ -7,7 +7,6 @@ services:
       DEBUG: "*"
       DISCORD_TOKEN:
       API_URL:
-      IMAGE_HOST:
       FTP_URL:
       DISCORD_SHARD: "{{.Task.Slot}}"
       DISCORD_TOTAL_SHARDS:
