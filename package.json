@@ -36,7 +36,7 @@
 		"reflect-metadata": "^0.2.1",
 		"supports-color": "^9.4.0",
 		"tsyringe": "^4.8.0",
-		"ttag": "^1.8.5",
+		"ttag": "^1.8.6",
 		"ydeck": "^0.2.10",
 		"ydke": "^1.1.0"
 	},

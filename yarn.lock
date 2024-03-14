@@ -5327,10 +5327,10 @@ ttag-cli@^1.10.10:
     walk "2.3.9"
     yargs "^15.4.1"
 
-ttag@^1.8.5:
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/ttag/-/ttag-1.8.5.tgz#cfb941999b4a256fedc963e3a5a918476dfd269e"
-  integrity sha512-oksmxDcGvmGroy2ZKQiNCPc+mwv9Gr7FU20DSM9kngGC6Z0OV0E9c1Z/FNDfNib2zmGPm/OdH2ehOeud8ZLtfQ==
+ttag@^1.8.6:
+  version "1.8.6"
+  resolved "https://registry.yarnpkg.com/ttag/-/ttag-1.8.6.tgz#257a01a649bb6a47018e32789cc839f19c529e9e"
+  integrity sha512-GwSFsRnthBz+VazcbvoBXcuiorMBEPrHdN3aJHZiTQiuCC1l0fZR0jp405SZ4BCHjvH+qWtVzmSwU6iSvbiSLg==
   dependencies:
     dedent "1.5.1"
     plural-forms "^0.5.3"
