@@ -24,6 +24,7 @@ import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { AutocompletableCommand } from "../Command";
 import { AttributeIcon, Colour, Icon, RaceIcon, formatCardName, formatCardText, getRubylessCardName } from "../card";
+import { CardSchema } from "../definitions";
 import { RushCardSchema } from "../definitions/rush";
 import { UpdatingLimitRegulationVector } from "../limit-regulation";
 import {
@@ -447,7 +448,7 @@ class ArtSwitcher {
 	private index = 0;
 
 	constructor(
-		private readonly images: NonNullable<Static<typeof RushCardSchema>["images"]>,
+		private readonly images: NonNullable<Static<typeof RushCardSchema | typeof CardSchema>["images"]>,
 		private readonly videoGameIllustration: string | null
 	) {
 		this.labelButton.setLabel(this.label);
@@ -462,7 +463,9 @@ class ArtSwitcher {
 		// The video game illustration, if it exists, may replace the first image
 		return (
 			(this.index === 0 && this.videoGameIllustration) ||
-			`https://yugipedia.com/wiki/Special:Redirect/file/${this.images[this.index].image}?utm_source=bastion`
+			`https://yugipedia.com/wiki/Special:Redirect/file/${
+				this.images[this.index].illustration ?? this.images[this.index].image
+			}?utm_source=bastion`
 		);
 	}
 
