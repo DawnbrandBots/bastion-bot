@@ -1,13 +1,12 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction } from "discord.js";
 import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { Command } from "../Command";
+import { ArtSwitcher, checkYugipediaRedirect } from "../art";
 import { getCard, getCardSearchOptions, getRubylessCardName, masterDuelIllustrationURL } from "../card";
-import { CardSchema } from "../definitions";
 import {
 	LocaleProvider,
 	buildLocalisedCommand,
@@ -54,24 +53,6 @@ export class ArtCommand extends Command {
 		return this.#logger;
 	}
 
-	async getArt(
-		card: Static<typeof CardSchema>,
-		interaction: ChatInputCommandInteraction
-	): Promise<string | undefined> {
-		const artUrl = masterDuelIllustrationURL(card);
-		try {
-			const response = await this.got.head(artUrl, { followRedirect: false });
-			if (response.statusCode === 302) {
-				// MediaWiki Special:Redirect/file should only use 302s
-				return artUrl;
-			} else if (response.statusCode !== 404) {
-				this.#logger.warn(serialiseInteraction(interaction, { redirectStatusCode: response.statusCode }));
-			}
-		} catch (error) {
-			this.#logger.warn(serialiseInteraction(interaction), error);
-		}
-	}
-
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const { type, input, resultLanguage, inputLanguage } = await getCardSearchOptions(interaction, this.locales);
 		const card = await getCard(this.got, type, input, inputLanguage);
@@ -82,18 +63,23 @@ export class ArtCommand extends Command {
 				fetchReply: true
 			});
 			return replyLatency(reply, interaction);
+		} else if (!card.images) {
+			const name = getRubylessCardName(card.name[resultLanguage] || `${card.konami_id}`, resultLanguage);
+			useLocale(resultLanguage);
+			const reply = await interaction.reply({
+				content: t`Could not find art for \`${name}\`!`,
+				fetchReply: true
+			});
+			return replyLatency(reply, interaction);
 		} else {
 			await interaction.deferReply();
-			const artUrl = await this.getArt(card, interaction);
+			const url = masterDuelIllustrationURL(card);
+			const hasVideoGameIllustration = await checkYugipediaRedirect(this.got, url, (...args) =>
+				this.logger.warn(serialiseInteraction(interaction), ...args)
+			);
+			const switcher = new ArtSwitcher(card.images, hasVideoGameIllustration ? url : null, "art");
 			const end = Date.now();
-			if (artUrl) {
-				// expected embedding of image from URL
-				await interaction.editReply(artUrl); // Actually returns void
-			} else {
-				const name = getRubylessCardName(card.name[resultLanguage] || `${card.konami_id}`, resultLanguage);
-				useLocale(resultLanguage);
-				await interaction.editReply({ content: t`Could not find art for \`${name}\`!` });
-			}
+			await switcher.editReply(interaction, resultLanguage);
 			// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
 			const latency = end - interaction.createdTimestamp;
 			return latency;

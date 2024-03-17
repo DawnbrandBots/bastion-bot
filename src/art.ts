@@ -77,13 +77,15 @@ export class ArtSwitcher {
 	}
 
 	private get currentImage(): string {
-		// The video game illustration, if it exists, may replace the first image
-		return (
-			(this.index === 0 && this.videoGameIllustration) ||
-			`https://yugipedia.com/wiki/Special:Redirect/file/${
-				this.images[this.index].illustration ?? this.images[this.index].image
-			}?utm_source=bastion`
-		);
+		const illustration = this.images[this.index].illustration;
+		if (illustration) {
+			return `https://yugipedia.com/wiki/Special:Redirect/file/${illustration}?utm_source=bastion`;
+		} else if (this.index === 0 && this.videoGameIllustration) {
+			return this.videoGameIllustration;
+		} else {
+			const image = this.images[this.index].image;
+			return `https://yugipedia.com/wiki/Special:Redirect/file/${image}?utm_source=bastion`;
+		}
 	}
 
 	private get replyOptions(): BaseMessageOptions {
