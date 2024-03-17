@@ -35,7 +35,7 @@ function videoGameIllustrationURL(card: Static<typeof RushCardSchema>): string {
 	// Filter card name down to alphanumeric characters
 	const probableBasename = (card.name.en ?? "").replaceAll(/\W/g, "");
 	// https://yugipedia.com/wiki/Category:Yu-Gi-Oh!_RUSH_DUEL:_Saikyo_Battle_Royale!!_Let%27s_Go!_Go_Rush!!_card_artworks
-	return `https://yugipedia.com/wiki/Special:Redirect/file/${probableBasename}-G002-JP-VG-artwork.png`;
+	return `https://yugipedia.com/wiki/Special:Redirect/file/${probableBasename}-G002-JP-VG-artwork.png?utm_source=bastion`;
 }
 
 function createRushCardEmbed(
@@ -80,8 +80,10 @@ function createRushCardEmbed(
 		description += "\n";
 	}
 
-	const illustration = `${videoGameIllustrationURL(card)}?utm_source=bastion`;
-	const embed = new EmbedBuilder().setTitle(formatCardName(card, lang)).setURL(rushcard).setThumbnail(illustration);
+	const embed = new EmbedBuilder()
+		.setTitle(formatCardName(card, lang))
+		.setURL(rushcard)
+		.setThumbnail(videoGameIllustrationURL(card));
 
 	if (card.card_type === "Monster") {
 		embed.setColor(

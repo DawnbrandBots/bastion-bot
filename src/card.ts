@@ -366,7 +366,7 @@ export function ygoprodeckCard(term: string | number): string {
 export function masterDuelIllustrationURL(card: Static<typeof CardSchema>): string {
 	// Filter card name down to alphanumeric characters
 	const probableBasename = (card.name.en ?? "").replaceAll(/\W/g, "");
-	return `https://yugipedia.com/wiki/Special:Redirect/file/${probableBasename}-MADU-EN-VG-artwork.png`;
+	return `https://yugipedia.com/wiki/Special:Redirect/file/${probableBasename}-MADU-EN-VG-artwork.png?utm_source=bastion`;
 }
 
 export function createCardEmbed(
