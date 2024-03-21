@@ -112,6 +112,10 @@ export class ArtSwitcher {
 
 	async editReply(parentInteraction: ChatInputCommandInteraction, resultLanguage: Locale): Promise<Message> {
 		const reply = await parentInteraction.editReply(this.replyOptions);
+		// Don't bother setting up button handler if all buttons are disabled
+		if (this.images.length === 1) {
+			return reply;
+		}
 		const filter = (childInteraction: ButtonInteraction): boolean => {
 			this.logger.info(serialiseInteraction(parentInteraction), `click: ${childInteraction.user.id}`);
 			if (childInteraction.user.id === parentInteraction.user.id) {
