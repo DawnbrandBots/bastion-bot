@@ -43,7 +43,7 @@ export abstract class Command {
 			this.metrics.writeCommand(interaction, latency);
 		} catch (error) {
 			this.metrics.writeCommand(interaction, -1);
-			this.logger.error(serialiseInteraction(interaction), error);
+			this.logger.error(serialiseInteraction(interaction, { error, stack: (error as Error).stack }), error);
 			let method;
 			if (interaction.replied) {
 				method = "followUp" as const;
