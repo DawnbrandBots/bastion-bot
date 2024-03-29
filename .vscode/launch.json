@@ -22,10 +22,28 @@
     },
     {
       "type": "node",
-      "name": "Jest",
+      "name": "Jest (unit)",
       "request": "launch",
       "runtimeExecutable": "yarn",
       "runtimeArgs": ["test"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "name": "Jest (contract)",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["test:contract"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "name": "Jest (integration)",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["test:integration"],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal"
     }
