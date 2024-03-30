@@ -36,7 +36,7 @@ describe("Message event listener", () => {
 	beforeEach(() => {
 		message = new MockMessage();
 		Object.defineProperty(message, "channel", { value: { id: "0" } });
-		Object.defineProperty(message, "author", { value: { bot: false } });
+		Object.defineProperty(message, "author", { value: { bot: false, id: "0" } });
 		Object.defineProperty(message, "client", {
 			value: {
 				user,
@@ -63,6 +63,13 @@ describe("Message event listener", () => {
 			channelId: "1",
 			messageId: "0"
 		};
+
+		await listener.run(message);
+		expect(message.reply).not.toHaveBeenCalled();
+	});
+
+	test("ignores system message", async () => {
+		message.system = true;
 
 		await listener.run(message);
 		expect(message.reply).not.toHaveBeenCalled();
