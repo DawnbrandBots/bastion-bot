@@ -24,6 +24,7 @@ import { LOCALES, LOCALES_MAP, Locale, LocaleProvider } from "../locale";
 import { Logger, getLogger } from "../logger";
 import { RecentMessageCache } from "../message-cache";
 import { Metrics } from "../metrics";
+import { shouldIgnore } from "../utils";
 
 // Only take certain plugins because we don't need to parse all markup like bolding
 // and the mention parsing is not as well-maintained as discord.js
@@ -246,8 +247,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 	}
 
 	async run(message: Message): Promise<void> {
-		// ignore system messages as we cannot reply to them
-		if (message.author.bot || message.system) {
+		if (shouldIgnore(message)) {
 			return;
 		}
 		// Deactivate new functionality in select servers

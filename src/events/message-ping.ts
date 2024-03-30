@@ -4,7 +4,8 @@ import { t, useLocale } from "ttag";
 import { Listener } from ".";
 import { EventLocker } from "../event-lock";
 import { LocaleProvider } from "../locale";
-import { getLogger, Logger } from "../logger";
+import { Logger, getLogger } from "../logger";
+import { shouldIgnore } from "../utils";
 
 @injectable()
 export class PingMessageListener implements Listener<"messageCreate"> {
@@ -12,7 +13,10 @@ export class PingMessageListener implements Listener<"messageCreate"> {
 
 	#logger = getLogger("events:message:ping");
 
-	constructor(@inject("LocaleProvider") private locales: LocaleProvider, private eventLocks: EventLocker) {}
+	constructor(
+		@inject("LocaleProvider") private locales: LocaleProvider,
+		private eventLocks: EventLocker
+	) {}
 
 	protected log(level: keyof Logger, message: Message, ...args: Parameters<Logger[keyof Logger]>): void {
 		const context = {
@@ -26,7 +30,7 @@ export class PingMessageListener implements Listener<"messageCreate"> {
 	}
 
 	async run(message: Message): Promise<void> {
-		if (message.author.bot || message.reference || message.system) {
+		if (shouldIgnore(message)) {
 			return;
 		}
 		if (
