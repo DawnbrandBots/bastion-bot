@@ -15,7 +15,7 @@
 		"clean": "tsc --build --clean",
 		"test": "jest test/unit",
 		"test:contract": "jest test/contract",
-		"test:integration": "jest test/integration --setupFiles=dotenv/config",
+		"test:integration": "env DOTENV_CONFIG_PATH=.env.test jest test/integration --setupFiles=dotenv/config --coverage=false --runInBand",
 		"lint": "eslint src test"
 	},
 	"engines": {
