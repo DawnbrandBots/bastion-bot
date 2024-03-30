@@ -100,6 +100,7 @@ jobs:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           API_URL: ${{ secrets.API_URL_EXTERNAL }}
           FTP_URL: ${{ secrets.FTP_URL }}
+          HEALTHCHECK_BOT_SNOWFLAKE: ${{ secrets.HEALTHCHECK_BOT_SNOWFLAKE }}
           DISCORD_TOTAL_SHARDS: 1
         run: |
           docker kill --signal=SIGTTIN $(docker ps --filter label=com.docker.swarm.service.name=discord-bot_bot --quiet) || echo No existing container!

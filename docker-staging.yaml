@@ -8,6 +8,7 @@ services:
       DISCORD_TOKEN:
       API_URL:
       FTP_URL:
+      HEALTHCHECK_BOT_SNOWFLAKE:
       DISCORD_SHARD: "{{.Task.Slot}}"
       DISCORD_TOTAL_SHARDS:
       BOT_LOGGER_WEBHOOK: "${BOT_LOGGER_WEBHOOK:-}"
