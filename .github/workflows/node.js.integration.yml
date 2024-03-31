@@ -1,0 +1,32 @@
+# SPDX-FileCopyrightText: © 2024 Kevin Lu
+# SPDX-Licence-Identifier: AGPL-3.0-or-later
+name: Integration tests
+on:
+  workflow_dispatch:
+  workflow_call:
+  pull_request:
+    paths:
+      - .github/workflows/node.js.integration.yml
+      - test/integration/*
+permissions: {}
+jobs:
+  integration-test:
+    runs-on: ubuntu-latest
+    environment: Singing Lanius#9842 (test)
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+      - run: yarn
+      - run: yarn test:integration
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}  # Singing Lanius#9842
+          TARGET_BOT: 309187464260485130  # Daichi#3599
+          TARGET_CHANNEL: 1223784420696264707
