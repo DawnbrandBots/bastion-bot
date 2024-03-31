@@ -28,5 +28,5 @@ jobs:
       - run: yarn test:integration
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}  # Singing Lanius#9842
-          TARGET_BOT: 309187464260485130  # Daichi#3599
-          TARGET_CHANNEL: 1223784420696264707
+          TARGET_BOT: "309187464260485130"  # Daichi#3599
+          TARGET_CHANNEL: "1223784420696264707"
