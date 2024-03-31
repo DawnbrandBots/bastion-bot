@@ -296,7 +296,8 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 				replyOptions = { content: t`Could not find a card matching \`${input}\`!` + context };
 			} else {
 				const embeds = createCardEmbed(card, resultLanguage, this.masterDuelLimitRegulation);
-				if (resultLanguage !== "en") {
+				// eslint-disable-next-line no-constant-condition
+				if (false) {
 					embeds[embeds.length - 1].addFields({
 						name: t`💬 Translations missing?`,
 						value: t`Help translate Bastion at the links above.`
