@@ -64,7 +64,7 @@ export function getLogger(namespace: string): Logger {
 		error: withWebhook(global.extend(`error:${namespace}`)),
 		warn: withWebhook(global.extend(`warn:${namespace}`)),
 		notify: withWebhook(global.extend(`notify:${namespace}`)),
-		info: global.extend(`info:${namespace}`),
-		verbose: global.extend(`verbose:${namespace}`)
+		info: contextLog(global.extend(`info:${namespace}`)),
+		verbose: contextLog(global.extend(`verbose:${namespace}`))
 	};
 }
