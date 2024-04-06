@@ -1,6 +1,7 @@
 name: Release to production (Compose)
 
 on:
+  workflow_call:
   workflow_dispatch:
     inputs:
       presence:
@@ -45,7 +46,7 @@ jobs:
           DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
           API_URL: ${{ secrets.API_URL_INTERNAL }}
           FTP_URL: ${{ secrets.FTP_URL }}
-          HEALTHCHECK_BOT_SNOWFLAKE: ${{ secrets.HEALTHCHECK_BOT_SNOWFLAKE }}
+          HEALTHCHECK_BOT_SNOWFLAKE: "1031374366426009753"  # Singing Lanius#9842
           BOT_LOGGER_WEBHOOK: ${{ secrets.PRODUCTION_LOGGER_WEBHOOK }}
           BOT_PRESENCE: ${{ github.event.inputs.presence }}
           BOT_MOTD: ${{ github.event.inputs.motd }}

@@ -1,7 +1,6 @@
 name: Compile and test
 on:
-  push:
-    branches: [master]
+  workflow_call:
   pull_request:
     branches: [master]
 permissions:
