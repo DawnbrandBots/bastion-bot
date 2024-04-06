@@ -3,7 +3,7 @@
 name: Continuous integration and deployment
 on:
   push:
-    branches: master
+    branches: [master]
 jobs:
   node-js:
     uses: ./.github/workflows/node.js.yml
