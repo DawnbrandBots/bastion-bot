@@ -42,7 +42,7 @@
 		"ydke": "^1.1.0"
 	},
 	"devDependencies": {
-		"@alphakretin/essentials": "^6.0.0",
+		"@alphakretin/essentials": "^6.1.0",
 		"@types/better-sqlite3": "^7.6.9",
 		"@types/debug": "^4.1.12",
 		"@types/gettext-parser": "^4.0.4",
@@ -59,11 +59,11 @@
 		"zlib-sync": "^0.1.9"
 	},
 	"resolutions": {
-		"@types/node": "^20.11.0",
+		"@types/node": "^20.12.5",
 		"http2-wrapper": "^2.2.1",
 		"make-dir": "^4.0.0",
-		"semver": "^7.5.4",
-		"undici": "^5.27.2"
+		"semver": "^7.6.0",
+		"undici": "^5.28.4"
 	},
 	"jest": {
 		"clearMocks": true,
