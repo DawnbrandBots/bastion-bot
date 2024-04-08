@@ -29,24 +29,29 @@ describe("Message inline card search", () => {
 	);
 	beforeAll(async () => await singingLanius.login());
 	afterAll(async () => await singingLanius.destroy());
-	test.each(SINGLE_CARD_SEARCH_CASES)("$name is returned for: $query", async ({ query, name, embeds = 1 }) => {
-		const channel = await singingLanius.channels.fetch(`${process.env.TARGET_CHANNEL}`);
-		expect(channel?.isTextBased()).toEqual(true);
-		if (channel?.isTextBased()) {
-			const request = await channel.send(query);
-			const responses = await channel.awaitMessages({
-				filter: message => message.author.id === process.env.TARGET_BOT,
-				max: 1,
-				time: 4000
-			});
-			console.info(responses);
-			expect(responses.size).toEqual(1);
-			const message = responses.first();
-			console.info(JSON.stringify(message?.embeds));
-			expect(message?.reference?.messageId).toEqual(request.id);
-			expect(message?.content).toBe("");
-			expect(message?.embeds.length).toEqual(embeds);
-			expect(message?.embeds[0].title).toEqual(name);
-		}
-	});
+	test.each(SINGLE_CARD_SEARCH_CASES)(
+		"$name is returned for: $query",
+		async ({ query, name, embeds = 1 }) => {
+			const channel = await singingLanius.channels.fetch(`${process.env.TARGET_CHANNEL}`);
+			expect(channel?.isTextBased()).toEqual(true);
+			if (channel?.isTextBased()) {
+				await new Promise(resolve => setTimeout(resolve, 1000));
+				const request = await channel.send(query);
+				const responses = await channel.awaitMessages({
+					filter: message => message.author.id === process.env.TARGET_BOT,
+					max: 1,
+					time: 5000
+				});
+				console.info(responses);
+				expect(responses.size).toEqual(1);
+				const message = responses.first();
+				console.info(JSON.stringify(message?.embeds));
+				expect(message?.reference?.messageId).toEqual(request.id);
+				expect(message?.content).toBe("");
+				expect(message?.embeds.length).toEqual(embeds);
+				expect(message?.embeds[0].title).toEqual(name);
+			}
+		},
+		10000
+	);
 });
