@@ -73,7 +73,6 @@ const DELIMITERS = {
 	ANGLE: { match: /<([^<\n]+?)>/g, prune: /<<.*?>>/g },
 	SQUARE: { match: /\[([^<\n]+?)\]/g, prune: /\[\[.*?\]\]/g },
 	CC: { match: /=([^<\n]+?)=/g, prune: /==.*?==/g },
-	TRANS: { match: /\)([^<\n]+?)\(/g, prune: null }, // ) (
 	HAVEN: { match: /%([^<\n]+?)\^/g, prune: null } // % ^
 } as const;
 
@@ -83,12 +82,9 @@ function getDelimiter(message: Message) {
 		case "170669983079071745":
 			return DELIMITERS.CC;
 		case "597478047163219988":
-		case "845400480452050954":
 			return DELIMITERS.SQUARE;
 		case "871582695967301703":
 			return DELIMITERS.HAVEN;
-		case "780952232103116800":
-			return DELIMITERS.TRANS;
 		default:
 			return DELIMITERS.ANGLE;
 	}
