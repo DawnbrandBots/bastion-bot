@@ -97,7 +97,7 @@ export const RaceIcon = {
 	[c("monster-type-race").t`Creator God`]: "<:CreatorGod:602707927219961866>",
 	[c("monster-type-race").t`Wyrm`]: "<:Wyrm:602707927068835884>",
 	[c("monster-type-race").t`Cyberse`]: "<:Cyberse:602707927421157376>",
-	[c("monster-type-race").t`Illusion`]: null,
+	[c("monster-type-race").t`Illusion`]: "<:Illusion:1227080132280324096>",
 	// Exclusive to Rush Duel
 	[c("monster-type-race").t`Galaxy`]: null,
 	// Rush Duel Fusion
