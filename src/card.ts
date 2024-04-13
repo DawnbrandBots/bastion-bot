@@ -363,10 +363,18 @@ export function ygoprodeckCard(term: string | number): string {
 	return `https://ygoprodeck.com/card/?search=${encodeURIComponent(term)}&utm_source=bastion`;
 }
 
-export function masterDuelIllustrationURL(card: Static<typeof CardSchema>): string {
+export function yugipediaFileRedirect(name: string): string {
+	return `https://yugipedia.com/wiki/Special:Redirect/file/${name}?utm_source=bastion`;
+}
+
+export function masterDuelIllustration(card: Static<typeof CardSchema>): string {
 	// Filter card name down to alphanumeric characters
 	const probableBasename = (card.name.en ?? "").replaceAll(/\W/g, "");
-	return `https://yugipedia.com/wiki/Special:Redirect/file/${probableBasename}-MADU-EN-VG-artwork.png?utm_source=bastion`;
+	return `${probableBasename}-MADU-EN-VG-artwork.png`;
+}
+
+export function masterDuelIllustrationURL(card: Static<typeof CardSchema>): string {
+	return yugipediaFileRedirect(masterDuelIllustration(card));
 }
 
 export function createCardEmbed(
