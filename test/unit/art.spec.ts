@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, DiscordjsError, DiscordjsErrorCodes } from "discord.js";
+import { BaseMessageOptions, ChatInputCommandInteraction } from "discord.js";
 import { ArtSwitcher } from "../../src/art";
 
 describe("ArtSwitcher", () => {
@@ -10,21 +10,44 @@ describe("ArtSwitcher", () => {
 		editReply.mockReset().mockReturnValue({ awaitMessageComponent });
 	});
 	it("shows single illustration", async () => {
-		awaitMessageComponent.mockRejectedValue(new DiscordjsError(DiscordjsErrorCodes.InteractionCollectorError));
 		const switcher = new ArtSwitcher(
 			[
 				{
-					illustration: "https://example.net/illustration.png",
+					illustration: "MekkKnightCrusadiaAvramax-MADU-EN-VG-artwork.png",
 					index: 1,
-					image: "https://example.net/image.png"
+					image: "MekkKnightCrusadiaAvramax-RA01-EN-SR-1E.png"
 				}
 			],
-			null,
 			"test"
 		);
 		await switcher.editReply(interaction, "en");
-		expect(editReply).toHaveBeenCalled();
+		expect(editReply).toHaveBeenCalledTimes(1);
+		expect(editReply).toHaveBeenCalledWith<[BaseMessageOptions]>(
+			expect.objectContaining({
+				content:
+					"https://yugipedia.com/wiki/Special:Redirect/file/MekkKnightCrusadiaAvramax-MADU-EN-VG-artwork.png?utm_source=bastion"
+			})
+		);
 	});
-	it.todo("shows video game illustration if available");
-	it.todo("shows image if no illustrations");
+	it("shows image if no illustrations", async () => {
+		const switcher = new ArtSwitcher(
+			[
+				{
+					index: 1,
+					image: "Shuttleroid-PP11-JP-ScR.jpg"
+				}
+			],
+			"test"
+		);
+		await switcher.editReply(interaction, "en");
+		expect(editReply).toHaveBeenCalledTimes(1);
+		expect(editReply).toHaveBeenCalledWith<[BaseMessageOptions]>(
+			expect.objectContaining({
+				content:
+					"https://yugipedia.com/wiki/Special:Redirect/file/Shuttleroid-PP11-JP-ScR.jpg?utm_source=bastion"
+			})
+		);
+	});
+	// TODO: test multiple-image cases, using
+	// // awaitMessageComponent.mockRejectedValue(new DiscordjsError(DiscordjsErrorCodes.InteractionCollectorError));
 });
