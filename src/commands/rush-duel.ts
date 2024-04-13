@@ -401,12 +401,13 @@ export class RushDuelCommand extends AutocompletableCommand {
 		}
 		await interaction.deferReply();
 		if (!card.images[0].illustration) {
-			const url = videoGameIllustration(card);
-			const hasVideoGameIllustration = await checkYugipediaRedirect(this.got, url, (...args) =>
-				this.#logger.warn(serialiseInteraction(interaction), ...args)
+			const hasVideoGameIllustration = await checkYugipediaRedirect(
+				this.got,
+				videoGameIllustrationURL(card),
+				(...args) => this.#logger.warn(serialiseInteraction(interaction), ...args)
 			);
 			if (hasVideoGameIllustration) {
-				card.images[0].illustration = url;
+				card.images[0].illustration = videoGameIllustration(card);
 			}
 		}
 		const switcher = new ArtSwitcher(card.images, "rush");
