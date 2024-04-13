@@ -363,6 +363,10 @@ export function ygoprodeckCard(term: string | number): string {
 	return `https://ygoprodeck.com/card/?search=${encodeURIComponent(term)}&utm_source=bastion`;
 }
 
+/**
+ * @param name URL-encoded file name
+ * @returns Bastion-attributed MediaWiki redirect useful for embedding images
+ */
 export function yugipediaFileRedirect(name: string): string {
 	return `https://yugipedia.com/wiki/Special:Redirect/file/${name}?utm_source=bastion`;
 }
