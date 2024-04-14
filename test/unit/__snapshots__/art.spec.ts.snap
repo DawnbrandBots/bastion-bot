@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArtSwitcher shows first of two illustrations 1`] = `
+{
+  "components": [
+    {
+      "components": [
+        {
+          "custom_id": "label",
+          "disabled": true,
+          "emoji": undefined,
+          "label": "1 / 2",
+          "style": 1,
+          "type": 2,
+        },
+        {
+          "custom_id": "prev",
+          "disabled": true,
+          "emoji": {
+            "animated": false,
+            "id": undefined,
+            "name": "⬅",
+          },
+          "style": 2,
+          "type": 2,
+        },
+        {
+          "custom_id": "next",
+          "disabled": false,
+          "emoji": {
+            "animated": false,
+            "id": undefined,
+            "name": "➡",
+          },
+          "style": 2,
+          "type": 2,
+        },
+      ],
+      "type": 1,
+    },
+  ],
+  "content": "https://yugipedia.com/wiki/Special:Redirect/file/BlazingCartesiatheVirtuous-MADU-JP-VG-artwork.png?utm_source=bastion",
+}
+`;
+
+exports[`ArtSwitcher shows image if no illustrations 1`] = `
+{
+  "components": [
+    {
+      "components": [
+        {
+          "custom_id": "label",
+          "disabled": true,
+          "emoji": undefined,
+          "label": "1 / 1",
+          "style": 1,
+          "type": 2,
+        },
+        {
+          "custom_id": "prev",
+          "disabled": true,
+          "emoji": {
+            "animated": false,
+            "id": undefined,
+            "name": "⬅",
+          },
+          "style": 2,
+          "type": 2,
+        },
+        {
+          "custom_id": "next",
+          "disabled": true,
+          "emoji": {
+            "animated": false,
+            "id": undefined,
+            "name": "➡",
+          },
+          "style": 2,
+          "type": 2,
+        },
+      ],
+      "type": 1,
+    },
+  ],
+  "content": "https://yugipedia.com/wiki/Special:Redirect/file/Shuttleroid-PP11-JP-ScR.jpg?utm_source=bastion",
+}
+`;
+
+exports[`ArtSwitcher shows single illustration 1`] = `
+{
+  "components": [
+    {
+      "components": [
+        {
+          "custom_id": "label",
+          "disabled": true,
+          "emoji": undefined,
+          "label": "1 / 1",
+          "style": 1,
+          "type": 2,
+        },
+        {
+          "custom_id": "prev",
+          "disabled": true,
+          "emoji": {
+            "animated": false,
+            "id": undefined,
+            "name": "⬅",
+          },
+          "style": 2,
+          "type": 2,
+        },
+        {
+          "custom_id": "next",
+          "disabled": true,
+          "emoji": {
+            "animated": false,
+            "id": undefined,
+            "name": "➡",
+          },
+          "style": 2,
+          "type": 2,
+        },
+      ],
+      "type": 1,
+    },
+  ],
+  "content": "https://yugipedia.com/wiki/Special:Redirect/file/MekkKnightCrusadiaAvramax-MADU-EN-VG-artwork.png?utm_source=bastion",
+}
+`;

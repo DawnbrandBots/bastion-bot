@@ -1,4 +1,4 @@
-import { BaseMessageOptions, ChatInputCommandInteraction } from "discord.js";
+import { ChatInputCommandInteraction, DiscordjsError, DiscordjsErrorCodes } from "discord.js";
 import { ArtSwitcher } from "../../src/art";
 
 describe("ArtSwitcher", () => {
@@ -22,12 +22,7 @@ describe("ArtSwitcher", () => {
 		);
 		await switcher.editReply(interaction, "en");
 		expect(editReply).toHaveBeenCalledTimes(1);
-		expect(editReply).toHaveBeenCalledWith<[BaseMessageOptions]>(
-			expect.objectContaining({
-				content:
-					"https://yugipedia.com/wiki/Special:Redirect/file/MekkKnightCrusadiaAvramax-MADU-EN-VG-artwork.png?utm_source=bastion"
-			})
-		);
+		expect(editReply.mock.calls[0][0]).toMatchSnapshot();
 	});
 	it("shows image if no illustrations", async () => {
 		const switcher = new ArtSwitcher(
@@ -41,13 +36,27 @@ describe("ArtSwitcher", () => {
 		);
 		await switcher.editReply(interaction, "en");
 		expect(editReply).toHaveBeenCalledTimes(1);
-		expect(editReply).toHaveBeenCalledWith<[BaseMessageOptions]>(
-			expect.objectContaining({
-				content:
-					"https://yugipedia.com/wiki/Special:Redirect/file/Shuttleroid-PP11-JP-ScR.jpg?utm_source=bastion"
-			})
-		);
+		expect(editReply.mock.calls[0][0]).toMatchSnapshot();
 	});
-	// TODO: test multiple-image cases, using
-	// // awaitMessageComponent.mockRejectedValue(new DiscordjsError(DiscordjsErrorCodes.InteractionCollectorError));
+	const CARTESIA_IMAGES = [
+		{
+			illustration: "BlazingCartesiatheVirtuous-MADU-JP-VG-artwork.png",
+			index: 1,
+			image: "BlazingCartesiatheVirtuous-DABL-JP-SR.png"
+		},
+		{
+			illustration: "BlazingCartesiatheVirtuous-MADU-EN-VG-artwork.png",
+			index: "1.1",
+			image: "BlazingCartesiatheVirtuous-MP23-EN-PScR-1E.png"
+		}
+	];
+	it("shows first of two illustrations", async () => {
+		awaitMessageComponent.mockRejectedValue(new DiscordjsError(DiscordjsErrorCodes.InteractionCollectorError));
+		const interaction = { editReply, user: {} } as unknown as ChatInputCommandInteraction;
+		const switcher = new ArtSwitcher(CARTESIA_IMAGES, "test");
+		await switcher.editReply(interaction, "en");
+		expect(editReply).toHaveBeenCalledTimes(1);
+		expect(editReply.mock.calls[0][0]).toMatchSnapshot();
+	});
+	it.todo("shows second of two illustrations");
 });
