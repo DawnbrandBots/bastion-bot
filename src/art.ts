@@ -14,6 +14,7 @@ import {
 } from "discord.js";
 import { Got } from "got";
 import { t, useLocale } from "ttag";
+import { yugipediaFileRedirect } from "./card";
 import { CardSchema } from "./definitions";
 import { RushCardSchema } from "./definitions/rush";
 import { Locale } from "./locale";
@@ -64,7 +65,6 @@ export class ArtSwitcher {
 
 	constructor(
 		private readonly images: NonNullable<Static<typeof RushCardSchema | typeof CardSchema>["images"]>,
-		private readonly videoGameIllustration: string | null,
 		context: string
 	) {
 		this.labelButton.setLabel(this.label);
@@ -79,12 +79,10 @@ export class ArtSwitcher {
 	private get currentImage(): string {
 		const illustration = this.images[this.index].illustration;
 		if (illustration) {
-			return `https://yugipedia.com/wiki/Special:Redirect/file/${illustration}?utm_source=bastion`;
-		} else if (this.index === 0 && this.videoGameIllustration) {
-			return this.videoGameIllustration;
+			return yugipediaFileRedirect(illustration);
 		} else {
 			const image = this.images[this.index].image;
-			return `https://yugipedia.com/wiki/Special:Redirect/file/${image}?utm_source=bastion`;
+			return yugipediaFileRedirect(image);
 		}
 	}
 

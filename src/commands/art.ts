@@ -5,8 +5,8 @@ import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { Command } from "../Command";
-import { ArtSwitcher, checkYugipediaRedirect } from "../art";
-import { getCard, getCardSearchOptions, getRubylessCardName, masterDuelIllustrationURL } from "../card";
+import { ArtSwitcher } from "../art";
+import { getCard, getCardSearchOptions, getRubylessCardName, masterDuelIllustration } from "../card";
 import {
 	LocaleProvider,
 	buildLocalisedCommand,
@@ -16,7 +16,7 @@ import {
 } from "../locale";
 import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
-import { replyLatency, serialiseInteraction } from "../utils";
+import { replyLatency } from "../utils";
 
 @injectable()
 export class ArtCommand extends Command {
@@ -73,11 +73,11 @@ export class ArtCommand extends Command {
 			return replyLatency(reply, interaction);
 		} else {
 			await interaction.deferReply();
-			const url = masterDuelIllustrationURL(card);
-			const hasVideoGameIllustration = await checkYugipediaRedirect(this.got, url, (...args) =>
-				this.logger.warn(serialiseInteraction(interaction), ...args)
-			);
-			const switcher = new ArtSwitcher(card.images, hasVideoGameIllustration ? url : null, "art");
+			// Avoid the latency of checking a wiki redirect on every command
+			if (card.master_duel_rarity && !card.images[0].illustration) {
+				card.images[0].illustration = masterDuelIllustration(card);
+			}
+			const switcher = new ArtSwitcher(card.images, "art");
 			const end = Date.now();
 			await switcher.editReply(interaction, resultLanguage);
 			// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate

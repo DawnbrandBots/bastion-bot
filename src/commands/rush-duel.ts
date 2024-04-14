@@ -15,7 +15,16 @@ import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { AutocompletableCommand } from "../Command";
 import { ArtSwitcher, checkYugipediaRedirect } from "../art";
-import { AttributeIcon, Colour, Icon, RaceIcon, formatCardName, formatCardText, getRubylessCardName } from "../card";
+import {
+	AttributeIcon,
+	Colour,
+	Icon,
+	RaceIcon,
+	formatCardName,
+	formatCardText,
+	getRubylessCardName,
+	yugipediaFileRedirect
+} from "../card";
 import { RushCardSchema } from "../definitions/rush";
 import { UpdatingLimitRegulationVector } from "../limit-regulation";
 import {
@@ -31,11 +40,15 @@ import { addNotice, replyLatency, serialiseInteraction } from "../utils";
 
 const rc = c;
 
-function videoGameIllustrationURL(card: Static<typeof RushCardSchema>): string {
+function videoGameIllustration(card: Static<typeof RushCardSchema>): string {
 	// Filter card name down to alphanumeric characters
 	const probableBasename = (card.name.en ?? "").replaceAll(/\W/g, "");
 	// https://yugipedia.com/wiki/Category:Yu-Gi-Oh!_RUSH_DUEL:_Saikyo_Battle_Royale!!_Let%27s_Go!_Go_Rush!!_card_artworks
-	return `https://yugipedia.com/wiki/Special:Redirect/file/${probableBasename}-G002-JP-VG-artwork.png?utm_source=bastion`;
+	return `${probableBasename}-G002-JP-VG-artwork.png`;
+}
+
+function videoGameIllustrationURL(card: Static<typeof RushCardSchema>): string {
+	return yugipediaFileRedirect(videoGameIllustration(card));
 }
 
 function createRushCardEmbed(
@@ -387,11 +400,17 @@ export class RushDuelCommand extends AutocompletableCommand {
 			return replyLatency(reply, interaction);
 		}
 		await interaction.deferReply();
-		const url = videoGameIllustrationURL(card);
-		const hasVideoGameIllustration = await checkYugipediaRedirect(this.got, url, (...args) =>
-			this.#logger.warn(serialiseInteraction(interaction), ...args)
-		);
-		const switcher = new ArtSwitcher(card.images, hasVideoGameIllustration ? url : null, "rush");
+		if (!card.images[0].illustration) {
+			const hasVideoGameIllustration = await checkYugipediaRedirect(
+				this.got,
+				videoGameIllustrationURL(card),
+				(...args) => this.#logger.warn(serialiseInteraction(interaction), ...args)
+			);
+			if (hasVideoGameIllustration) {
+				card.images[0].illustration = videoGameIllustration(card);
+			}
+		}
+		const switcher = new ArtSwitcher(card.images, "rush");
 		const end = Date.now();
 		await switcher.editReply(interaction, resultLanguage);
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
