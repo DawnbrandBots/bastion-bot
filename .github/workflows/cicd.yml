@@ -4,9 +4,6 @@ name: Continuous integration and deployment
 on:
   push:
     branches: [master]
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 jobs:
   node-js:
     uses: ./.github/workflows/node.js.yml
@@ -28,4 +25,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     uses: ./.github/workflows/release-compose.yml
     secrets: inherit
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
     name: Release to production (Compose)

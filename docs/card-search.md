@@ -20,7 +20,7 @@ If you do not want `<>` card search to be used in a channel, deny it the View Ch
 
 ## Cleaning up
 
-If the message summoning Bastion is deleted within one minute, Bastion will automatically delete its
+If the message summoning Bastion is deleted within five minutes, Bastion will automatically delete its
 responses. This allows non-moderators to clean up after themselves.
 
 ## Searching by password and Konami ID
@@ -79,9 +79,10 @@ searching for unofficial cards.
 
 ## Where are Rush Duel cards and TCG Speed Duel skills?
 
-These were included in the old `<>` search somewhat by accident.
-They will be returning soon in dedicated Slash Commands! If you have feedback,
-please [join the support server](https://discord.gg/4aFuPyuE96).
+These were included in the old `<>` search somewhat by accident. Please use `/rush-duel` instead.
+Extending `<>` to include Rush Duel is planned in [#341](https://github.com/DawnbrandBots/bastion-bot/issues/341).
+A Slash Command for skills is planned in [#446](https://github.com/DawnbrandBots/bastion-bot/issues/446).
+If you have feedback, please [join the support server](https://discord.gg/4aFuPyuE96).
 
 ## Custom brackets
 
