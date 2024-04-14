@@ -4,21 +4,21 @@
 [<img src="https://cdn.discordapp.com/avatars/383854640694820865/fab10204c193d0bc3d48169d11245a1a.png" alt="Bastion avatar" align="right" />](https://yugipedia.com/wiki/Bastion_Misawa)
 
 A free and open-source Discord bot for looking up cards and other useful information about the
-_Yu-Gi-Oh! Trading Card Game_ and _Official Card Game_. This is the repository for the new instance
-to take advantage of new features offered by Discord and improve reliability.
+_Yu-Gi-Oh! Trading Card Game_, _Official Card Game_, _Rush Duel_, and _Master Duel_ video game.
 
-The new instance runs concurrently with the old instance.
-Features implemented here will be gradually rolled out to the live bot.
-**New `<>` card search documentation is [here](/docs/card-search.md).**
+**[Get started with searching for cards using `<>` in your messages!](/docs/card-search.md)**
 For Slash Command documentation, look in [`docs/commands`](/docs/commands).
 For everything else, please refer to the old [Bastion Classic](https://github.com/AlphaKretin/bastion-bot) repository.
 
 Thanks to [YGOPRODECK](https://ygoprodeck.com/) for sponsoring Bastion. Prices provided by Bastion are YGOPRODECK affiliate links.
 
+Card images and most card data are sourced from [Yugipedia](https://yugipedia.com/) via [YAML Yugi](https://github.com/DawnbrandBots/yaml-yugi).
+
 [<img src="https://img.shields.io/badge/invite%20to-discord-brightgreen?style=for-the-badge" alt="Invite to Discord" />](https://discord.com/api/oauth2/authorize?client_id=383854640694820865&permissions=274878285888&scope=bot%20applications.commands)
 &nbsp;
 [<img src="https://img.shields.io/badge/App%20Directory-darkgreen?style=for-the-badge" alt="Discord App Directory" />](https://discord.com/application-directory/383854640694820865)
 
+[![Continuous integration and deployment](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/cicd.yml/badge.svg)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/cicd.yml)
 [![Compile and test](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/node.js.yml/badge.svg)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/node.js.yml)
 [![Build Docker image and deploy to Swarm](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/docker.yml/badge.svg)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/docker.yml)
 [![Release to production (Compose)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/release-compose.yml/badge.svg)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/release-compose.yml)
