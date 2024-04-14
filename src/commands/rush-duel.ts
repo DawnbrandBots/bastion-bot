@@ -399,8 +399,8 @@ export class RushDuelCommand extends AutocompletableCommand {
 			});
 			return replyLatency(reply, interaction);
 		}
-		await interaction.deferReply();
 		if (!card.images[0].illustration) {
+			await interaction.deferReply();
 			const hasVideoGameIllustration = await checkYugipediaRedirect(
 				this.got,
 				videoGameIllustrationURL(card),
@@ -409,12 +409,15 @@ export class RushDuelCommand extends AutocompletableCommand {
 			if (hasVideoGameIllustration) {
 				card.images[0].illustration = videoGameIllustration(card);
 			}
+			const switcher = new ArtSwitcher(card.images, "rush");
+			const end = Date.now();
+			await switcher.send(interaction, "editReply", resultLanguage);
+			// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
+			const latency = end - interaction.createdTimestamp;
+			return latency;
 		}
 		const switcher = new ArtSwitcher(card.images, "rush");
-		const end = Date.now();
-		await switcher.editReply(interaction, resultLanguage);
-		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
-		const latency = end - interaction.createdTimestamp;
-		return latency;
+		const reply = await switcher.send(interaction, "reply", resultLanguage);
+		return replyLatency(reply, interaction);
 	}
 }

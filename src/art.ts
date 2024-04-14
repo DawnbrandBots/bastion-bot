@@ -108,8 +108,12 @@ export class ArtSwitcher {
 		this.labelButton.setLabel(this.label);
 	}
 
-	async editReply(parentInteraction: ChatInputCommandInteraction, resultLanguage: Locale): Promise<Message> {
-		const reply = await parentInteraction.editReply(this.replyOptions);
+	async send(
+		parentInteraction: ChatInputCommandInteraction,
+		method: "reply" | "editReply",
+		resultLanguage: Locale
+	): Promise<Message> {
+		const reply = await parentInteraction[method]({ ...this.replyOptions, fetchReply: true });
 		// Don't bother setting up button handler if all buttons are disabled
 		if (this.images.length === 1) {
 			return reply;
