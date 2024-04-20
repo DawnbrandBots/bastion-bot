@@ -3,9 +3,10 @@ import { ChatInputCommandInteraction, EmbedBuilder, EmbedFooterOptions } from "d
 import { Got } from "got";
 import { parseDocument } from "htmlparser2";
 import { c, t, useLocale } from "ttag";
-import { CardSchema, LinkArrow, OCGLimitRegulation, SpeedLimitRegulation } from "./definitions";
+import { CardSchema, OCGLimitRegulation, SpeedLimitRegulation } from "./definitions";
 import { RushCardSchema } from "./definitions/rush";
 import { UpdatingLimitRegulationVector } from "./limit-regulation";
+import { linkArrowsEmoji } from "./link-arrows";
 import { Locale, LocaleProvider } from "./locale";
 
 /**
@@ -381,36 +382,6 @@ export function masterDuelIllustrationURL(card: Static<typeof CardSchema>): stri
 	return yugipediaFileRedirect(masterDuelIllustration(card));
 }
 
-const leftLinkArrowsEmoji: Record<string, string> = { "0": "<:LinkMarker_LeftMiddle_0:1102794510444011581>" };
-const rightLinkArrowsEmoji: Record<string, string> = { "0": "<:LinkMarker_Right_0:1102794415149432992>" };
-
-const arrowToNumpad: Record<LinkArrow, number> = {
-	"↙": 1,
-	"⬇": 2,
-	"↘": 3,
-	"⬅": 4,
-	"➡": 6,
-	"↖": 7,
-	"⬆": 8,
-	"↗": 9
-};
-
-function linkArrowsEmoji(arrows: LinkArrow[]): string {
-	const leftNumpad: number[] = [];
-	const rightNumpad: number[] = [];
-	for (const arrow of arrows) {
-		const numpad = arrowToNumpad[arrow];
-		if (numpad % 3 === 0) {
-			rightNumpad.push(numpad);
-		} else {
-			leftNumpad.push(numpad);
-		}
-	}
-	const leftIndex = leftNumpad.sort().join("") || "0";
-	const rightIndex = rightNumpad.sort().join("") || "0";
-	return leftLinkArrowsEmoji[leftIndex] + rightLinkArrowsEmoji[rightIndex];
-}
-
 export function createCardEmbed(
 	card: Static<typeof CardSchema>,
 	lang: Locale,
@@ -513,7 +484,7 @@ export function createCardEmbed(
 		if ("rank" in card) {
 			description += t`**Rank**: ${Icon.Rank} ${card.rank} **ATK**: ${card.atk} **DEF**: ${card.def}`;
 		} else if ("link_arrows" in card) {
-			const arrows = card.link_arrows.join("");
+			const arrows = linkArrowsEmoji(card.link_arrows) + card.link_arrows.join("");
 			description += t`**Link Rating**: ${card.link_arrows.length} **ATK**: ${card.atk} **Link Arrows**: ${arrows}`;
 		} else {
 			description += t`**Level**: ${Icon.Level} ${card.level} **ATK**: ${card.atk} **DEF**: ${card.def}`;
