@@ -6,6 +6,7 @@ import { c, t, useLocale } from "ttag";
 import { CardSchema, OCGLimitRegulation, SpeedLimitRegulation } from "./definitions";
 import { RushCardSchema } from "./definitions/rush";
 import { UpdatingLimitRegulationVector } from "./limit-regulation";
+import { linkArrowsEmoji } from "./link-arrows";
 import { Locale, LocaleProvider } from "./locale";
 
 /**
@@ -483,7 +484,7 @@ export function createCardEmbed(
 		if ("rank" in card) {
 			description += t`**Rank**: ${Icon.Rank} ${card.rank} **ATK**: ${card.atk} **DEF**: ${card.def}`;
 		} else if ("link_arrows" in card) {
-			const arrows = card.link_arrows.join("");
+			const arrows = linkArrowsEmoji(card.link_arrows) + card.link_arrows.join("");
 			description += t`**Link Rating**: ${card.link_arrows.length} **ATK**: ${card.atk} **Link Arrows**: ${arrows}`;
 		} else {
 			description += t`**Level**: ${Icon.Level} ${card.level} **ATK**: ${card.atk} **DEF**: ${card.def}`;
