@@ -2,6 +2,7 @@ import { LinkArrow } from "../definitions";
 import leftJson from "./left.json";
 import rightJson from "./right.json";
 
+// Emoji created by Ice-Pendragon, including implementation concept https://github.com/DawnbrandBots/bastion-bot/issues/311
 const leftLinkArrowsEmoji: Record<string, string> = leftJson;
 const rightLinkArrowsEmoji: Record<string, string> = rightJson;
 
