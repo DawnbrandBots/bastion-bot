@@ -43,7 +43,7 @@
 	},
 	"devDependencies": {
 		"@alphakretin/essentials": "^6.1.0",
-		"@types/better-sqlite3": "^7.6.9",
+		"@types/better-sqlite3": "^7.6.10",
 		"@types/debug": "^4.1.12",
 		"@types/gettext-parser": "^4.0.4",
 		"@types/jest": "^29.5.12",
