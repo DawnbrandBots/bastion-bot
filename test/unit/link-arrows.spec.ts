@@ -6,7 +6,7 @@ describe("linkArrowsEmoji", () => {
 		{
 			name: "Link Spider",
 			arrows: [LinkArrow.Bottom],
-			emoji: "<:LinkMarker_LeftMiddle_12:1102794524545273879><:LinkMarker_Right_0:1102794415149432992>"
+			emoji: "<:LinkMarker_LeftMiddle_2:1102794515661725716><:LinkMarker_Right_0:1102794415149432992>"
 		},
 		{
 			name: "Striker Dragon",
