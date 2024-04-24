@@ -1,4 +1,5 @@
-import { masterDuelIllustration, masterDuelIllustrationURL, yugipediaFileRedirect } from "../../src/card";
+import { masterDuelIllustration, masterDuelIllustrationURL, thumbnail, yugipediaFileRedirect } from "../../src/card";
+import { MasterDuelRarity } from "../../src/definitions";
 
 describe("Helper functions", () => {
 	test("yugipediaFileRedirect", () => {
@@ -38,5 +39,34 @@ describe("Helper functions", () => {
 		expect(masterDuelIllustrationURL(mockCard)).toEqual(
 			"https://yugipedia.com/wiki/Special:Redirect/file/BlueEyesWhiteDragon-MADU-EN-VG-artwork.png?utm_source=bastion"
 		);
+	});
+	test.each([
+		{
+			label: "master_duel_rarity",
+			card: { master_duel_rarity: MasterDuelRarity.N, name: { en: "S:P Little Knight" } },
+			expected: "https://yugipedia.com/wiki/Special:Redirect/file/SPLittleKnight-MADU-EN-VG-artwork.png?utm_source=bastion"
+		},
+		{
+			label: "illustration and no master_duel_rarity",
+			card: {
+				images: [
+					{
+						illustration: "ElementalHEROAirNeos-LOD2-JP-VG-artwork.jpg",
+						index: 1,
+						image: "ElementalHEROAirNeos-STON-EN-UR-UE-Reprint.png"
+					}
+				]
+			},
+			expected: "https://yugipedia.com/wiki/Special:Redirect/file/ElementalHEROAirNeos-LOD2-JP-VG-artwork.jpg?utm_source=bastion"
+		},
+		{
+			label: "no illustration and no master_duel_rarity",
+			card: { images: [{ index: 1, image: "DiabellzetheOriginalSinkeeper-LEDE-EN-ScR-1E.png" }] },
+			expected: "https://yugipedia.com/wiki/Special:Redirect/file/DiabellzetheOriginalSinkeeper-LEDE-EN-ScR-1E.png?utm_source=bastion"
+		},
+		{ label: "no images", card: {}, expected: null }
+	])("thumbnail returns $expected for card with $label", ({ card, expected }) => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		expect(thumbnail(card as any)).toEqual(expected);
 	});
 });

@@ -382,6 +382,16 @@ export function masterDuelIllustrationURL(card: Static<typeof CardSchema>): stri
 	return yugipediaFileRedirect(masterDuelIllustration(card));
 }
 
+export function thumbnail(card: Static<typeof CardSchema>): string | null {
+	if (card.master_duel_rarity) {
+		return masterDuelIllustrationURL(card);
+	}
+	if (card.images?.length) {
+		return yugipediaFileRedirect(card.images[0].illustration ?? card.images[0].image);
+	}
+	return null;
+}
+
 export function createCardEmbed(
 	card: Static<typeof CardSchema>,
 	lang: Locale,
@@ -400,7 +410,7 @@ export function createCardEmbed(
 	const embed = new EmbedBuilder()
 		.setTitle(formatCardName(card, lang))
 		.setURL(ygoprodeck)
-		.setThumbnail(masterDuelIllustrationURL(card));
+		.setThumbnail(thumbnail(card));
 
 	const links = {
 		name: t`🔗 Links`,
