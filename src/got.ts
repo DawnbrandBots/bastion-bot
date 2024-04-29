@@ -30,25 +30,29 @@ export default function createGotClient(): Got {
 		hooks: {
 			beforeRequest: [
 				options =>
-					logger.info({
-						event: "beforeRequest",
-						method: options.method,
-						url: options.url.toString(),
-						timeout: options.timeout,
-						headers: options.headers
-					})
+					logger.info(
+						JSON.stringify({
+							event: "beforeRequest",
+							method: options.method,
+							url: options.url,
+							timeout: options.timeout,
+							headers: options.headers
+						})
+					)
 			],
 			afterResponse: [
 				response => (
-					logger.info({
-						event: "afterResponse",
-						method: response.request.options.method,
-						url: response.requestUrl,
-						code: response.statusCode,
-						timings: response.timings,
-						headers: response.rawHeaders,
-						body: response.body
-					}),
+					logger.info(
+						JSON.stringify({
+							event: "afterResponse",
+							method: response.request.options.method,
+							url: response.requestUrl,
+							code: response.statusCode,
+							timings: response.timings,
+							headers: response.rawHeaders,
+							body: response.body
+						})
+					),
 					response
 				)
 			]
