@@ -2,7 +2,6 @@ import { AsyncLocalStorage } from "async_hooks";
 import debug, { Debug } from "debug";
 import { AutocompleteInteraction, CommandInteraction, escapeMarkdown, Message, WebhookClient } from "discord.js";
 import util from "util";
-import { serialiseInteraction } from "./utils";
 
 const global = debug("bot");
 
@@ -10,25 +9,41 @@ const webhook = process.env.BOT_LOGGER_WEBHOOK ? new WebhookClient({ url: proces
 
 export const asyncLocalStorage = new AsyncLocalStorage<CommandInteraction | AutocompleteInteraction | Message>();
 
-function contextLog(log: debug.Debugger): Debug["log"] {
-	return function (...args: Parameters<debug.Debugger>) {
-		const context = asyncLocalStorage.getStore();
-		if (context) {
-			if ("commandId" in context) {
-				log(serialiseInteraction(context), ...args);
-			} else {
-				log(
-					JSON.stringify({
-						channel: context.channelId,
-						message: context.id,
-						guild: context.guildId,
-						author: context.author.id
-					}),
-					...args
-				);
-			}
+function contextLog(log: debug.Debugger): LogFunction {
+	return function (msg: string | Record<string, unknown>, error?: Error) {
+		const asyncContext = asyncLocalStorage.getStore();
+		const context =
+			asyncContext &&
+			("commandId" in asyncContext
+				? {
+						channel: asyncContext.channelId,
+						message: asyncContext.id,
+						guild: asyncContext.guildId,
+						author: asyncContext.user.id,
+						id: asyncContext.commandId,
+						command: asyncContext.commandName
+					}
+				: {
+						channel: asyncContext.channelId,
+						message: asyncContext.id,
+						guild: asyncContext.guildId,
+						author: asyncContext.author.id
+					});
+		if (context || error) {
+			log(
+				JSON.stringify({
+					msg,
+					...(context && { context }),
+					...(error && {
+						error,
+						stack: error.stack
+					})
+				})
+			);
+		} else if (typeof msg === "string") {
+			log(msg);
 		} else {
-			log(...args);
+			log(JSON.stringify(msg));
 		}
 	};
 }
@@ -51,12 +66,17 @@ function withWebhook(log: debug.Debugger): Debug["log"] {
 	}
 }
 
+interface LogFunction {
+	(msg: string, error?: Error): void;
+	(obj: Record<string, unknown>, error?: Error): void;
+}
+
 export interface Logger {
-	error: Debug["log"];
-	warn: Debug["log"];
-	notify: Debug["log"];
-	info: Debug["log"];
-	verbose: Debug["log"];
+	error: LogFunction;
+	warn: LogFunction;
+	notify: LogFunction;
+	info: LogFunction;
+	verbose: LogFunction;
 }
 
 export function getLogger(namespace: string): Logger {
