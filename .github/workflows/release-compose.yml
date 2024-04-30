@@ -51,6 +51,7 @@ jobs:
           BOT_PRESENCE: ${{ github.event.inputs.presence }}
           BOT_MOTD: ${{ github.event.inputs.motd }}
           BOT_BIND_MOUNT: ${{ secrets.PRODUCTION_BIND_MOUNT }}
+          LOG_ALL_MESSAGE_CHANNEL: ${{ secrets.LOG_ALL_MESSAGE_CHANNEL }}
         run: |
           docker-compose pull
           docker-compose up -d

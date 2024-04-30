@@ -243,6 +243,14 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 	}
 
 	async run(message: Message): Promise<void> {
+		if (message.channelId === process.env.LOG_ALL_MESSAGE_CHANNEL) {
+			this.#logger.verbose(
+				JSON.stringify({
+					...(message.toJSON() as object),
+					channel: message.channel.toJSON()
+				})
+			);
+		}
 		if (shouldIgnore(message)) {
 			return;
 		}

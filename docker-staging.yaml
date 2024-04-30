@@ -15,6 +15,7 @@ services:
       BOT_PRESENCE: "${BOT_PRESENCE:-}"
       BOT_MOTD: "${BOT_MOTD:-}"
       BOT_NO_DIRECT_MESSAGE_SEARCH: 1
+      LOG_ALL_MESSAGE_CHANNEL:
     logging:
       driver: journald
     deploy:
