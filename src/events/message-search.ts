@@ -1,15 +1,15 @@
 import { rules } from "discord-markdown";
 import {
-	Colors,
-	DiscordAPIError,
-	EmbedBuilder,
-	EmojiIdentifierResolvable,
-	FormattingPatterns,
-	Message,
-	MessageReaction,
-	MessageReplyOptions,
-	PermissionsBitField,
-	RESTJSONErrorCodes
+    Colors,
+    DiscordAPIError,
+    EmbedBuilder,
+    EmojiIdentifierResolvable,
+    FormattingPatterns,
+    Message,
+    MessageReaction,
+    MessageReplyOptions,
+    PermissionsBitField,
+    RESTJSONErrorCodes
 } from "discord.js";
 import { Got } from "got";
 import { ParserRules, parserFor } from "simple-markdown";
@@ -209,6 +209,8 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 
 	#logger = getLogger("events:message:search");
 
+	readonly #debugChannels = new Set(process.env.LOG_ALL_MESSAGE_CHANNEL?.split(","));
+
 	constructor(
 		@inject("LocaleProvider") private locales: LocaleProvider,
 		@inject("got") private got: Got,
@@ -243,7 +245,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 	}
 
 	async run(message: Message): Promise<void> {
-		if (message.channelId === process.env.LOG_ALL_MESSAGE_CHANNEL) {
+		if (this.#debugChannels.has(message.channelId)) {
 			this.#logger.verbose(
 				JSON.stringify({
 					...(message.toJSON() as object),
