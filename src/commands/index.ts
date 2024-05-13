@@ -2,6 +2,7 @@ import { REST } from "@discordjs/rest";
 import { APIUser, Routes } from "discord-api-types/v10";
 import { ArtCommand } from "./art";
 import { DeckCommand } from "./deck";
+import { DeckSearchCommand } from "./deck-search";
 import { HelpCommand } from "./help";
 import { IdCommand } from "./id";
 import { LinkCommand } from "./link";
@@ -30,7 +31,7 @@ const productionCommandClasses = [
 	PriceCommand,
 	RushDuelCommand
 ];
-const previewCommandClasses = [QueryCommand];
+const previewCommandClasses = [QueryCommand, DeckSearchCommand];
 
 export const classes = [
 	...productionCommandClasses,
@@ -40,6 +41,7 @@ export const classes = [
 export {
 	ArtCommand,
 	DeckCommand,
+	DeckSearchCommand,
 	HelpCommand,
 	IdCommand,
 	LinkCommand,

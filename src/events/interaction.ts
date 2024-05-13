@@ -42,6 +42,10 @@ export class InteractionListener implements Listener<"interactionCreate"> {
 			} else {
 				this.#logger.verbose(serialiseInteraction(interaction, { skipNoLock: true }));
 			}
-		}
+		} else if (interaction.isButton()) {
+            interaction.customId;
+        } else if (interaction.isModalSubmit()) {
+            interaction.customId;
+        }
 	}
 }
