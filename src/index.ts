@@ -7,7 +7,11 @@ import { classes, registerSlashCommands } from "./commands";
 import { EventLocker } from "./event-lock";
 import { InteractionListener, MessageDeleteListener, PingMessageListener, SearchMessageListener } from "./events";
 import createGotClient from "./got";
-import { limitRegulationMasterDuelProvider, limitRegulationRushProvider } from "./limit-regulation";
+import {
+	limitRegulationAsianEnglishProvider,
+	limitRegulationMasterDuelProvider,
+	limitRegulationRushProvider
+} from "./limit-regulation";
 import { LocaleProvider, SQLiteLocaleProvider, loadTranslations } from "./locale";
 import { getLogger } from "./logger";
 import { RecentMessageCache } from "./message-cache";
@@ -60,6 +64,7 @@ if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 
 	container.register("limitRegulationRush", limitRegulationRushProvider);
 	container.register("limitRegulationMasterDuel", limitRegulationMasterDuelProvider);
+	container.register("limitRegulationAsianEnglish", limitRegulationAsianEnglishProvider);
 
 	//container.registerSingleton<Metrics>(Metrics);
 	container.registerSingleton<LocaleProvider>("LocaleProvider", SQLiteLocaleProvider);
