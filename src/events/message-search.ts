@@ -1,17 +1,18 @@
 import { rules } from "discord-markdown";
 import {
-    Colors,
-    DiscordAPIError,
-    EmbedBuilder,
-    EmojiIdentifierResolvable,
-    FormattingPatterns,
-    Message,
-    MessageReaction,
-    MessageReplyOptions,
-    PermissionsBitField,
-    RESTJSONErrorCodes
+	Colors,
+	DiscordAPIError,
+	EmbedBuilder,
+	EmojiIdentifierResolvable,
+	FormattingPatterns,
+	Message,
+	MessageReaction,
+	MessageReplyOptions,
+	PermissionsBitField,
+	RESTJSONErrorCodes
 } from "discord.js";
 import { Got } from "got";
+import { Record as ImmutableRecord, OrderedSet } from "immutable";
 import { ParserRules, parserFor } from "simple-markdown";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
@@ -90,15 +91,31 @@ function getDelimiter(message: Message) {
 	}
 }
 
-export function parseSummons(cleanMessage: string, regex: RegExp): string[] {
+export type SearchSummon = { readonly summon: string; readonly type: "ocg" | "rush" };
+const SearchSummonRecord = ImmutableRecord<SearchSummon>({ summon: "", type: "ocg" }, "SearchSummon");
+
+function matchToSummon(match: RegExpExecArray): SearchSummon {
+	const before = match.input[match.index - 1];
+	const after = match.input[match.index + match[1].length + 2];
+	let type: SearchSummon["type"] = "ocg";
+	if (before?.toLowerCase() === "r" || after?.toLowerCase() === "r") {
+		type = "rush";
+	}
+	return {
+		summon: match[1].trim(),
+		type
+	};
+}
+
+function parseSummons(cleanMessage: string, regex: RegExp): SearchSummon[] {
 	return [...cleanMessage.matchAll(regex)]
-		.map(match => match[1].trim())
-		.filter(summon => {
-			// Ignore matches containing only whitespace or containing the following three tokens
-			if (summon.length === 0) {
+		.map(match => matchToSummon(match))
+		.filter(({ summon }) => {
+			if (summon.length === 0 || summon.length > 80) {
 				return false;
 			}
 			const lower = summon.toLowerCase();
+			// Ignore, let old bot process
 			return !["://", "(", "anime"].some(token => lower.includes(token));
 		});
 }
@@ -106,7 +123,7 @@ export function parseSummons(cleanMessage: string, regex: RegExp): string[] {
 export function preprocess(
 	message: string,
 	delimiter: (typeof DELIMITERS)[keyof typeof DELIMITERS] = DELIMITERS.ANGLE
-): string[] {
+): SearchSummon[] {
 	message = cleanMessageMarkup(message);
 	if (delimiter.prune) {
 		message = message.replaceAll(delimiter.prune, "");
@@ -273,16 +290,16 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			return;
 		}
 		const delimiter = getDelimiter(message);
-		let inputs = preprocess(message.content, delimiter);
+		const inputs = preprocess(message.content, delimiter);
 		if (inputs.length === 0) {
 			return;
 		}
 		this.log("info", message, JSON.stringify(inputs));
-		inputs = [...new Set(inputs)].slice(0, 3); // remove duplicates, then select first three
+		const uniqueInputs = OrderedSet(inputs.map(SearchSummonRecord)).slice(0, 3); // remove duplicates, then select first three
 		message.channel.sendTyping().catch(error => this.log("info", message, error));
 		this.addReaction(message, "🕙");
 		const language = await this.locales.getM(message);
-		const promises = inputs.map(async input => {
+		const promises = uniqueInputs.map(async ({ summon: input }) => {
 			const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
 			const card = await getCard(this.got, type, searchTerm, inputLanguage);
 			useLocale(resultLanguage);
@@ -336,13 +353,13 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		for (const [i, result] of results.entries()) {
 			if (result.status === "fulfilled") {
 				const [card, reply] = result.value;
-				this.metrics.writeSearch(message, inputs[i], card, reply);
+				this.metrics.writeSearch(message, JSON.stringify(inputs[i]), card, reply);
 				if (reply) {
 					replies.push(reply.id);
 				}
 			} else {
 				// Exception from getCard
-				this.metrics.writeSearch(message, inputs[i]);
+				this.metrics.writeSearch(message, JSON.stringify(inputs[i]));
 				this.log("error", message, inputs[i], result.reason);
 			}
 		}
