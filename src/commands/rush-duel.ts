@@ -27,7 +27,7 @@ import {
 import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
 import { createRushCardEmbed, videoGameIllustration, videoGameIllustrationURL } from "../rush-duel";
-import { addNotice, replyLatency, serialiseInteraction } from "../utils";
+import { replyLatency, serialiseInteraction } from "../utils";
 
 @injectable()
 export class RushDuelCommand extends AutocompletableCommand {
@@ -187,7 +187,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 		}
 		const { resultLanguage, card } = result;
 		const embed = createRushCardEmbed(card, resultLanguage, this.limitRegulation);
-		const reply = await interaction.reply({ embeds: addNotice(embed), fetchReply: true });
+		const reply = await interaction.reply({ embeds: [embed], fetchReply: true });
 		return replyLatency(reply, interaction);
 	}
 
@@ -211,7 +211,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 				const card = JSON.parse(response.body);
 				const embed = createRushCardEmbed(card, lang, this.limitRegulation);
 				const reply = await interaction.reply({
-					embeds: addNotice(embed),
+					embeds: [embed],
 					fetchReply: true
 				});
 				return replyLatency(reply, interaction);
@@ -229,7 +229,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 		this.#logger.info(serialiseInteraction(interaction, { response: card.yugipedia_page_id }));
 		const lang = await this.locales.get(interaction);
 		const embed = createRushCardEmbed(card, lang, this.limitRegulation);
-		const reply = await interaction.reply({ embeds: addNotice(embed), fetchReply: true });
+		const reply = await interaction.reply({ embeds: [embed], fetchReply: true });
 		return replyLatency(reply, interaction);
 	}
 
