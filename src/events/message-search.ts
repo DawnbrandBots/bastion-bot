@@ -14,7 +14,7 @@ import {
 import { Got } from "got";
 import { Record as ImmutableRecord, OrderedSet } from "immutable";
 import { ParserRules, parserFor } from "simple-markdown";
-import { inject, injectable } from "tsyringe";
+import { inject, injectable, instanceCachingFactory } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { Listener } from ".";
 import { ABDeploy } from "../abdeploy";
@@ -199,6 +199,60 @@ export function inputToGetCardArguments(input: string, defaultLanguage: Locale) 
 	}
 }
 
+interface CardSearcher {
+	search(message: Message, input: string, language: Locale): Promise<MessageReplyOptions>;
+}
+
+class OCGCardSearcher implements CardSearcher {
+	constructor(
+		private got: Got,
+		private masterDuelLimitRegulation: UpdatingLimitRegulationVector
+	) {}
+	async search(message: Message, input: string, language: Locale): Promise<MessageReplyOptions> {
+		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
+		const card = await getCard(this.got, type, searchTerm, inputLanguage);
+		useLocale(resultLanguage);
+		let replyOptions;
+		if (!card) {
+			let context = "\n";
+			if (type === "name") {
+				const localisedInputLanguage = LOCALES_MAP.get(inputLanguage);
+				// Note: nonfunctional in development or preview because those bots do not have global commands.
+				// To test functionality in development or preview, fetch guild commands and search them instead.
+				const id = message.client.application.commands.cache.find(cmd => cmd.name === "locale")?.id ?? 0;
+				context += t`Search language: **${localisedInputLanguage}** (${inputLanguage}). Check defaults with </locale get:${id}> and configure with </locale set:${id}>`;
+			} else {
+				const localisedType = rc("command-option").gettext(type);
+				context += t`Search type: ${localisedType}`;
+			}
+			replyOptions = { content: t`Could not find a card matching \`${input}\`!` + context };
+		} else {
+			const embeds = createCardEmbed(card, resultLanguage, this.masterDuelLimitRegulation);
+			// eslint-disable-next-line no-constant-condition
+			if (false) {
+				embeds[embeds.length - 1].addFields({
+					name: t`💬 Translations missing?`,
+					value: t`Help translate Bastion at the links above.`
+				});
+			}
+			replyOptions = { embeds };
+		}
+		return replyOptions;
+	}
+}
+
+class RushCardSearcher implements CardSearcher {
+	search(): Promise<MessageReplyOptions> {
+		throw new Error("Method not implemented.");
+	}
+}
+
+type CardSearcherMap = Record<SearchSummon["type"], CardSearcher>;
+export const cardSearcherProvider = instanceCachingFactory<CardSearcherMap>(container => ({
+	ocg: new OCGCardSearcher(container.resolve("got"), container.resolve("limitRegulationMasterDuel")),
+	rush: new RushCardSearcher()
+}));
+
 function createMisconfigurationEmbed(error: DiscordAPIError, message: Message): EmbedBuilder {
 	return new EmbedBuilder()
 		.setColor(Colors.Red)
@@ -235,7 +289,8 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		private metrics: Metrics,
 		private recentCache: RecentMessageCache,
 		private abdeploy: ABDeploy,
-		private eventLocks: EventLocker
+		private eventLocks: EventLocker,
+		@inject("cardSearchers") private cardSearchers: CardSearcherMap
 	) {
 		this.got = got.extend({
 			// Default got behaviour, with logging hooked in https://github.com/sindresorhus/got/tree/v11.8.6#retry
@@ -299,35 +354,8 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		message.channel.sendTyping().catch(error => this.log("info", message, error));
 		this.addReaction(message, "🕙");
 		const language = await this.locales.getM(message);
-		const promises = uniqueInputs.map(async ({ summon: input }) => {
-			const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
-			const card = await getCard(this.got, type, searchTerm, inputLanguage);
-			useLocale(resultLanguage);
-			let replyOptions;
-			if (!card) {
-				let context = "\n";
-				if (type === "name") {
-					const localisedInputLanguage = LOCALES_MAP.get(inputLanguage);
-					// Note: nonfunctional in development or preview because those bots do not have global commands.
-					// To test functionality in development or preview, fetch guild commands and search them instead.
-					const id = message.client.application.commands.cache.find(cmd => cmd.name === "locale")?.id ?? 0;
-					context += t`Search language: **${localisedInputLanguage}** (${inputLanguage}). Check defaults with </locale get:${id}> and configure with </locale set:${id}>`;
-				} else {
-					const localisedType = rc("command-option").gettext(type);
-					context += t`Search type: ${localisedType}`;
-				}
-				replyOptions = { content: t`Could not find a card matching \`${input}\`!` + context };
-			} else {
-				const embeds = createCardEmbed(card, resultLanguage, this.masterDuelLimitRegulation);
-				// eslint-disable-next-line no-constant-condition
-				if (false) {
-					embeds[embeds.length - 1].addFields({
-						name: t`💬 Translations missing?`,
-						value: t`Help translate Bastion at the links above.`
-					});
-				}
-				replyOptions = { embeds };
-			}
+		const promises = uniqueInputs.map(async hit => {
+			const replyOptions = await this.cardSearchers[hit.type].search(message, hit.summon, language);
 			try {
 				const reply = await message.reply(replyOptions);
 				return [card, reply] as const;
