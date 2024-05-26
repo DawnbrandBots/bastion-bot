@@ -6,6 +6,7 @@ import { BotFactory } from "./bot";
 import { classes, registerSlashCommands } from "./commands";
 import { EventLocker } from "./event-lock";
 import { InteractionListener, MessageDeleteListener, PingMessageListener, SearchMessageListener } from "./events";
+import { cardSearcherProvider } from "./events/message-search";
 import createGotClient from "./got";
 import { limitRegulationMasterDuelProvider, limitRegulationRushProvider } from "./limit-regulation";
 import { LocaleProvider, SQLiteLocaleProvider, loadTranslations } from "./locale";
@@ -60,6 +61,7 @@ if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 
 	container.register("limitRegulationRush", limitRegulationRushProvider);
 	container.register("limitRegulationMasterDuel", limitRegulationMasterDuelProvider);
+	container.register("cardSearchers", { useFactory: cardSearcherProvider });
 
 	//container.registerSingleton<Metrics>(Metrics);
 	container.registerSingleton<LocaleProvider>("LocaleProvider", SQLiteLocaleProvider);
