@@ -1,5 +1,6 @@
 import { Static } from "@sinclair/typebox";
 import { EmbedBuilder } from "discord.js";
+import { Got } from "got";
 import { c, t, useLocale } from "ttag";
 import { AttributeIcon, Colour, Icon, RaceIcon, formatCardName, formatCardText, yugipediaFileRedirect } from "./card";
 import { RushCardSchema } from "./definitions/rush";
@@ -146,4 +147,32 @@ export function createRushCardEmbed(
 	embed.setFooter({ text: footer });
 
 	return embed;
+}
+
+export async function searchRushCard(
+	got: Got,
+	query: string,
+	lang: Locale,
+	count: number = 1
+): Promise<Static<typeof RushCardSchema>[]> {
+	const url = new URL(`${process.env.API_URL}/rush/search`);
+	url.searchParams.set("name", query);
+	url.searchParams.set("lang", lang);
+	url.searchParams.set("count", `${count}`);
+	return await got(url, { throwHttpErrors: true }).json<Static<typeof RushCardSchema>[]>();
+}
+
+export async function getRushCardByKonamiId(
+	got: Got,
+	konamiId: string | number
+): Promise<Static<typeof RushCardSchema> | null> {
+	const response = await got(`${process.env.API_URL}/rush/${konamiId}`);
+	switch (response.statusCode) {
+		case 200:
+			return JSON.parse(response.body);
+		case 404:
+			return null;
+		default:
+			throw new got.HTTPError(response);
+	}
 }

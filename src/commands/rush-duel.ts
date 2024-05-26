@@ -26,7 +26,13 @@ import {
 } from "../locale";
 import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
-import { createRushCardEmbed, videoGameIllustration, videoGameIllustrationURL } from "../rush-duel";
+import {
+	createRushCardEmbed,
+	getRushCardByKonamiId,
+	searchRushCard,
+	videoGameIllustration,
+	videoGameIllustrationURL
+} from "../rush-duel";
 import { replyLatency, serialiseInteraction } from "../utils";
 
 @injectable()
@@ -101,14 +107,6 @@ export class RushDuelCommand extends AutocompletableCommand {
 		return this.#logger;
 	}
 
-	private async search(query: string, lang: Locale, count: number): Promise<Static<typeof RushCardSchema>[]> {
-		const url = new URL(`${process.env.API_URL}/rush/search`);
-		url.searchParams.set("name", query);
-		url.searchParams.set("lang", lang);
-		url.searchParams.set("count", `${count}`);
-		return await this.got(url, { throwHttpErrors: true }).json<Static<typeof RushCardSchema>[]>();
-	}
-
 	override async autocomplete(interaction: AutocompleteInteraction): Promise<void> {
 		const query = interaction.options.getFocused();
 		if (!query) {
@@ -119,7 +117,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 			const resultLanguage = await this.locales.get(interaction);
 			const inputLanguage = (interaction.options.getString("input-language") as Locale) ?? resultLanguage;
 			const start = Date.now();
-			const response = await this.search(query, inputLanguage, 25);
+			const response = await searchRushCard(this.got, query, inputLanguage, 25);
 			const latency = Date.now() - start;
 			this.#logger.info(serialiseInteraction(interaction, { autocomplete: query, latency }));
 			const options = [];
@@ -163,7 +161,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 			this.#logger.info(serialiseInteraction(interaction, { input, cached: card.yugipedia_page_id }));
 		} else {
 			const start = Date.now();
-			const response = await this.search(input, inputLanguage, 1);
+			const response = await searchRushCard(this.got, input, inputLanguage, 1);
 			const latency = Date.now() - start;
 			if (!response.length) {
 				this.#logger.info(serialiseInteraction(interaction, { input, latency, response: null }));
@@ -194,31 +192,18 @@ export class RushDuelCommand extends AutocompletableCommand {
 	private async subcommandKonamiId(interaction: ChatInputCommandInteraction): Promise<number> {
 		const input = interaction.options.getInteger("input", true);
 		this.#logger.info(serialiseInteraction(interaction, { input }));
-		const response = await this.got(`${process.env.API_URL}/rush/${input}`, {
-			headers: { Accept: "application/json" }
-		});
+		const card = await getRushCardByKonamiId(this.got, input);
 		const lang = await this.locales.get(interaction);
-		switch (response.statusCode) {
-			case 404: {
-				useLocale(lang);
-				const reply = await interaction.reply({
-					content: t`Could not find a card matching \`${input}\`!`,
-					fetchReply: true
-				});
-				return replyLatency(reply, interaction);
-			}
-			case 200: {
-				const card = JSON.parse(response.body);
-				const embed = createRushCardEmbed(card, lang, this.limitRegulation);
-				const reply = await interaction.reply({
-					embeds: [embed],
-					fetchReply: true
-				});
-				return replyLatency(reply, interaction);
-			}
-			default:
-				throw new this.got.HTTPError(response);
+		let replyOptions;
+		if (!card) {
+			useLocale(lang);
+			replyOptions = { content: t`Could not find a card matching \`${input}\`!` };
+		} else {
+			const embed = createRushCardEmbed(card, lang, this.limitRegulation);
+			replyOptions = { embeds: [embed] };
 		}
+		const reply = await interaction.reply({ ...replyOptions, fetchReply: true });
+		return replyLatency(reply, interaction);
 	}
 
 	private async subcommandRandom(interaction: ChatInputCommandInteraction): Promise<number> {
