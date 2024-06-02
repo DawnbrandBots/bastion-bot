@@ -1,5 +1,4 @@
 import {
-	CacheType,
 	ChatInputCommandInteraction,
 	RESTPostAPIApplicationCommandsJSONBody,
 	SlashCommandBuilder,
@@ -24,6 +23,34 @@ interface TopResponse {
 	total: number;
 }
 
+interface MasterDuelCardUsage {
+	name: string;
+	id: number;
+	win_count: number;
+	loss_count: number;
+	win_ratio: number;
+	duel_count: number;
+	placement: number;
+	season: number;
+	game_mode: string;
+	pretty_url: string;
+	rarity: string;
+}
+
+interface MasterDuelTier {
+	tier: number;
+	season: number;
+	game_mode: string;
+	archetype_name: string;
+	win_count: number;
+	loss_count: number;
+	win_ratio: string;
+	duel_count: number;
+	rank_weighted_score: number;
+	average_turn_count: string;
+	median_turn_count: string;
+}
+
 @injectable()
 export class MetagameCommand extends Command {
 	#logger = getLogger("command:metagame");
@@ -39,14 +66,18 @@ export class MetagameCommand extends Command {
 		const builder = buildLocalisedCommand(
 			new SlashCommandBuilder(),
 			() => c("command-name").t`metagame`,
-			() => c("command-description").t`Show the current tournament metagame.`
+			() =>
+				c("command-description")
+					.t`Show the current competitive strategies in tournaments and the Master Duel ranked ladder.`
 		);
 		const option = buildLocalisedCommand(
 			new SlashCommandStringOption()
 				.addChoices([
 					buildLocalisedChoice("TCG", () => "TCG"),
 					buildLocalisedChoice("OCG", () => "OCG"),
-					buildLocalisedChoice("OCG-AE", () => "OCG (Asian-English)")
+					buildLocalisedChoice("OCG-AE", () => "OCG (Asian-English)"),
+					buildLocalisedChoice("MD-CU", () => "Master Duel Diamond+ ranked card usage"),
+					buildLocalisedChoice("MD-TL", () => "Master Duel Diamond+ tier list")
 				])
 				.setRequired(true),
 			() => c("command-option").t`region`,
@@ -58,8 +89,7 @@ export class MetagameCommand extends Command {
 		return this.#logger;
 	}
 
-	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-	private async getTops(region: string) {
+	private async getTops(region: string): Promise<TopResponse> {
 		return await this.got
 			.post("https://ygoprodeck.com/api/tournament/getTopArchetypes.php", {
 				headers: {
@@ -68,7 +98,59 @@ export class MetagameCommand extends Command {
 				},
 				body: `format=${region}`
 			})
-			.json<TopResponse>();
+			.json();
+	}
+
+	private async getMasterDuelCardUsage(): Promise<MasterDuelCardUsage[]> {
+		return await this.got("https://ygoprodeck.com/api/master-duel/card-usage.php").json();
+	}
+
+	private async getMasterDuelTierList(): Promise<MasterDuelTier[]> {
+		return await this.got("https://ygoprodeck.com/api/master-duel/tier-list.php").json();
+	}
+
+	private async masterDuelCardUsage(interaction: ChatInputCommandInteraction): Promise<number> {
+		const usage = await this.getMasterDuelCardUsage();
+		const reply = await interaction.reply({
+			embeds: [
+				{
+					title: "Master Duel Diamond+ ranked card usage",
+					url: "https://ygoprodeck.com/master-duel/card-usage/?utm_source=bastion",
+					description: usage
+						.map(
+							card =>
+								`${card.name}: ${(card.win_ratio * 100).toFixed(2)}% wins in ${card.duel_count} duels`
+						)
+						.join("\n"),
+					footer: { text: `YGOPRODECK data for season ${usage[0].season}` }
+				}
+			],
+			fetchReply: true
+		});
+		return replyLatency(reply, interaction);
+	}
+
+	private async masterDuelTierList(interaction: ChatInputCommandInteraction): Promise<number> {
+		const tierList = await this.getMasterDuelTierList();
+		const tiers: MasterDuelTier[][] = [];
+		for (const strategy of tierList) {
+			if (tiers[strategy.tier]) {
+				tiers[strategy.tier].push(strategy);
+			} else {
+				tiers[strategy.tier] = [strategy];
+			}
+		}
+		const reply = await interaction.reply({
+			embeds: [
+				{
+					title: "Master Duel Diamond+ tier list",
+					url: "https://ygoprodeck.com/master-duel/tier-list/?utm_source=bastion",
+					footer: { text: `YGOPRODECK weighted scores for season ${tierList[0].season}` }
+				}
+			],
+			fetchReply: true
+		});
+		return replyLatency(reply, interaction);
 	}
 
 	private link(path: string): URL {
@@ -77,8 +159,7 @@ export class MetagameCommand extends Command {
 		return url;
 	}
 
-	protected override async execute(interaction: ChatInputCommandInteraction<CacheType>): Promise<number> {
-		const region = interaction.options.getString("region", true);
+	private async tournamentTops(interaction: ChatInputCommandInteraction, region: string): Promise<number> {
 		const tops = await this.getTops(region);
 		let description = "";
 		let otherQuantity = 0;
@@ -106,5 +187,17 @@ export class MetagameCommand extends Command {
 			fetchReply: true
 		});
 		return replyLatency(reply, interaction);
+	}
+
+	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
+		const region = interaction.options.getString("region", true);
+		switch (region) {
+			case "MD-CU":
+				return await this.masterDuelCardUsage(interaction);
+			case "MD-TL":
+				return await this.masterDuelTierList(interaction);
+			default:
+				return await this.tournamentTops(interaction, region);
+		}
 	}
 }
