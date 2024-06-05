@@ -52,12 +52,39 @@ interface MasterDuelTier {
 }
 
 @injectable()
+export class MetagameClient {
+	constructor(@inject("got") private got: Got) {
+		this.got = got.extend({ throwHttpErrors: true });
+	}
+
+	async getTops(region: string): Promise<TopResponse> {
+		return await this.got
+			.post("https://ygoprodeck.com/api/tournament/getTopArchetypes.php", {
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/x-www-form-urlencoded"
+				},
+				body: `format=${region}`
+			})
+			.json();
+	}
+
+	async getMasterDuelCardUsage(): Promise<MasterDuelCardUsage[]> {
+		return await this.got("https://ygoprodeck.com/api/master-duel/card-usage.php").json();
+	}
+
+	async getMasterDuelTierList(): Promise<MasterDuelTier[]> {
+		return await this.got("https://ygoprodeck.com/api/master-duel/tier-list.php").json();
+	}
+}
+
+@injectable()
 export class MetagameCommand extends Command {
 	#logger = getLogger("command:metagame");
 
 	constructor(
 		metrics: Metrics,
-		@inject("got") private got: Got
+		private api: MetagameClient
 	) {
 		super(metrics);
 	}
@@ -89,28 +116,8 @@ export class MetagameCommand extends Command {
 		return this.#logger;
 	}
 
-	private async getTops(region: string): Promise<TopResponse> {
-		return await this.got
-			.post("https://ygoprodeck.com/api/tournament/getTopArchetypes.php", {
-				headers: {
-					Accept: "application/json",
-					"Content-Type": "application/x-www-form-urlencoded"
-				},
-				body: `format=${region}`
-			})
-			.json();
-	}
-
-	private async getMasterDuelCardUsage(): Promise<MasterDuelCardUsage[]> {
-		return await this.got("https://ygoprodeck.com/api/master-duel/card-usage.php").json();
-	}
-
-	private async getMasterDuelTierList(): Promise<MasterDuelTier[]> {
-		return await this.got("https://ygoprodeck.com/api/master-duel/tier-list.php").json();
-	}
-
 	private async masterDuelCardUsage(interaction: ChatInputCommandInteraction): Promise<number> {
-		const usage = await this.getMasterDuelCardUsage();
+		const usage = await this.api.getMasterDuelCardUsage();
 		const reply = await interaction.reply({
 			embeds: [
 				{
@@ -131,7 +138,7 @@ export class MetagameCommand extends Command {
 	}
 
 	private async masterDuelTierList(interaction: ChatInputCommandInteraction): Promise<number> {
-		const tierList = await this.getMasterDuelTierList();
+		const tierList = await this.api.getMasterDuelTierList();
 		const tiers: MasterDuelTier[][] = [];
 		for (const strategy of tierList) {
 			if (tiers[strategy.tier]) {
@@ -160,7 +167,7 @@ export class MetagameCommand extends Command {
 	}
 
 	private async tournamentTops(interaction: ChatInputCommandInteraction, region: string): Promise<number> {
-		const tops = await this.getTops(region);
+		const tops = await this.api.getTops(region);
 		let description = "";
 		let otherQuantity = 0;
 		for (const strategy of tops.archetypes) {
