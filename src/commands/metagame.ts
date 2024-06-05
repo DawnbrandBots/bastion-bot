@@ -139,20 +139,30 @@ export class MetagameCommand extends Command {
 
 	private async masterDuelTierList(interaction: ChatInputCommandInteraction): Promise<number> {
 		const tierList = await this.api.getMasterDuelTierList();
-		const tiers: MasterDuelTier[][] = [];
+		const tiers = new Map<number, MasterDuelTier[]>();
 		for (const strategy of tierList) {
-			if (tiers[strategy.tier]) {
-				tiers[strategy.tier].push(strategy);
-			} else {
-				tiers[strategy.tier] = [strategy];
+			if (!tiers.has(strategy.tier)) {
+				tiers.set(strategy.tier, []);
 			}
+			tiers.get(strategy.tier)!.push(strategy);
 		}
 		const reply = await interaction.reply({
 			embeds: [
 				{
 					title: "Master Duel Diamond+ tier list",
 					url: "https://ygoprodeck.com/master-duel/tier-list/?utm_source=bastion",
-					footer: { text: `YGOPRODECK weighted scores for season ${tierList[0].season}` }
+					fields: [...tiers.entries()].map(([tier, strategies]) => ({
+						name: `Tier ${tier}`,
+						value: strategies
+							.map(
+								strategy =>
+									`- ${strategy.archetype_name} WR: ${strategy.win_ratio} (WS: ${strategy.rank_weighted_score})\n`
+							)
+							.join("")
+					})),
+					footer: {
+						text: `YGOPRODECK weighted scores for season ${tierList[0].season}. Mean turns: ${tierList[0].average_turn_count}. Median turns: ${tierList[0].median_turn_count}`
+					}
 				}
 			],
 			fetchReply: true
