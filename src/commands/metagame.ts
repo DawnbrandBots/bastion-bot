@@ -161,7 +161,7 @@ export class MetagameCommand extends Command {
 							.join("")
 					})),
 					footer: {
-						text: `YGOPRODECK weighted scores for season ${tierList[0].season}. Mean turns: ${tierList[0].average_turn_count}. Median turns: ${tierList[0].median_turn_count}`
+						text: `YGOPRODECK weighted scores for season ${tierList[0].season}.\nMean turns: ${tierList[0].average_turn_count}. Median turns: ${tierList[0].median_turn_count}`
 					}
 				}
 			],
