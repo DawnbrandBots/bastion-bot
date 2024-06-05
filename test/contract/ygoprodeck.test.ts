@@ -1,15 +1,20 @@
 import debug from "debug";
 import { Got } from "got";
+import { MasterDuelCardUsage, MasterDuelTier, MetagameClient, TopResponse } from "../../src/commands/metagame";
 import { Price, PriceClient } from "../../src/commands/price";
 import createGotClient from "../../src/got";
 
+let got: Got;
+
+beforeAll(() => {
+	debug.enable("bot:*");
+	got = createGotClient();
+});
+
 describe("YGOPRODECK getCardPrices API contract", () => {
-	let got: Got;
 	let client: PriceClient;
 
 	beforeAll(() => {
-		debug.enable("bot:*");
-		got = createGotClient();
 		client = new PriceClient(got);
 	});
 
@@ -73,6 +78,97 @@ describe("YGOPRODECK getCardPrices API contract", () => {
 	] as const)("does not return prices for non-TCG cards (%s)", async (store, name) => {
 		const prices = await client.get(name, store);
 		expect(prices).toBeFalsy();
+	});
+});
+
+describe("YGOPRODECK metagame API contracts", () => {
+	let client: MetagameClient;
+
+	beforeAll(() => {
+		client = new MetagameClient(got);
+	});
+
+	test.each(["TCG", "OCG", "OCG-AE"])("/api/tournament/getTopArchetypes.php with format=%s", async format => {
+		const tops = await client.getTops(format);
+		expect(tops.format).toEqual(format);
+		expect(tops.total).toBeGreaterThan(0);
+		expect(tops.dateCutoffEnd).toBeDefined();
+		expect(Date.parse(tops.dateCutoffStart)).not.toBeNaN();
+		expect(Array.isArray(tops.archetypes)).toBe(true);
+		expect(tops.archetypes.length).toBeGreaterThan(0);
+		for (const strategy of tops.archetypes) {
+			expect(strategy).toEqual(
+				expect.objectContaining<TopResponse["archetypes"][0]>({
+					arch_1: expect.stringMatching(/./),
+					quantity: expect.any(Number),
+					arch_1_img: expect.any(Number),
+					archetypeTierPage: expect.stringMatching(/./)
+				})
+			);
+			expect(strategy.quantity).toBeGreaterThan(0);
+			expect(strategy.arch_1_img).toBeGreaterThan(0);
+		}
+	});
+
+	test("/api/master-duel/card-usage.php", async () => {
+		const usage = await client.getMasterDuelCardUsage();
+		expect(Array.isArray(usage)).toBe(true);
+		expect(usage.length).toBeGreaterThan(0);
+		for (const card of usage) {
+			expect(card).toEqual(
+				expect.objectContaining<MasterDuelCardUsage>({
+					name: expect.stringMatching(/./),
+					id: expect.any(Number),
+					win_count: expect.any(Number),
+					loss_count: expect.any(Number),
+					win_ratio: expect.any(Number),
+					duel_count: expect.any(Number),
+					placement: expect.any(Number),
+					season: expect.any(Number),
+					game_mode: expect.stringMatching(/./),
+					pretty_url: expect.stringMatching(/./),
+					rarity: expect.stringMatching(/./)
+				})
+			);
+			expect(card.id).toBeGreaterThan(0);
+			expect(card.win_count).toBeGreaterThan(0);
+			expect(card.loss_count).toBeGreaterThan(0);
+			expect(card.win_ratio).toBeGreaterThanOrEqual(0);
+			expect(card.win_ratio).toBeLessThanOrEqual(1);
+			expect(card.duel_count).toBeGreaterThan(0);
+			expect(card.placement).toBeGreaterThan(0);
+			expect(card.season).toBeGreaterThan(0);
+		}
+	});
+
+	test("/api/master-duel/tier-list.php", async () => {
+		const tierList = await client.getMasterDuelTierList();
+		expect(Array.isArray(tierList)).toBe(true);
+		expect(tierList.length).toBeGreaterThan(0);
+		for (const strategy of tierList) {
+			expect(strategy).toEqual(
+				expect.objectContaining<MasterDuelTier>({
+					tier: expect.any(Number),
+					season: expect.any(Number),
+					game_mode: expect.stringMatching(/./),
+					archetype_name: expect.stringMatching(/./),
+					win_count: expect.any(Number),
+					loss_count: expect.any(Number),
+					win_ratio: expect.stringMatching(/./),
+					duel_count: expect.any(Number),
+					rank_weighted_score: expect.any(Number),
+					average_turn_count: expect.stringMatching(/./),
+					median_turn_count: expect.stringMatching(/./)
+				})
+			);
+			expect(strategy.season).toBeGreaterThan(0);
+			expect(strategy.win_count).toBeGreaterThan(0);
+			expect(strategy.loss_count).toBeGreaterThan(0);
+			expect(parseFloat(strategy.win_ratio)).not.toBeNaN();
+			expect(strategy.duel_count).toBeGreaterThan(0);
+			expect(parseFloat(strategy.average_turn_count)).not.toBeNaN();
+			expect(parseFloat(strategy.median_turn_count)).not.toBeNaN();
+		}
 	});
 });
 

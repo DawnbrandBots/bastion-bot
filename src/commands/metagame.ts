@@ -13,7 +13,7 @@ import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
 import { replyLatency } from "../utils";
 
-interface TopResponse {
+export interface TopResponse {
 	archetypes: { arch_1: string; quantity: number; arch_1_img: number; archetypeTierPage: string }[];
 	format: string;
 	dateCutoffStart: string;
@@ -23,7 +23,7 @@ interface TopResponse {
 	total: number;
 }
 
-interface MasterDuelCardUsage {
+export interface MasterDuelCardUsage {
 	name: string;
 	id: number;
 	win_count: number;
@@ -37,7 +37,7 @@ interface MasterDuelCardUsage {
 	rarity: string;
 }
 
-interface MasterDuelTier {
+export interface MasterDuelTier {
 	tier: number;
 	season: number;
 	game_mode: string;
