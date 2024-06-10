@@ -1,6 +1,12 @@
 import debug from "debug";
 import { Got } from "got";
-import { MasterDuelCardUsage, MasterDuelTier, MetagameClient, TopResponse } from "../../src/commands/metagame";
+import {
+	MasterDuelCardUsage,
+	MasterDuelTier,
+	MetagameClient,
+	TopCardsResponse,
+	TopStrategiesResponse
+} from "../../src/commands/metagame";
 import { Price, PriceClient } from "../../src/commands/price";
 import createGotClient from "../../src/got";
 
@@ -98,7 +104,7 @@ describe("YGOPRODECK metagame API contracts", () => {
 		expect(tops.archetypes.length).toBeGreaterThan(0);
 		for (const strategy of tops.archetypes) {
 			expect(strategy).toEqual(
-				expect.objectContaining<TopResponse["archetypes"][0]>({
+				expect.objectContaining<TopStrategiesResponse["archetypes"][0]>({
 					arch_1: expect.stringMatching(/./),
 					quantity: expect.any(Number),
 					arch_1_img: expect.any(Number),
@@ -107,6 +113,58 @@ describe("YGOPRODECK metagame API contracts", () => {
 			);
 			expect(strategy.quantity).toBeGreaterThan(0);
 			expect(strategy.arch_1_img).toBeGreaterThan(0);
+		}
+	});
+
+	function matrix<T, U>(A: T[], B: U[]): [T, U][] {
+		const product: [T, U][] = [];
+		for (const a of A) {
+			for (const b of B) {
+				product.push([a, b]);
+			}
+		}
+		return product;
+	}
+
+	test.each(
+		matrix(
+			[
+				"Tournament Meta Decks",
+				"Tournament Meta Decks OCG",
+				"Tournament Meta Decks OCG (Asian-English)",
+				"Master Duel Decks"
+			] as const,
+			["format", "banlist", "14 day", "90 day"] as const
+		)
+	)("/api/top/getFormat.php with format=%s, dateStart=%s", async (format, dateStart) => {
+		const usage = await client.getCardUsage(format, dateStart);
+		expect(usage.keys.format).toEqual(format);
+		expect(Date.parse(usage.keys.dateStart)).not.toBeNaN();
+		expect(Date.parse(usage.keys.dateEnd)).not.toBeNaN();
+		expect(Array.isArray(usage.results)).toBe(true);
+		for (const card of usage.results) {
+			expect(card).toEqual(
+				expect.objectContaining<TopCardsResponse["results"][0]>({
+					name: expect.stringMatching(/./),
+					card_number: expect.any(Number),
+					pretty_url: expect.stringMatching(/./),
+					total_card_count: expect.stringMatching(/^\d+$/),
+					deck_count: expect.any(Number),
+					avg_card_per_deck: expect.stringMatching(/\d/),
+					percentage: expect.stringMatching(/\d/),
+					percent_played_at_1: expect.stringMatching(/\d/),
+					percent_played_at_2: expect.stringMatching(/\d/),
+					percent_played_at_3: expect.stringMatching(/\d/)
+				})
+			);
+			expect(card.card_number).toBeGreaterThan(0);
+			expect(parseInt(card.total_card_count)).toBeGreaterThan(0);
+			expect(card.deck_count).toBeGreaterThan(0);
+			expect(parseFloat(card.avg_card_per_deck)).toBeGreaterThan(0);
+			expect(parseFloat(card.percentage)).toBeGreaterThan(0);
+			expect(parseFloat(card.percent_played_at_1)).toBeGreaterThanOrEqual(0);
+			expect(parseFloat(card.percent_played_at_2)).toBeGreaterThanOrEqual(0);
+			expect(parseFloat(card.percent_played_at_3)).toBeGreaterThanOrEqual(0);
 		}
 	});
 
@@ -157,17 +215,17 @@ describe("YGOPRODECK metagame API contracts", () => {
 					win_ratio: expect.stringMatching(/./),
 					duel_count: expect.any(Number),
 					rank_weighted_score: expect.any(Number),
-					average_turn_count: expect.stringMatching(/./),
-					median_turn_count: expect.stringMatching(/./)
+					average_turn_count: expect.stringMatching(/\d/),
+					median_turn_count: expect.stringMatching(/\d/)
 				})
 			);
 			expect(strategy.season).toBeGreaterThan(0);
 			expect(strategy.win_count).toBeGreaterThan(0);
 			expect(strategy.loss_count).toBeGreaterThan(0);
-			expect(parseFloat(strategy.win_ratio)).not.toBeNaN();
+			expect(parseFloat(strategy.win_ratio)).toBeGreaterThan(0);
 			expect(strategy.duel_count).toBeGreaterThan(0);
-			expect(parseFloat(strategy.average_turn_count)).not.toBeNaN();
-			expect(parseFloat(strategy.median_turn_count)).not.toBeNaN();
+			expect(parseFloat(strategy.average_turn_count)).toBeGreaterThan(0);
+			expect(parseFloat(strategy.median_turn_count)).toBeGreaterThan(0);
 		}
 	});
 });

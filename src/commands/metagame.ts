@@ -13,7 +13,7 @@ import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
 import { replyLatency } from "../utils";
 
-export interface TopResponse {
+export interface TopStrategiesResponse {
 	archetypes: { arch_1: string; quantity: number; arch_1_img: number; archetypeTierPage: string }[];
 	format: string;
 	dateCutoffStart: string;
@@ -21,6 +21,34 @@ export interface TopResponse {
 	tierMin: number;
 	tierMax: number;
 	total: number;
+}
+
+export type TopCardsFormat =
+	| "Tournament Meta Decks"
+	| "Tournament Meta Decks OCG"
+	| "Tournament Meta Decks OCG (Asian-English)"
+	| "Master Duel Decks";
+// https://ygoprodeck.com/top/ uses 90 for 3 months, 182 for 6 months
+export type TopCardsDateStart = "format" | "banlist" | `${number} day`;
+
+export interface TopCardsResponse {
+	keys: {
+		format: string;
+		dateStart: string;
+		dateEnd: string;
+	};
+	results: {
+		name: string;
+		card_number: number;
+		pretty_url: string;
+		total_card_count: `${number}`;
+		deck_count: number;
+		avg_card_per_deck: `${number}`;
+		percentage: `${number}`;
+		percent_played_at_1: `${number}`;
+		percent_played_at_2: `${number}`;
+		percent_played_at_3: `${number}`;
+	}[];
 }
 
 export interface MasterDuelCardUsage {
@@ -57,7 +85,7 @@ export class MetagameClient {
 		this.got = got.extend({ throwHttpErrors: true });
 	}
 
-	async getTops(region: string): Promise<TopResponse> {
+	async getTops(region: string): Promise<TopStrategiesResponse> {
 		return await this.got
 			.post("https://ygoprodeck.com/api/tournament/getTopArchetypes.php", {
 				headers: {
@@ -67,6 +95,13 @@ export class MetagameClient {
 				body: `format=${region}`
 			})
 			.json();
+	}
+
+	async getCardUsage(format: TopCardsFormat, dateStart: TopCardsDateStart): Promise<TopCardsResponse> {
+		const url = new URL("https://ygoprodeck.com/api/top/getFormat.php");
+		url.searchParams.set("format", format);
+		url.searchParams.set("dateStart", dateStart);
+		return await this.got(url).json();
 	}
 
 	async getMasterDuelCardUsage(): Promise<MasterDuelCardUsage[]> {
