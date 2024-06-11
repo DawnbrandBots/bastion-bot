@@ -158,12 +158,10 @@ export class MetagameCommand extends Command {
 				{
 					title: "Master Duel Diamond+ ranked card usage",
 					url: "https://ygoprodeck.com/master-duel/card-usage/?utm_source=bastion",
-					description: usage
-						.map(
-							card =>
-								`${card.name}: ${(card.win_ratio * 100).toFixed(2)}% wins in ${card.duel_count} duels`
-						)
-						.join("\n"),
+					fields: usage.map(card => ({
+						name: card.name,
+						value: `${(card.win_ratio * 100).toFixed(2)}% wins in ${card.duel_count} duels`
+					})),
 					footer: { text: `YGOPRODECK data for season ${usage[0].season}` }
 				}
 			],
