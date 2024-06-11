@@ -228,7 +228,7 @@ export class MetagameCommand extends Command {
 				{
 					title: `Top ${tops.format} strategies`,
 					description,
-					url: `https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion&format=${region}`, // deeplink pls
+					url: `https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#${region}/All/Format/NA/`,
 					footer: { text: `YGOPRODECK data ${tops.dateCutoffStart} to ${tops.dateCutoffEnd}` },
 					image: {
 						url: `https://dawnbrandbots.github.io/ygoprodeck-e2e-test/top-chart-${region.toLowerCase()}.png`
