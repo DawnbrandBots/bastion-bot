@@ -230,9 +230,8 @@ export class MetagameCommand extends Command {
 					description,
 					url: `https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion&format=${region}`, // deeplink pls
 					footer: { text: `YGOPRODECK data ${tops.dateCutoffStart} to ${tops.dateCutoffEnd}` },
-					thumbnail: {
-						// render pie to raster pls
-						url: `https://images.ygoprodeck.com/images/cards_cropped/${tops.archetypes[0]?.arch_1_img}.jpg`
+					image: {
+						url: `https://dawnbrandbots.github.io/ygoprodeck-e2e-test/top-chart-${region.toLowerCase()}.png`
 					}
 				}
 			],
