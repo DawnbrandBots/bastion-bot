@@ -2,7 +2,8 @@ import {
 	ChatInputCommandInteraction,
 	RESTPostAPIApplicationCommandsJSONBody,
 	SlashCommandBuilder,
-	SlashCommandStringOption
+	SlashCommandStringOption,
+	SlashCommandSubcommandBuilder
 } from "discord.js";
 import { Got } from "got";
 import { inject, injectable } from "tsyringe";
@@ -128,24 +129,102 @@ export class MetagameCommand extends Command {
 		const builder = buildLocalisedCommand(
 			new SlashCommandBuilder(),
 			() => c("command-name").t`metagame`,
+			() => c("command-description").t`Show statistics on the current competitive state of play.`
+		);
+		const strategiesSubcommand = buildLocalisedCommand(
+			new SlashCommandSubcommandBuilder(),
+			() => c("command-option").t`strategies`,
 			() =>
-				c("command-description")
-					.t`Show the current competitive strategies in tournaments and the Master Duel ranked ladder.`
+				c("command-option-description")
+					.t`Show the top competitive strategies in tournaments and the Master Duel ranked ladder.`
+		).addStringOption(
+			buildLocalisedCommand(
+				new SlashCommandStringOption()
+					.addChoices([
+						buildLocalisedChoice("TCG", () => c("command-option-choice").t`TCG`),
+						buildLocalisedChoice("OCG", () => c("command-option-choice").t`OCG`),
+						buildLocalisedChoice("OCG-AE", () => c("command-option-choice").t`OCG (Asian-English)`),
+						buildLocalisedChoice(
+							"MD-TL",
+							() => c("command-option-choice").t`Master Duel Diamond+ tier list`
+						)
+					])
+					.setRequired(true),
+				() => c("command-option").t`format`,
+				() => c("command-option-description").t`Game region or Master Duel.`
+			)
 		);
-		const option = buildLocalisedCommand(
-			new SlashCommandStringOption()
-				.addChoices([
-					buildLocalisedChoice("TCG", () => "TCG"),
-					buildLocalisedChoice("OCG", () => "OCG"),
-					buildLocalisedChoice("OCG-AE", () => "OCG (Asian-English)"),
-					buildLocalisedChoice("MD-CU", () => "Master Duel Diamond+ ranked card usage"),
-					buildLocalisedChoice("MD-TL", () => "Master Duel Diamond+ tier list")
-				])
-				.setRequired(true),
-			() => c("command-option").t`region`,
-			() => c("command-option-description").t`Game region.`
-		);
-		return builder.addStringOption(option).toJSON();
+		const cardsSubcommand = buildLocalisedCommand(
+			new SlashCommandSubcommandBuilder(),
+			() => c("command-option").t`cards`,
+			() =>
+				c("command-option-description")
+					.t`Show the most popular cards in tournaments and the Master Duel ranked ladder.`
+		)
+			.addStringOption(
+				buildLocalisedCommand(
+					new SlashCommandStringOption()
+						.addChoices([
+							buildLocalisedChoice<TopCardsFormat>(
+								"Tournament Meta Decks",
+								() => c("command-option-choice").t`TCG`
+							),
+							buildLocalisedChoice<TopCardsFormat>(
+								"Tournament Meta Decks OCG",
+								() => c("command-option-choice").t`OCG`
+							),
+							buildLocalisedChoice<TopCardsFormat>(
+								"Tournament Meta Decks OCG (Asian-English)",
+								() => c("command-option-choice").t`OCG (Asian-English)`
+							),
+							buildLocalisedChoice<TopCardsFormat>(
+								"Master Duel Decks",
+								() => c("command-option-choice").t`Master Duel Diamond+ ladder`
+							)
+						])
+						.setRequired(true),
+					() => c("command-option").t`format`,
+					() => c("command-option-description").t`Game region or Master Duel.`
+				)
+			)
+			.addStringOption(
+				buildLocalisedCommand(
+					new SlashCommandStringOption().addChoices([
+						buildLocalisedChoice<TopCardsDateStart>(
+							"format",
+							() => c("command-option-choice").t`Current format`
+						),
+						buildLocalisedChoice<TopCardsDateStart>(
+							"banlist",
+							() => c("command-option-choice").t`Since last Forbidden/Limited List`
+						),
+						buildLocalisedChoice<TopCardsDateStart>(
+							"7 day",
+							() => c("command-option-choice").t`Last 7 days`
+						),
+						buildLocalisedChoice<TopCardsDateStart>(
+							"14 day",
+							() => c("command-option-choice").t`Last 14 days`
+						),
+						buildLocalisedChoice<TopCardsDateStart>(
+							"30 day",
+							() => c("command-option-choice").t`Last 30 days`
+						),
+						buildLocalisedChoice<TopCardsDateStart>(
+							"90 day",
+							() => c("command-option-choice").t`Last three months`
+						),
+						buildLocalisedChoice<TopCardsDateStart>(
+							"182 day",
+							() => c("command-option-choice").t`Last six months`
+						)
+					]),
+					() => c("command-option").t`date-range`,
+					() => c("command-option-description").t`Limit card usage statistics to this date range.`
+				)
+			);
+		builder.addSubcommand(strategiesSubcommand).addSubcommand(cardsSubcommand);
+		return builder.toJSON();
 	}
 	protected override get logger(): Logger {
 		return this.#logger;
@@ -239,14 +318,16 @@ export class MetagameCommand extends Command {
 	}
 
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
-		const region = interaction.options.getString("region", true);
-		switch (region) {
-			case "MD-CU":
-				return await this.masterDuelCardUsage(interaction);
-			case "MD-TL":
+		if (interaction.options.getSubcommand() === "strategies") {
+			const format = interaction.options.getString("format", true);
+			if (format === "MD-TL") {
 				return await this.masterDuelTierList(interaction);
-			default:
-				return await this.tournamentTops(interaction, region);
+			} else {
+				return await this.tournamentTops(interaction, format);
+			}
+		} else {
+			// subcommand cards
+			return await this.masterDuelCardUsage(interaction);
 		}
 	}
 }
