@@ -3,6 +3,7 @@ import sqlite, { Database, Statement } from "better-sqlite3";
 import { AutocompleteInteraction, ChatInputCommandInteraction, Message } from "discord.js";
 import { inject, singleton } from "tsyringe";
 import { CardSchema } from "./definitions";
+import { RushCardSchema } from "./definitions/rush";
 
 @singleton()
 export class Metrics {
@@ -55,7 +56,7 @@ CREATE TABLE IF NOT EXISTS "searches" (
 	public writeSearch(
 		searchMessage: Message,
 		query: string,
-		resultCard?: Static<typeof CardSchema>,
+		resultCard?: Static<typeof CardSchema | typeof RushCardSchema> | null,
 		replyMessage?: Message
 	): void {
 		// Neither resultCard nor replyMessage: card lookup failed
@@ -70,7 +71,7 @@ CREATE TABLE IF NOT EXISTS "searches" (
 		}
 		let result = null;
 		if (resultCard) {
-			if (resultCard.password) {
+			if ("password" in resultCard && resultCard.password) {
 				result = `${resultCard.password}`;
 			} else if (resultCard.konami_id) {
 				result = `%${resultCard.konami_id}`;
