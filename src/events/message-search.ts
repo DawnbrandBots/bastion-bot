@@ -102,7 +102,7 @@ function matchToSummon(match: RegExpExecArray): SearchSummon {
 	const before = match.input[match.index - 1];
 	const after = match.input[match.index + match[1].length + 2];
 	let type: SearchSummon["type"] = "ocg";
-	if (before?.toLowerCase() === "r" || after?.toLowerCase() === "r") {
+	if (before?.toLowerCase() === "r" || after?.toLowerCase() === "r" || before === "러" || after === "러") {
 		type = "rush";
 	}
 	return {
