@@ -74,17 +74,17 @@ describe("preprocess message to get inputs", () => {
 	});
 	test("gets one", () => {
 		const inputs = preprocess("<test>");
-		expect(inputs).toEqual([{ summon: "test", type: "ocg" }]);
+		expect(inputs).toEqual([expect.objectContaining({ summon: "test", type: "ocg" })]);
 	});
 	test("clears whitespace", () => {
 		const inputs = preprocess("< test >");
-		expect(inputs).toEqual([{ summon: "test", type: "ocg" }]);
+		expect(inputs).toEqual([expect.objectContaining({ summon: "test", type: "ocg" })]);
 	});
 	test("gets multiple", () => {
 		const inputs = preprocess("<foo> <bar>");
 		expect(inputs).toEqual([
-			{ summon: "foo", type: "ocg" },
-			{ summon: "bar", type: "ocg" }
+			expect.objectContaining({ summon: "foo", type: "ocg" }),
+			expect.objectContaining({ summon: "bar", type: "ocg" })
 		]);
 	});
 	test("ignores hyperlinks", () => {
@@ -108,31 +108,39 @@ describe("preprocess message to get inputs", () => {
 			"<#12345678901234567> <@!12345678901234567> <big test> <<missed>> < nibiru> <@&12345678901234567> :thonk: <t:1664136104811>\n`<miss>`\n\\`<eternity>`\n<tearlaments\n        lulucaros>\n|| <dark magician> ||\n<dark dragoon >>\n```\n<code talker>\n```\n> <majesty's fiend>"
 		);
 		expect(inputs).toEqual([
-			{ summon: "big test", type: "ocg" },
-			{ summon: "nibiru", type: "ocg" },
-			{ summon: "eternity", type: "ocg" },
-			{ summon: "dark dragoon", type: "ocg" }
+			expect.objectContaining({ summon: "big test", type: "ocg" }),
+			expect.objectContaining({ summon: "nibiru", type: "ocg" }),
+			expect.objectContaining({ summon: "eternity", type: "ocg" }),
+			expect.objectContaining({ summon: "dark dragoon", type: "ocg" })
 		]);
 	});
-	test.each(["r<test>", "<test>r", "R<test>", "<test>R", "r<test>r", "r<test>R", "R<test>R", "R<test>r"])(
-		"gets rush: %s",
-		message => {
-			const inputs = preprocess(message);
-			expect(inputs).toEqual([{ summon: "test", type: "rush" }]);
-		}
-	);
+	test.each([
+		"r<test>",
+		"<test>r",
+		"R<test>",
+		"<test>R",
+		"r<test>r",
+		"r<test>R",
+		"R<test>R",
+		"R<test>r",
+		"러<test>",
+		"<test>러"
+	])("gets rush: %s", message => {
+		const inputs = preprocess(message);
+		expect(inputs).toEqual([expect.objectContaining({ summon: "test", type: "rush" })]);
+	});
 	test("gets joined rush", () => {
 		const inputs = preprocess("<foo>r<bar>");
 		expect(inputs).toEqual([
-			{ summon: "foo", type: "rush" },
-			{ summon: "bar", type: "rush" }
+			expect.objectContaining({ summon: "foo", type: "rush" }),
+			expect.objectContaining({ summon: "bar", type: "rush" })
 		]);
 	});
 	test("gets mixed", () => {
 		const inputs = preprocess("<pot of greed> vs r<pot of greed>");
 		expect(inputs).toEqual([
-			{ summon: "pot of greed", type: "ocg" },
-			{ summon: "pot of greed", type: "rush" }
+			expect.objectContaining({ summon: "pot of greed", type: "ocg" }),
+			expect.objectContaining({ summon: "pot of greed", type: "rush" })
 		]);
 	});
 });

@@ -13,7 +13,7 @@ import {
 	RESTJSONErrorCodes
 } from "discord.js";
 import { Got } from "got";
-import { Record as ImmutableRecord, OrderedSet } from "immutable";
+import { OrderedSet, Seq, ValueObject } from "immutable";
 import { ParserRules, parserFor } from "simple-markdown";
 import { inject, injectable, instanceCachingFactory } from "tsyringe";
 import { c, t, useLocale } from "ttag";
@@ -95,33 +95,52 @@ function getDelimiter(message: Message) {
 	}
 }
 
-export type SearchSummon = { readonly summon: string; readonly type: "ocg" | "rush" };
-const SearchSummonRecord = ImmutableRecord<SearchSummon>({ summon: "", type: "ocg" }, "SearchSummon");
+class SearchSummon implements ValueObject {
+	readonly summon: string;
+	readonly type: "ocg" | "rush";
+	readonly original: string;
+	readonly index: number;
 
-function matchToSummon(match: RegExpExecArray): SearchSummon {
-	const before = match.input[match.index - 1];
-	const after = match.input[match.index + match[1].length + 2];
-	let type: SearchSummon["type"] = "ocg";
-	if (before?.toLowerCase() === "r" || after?.toLowerCase() === "r" || before === "러" || after === "러") {
-		type = "rush";
+	constructor(match: RegExpExecArray) {
+		this.summon = match[1].trim();
+		const beforePosition = match.index - 1;
+		const afterPosition = match.index + match[1].length + 2;
+		const before = match.input[beforePosition];
+		const after = match.input[afterPosition];
+		if (before?.toLowerCase() === "r" || after?.toLowerCase() === "r" || before === "러" || after === "러") {
+			this.type = "rush";
+		} else {
+			this.type = "ocg";
+		}
+		this.original = match.input.substring(beforePosition, afterPosition + 1);
+		this.index = match.index;
 	}
-	return {
-		summon: match[1].trim(),
-		type
-	};
+
+	shouldIgnore(): boolean {
+		if (this.summon.length === 0 || this.summon.length > 80) {
+			return true;
+		}
+		const lower = this.summon.toLowerCase();
+		// Ignore, let old bot process
+		return ["://", "(", "anime"].some(token => lower.includes(token));
+	}
+
+	equals(other: unknown): boolean {
+		if (other instanceof SearchSummon) {
+			return this.summon === other.summon && this.type === other.type;
+		}
+		return false;
+	}
+
+	hashCode(): number {
+		return Seq({ summon: this.summon, type: this.type }).hashCode();
+	}
 }
 
 function parseSummons(cleanMessage: string, regex: RegExp): SearchSummon[] {
 	return [...cleanMessage.matchAll(regex)]
-		.map(match => matchToSummon(match))
-		.filter(({ summon }) => {
-			if (summon.length === 0 || summon.length > 80) {
-				return false;
-			}
-			const lower = summon.toLowerCase();
-			// Ignore, let old bot process
-			return !["://", "(", "anime"].some(token => lower.includes(token));
-		});
+		.map(match => new SearchSummon(match))
+		.filter(summon => !summon.shouldIgnore());
 }
 
 export function preprocess(
@@ -386,7 +405,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			return;
 		}
 		this.log("info", message, JSON.stringify(inputs));
-		const uniqueInputs = OrderedSet(inputs.map(SearchSummonRecord)).slice(0, 3); // remove duplicates, then select first three
+		const uniqueInputs = OrderedSet(inputs).slice(0, 3); // remove duplicates, then select first three
 		message.channel.sendTyping().catch(error => this.log("info", message, error));
 		this.addReaction(message, "🕙");
 		const language = await this.locales.getM(message);
