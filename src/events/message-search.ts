@@ -30,6 +30,7 @@ import { RecentMessageCache } from "../message-cache";
 import { Metrics } from "../metrics";
 import { createRushCardEmbed, getRushCardByKonamiId, searchRushCard } from "../rush-duel";
 import { shouldIgnore } from "../utils";
+import { CommandCache } from "./ready-commands";
 
 // Only take certain plugins because we don't need to parse all markup like bolding
 // and the mention parsing is not as well-maintained as discord.js
@@ -224,18 +225,24 @@ export function inputToGetCardArguments(input: string, defaultLanguage: Locale) 
 
 interface CardSearcher {
 	search(
-		message: Message,
 		input: string,
 		language: Locale
 	): Promise<[Static<typeof CardSchema | typeof RushCardSchema> | null | undefined, MessageReplyOptions]>;
 }
 
+function searchLanguageHint(inputLanguage: Locale, commandCache: CommandCache): string {
+	const localisedInputLanguage = LOCALES_MAP.get(inputLanguage);
+	const id = commandCache.get("locale")?.id ?? 0;
+	return t`Search language: **${localisedInputLanguage}** (${inputLanguage}). Check defaults with </locale get:${id}> and configure with </locale set:${id}>`;
+}
+
 class OCGCardSearcher implements CardSearcher {
 	constructor(
 		private got: Got,
+		private commandCache: CommandCache,
 		private masterDuelLimitRegulation: UpdatingLimitRegulationVector
 	) {}
-	async search(message: Message, input: string, language: Locale): ReturnType<CardSearcher["search"]> {
+	async search(input: string, language: Locale): ReturnType<CardSearcher["search"]> {
 		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
 		const card = await getCard(this.got, type, searchTerm, inputLanguage);
 		useLocale(resultLanguage);
@@ -243,11 +250,7 @@ class OCGCardSearcher implements CardSearcher {
 		if (!card) {
 			let context = "\n";
 			if (type === "name") {
-				const localisedInputLanguage = LOCALES_MAP.get(inputLanguage);
-				// Note: nonfunctional in development or preview because those bots do not have global commands.
-				// To test functionality in development or preview, fetch guild commands and search them instead.
-				const id = message.client.application.commands.cache.find(cmd => cmd.name === "locale")?.id ?? 0;
-				context += t`Search language: **${localisedInputLanguage}** (${inputLanguage}). Check defaults with </locale get:${id}> and configure with </locale set:${id}>`;
+				context += searchLanguageHint(inputLanguage, this.commandCache);
 			} else {
 				const localisedType = rc("command-option").gettext(type);
 				context += t`Search type: ${localisedType}`;
@@ -271,9 +274,10 @@ class OCGCardSearcher implements CardSearcher {
 class RushCardSearcher implements CardSearcher {
 	constructor(
 		private got: Got,
+		private commandCache: CommandCache,
 		private limitRegulation: UpdatingLimitRegulationVector
 	) {}
-	async search(message: Message, input: string, language: Locale): ReturnType<CardSearcher["search"]> {
+	async search(input: string, language: Locale): ReturnType<CardSearcher["search"]> {
 		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
 		const card =
 			type === "name"
@@ -284,11 +288,7 @@ class RushCardSearcher implements CardSearcher {
 		if (!card) {
 			let context = "\n";
 			if (type === "name") {
-				const localisedInputLanguage = LOCALES_MAP.get(inputLanguage);
-				// Note: nonfunctional in development or preview because those bots do not have global commands.
-				// To test functionality in development or preview, fetch guild commands and search them instead.
-				const id = message.client.application.commands.cache.find(cmd => cmd.name === "locale")?.id ?? 0;
-				context += t`Search language: **${localisedInputLanguage}** (${inputLanguage}). Check defaults with </locale get:${id}> and configure with </locale set:${id}>`;
+				context += searchLanguageHint(inputLanguage, this.commandCache);
 			} else {
 				const localisedType = c("command-option").gettext("konami-id");
 				context += t`Search type: ${localisedType}`;
@@ -316,9 +316,10 @@ export const cardSearcherProvider = instanceCachingFactory<CardSearcherMap>(cont
 			}
 		}
 	});
+	const commandCache = container.resolve<CommandCache>("commandCache");
 	return {
-		ocg: new OCGCardSearcher(got, container.resolve("limitRegulationMasterDuel")),
-		rush: new RushCardSearcher(got, container.resolve("limitRegulationRush"))
+		ocg: new OCGCardSearcher(got, commandCache, container.resolve("limitRegulationMasterDuel")),
+		rush: new RushCardSearcher(got, commandCache, container.resolve("limitRegulationRush"))
 	};
 });
 
@@ -410,7 +411,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		this.addReaction(message, "🕙");
 		const language = await this.locales.getM(message);
 		const promises = uniqueInputs.map(async hit => {
-			const [card, replyOptions] = await this.cardSearchers[hit.type].search(message, hit.summon, language);
+			const [card, replyOptions] = await this.cardSearchers[hit.type].search(hit.summon, language);
 			try {
 				const reply = await message.reply(replyOptions);
 				return [card, reply] as const;
