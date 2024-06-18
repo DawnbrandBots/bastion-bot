@@ -1,3 +1,4 @@
+import { Static } from "@sinclair/typebox";
 import { rules } from "discord-markdown";
 import {
 	Colors,
@@ -12,20 +13,24 @@ import {
 	RESTJSONErrorCodes
 } from "discord.js";
 import { Got } from "got";
-import { Record as ImmutableRecord, OrderedSet } from "immutable";
+import { OrderedSet, Seq, ValueObject } from "immutable";
 import { ParserRules, parserFor } from "simple-markdown";
-import { inject, injectable } from "tsyringe";
+import { inject, injectable, instanceCachingFactory } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { Listener } from ".";
 import { ABDeploy } from "../abdeploy";
 import { createCardEmbed, getCard } from "../card";
+import { CardSchema } from "../definitions";
+import { RushCardSchema } from "../definitions/rush";
 import { EventLocker } from "../event-lock";
 import { UpdatingLimitRegulationVector } from "../limit-regulation";
 import { LOCALES, LOCALES_MAP, Locale, LocaleProvider } from "../locale";
 import { Logger, getLogger } from "../logger";
 import { RecentMessageCache } from "../message-cache";
 import { Metrics } from "../metrics";
+import { createRushCardEmbed, getRushCardByKonamiId, searchRushCard } from "../rush-duel";
 import { shouldIgnore } from "../utils";
+import { CommandCache } from "./ready-commands";
 
 // Only take certain plugins because we don't need to parse all markup like bolding
 // and the mention parsing is not as well-maintained as discord.js
@@ -91,33 +96,52 @@ function getDelimiter(message: Message) {
 	}
 }
 
-export type SearchSummon = { readonly summon: string; readonly type: "ocg" | "rush" };
-const SearchSummonRecord = ImmutableRecord<SearchSummon>({ summon: "", type: "ocg" }, "SearchSummon");
+class SearchSummon implements ValueObject {
+	readonly summon: string;
+	readonly type: "ocg" | "rush";
+	readonly original: string;
+	readonly index: number;
 
-function matchToSummon(match: RegExpExecArray): SearchSummon {
-	const before = match.input[match.index - 1];
-	const after = match.input[match.index + match[1].length + 2];
-	let type: SearchSummon["type"] = "ocg";
-	if (before?.toLowerCase() === "r" || after?.toLowerCase() === "r") {
-		type = "rush";
+	constructor(match: RegExpExecArray) {
+		this.summon = match[1].trim();
+		const beforePosition = match.index - 1;
+		const afterPosition = match.index + match[1].length + 2;
+		const before = match.input[beforePosition];
+		const after = match.input[afterPosition];
+		if (before?.toLowerCase() === "r" || after?.toLowerCase() === "r" || before === "러" || after === "러") {
+			this.type = "rush";
+		} else {
+			this.type = "ocg";
+		}
+		this.original = match.input.substring(beforePosition, afterPosition + 1);
+		this.index = match.index;
 	}
-	return {
-		summon: match[1].trim(),
-		type
-	};
+
+	shouldIgnore(): boolean {
+		if (this.summon.length === 0 || this.summon.length > 80) {
+			return true;
+		}
+		const lower = this.summon.toLowerCase();
+		// Ignore, let old bot process
+		return ["://", "(", "anime"].some(token => lower.includes(token));
+	}
+
+	equals(other: unknown): boolean {
+		if (other instanceof SearchSummon) {
+			return this.summon === other.summon && this.type === other.type;
+		}
+		return false;
+	}
+
+	hashCode(): number {
+		return Seq({ summon: this.summon, type: this.type }).hashCode();
+	}
 }
 
 function parseSummons(cleanMessage: string, regex: RegExp): SearchSummon[] {
 	return [...cleanMessage.matchAll(regex)]
-		.map(match => matchToSummon(match))
-		.filter(({ summon }) => {
-			if (summon.length === 0 || summon.length > 80) {
-				return false;
-			}
-			const lower = summon.toLowerCase();
-			// Ignore, let old bot process
-			return !["://", "(", "anime"].some(token => lower.includes(token));
-		});
+		.map(match => new SearchSummon(match))
+		.filter(summon => !summon.shouldIgnore());
 }
 
 export function preprocess(
@@ -199,6 +223,106 @@ export function inputToGetCardArguments(input: string, defaultLanguage: Locale) 
 	}
 }
 
+interface CardSearcher {
+	search(
+		input: string,
+		language: Locale
+	): Promise<[Static<typeof CardSchema | typeof RushCardSchema> | null | undefined, MessageReplyOptions]>;
+}
+
+function searchLanguageHint(inputLanguage: Locale, commandCache: CommandCache): string {
+	const localisedInputLanguage = LOCALES_MAP.get(inputLanguage);
+	const id = commandCache.get("locale")?.id ?? 0;
+	return t`Search language: **${localisedInputLanguage}** (${inputLanguage}). Check defaults with </locale get:${id}> and configure with </locale set:${id}>`;
+}
+
+class OCGCardSearcher implements CardSearcher {
+	constructor(
+		private got: Got,
+		private commandCache: CommandCache,
+		private masterDuelLimitRegulation: UpdatingLimitRegulationVector
+	) {}
+	async search(input: string, language: Locale): ReturnType<CardSearcher["search"]> {
+		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
+		const card = await getCard(this.got, type, searchTerm, inputLanguage);
+		useLocale(resultLanguage);
+		let replyOptions;
+		if (!card) {
+			let context = "\n";
+			if (type === "name") {
+				context += searchLanguageHint(inputLanguage, this.commandCache);
+			} else {
+				const localisedType = rc("command-option").gettext(type);
+				context += t`Search type: ${localisedType}`;
+			}
+			replyOptions = { content: t`Could not find a card matching \`${input}\`!` + context };
+		} else {
+			const embeds = createCardEmbed(card, resultLanguage, this.masterDuelLimitRegulation);
+			// eslint-disable-next-line no-constant-condition
+			if (false) {
+				embeds[embeds.length - 1].addFields({
+					name: t`💬 Translations missing?`,
+					value: t`Help translate Bastion at the links above.`
+				});
+			}
+			replyOptions = { embeds };
+		}
+		return [card, replyOptions];
+	}
+}
+
+class RushCardSearcher implements CardSearcher {
+	constructor(
+		private got: Got,
+		private commandCache: CommandCache,
+		private limitRegulation: UpdatingLimitRegulationVector
+	) {}
+	async search(input: string, language: Locale): ReturnType<CardSearcher["search"]> {
+		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
+		const card =
+			type === "name"
+				? (await searchRushCard(this.got, searchTerm, inputLanguage))[0]
+				: await getRushCardByKonamiId(this.got, searchTerm);
+		useLocale(resultLanguage);
+		let replyOptions;
+		if (!card) {
+			let context = "\n";
+			if (type === "name") {
+				context += searchLanguageHint(inputLanguage, this.commandCache);
+			} else {
+				const localisedType = c("command-option").gettext("konami-id");
+				context += t`Search type: ${localisedType}`;
+			}
+			replyOptions = { content: t`Could not find a Rush Duel card matching \`${input}\`!` + context };
+		} else {
+			const embed = createRushCardEmbed(card, resultLanguage, this.limitRegulation);
+			replyOptions = { embeds: [embed] };
+		}
+		return [card, replyOptions];
+	}
+}
+
+type CardSearcherMap = Record<SearchSummon["type"], CardSearcher>;
+export const cardSearcherProvider = instanceCachingFactory<CardSearcherMap>(container => {
+	const logger = getLogger("events:message:search");
+	const got = container.resolve<Got>("got").extend({
+		// Default got behaviour, with logging hooked in https://github.com/sindresorhus/got/tree/v11.8.6#retry
+		retry: {
+			limit: 2,
+			// retry immediately, but pass through 0 values that cancel the retry
+			calculateDelay: ({ attemptCount, error, computedValue }) => {
+				logger.info(`Retry ${attemptCount} (${computedValue} ms): `, error);
+				return computedValue;
+			}
+		}
+	});
+	const commandCache = container.resolve<CommandCache>("commandCache");
+	return {
+		ocg: new OCGCardSearcher(got, commandCache, container.resolve("limitRegulationMasterDuel")),
+		rush: new RushCardSearcher(got, commandCache, container.resolve("limitRegulationRush"))
+	};
+});
+
 function createMisconfigurationEmbed(error: DiscordAPIError, message: Message): EmbedBuilder {
 	return new EmbedBuilder()
 		.setColor(Colors.Red)
@@ -230,25 +354,12 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 
 	constructor(
 		@inject("LocaleProvider") private locales: LocaleProvider,
-		@inject("got") private got: Got,
-		@inject("limitRegulationMasterDuel") private masterDuelLimitRegulation: UpdatingLimitRegulationVector,
+		@inject("cardSearchers") private cardSearchers: CardSearcherMap,
 		private metrics: Metrics,
 		private recentCache: RecentMessageCache,
 		private abdeploy: ABDeploy,
 		private eventLocks: EventLocker
-	) {
-		this.got = got.extend({
-			// Default got behaviour, with logging hooked in https://github.com/sindresorhus/got/tree/v11.8.6#retry
-			retry: {
-				limit: 2,
-				// retry immediately, but pass through 0 values that cancel the retry
-				calculateDelay: ({ attemptCount, error, computedValue }) => {
-					this.#logger.info(`Retry ${attemptCount} (${computedValue} ms): `, error);
-					return computedValue;
-				}
-			}
-		});
-	}
+	) {}
 
 	protected log(level: keyof Logger, message: Message, ...args: Parameters<Logger[keyof Logger]>): void {
 		const context = {
@@ -295,39 +406,12 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			return;
 		}
 		this.log("info", message, JSON.stringify(inputs));
-		const uniqueInputs = OrderedSet(inputs.map(SearchSummonRecord)).slice(0, 3); // remove duplicates, then select first three
+		const uniqueInputs = OrderedSet(inputs).slice(0, 3); // remove duplicates, then select first three
 		message.channel.sendTyping().catch(error => this.log("info", message, error));
 		this.addReaction(message, "🕙");
 		const language = await this.locales.getM(message);
-		const promises = uniqueInputs.map(async ({ summon: input }) => {
-			const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
-			const card = await getCard(this.got, type, searchTerm, inputLanguage);
-			useLocale(resultLanguage);
-			let replyOptions;
-			if (!card) {
-				let context = "\n";
-				if (type === "name") {
-					const localisedInputLanguage = LOCALES_MAP.get(inputLanguage);
-					// Note: nonfunctional in development or preview because those bots do not have global commands.
-					// To test functionality in development or preview, fetch guild commands and search them instead.
-					const id = message.client.application.commands.cache.find(cmd => cmd.name === "locale")?.id ?? 0;
-					context += t`Search language: **${localisedInputLanguage}** (${inputLanguage}). Check defaults with </locale get:${id}> and configure with </locale set:${id}>`;
-				} else {
-					const localisedType = rc("command-option").gettext(type);
-					context += t`Search type: ${localisedType}`;
-				}
-				replyOptions = { content: t`Could not find a card matching \`${input}\`!` + context };
-			} else {
-				const embeds = createCardEmbed(card, resultLanguage, this.masterDuelLimitRegulation);
-				// eslint-disable-next-line no-constant-condition
-				if (false) {
-					embeds[embeds.length - 1].addFields({
-						name: t`💬 Translations missing?`,
-						value: t`Help translate Bastion at the links above.`
-					});
-				}
-				replyOptions = { embeds };
-			}
+		const promises = uniqueInputs.map(async hit => {
+			const [card, replyOptions] = await this.cardSearchers[hit.type].search(hit.summon, language);
 			try {
 				const reply = await message.reply(replyOptions);
 				return [card, reply] as const;
@@ -338,10 +422,10 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 					RESTJSONErrorCodes.MissingAccess // missing Send Messages in Threads
 				];
 				if (error instanceof DiscordAPIError && userConfigurationErrors.includes(error.code)) {
-					this.log("info", message, input, error);
+					this.log("info", message, hit.summon, error);
 					message.author
 						.send(prependEmbed(replyOptions, createMisconfigurationEmbed(error, message)))
-						.catch(e => this.log("info", message, input, e));
+						.catch(e => this.log("info", message, hit.summon, e));
 				} else {
 					this.log("error", message, error);
 				}

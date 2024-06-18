@@ -87,9 +87,6 @@ export class BotFactory {
 			logger.info("Registered messageCreate gateway event frequency early warning canary");
 		});
 
-		// Obtain the snowflakes for all our Slash Commands so they can be mentioned
-		bot.once("ready", async () => void (await bot.application?.commands.fetch()));
-
 		for (const listener of this.listeners) {
 			bot.on(listener.type, (...args) => listener.run(...args));
 		}
