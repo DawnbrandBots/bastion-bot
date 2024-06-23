@@ -176,3 +176,32 @@ export async function getRushCardByKonamiId(
 			throw new got.HTTPError(response);
 	}
 }
+
+// Only used by /rush-duel
+export function suggestSearchTrigger(input: string, korean: boolean): string {
+	if (korean) {
+		if (input.charCodeAt(0) % 2 === 0) {
+			return `러<${input}>`;
+		} else {
+			return `<${input}>러`;
+		}
+	} else {
+		switch (input.charCodeAt(0) % 4) {
+			case 0:
+				return `r<${input}>`;
+			case 1:
+				return `<${input}>r`;
+			case 2:
+				return `R<${input}>`;
+			case 3:
+			default:
+				return `<${input}>R`;
+		}
+	}
+}
+
+// Only used by /rush-duel
+export function addTip(embed: EmbedBuilder, searchTrigger: string): EmbedBuilder {
+	const tip = t`Using ${searchTrigger}, you can search for Rush Duel cards directly in messages without autocomplete`;
+	return embed.setFooter({ text: `${embed.data.footer?.text}\n${tip}` });
+}
