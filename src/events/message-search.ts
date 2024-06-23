@@ -361,15 +361,23 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		private eventLocks: EventLocker
 	) {}
 
-	protected log(level: keyof Logger, message: Message, ...args: Parameters<Logger[keyof Logger]>): void {
-		const context = {
-			channel: message.channelId,
-			message: message.id,
-			guild: message.guildId,
-			author: message.author.id,
-			ping: message.client.ws.ping
-		};
-		this.#logger[level](JSON.stringify(context), ...args);
+	protected log(level: keyof Logger, context: Message, msg: string | Record<string, unknown>, error?: Error): void {
+		this.#logger[level](
+			JSON.stringify({
+				context: {
+					channel: context.channelId,
+					message: context.id,
+					guild: context.guildId,
+					author: context.author.id,
+					ping: context.client.ws.ping
+				},
+				...(typeof msg === "string" ? { msg } : msg),
+				...(error && {
+					error,
+					stack: error.stack
+				})
+			})
+		);
 	}
 
 	async run(message: Message): Promise<void> {
@@ -405,9 +413,9 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		if (inputs.length === 0) {
 			return;
 		}
-		this.log("info", message, JSON.stringify(inputs));
+		this.log("info", message, { inputs });
 		const uniqueInputs = OrderedSet(inputs).slice(0, 3); // remove duplicates, then select first three
-		message.channel.sendTyping().catch(error => this.log("info", message, error));
+		message.channel.sendTyping().catch(error => this.log("info", message, "Error sending typing indicator", error));
 		this.addReaction(message, "🕙");
 		const language = await this.locales.getM(message);
 		const promises = uniqueInputs.map(async hit => {
@@ -422,12 +430,12 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 					RESTJSONErrorCodes.MissingAccess // missing Send Messages in Threads
 				];
 				if (error instanceof DiscordAPIError && userConfigurationErrors.includes(error.code)) {
-					this.log("info", message, hit.summon, error);
+					this.log("info", message, { hit }, error);
 					message.author
 						.send(prependEmbed(replyOptions, createMisconfigurationEmbed(error, message)))
-						.catch(e => this.log("info", message, hit.summon, e));
+						.catch(e => this.log("info", message, { hit, msg: "Error sending misconfig DM" }, e));
 				} else {
-					this.log("error", message, error);
+					this.log("error", message, { hit }, error as Error);
 				}
 				return [card] as const;
 			}
@@ -442,9 +450,8 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 					replies.push(reply.id);
 				}
 			} else {
-				// Exception from getCard
 				this.metrics.writeSearch(message, JSON.stringify(inputs[i]));
-				this.log("error", message, inputs[i], result.reason);
+				this.log("error", message, { hit: inputs[i], msg: "Error getting card" }, result.reason);
 			}
 		}
 		this.recentCache.set(message, replies);
@@ -467,9 +474,9 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 				RESTJSONErrorCodes.MissingAccess // must have Read Message History to react to messages
 			];
 			if (error instanceof DiscordAPIError && userConfigurationErrors.includes(error.code)) {
-				this.log("info", message, error);
+				this.log("info", message, "Missing permissions to add reactions", error);
 			} else {
-				this.log("warn", message, error);
+				this.log("warn", message, "Could not add reaction", error as Error);
 			}
 		}
 	}
@@ -481,7 +488,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			if (error instanceof DiscordAPIError && error.code === RESTJSONErrorCodes.UnknownMessage) {
 				this.log("info", message, "Message deleted before removing reaction");
 			} else {
-				this.log("warn", message, error);
+				this.log("warn", message, "Could not remove reaction", error as Error);
 			}
 		}
 	}
