@@ -96,7 +96,7 @@ function getDelimiter(message: Message) {
 	}
 }
 
-class SearchSummon implements ValueObject {
+export class SearchSummon implements ValueObject {
 	readonly summon: string;
 	readonly type: "ocg" | "rush";
 	readonly original: string;
@@ -445,12 +445,12 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		for (const [i, result] of results.entries()) {
 			if (result.status === "fulfilled") {
 				const [card, reply] = result.value;
-				this.metrics.writeSearch(message, JSON.stringify(inputs[i]), card, reply);
+				this.metrics.writeSearch(message, inputs[i], card, reply);
 				if (reply) {
 					replies.push(reply.id);
 				}
 			} else {
-				this.metrics.writeSearch(message, JSON.stringify(inputs[i]));
+				this.metrics.writeSearch(message, inputs[i]);
 				this.log("error", message, { hit: inputs[i], msg: "Error getting card" }, result.reason);
 			}
 		}
