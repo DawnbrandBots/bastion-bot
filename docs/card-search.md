@@ -80,8 +80,21 @@ For a full list of supported languages, see the above locale setting link.
 
 ## Rush Duel
 
-Please use `/rush-duel` instead.
-Extending `<>` to include Rush Duel is planned in [#341](https://github.com/DawnbrandBots/bastion-bot/issues/341).
+Prefix or postfix the angle brackets with an `R` (case-insensitive) to search for Rush Duel cards
+instead of OCG/TCG cards. Example:
+
+> Blah blah r<>
+
+You can freely mix search categories, but the maximum of three still applies. Example:
+
+> <>R <> <>
+
+If your search term is just a number, it will be treated as a Konami ID because Rush Duel cards do
+not have passwords. Example:
+
+> R<>
+
+The `/rush-duel` command provides autocomplete on search and random selection.
 
 ## Appendix
 
