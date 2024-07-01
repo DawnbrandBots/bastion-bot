@@ -223,11 +223,17 @@ export function inputToGetCardArguments(input: string, defaultLanguage: Locale) 
 	}
 }
 
-interface CardSearcher {
-	search(
-		input: string,
-		language: Locale
-	): Promise<[Static<typeof CardSchema | typeof RushCardSchema> | null | undefined, MessageReplyOptions]>;
+export interface SearchResult<T> {
+	card?: T;
+	replyOptions: MessageReplyOptions;
+	resultLanguage: Locale;
+	type: ReturnType<typeof inputToGetCardArguments>[1];
+	inputLanguage?: Locale;
+	reply?: Message;
+}
+
+interface CardSearcher<T> {
+	search(input: string, language: Locale): Promise<SearchResult<T>>;
 }
 
 function searchLanguageHint(inputLanguage: Locale, commandCache: CommandCache): string {
@@ -236,13 +242,14 @@ function searchLanguageHint(inputLanguage: Locale, commandCache: CommandCache): 
 	return t`Search language: **${localisedInputLanguage}** (${inputLanguage}). Check defaults with </locale get:${id}> and configure with </locale set:${id}>`;
 }
 
-class OCGCardSearcher implements CardSearcher {
+class OCGCardSearcher implements CardSearcher<Static<typeof CardSchema>> {
 	constructor(
 		private got: Got,
 		private commandCache: CommandCache,
 		private masterDuelLimitRegulation: UpdatingLimitRegulationVector
 	) {}
-	async search(input: string, language: Locale): ReturnType<CardSearcher["search"]> {
+	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+	async search(input: string, language: Locale) {
 		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
 		const card = await getCard(this.got, type, searchTerm, inputLanguage);
 		useLocale(resultLanguage);
@@ -267,17 +274,18 @@ class OCGCardSearcher implements CardSearcher {
 			}
 			replyOptions = { embeds };
 		}
-		return [card, replyOptions];
+		return { card, replyOptions, resultLanguage, type, inputLanguage };
 	}
 }
 
-class RushCardSearcher implements CardSearcher {
+class RushCardSearcher implements CardSearcher<Static<typeof RushCardSchema>> {
 	constructor(
 		private got: Got,
 		private commandCache: CommandCache,
 		private limitRegulation: UpdatingLimitRegulationVector
 	) {}
-	async search(input: string, language: Locale): ReturnType<CardSearcher["search"]> {
+	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+	async search(input: string, language: Locale) {
 		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
 		const card =
 			type === "name"
@@ -298,11 +306,11 @@ class RushCardSearcher implements CardSearcher {
 			const embed = createRushCardEmbed(card, resultLanguage, this.limitRegulation);
 			replyOptions = { embeds: [embed] };
 		}
-		return [card, replyOptions];
+		return { card, replyOptions, resultLanguage, type, inputLanguage };
 	}
 }
 
-type CardSearcherMap = Record<SearchSummon["type"], CardSearcher>;
+type CardSearcherMap = Record<SearchSummon["type"], CardSearcher<Static<typeof CardSchema | typeof RushCardSchema>>>;
 export const cardSearcherProvider = instanceCachingFactory<CardSearcherMap>(container => {
 	const logger = getLogger("events:message:search");
 	const got = container.resolve<Got>("got").extend({
@@ -419,10 +427,10 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		this.addReaction(message, "🕙");
 		const language = await this.locales.getM(message);
 		const promises = uniqueInputs.map(async hit => {
-			const [card, replyOptions] = await this.cardSearchers[hit.type].search(hit.summon, language);
+			const searchResult = await this.cardSearchers[hit.type].search(hit.summon, language);
 			try {
-				const reply = await message.reply(replyOptions);
-				return [card, reply] as const;
+				const reply = await message.reply(searchResult.replyOptions);
+				return { ...searchResult, reply };
 			} catch (error) {
 				const userConfigurationErrors: unknown[] = [
 					RESTJSONErrorCodes.MissingPermissions,
@@ -432,22 +440,21 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 				if (error instanceof DiscordAPIError && userConfigurationErrors.includes(error.code)) {
 					this.log("info", message, { hit }, error);
 					message.author
-						.send(prependEmbed(replyOptions, createMisconfigurationEmbed(error, message)))
+						.send(prependEmbed(searchResult.replyOptions, createMisconfigurationEmbed(error, message)))
 						.catch(e => this.log("info", message, { hit, msg: "Error sending misconfig DM" }, e));
 				} else {
 					this.log("error", message, { hit }, error as Error);
 				}
-				return [card] as const;
+				return searchResult;
 			}
 		});
 		const results = await Promise.allSettled(promises);
 		const replies = [];
 		for (const [i, result] of results.entries()) {
 			if (result.status === "fulfilled") {
-				const [card, reply] = result.value;
-				this.metrics.writeSearch(message, inputs[i], card, reply);
-				if (reply) {
-					replies.push(reply.id);
+				this.metrics.writeSearch(message, inputs[i], result.value);
+				if (result.value.reply) {
+					replies.push(result.value.reply.id);
 				}
 			} else {
 				this.metrics.writeSearch(message, inputs[i]);

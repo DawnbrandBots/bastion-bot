@@ -165,13 +165,13 @@ export async function searchRushCard(
 export async function getRushCardByKonamiId(
 	got: Got,
 	konamiId: string | number
-): Promise<Static<typeof RushCardSchema> | null> {
+): Promise<Static<typeof RushCardSchema> | undefined> {
 	const response = await got(`${process.env.API_URL}/rush/${konamiId}`);
 	switch (response.statusCode) {
 		case 200:
 			return JSON.parse(response.body);
 		case 404:
-			return null;
+			return undefined;
 		default:
 			throw new got.HTTPError(response);
 	}

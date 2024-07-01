@@ -4,7 +4,7 @@ import { AutocompleteInteraction, ChatInputCommandInteraction, Message } from "d
 import { inject, singleton } from "tsyringe";
 import { CardSchema } from "./definitions";
 import { RushCardSchema } from "./definitions/rush";
-import { SearchSummon } from "./events/message-search";
+import { SearchResult, SearchSummon } from "./events/message-search";
 
 @singleton()
 export class Metrics {
@@ -14,7 +14,7 @@ export class Metrics {
 	constructor(@inject("metricsDb") metricsDb: string) {
 		this.db = this.getDB(metricsDb);
 		this.commandStatement = this.db.prepare("INSERT INTO commands VALUES(?,?,?,?,?,?,?)");
-		this.searchStatement = this.db.prepare("INSERT INTO searches2 VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+		this.searchStatement = this.db.prepare("INSERT INTO searches2 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 	}
 
 	private getDB(metricsDb: string): Database {
@@ -47,11 +47,17 @@ CREATE TABLE IF NOT EXISTS "searches2" (
 	"channel"	TEXT NOT NULL,
 	"channel_type"	TEXT NOT NULL,
 	"author"	TEXT NOT NULL,
+
 	"search_type"	TEXT NOT NULL,
 	"search_summon"	TEXT NOT NULL,
 	"search_index"	TEXT NOT NULL,
 	"search_full"	TEXT NOT NULL,
-	"result"	TEXT,
+
+	"input_type"	TEXT,
+	"input_language"	TEXT,
+	"result_language"	TEXT,
+
+	"result_card"	TEXT,
 	"latency"	INTEGER NOT NULL,
 	PRIMARY KEY("message", "search_index")
 );`);
@@ -69,39 +75,46 @@ CREATE TABLE IF NOT EXISTS "searches2" (
 	}
 
 	writeSearch(
-		searchMessage: Message,
+		message: Message,
 		summon: SearchSummon,
-		resultCard?: Static<typeof CardSchema | typeof RushCardSchema> | null,
-		replyMessage?: Message
+		searchResult?: SearchResult<Static<typeof CardSchema | typeof RushCardSchema>>
 	): void {
-		// Neither resultCard nor replyMessage: card lookup failed
-		// No replyMessage: Discord reply failed
-		// Both defined: normal operation
-		if (searchMessage.author.id === process.env.HEALTHCHECK_BOT_SNOWFLAKE) {
+		// searchResult: card lookup failed
+		// searchResult.reply undefined: Discord reply failed
+		// else normal operation
+		if (message.author.id === process.env.HEALTHCHECK_BOT_SNOWFLAKE) {
 			return;
 		}
-		let result = null;
-		if (resultCard) {
-			if ("password" in resultCard && resultCard.password) {
-				result = `${resultCard.password}`;
-			} else if (resultCard.konami_id) {
-				result = `%${resultCard.konami_id}`;
+		let resultCard = null;
+		if (searchResult?.card) {
+			if ("password" in searchResult.card && searchResult.card.password) {
+				resultCard = `${searchResult.card.password}`;
+			} else if (searchResult.card.konami_id) {
+				resultCard = `%${searchResult.card.konami_id}`;
 			} else {
-				result = `${resultCard.name.en}`;
+				resultCard = `${searchResult.card.name.en}`;
 			}
 		}
-		const latency = replyMessage ? replyMessage.createdTimestamp - searchMessage.createdTimestamp : -1;
+		const latency = searchResult?.reply ? searchResult.reply.createdTimestamp - message.createdTimestamp : -1;
 		this.searchStatement.run(
-			searchMessage.id,
-			searchMessage.guildId,
-			searchMessage.channelId,
-			searchMessage.channel.type,
-			searchMessage.author.id,
+			message.id,
+			message.guildId,
+			message.channelId,
+			message.channel.type,
+			message.author.id,
+
 			summon.type,
 			summon.summon,
 			summon.index,
 			summon.original,
-			result,
+
+			// Caveat: search failure results in these not being present
+			// when only input language should be optional when searching by ID
+			searchResult?.type,
+			searchResult?.inputLanguage,
+			searchResult?.resultLanguage,
+
+			resultCard,
 			latency
 		);
 	}
