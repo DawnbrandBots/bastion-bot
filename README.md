@@ -18,6 +18,7 @@ Card images and most card data are sourced from [Yugipedia](https://yugipedia.co
 &nbsp;
 [<img src="https://img.shields.io/badge/App%20Directory-darkgreen?style=for-the-badge" alt="Discord App Directory" />](https://discord.com/application-directory/383854640694820865)
 
+[![codecov](https://codecov.io/gh/DawnbrandBots/bastion-bot/graph/badge.svg?token=17Z5J4SB5B)](https://codecov.io/gh/DawnbrandBots/bastion-bot)
 [![Continuous integration and deployment](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/cicd.yml/badge.svg)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/cicd.yml)
 [![Compile and test](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/node.js.yml/badge.svg)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/node.js.yml)
 [![Build Docker image and deploy to Swarm](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/docker.yml/badge.svg)](https://github.com/DawnbrandBots/bastion-bot/actions/workflows/docker.yml)

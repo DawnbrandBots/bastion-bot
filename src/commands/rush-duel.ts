@@ -27,9 +27,11 @@ import {
 import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
 import {
+	addTip,
 	createRushCardEmbed,
 	getRushCardByKonamiId,
 	searchRushCard,
+	suggestSearchTrigger,
 	videoGameIllustration,
 	videoGameIllustrationURL
 } from "../rush-duel";
@@ -183,9 +185,10 @@ export class RushDuelCommand extends AutocompletableCommand {
 		if (typeof result === "number") {
 			return result;
 		}
-		const { resultLanguage, card } = result;
+		const { input, resultLanguage, card } = result;
 		const embed = createRushCardEmbed(card, resultLanguage, this.limitRegulation);
-		const reply = await interaction.reply({ embeds: [embed], fetchReply: true });
+		const suggested = suggestSearchTrigger(input, resultLanguage === "ko");
+		const reply = await interaction.reply({ embeds: [addTip(embed, suggested)], fetchReply: true });
 		return replyLatency(reply, interaction);
 	}
 
@@ -200,7 +203,8 @@ export class RushDuelCommand extends AutocompletableCommand {
 			replyOptions = { content: t`Could not find a card matching \`${input}\`!` };
 		} else {
 			const embed = createRushCardEmbed(card, lang, this.limitRegulation);
-			replyOptions = { embeds: [embed] };
+			const suggested = suggestSearchTrigger(`${input}`, lang === "ko");
+			replyOptions = { embeds: [addTip(embed, `${suggested}`)] };
 		}
 		const reply = await interaction.reply({ ...replyOptions, fetchReply: true });
 		return replyLatency(reply, interaction);
