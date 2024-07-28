@@ -33,10 +33,8 @@ export class PingMessageListener implements Listener<"messageCreate"> {
 		if (shouldIgnore(message)) {
 			return;
 		}
-		if (
-			message.client.user &&
-			message.mentions.has(message.client.user, { ignoreEveryone: true, ignoreRoles: true })
-		) {
+		// Only if directly pinged by name in message content (not by reply or group ping)
+		if (message.mentions.parsedUsers.has(message.client.user.id)) {
 			if (!this.eventLocks.has(message.id, PingMessageListener.name)) {
 				this.log("verbose", message, "skipNoLock");
 				return;
