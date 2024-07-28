@@ -19,17 +19,19 @@ conversations to have Bastion fetch the card information for you! Example:
 ![Search result for above message, part 1](./img/card-search-1.png)
 ![Search result for above message, part 2](./img/card-search-2.png)
 
+(Note: reference screenshots are outdated.)
+
 This works in any type of channel, including forums, threads, and voice chats, as long as
-Bastion is in the channel.
-
-Completely internationalized
-
-The card information is presented in the same Discord embeds as [`/search`](/docs/commands/search.md).
-
-A maximum of THREE cards can be fetched per message, to avoid spamming.
+Bastion is in the channel. A maximum of THREE cards can be fetched per message, to avoid spamming.
 
 Bastion _must_ have all of its [permissions](/README.md#discord-permissions) to work properly.
 If you do not want `<>` card search to be used in a channel, deny it the View Channel permission.
+
+The card information is presented in the same Discord embeds as [`/search`](/docs/commands/search.md).
+The embeds are localized to every official Yu-Gi-Oh! language. The default search and result language
+for community servers is the server primary language in Discord settings, falling back to English if
+the setting is not a Yu-Gi-Oh! language or it is not a community server. For more information, see
+[Other languages](#searching-in-other-languages) below.
 
 ## Cleaning up
 
