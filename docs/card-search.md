@@ -83,18 +83,22 @@ For a full list of supported languages, see the above locale setting link.
 ## Rush Duel
 
 Prefix or postfix the angle brackets with an `R` (case-insensitive) to search for Rush Duel cards
-instead of OCG/TCG cards. Example:
+instead of OCG/TCG cards. `러` can also be used for Korean. Example:
 
-> Blah blah r<>
+> I Maximum Summon r\<Yggdrago the Sky Emperor>!
 
 You can freely mix search categories, but the maximum of three still applies. Example:
 
-> <>R <> <>
+> \<pot of greed>R \<pot of greed> \<aleister the invoker>
 
 If your search term is just a number, it will be treated as a Konami ID because Rush Duel cards do
 not have passwords. Example:
 
-> R<>
+> R\<15150>
+
+Cross-language search works the same way. Example:
+
+> 러\<푸른 눈의 백룡,ko> \<フュージョン,ja,ja>r
 
 The `/rush-duel` command provides autocomplete on search and random selection.
 
