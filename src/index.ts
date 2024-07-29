@@ -5,7 +5,15 @@ import { Command } from "./Command";
 import { BotFactory } from "./bot";
 import { classes, registerSlashCommands } from "./commands";
 import { EventLocker } from "./event-lock";
-import { InteractionListener, MessageDeleteListener, PingMessageListener, SearchMessageListener } from "./events";
+import {
+	CommandCacheReadyListener,
+	InteractionListener,
+	MessageDeleteListener,
+	PingMessageListener,
+	SearchMessageListener
+} from "./events";
+import { cardSearcherProvider } from "./events/message-search";
+import { CommandCache } from "./events/ready-commands";
 import createGotClient from "./got";
 import { limitRegulationMasterDuelProvider, limitRegulationRushProvider } from "./limit-regulation";
 import { LocaleProvider, SQLiteLocaleProvider, loadTranslations } from "./locale";
@@ -57,9 +65,11 @@ if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 
 	// TTL: 5 minutes, sweep every 5 minutes
 	container.registerInstance<RecentMessageCache>(RecentMessageCache, new RecentMessageCache(300000, 300000));
+	container.registerInstance<CommandCache>("commandCache", new Map());
 
 	container.register("limitRegulationRush", limitRegulationRushProvider);
 	container.register("limitRegulationMasterDuel", limitRegulationMasterDuelProvider);
+	container.register("cardSearchers", { useFactory: cardSearcherProvider });
 
 	//container.registerSingleton<Metrics>(Metrics);
 	container.registerSingleton<LocaleProvider>("LocaleProvider", SQLiteLocaleProvider);
@@ -68,6 +78,7 @@ if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 	container.register<PingMessageListener>("Listener", { useClass: PingMessageListener });
 	container.register<SearchMessageListener>("Listener", { useClass: SearchMessageListener });
 	container.register<MessageDeleteListener>("Listener", { useClass: MessageDeleteListener });
+	container.register<CommandCacheReadyListener>("Listener", { useClass: CommandCacheReadyListener });
 	//container.register<BotFactory>(BotFactory, { useClass: BotFactory });
 
 	const bot = container.resolve(BotFactory).createInstance();

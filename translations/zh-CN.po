@@ -6,72 +6,75 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src\card.ts:364
-#: src\commands\rush-duel.ts:60
+#: src\card.ts:416
+#: src\rush-duel.ts:39
 msgid "🔗 Links"
 msgstr "🔗 链接"
 
-#: src\card.ts:365
+#: src\card.ts:417
 #, javascript-format
 msgid "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr "[K社官方数据库](${ official }) | [事务局FAQ](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
-#: src\card.ts:368
+#: src\card.ts:420
 #, javascript-format
 msgid "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
-#: src\card.ts:436
-#: src\commands\rush-duel.ts:107
+#: src\card.ts:489
+#: src\rush-duel.ts:92
+#, javascript-format
 msgid "**Type**: ${ raceIcon } ${ localizedMonsterTypeLine }"
 msgstr "**种族**: ${ raceIcon } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:438
-#: src\commands\rush-duel.ts:109
+#: src\card.ts:491
+#: src\rush-duel.ts:94
 #, javascript-format
 msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 msgstr "**属性**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
 
-#: src\card.ts:442
+#: src\card.ts:495
 #, javascript-format
 msgid "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 msgstr "**阶级**: ${ Icon.Rank } ${ card.rank } **攻击力**: ${ card.atk } **守备力**: ${ card.def }"
 
-#: src\card.ts:445
+#: src\card.ts:498
 #, javascript-format
 msgid "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link Arrows**: ${ arrows }"
 msgstr "**连接数值**: ${ card.link_arrows.length } **攻击力**: ${ card.atk } **连接标记**: ${ arrows }"
 
-#: src\card.ts:447
-#: src\commands\rush-duel.ts:111
+#: src\card.ts:500
+#: src\rush-duel.ts:96
+#, javascript-format
 msgid "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 msgstr "**等级**: ${ Icon.Level } ${ card.level } **攻击力**: ${ card.atk } **守备力**: ${ card.def }"
 
-#: src\card.ts:454
+#: src\card.ts:507
 #, javascript-format
 msgid "**Pendulum Scale**: ${ formattedScale }"
 msgstr "**灵摆刻度**: ${ formattedScale }"
 
-#: src\card.ts:325
+#: src\card.ts:345
 #, javascript-format
 msgid "Password: ${ card.password } | Konami ID #${ card.konami_id }"
 msgstr "卡片密码: ${ card.password } | 官方编号${ card.konami_id }"
 
-#: src\card.ts:327
+#: src\card.ts:347
+#, javascript-format
 msgid "No password | Konami ID #${ card.konami_id }"
 msgstr "无卡密 | 官方编号${ card.konami_id }"
 
-#: src\card.ts:329
+#: src\card.ts:349
 #, javascript-format
 msgid "Password: ${ card.password } | Not yet released"
 msgstr "卡片密码: ${ card.password } | 未发行"
 
-#: src\card.ts:331
-#: src\commands\rush-duel.ts:161
+#: src\card.ts:351
+#: src\rush-duel.ts:146
 msgid "Not yet released"
 msgstr "未发行"
 
-#: src\card.ts:335
+#: src\card.ts:355
 #, javascript-format
 msgid "Placeholder ID: ${ card.fake_password }"
 msgstr "假卡密: ${ card.fake_password }"
@@ -128,87 +131,93 @@ msgstr "觉得Bastion怎么样？请考虑捐助我们！"
 msgid "Found what you were looking for? Consider supporting us!"
 msgstr "找到你要的东西了吗？请考虑捐助我们！"
 
-#: src\commands\art.ts:69
-#: src\commands\price.ts:121
-#: src\commands\rush-duel.ts:306
-#: src\commands\rush-duel.ts:339
-#: src\commands\search.ts:62
-#: src\events\message-search.ts:294
+#: src\commands\art.ts:63
+#: src\commands\price.ts:131
+#: src\commands\rush-duel.ts:172
+#: src\commands\rush-duel.ts:203
+#: src\commands\search.ts:64
+#: src\events\message-search.ts:258
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr "查无此卡：`${ input }`"
 
-#: src\commands\art.ts:83
+#: src\commands\art.ts:70
+#: src\commands\rush-duel.ts:235
+#, javascript-format
 msgid "Could not find art for `${ name }`!"
 msgstr "没找到`${ name }`的卡图！"
 
-#: src\commands\locale.ts:70
+#: src\commands\locale.ts:77
 #, javascript-format
 msgid "Locale override for this channel: ${ channelOverride }"
 msgstr ""
 
-#: src\commands\locale.ts:74
+#: src\commands\locale.ts:81
+#, javascript-format
 msgid "Locale override for this server: ${ guildOverride }"
 msgstr ""
 
-#: src\commands\locale.ts:77
-#: src\commands\locale.ts:107
+#: src\commands\locale.ts:84
+#: src\commands\locale.ts:117
 #, javascript-format
 msgid "Discord Community locale for this server: ${ interaction.guildLocale }"
 msgstr ""
 
-#: src\commands\locale.ts:81
+#: src\commands\locale.ts:89
+#, javascript-format
 msgid "Locale override for this direct message: ${ override }"
 msgstr ""
 
-#: src\commands\locale.ts:84
+#: src\commands\locale.ts:92
 #, javascript-format
 msgid "Your Discord locale: ${ interaction.locale }"
 msgstr ""
 
-#: src\commands\locale.ts:96
+#: src\commands\locale.ts:106
 #, javascript-format
 msgid "Locale for current channel <#${ channel }> overridden with ${ locale }."
 msgstr ""
 
-#: src\commands\locale.ts:99
+#: src\commands\locale.ts:110
+#, javascript-format
 msgid "Locale for current channel <#${ channel }> reset to server default."
 msgstr ""
 
-#: src\commands\locale.ts:109
+#: src\commands\locale.ts:120
 msgid "Sorry, you must have the Manage Channel permission in this channel. If you think this is an error, contact your server admin or report a bug."
 msgstr ""
 
-#: src\commands\locale.ts:116
+#: src\commands\locale.ts:128
 #, javascript-format
 msgid "Locale for this server overriden with ${ locale }."
 msgstr ""
 
-#: src\commands\locale.ts:119
+#: src\commands\locale.ts:132
 msgid "Locale for this server reset to Discord Community default."
 msgstr ""
 
-#: src\commands\locale.ts:122
+#: src\commands\locale.ts:135
 #, javascript-format
 msgid "Server-wide default for community servers is ${ interaction.guildLocale }."
 msgstr ""
 
-#: src\commands\locale.ts:124
+#: src\commands\locale.ts:138
 msgid "Sorry, you must have the Manage Server permission to do this. If you think this is an error, contact your server admin or report a bug."
 msgstr ""
 
-#: src\commands\locale.ts:131
+#: src\commands\locale.ts:146
 #, javascript-format
 msgid "Locale for this direct message overridden with ${ locale }. Your Discord setting is ${ interaction.locale }."
 msgstr ""
 
-#: src\commands\locale.ts:134
+#: src\commands\locale.ts:150
 #, javascript-format
 msgid "Locale for this direct message reset to Discord default. Your Discord setting is ${ interaction.locale }."
 msgstr ""
 
 #: src\commands\ping.ts:40
-#: src\events\message-ping.ts:108
+#: src\events\message-ping.ts:112
+#, javascript-format
 msgid "Total latency: ${ latency } ms"
 msgstr "延迟${ latency }ms"
 
@@ -217,153 +226,148 @@ msgstr "延迟${ latency }ms"
 msgid "Could not find a Yugipedia page named `${ page }`."
 msgstr "Yugipedia上找不到`${ page }`"
 
-#: src\commands\deck.ts:249
+#: src\commands\deck.ts:244
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
 msgstr[0] "${ counts.Monster }张怪兽卡"
 
-#: src\commands\deck.ts:252
+#: src\commands\deck.ts:247
+#, javascript-format
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
 msgstr[0] "${ counts.Spell }张魔法卡"
 
-#: src\commands\deck.ts:255
+#: src\commands\deck.ts:250
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
 msgstr[0] "${ counts.Trap }张陷阱卡"
 
-#: src\commands\deck.ts:283
+#: src\commands\deck.ts:278
 msgid "Your Deck"
 msgstr "你的卡组"
 
-#: src\commands\deck.ts:288
+#: src\commands\deck.ts:283
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
 msgstr[0] "牌组（${ deck.main.length }张 — ${ countDetail }）"
 
-#: src\commands\deck.ts:302
+#: src\commands\deck.ts:297
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ countDetail })"
 msgstr[0] "额外卡组（${ deck.extra.length }张 — ${ countDetail }）"
 
-#: src\commands\deck.ts:316
+#: src\commands\deck.ts:311
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ countDetail })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ countDetail })"
 msgstr[0] "备牌（${ deck.side.length }张 — ${ countDetail }）"
 
-#: src\commands\deck.ts:295
+#: src\commands\deck.ts:290
 msgid "Main Deck (continued)"
 msgstr "牌组（续）"
 
-#: src\commands\deck.ts:309
+#: src\commands\deck.ts:304
 msgid "Extra Deck (continued)"
 msgstr "额外卡组（续）"
 
-#: src\commands\deck.ts:323
+#: src\commands\deck.ts:318
 msgid "Side Deck (continued)"
 msgstr "备牌（续）"
 
-#: src\commands\deck.ts:412
+#: src\commands\deck.ts:407
 msgid "Error: Your deck is empty."
 msgstr "错误：卡组是空的。"
 
 #: src\commands\ping.ts:36
-#: src\events\message-ping.ts:43
+#: src\events\message-ping.ts:47
 #, javascript-format
 msgid "Average WebSocket ping (new instance): ${ ping } ms"
 msgstr ""
 
-#: src\events\message-ping.ts:45
+#: src\events\message-ping.ts:49
 msgid "Free and open source _Yu-Gi-Oh!_ bot"
 msgstr "自由开源游戏王聊天机器人"
 
-#: src\events\message-ping.ts:68
+#: src\events\message-ping.ts:72
 #, javascript-format
 msgid "Revision: ${ process.env.BOT_REVISION }."
 msgstr "修订：${ process.env.BOT_REVISION }"
 
-#: src\commands\deck.ts:333
+#: src\commands\deck.ts:328
 msgid ".ydk files must have the .ydk extension!"
 msgstr ""
 
-#: src\commands\deck.ts:336
+#: src\commands\deck.ts:331
 msgid ".ydk files should not be larger than 1 KB!"
 msgstr ""
 
-#: src\commands\deck.ts:326
+#: src\commands\deck.ts:321
 msgid "ydke URL"
 msgstr ""
 
-#: src\card.ts:402
+#: src\card.ts:455
+#: src\rush-duel.ts:61
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
+#, javascript-format
 msgid "**Limit**: ${ limitRegulationDisplay }"
 msgstr "**限制**: ${ limitRegulationDisplay }"
 
-#: src\commands\price.ts:40
+#: src\commands\price.ts:69
 msgid "TCGPlayer"
 msgstr ""
 
-#: src\commands\price.ts:41
+#: src\commands\price.ts:70
 msgid "Cardmarket"
 msgstr ""
 
-#: src\commands\price.ts:42
-msgid "CoolStuffInc"
-msgstr ""
-
-#: src\commands\price.ts:96
-#. TODO: future, determine localisation and relevance status of this error
-msgid "Sorry, I can't find the price for a card with no English name!"
-msgstr ""
-
-#: src\commands\price.ts:140
+#: src\commands\price.ts:147
 msgid "No market price"
 msgstr ""
 
-#: src\commands\price.ts:148
+#: src\commands\price.ts:155
 #, javascript-format
 msgid "Prices for ${ card.name[resultLanguage] } - ${ vendorName }"
 msgstr ""
 
-#: src\commands\price.ts:162
+#: src\commands\price.ts:169
+#, javascript-format
 msgid "Could not find prices for `${ name }`!"
 msgstr ""
 
-#: src\commands\deck.ts:430
+#: src\commands\deck.ts:425
 #. prepare interaction button for FTP upload
 msgid "Upload to YGOPRODECK"
 msgstr "上传至YGOPRODECK"
 
-#: src\commands\deck.ts:488
+#: src\commands\deck.ts:483
 #. disable original button
 #. prepare row to disable button on original message
 msgid "Upload Complete"
 msgstr "上传成功"
 
-#: src\commands\deck.ts:475
+#: src\commands\deck.ts:470
 msgid "Deck upload failed!"
 msgstr "上传失败"
 
-#: src\commands\deck.ts:496
+#: src\commands\deck.ts:491
 #. reply in affirmation
 #, javascript-format
 msgid "Deck successfully uploaded to <${ url }>!"
 msgstr "卡组成功上传到<${ url }>!"
 
-#: src\events\message-search.ts:299
+#: src\events\message-search.ts:264
 msgid "💬 Translations missing?"
 msgstr "💬缺少翻译？"
 
-#: src\events\message-search.ts:300
+#: src\events\message-search.ts:265
 msgid "Help translate Bastion at the links above."
 msgstr "在以上的网址帮忙翻译Bastion"
 
-#: src\events\message-ping.ts:46
+#: src\events\message-ping.ts:50
 msgid ""
 "❓ Help documentation on [GitHub](https://github.com/DawnbrandBots/bastion-bot), or use `.commands` and `.help`.\n"
 "🟢 Licence: [GNU AGPL 3.0+](https://choosealicense.com/licenses/agpl-3.0/).\n"
@@ -379,29 +383,31 @@ msgid ""
 "💬 Translations missing? Help translate Bastion on [GitHub](https://github.com/DawnbrandBots/bastion-bot)."
 msgstr ""
 
-#: src\events\message-search.ts:292
+#: src\events\message-search.ts:256
+#: src\events\message-search.ts:294
+#, javascript-format
 msgid "Search type: ${ localisedType }"
 msgstr "搜索类型：${ localisedType }"
 
-#: src\events\message-search.ts:289
+#: src\events\message-search.ts:236
 #, javascript-format
 msgid "Search language: **${ localisedInputLanguage }** (${ inputLanguage }). Check defaults with </locale get:${ id }> and configure with </locale set:${ id }>"
 msgstr ""
 
-#: src\events\message-ping.ts:91
+#: src\events\message-ping.ts:95
 msgid "⚠️ You pinged me, but I am missing permissions in the channel!"
 msgstr ""
 
-#: src\events\message-ping.ts:94
-#: src\events\message-search.ts:193
+#: src\events\message-ping.ts:98
+#: src\events\message-search.ts:332
 msgid "Please have a server administrator [fix this](https://github.com/DawnbrandBots/bastion-bot#discord-permissions)."
 msgstr ""
 
-#: src\events\message-search.ts:190
+#: src\events\message-search.ts:329
 msgid "⚠️ I am missing permissions in the channel!"
 msgstr ""
 
-#: src\commands\locale.ts:104
+#: src\commands\locale.ts:114
 #, javascript-format
 msgid "Server-wide locale override: ${ guildOverride }"
 msgstr ""
@@ -412,446 +418,453 @@ msgid "Something went wrong searching YGOPRODECK for `${ searchTerm }`."
 msgstr ""
 
 #: src\commands\yugipedia.ts:110
+#, javascript-format
 msgid "Something went wrong searching Yugipedia for `${ page }`."
 msgstr ""
 
-#: src\commands\rush-duel.ts:61
+#: src\rush-duel.ts:40
 #, javascript-format
 msgid "[Official Konami DB](${ official }) | [Rulings (Japanese)](${ rulings }) | [Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
 msgstr "[K社官方数据库](${ official }) | [事务局FAQ](${ rulings }) | [Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
 
-#: src\commands\rush-duel.ts:64
+#: src\rush-duel.ts:43
 #, javascript-format
 msgid "[Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
 msgstr "[Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
 
-#: src\commands\rush-duel.ts:78
+#: src\rush-duel.ts:57
 msgid "__**LEGEND**__"
 msgstr ""
 
-#: src\commands\rush-duel.ts:114
+#: src\rush-duel.ts:99
+#, javascript-format
 msgid "**MAXIMUM ATK**: ${ card.maximum_atk }"
 msgstr ""
 
-#: src\commands\rush-duel.ts:161
+#: src\rush-duel.ts:146
 #, javascript-format
 msgid "Konami ID #${ card.konami_id }"
 msgstr "官方编号${ card.konami_id }"
 
-#: src\commands\deck.ts:456
-#: src\commands\rush-duel.ts:486
+#: src\art.ts:129
+#: src\commands\deck.ts:451
 msgid "Buttons can only be used by the user who called Bastion."
 msgstr ""
 
-#: src\commands\rush-duel.ts:398
-#, javascript-format
-msgid "Could not find art for `${ input }`!"
-msgstr ""
-
-#: src\card.ts:409
+#: src\card.ts:462
 #, javascript-format
 msgid "**Master Duel rarity**: ${ rarity_icon } ${ localized_rarity }"
 msgstr "**稀有度 (Master Duel)**: ${ rarity_icon } ${ localized_rarity }"
 
-#: src\card.ts:38
+#: src\rush-duel.ts:205
+#, javascript-format
+msgid "Using ${ searchTrigger }, you can search for Rush Duel cards directly in messages without autocomplete"
+msgstr ""
+
+#: src\events\message-search.ts:296
+#, javascript-format
+msgid "Could not find a Rush Duel card matching `${ input }`!"
+msgstr ""
+
+#: src\card.ts:40
 msgctxt "monster-type-race"
 msgid "Normal"
 msgstr "通常"
 
-#: src\card.ts:39
+#: src\card.ts:41
 msgctxt "monster-type-race"
 msgid "Effect"
 msgstr "效果"
 
-#: src\card.ts:40
+#: src\card.ts:42
 msgctxt "monster-type-race"
 msgid "Pendulum"
 msgstr "灵摆"
 
-#: src\card.ts:41
+#: src\card.ts:43
 msgctxt "monster-type-race"
 msgid "Ritual"
 msgstr "仪式"
 
-#: src\card.ts:42
+#: src\card.ts:44
 msgctxt "monster-type-race"
 msgid "Fusion"
 msgstr "融合"
 
-#: src\card.ts:43
+#: src\card.ts:45
 msgctxt "monster-type-race"
 msgid "Synchro"
 msgstr "同步"
 
-#: src\card.ts:44
+#: src\card.ts:46
 msgctxt "monster-type-race"
 msgid "Xyz"
 msgstr "超量"
 
-#: src\card.ts:45
+#: src\card.ts:47
 msgctxt "monster-type-race"
 msgid "Link"
 msgstr "连接"
 
-#: src\card.ts:46
+#: src\card.ts:48
 msgctxt "monster-type-race"
 msgid "Tuner"
 msgstr "协调"
 
-#: src\card.ts:47
+#: src\card.ts:49
 msgctxt "monster-type-race"
 msgid "Flip"
 msgstr "反转"
 
-#: src\card.ts:48
+#: src\card.ts:50
 msgctxt "monster-type-race"
 msgid "Toon"
 msgstr "卡通"
 
-#: src\card.ts:49
+#: src\card.ts:51
 msgctxt "monster-type-race"
 msgid "Spirit"
 msgstr "灵魂"
 
-#: src\card.ts:50
+#: src\card.ts:52
 msgctxt "monster-type-race"
 msgid "Union"
 msgstr "同盟"
 
-#: src\card.ts:51
+#: src\card.ts:53
 msgctxt "monster-type-race"
 msgid "Gemini"
 msgstr "双重"
 
-#: src\card.ts:74
+#: src\card.ts:76
 msgctxt "monster-type-race"
 msgid "Warrior"
 msgstr "战士族"
 
-#: src\card.ts:75
+#: src\card.ts:77
 msgctxt "monster-type-race"
 msgid "Spellcaster"
 msgstr "魔法师族"
 
-#: src\card.ts:76
+#: src\card.ts:78
 msgctxt "monster-type-race"
 msgid "Fairy"
 msgstr "天使族"
 
-#: src\card.ts:77
+#: src\card.ts:79
 msgctxt "monster-type-race"
 msgid "Fiend"
 msgstr "恶魔族"
 
-#: src\card.ts:78
+#: src\card.ts:80
 msgctxt "monster-type-race"
 msgid "Zombie"
 msgstr "不死族"
 
-#: src\card.ts:79
+#: src\card.ts:81
 msgctxt "monster-type-race"
 msgid "Machine"
 msgstr "机械族"
 
-#: src\card.ts:80
+#: src\card.ts:82
 msgctxt "monster-type-race"
 msgid "Aqua"
 msgstr "水族"
 
-#: src\card.ts:81
+#: src\card.ts:83
 msgctxt "monster-type-race"
 msgid "Pyro"
 msgstr "炎族"
 
-#: src\card.ts:82
+#: src\card.ts:84
 msgctxt "monster-type-race"
 msgid "Rock"
 msgstr "岩石族"
 
-#: src\card.ts:83
+#: src\card.ts:85
 msgctxt "monster-type-race"
 msgid "Winged Beast"
 msgstr "鸟兽族"
 
-#: src\card.ts:84
+#: src\card.ts:86
 msgctxt "monster-type-race"
 msgid "Plant"
 msgstr "植物族"
 
-#: src\card.ts:85
+#: src\card.ts:87
 msgctxt "monster-type-race"
 msgid "Insect"
 msgstr "昆虫族"
 
-#: src\card.ts:86
+#: src\card.ts:88
 msgctxt "monster-type-race"
 msgid "Thunder"
 msgstr "雷族"
 
-#: src\card.ts:87
+#: src\card.ts:89
 msgctxt "monster-type-race"
 msgid "Dragon"
 msgstr "龙族"
 
-#: src\card.ts:88
+#: src\card.ts:90
 msgctxt "monster-type-race"
 msgid "Beast"
 msgstr "兽族"
 
-#: src\card.ts:89
+#: src\card.ts:91
 msgctxt "monster-type-race"
 msgid "Beast-Warrior"
 msgstr "兽战士族"
 
-#: src\card.ts:90
+#: src\card.ts:92
 msgctxt "monster-type-race"
 msgid "Dinosaur"
 msgstr "恐龙族"
 
-#: src\card.ts:91
+#: src\card.ts:93
 msgctxt "monster-type-race"
 msgid "Fish"
 msgstr "鱼族"
 
-#: src\card.ts:92
+#: src\card.ts:94
 msgctxt "monster-type-race"
 msgid "Sea Serpent"
 msgstr "海龙族"
 
-#: src\card.ts:93
+#: src\card.ts:95
 msgctxt "monster-type-race"
 msgid "Reptile"
 msgstr "爬虫族"
 
-#: src\card.ts:94
+#: src\card.ts:96
 msgctxt "monster-type-race"
 msgid "Psychic"
 msgstr "念动力族"
 
-#: src\card.ts:95
+#: src\card.ts:97
 msgctxt "monster-type-race"
 msgid "Divine-Beast"
 msgstr "幻神兽族"
 
-#: src\card.ts:96
+#: src\card.ts:98
 msgctxt "monster-type-race"
 msgid "Creator God"
 msgstr "创造神族"
 
-#: src\card.ts:97
+#: src\card.ts:99
 msgctxt "monster-type-race"
 msgid "Wyrm"
 msgstr "幻龙族"
 
-#: src\card.ts:98
+#: src\card.ts:100
 msgctxt "monster-type-race"
 msgid "Cyberse"
 msgstr "电子界族"
 
-#: src\card.ts:53
+#: src\card.ts:55
 #. Exclusive to Rush Duel
 msgctxt "monster-type-race"
 msgid "Maximum"
 msgstr "极限"
 
-#: src\card.ts:99
+#: src\card.ts:101
 msgctxt "monster-type-race"
 msgid "Illusion"
 msgstr "幻想魔族"
 
-#: src\card.ts:101
+#: src\card.ts:103
 #. Exclusive to Rush Duel
 msgctxt "monster-type-race"
 msgid "Galaxy"
 msgstr "银河族"
 
-#: src\card.ts:103
+#: src\card.ts:105
 #. Rush Duel Fusion
 msgctxt "monster-type-race"
 msgid "Cyborg"
 msgstr "半机械族"
 
-#: src\card.ts:104
+#: src\card.ts:106
 msgctxt "monster-type-race"
 msgid "Magical Knight"
 msgstr "魔导骑士族"
 
-#: src\card.ts:105
+#: src\card.ts:107
 msgctxt "monster-type-race"
 msgid "High Dragon"
 msgstr "多头龙族"
 
-#: src\card.ts:106
+#: src\card.ts:108
 msgctxt "monster-type-race"
 msgid "Celestial Warrior"
 msgstr "天界战士族"
 
-#: src\card.ts:107
+#: src\card.ts:109
 msgctxt "monster-type-race"
 msgid "Omega Psychic"
 msgstr "欧米伽念动力族"
 
-#: src\card.ts:54
+#: src\card.ts:56
 msgctxt "spell-trap-property"
 msgid "Normal Spell"
 msgstr "通常魔法"
 
-#: src\card.ts:55
+#: src\card.ts:57
 msgctxt "spell-trap-property"
 msgid "Continuous Spell"
 msgstr "永续魔法"
 
-#: src\card.ts:56
+#: src\card.ts:58
 msgctxt "spell-trap-property"
 msgid "Equip Spell"
 msgstr "装备魔法"
 
-#: src\card.ts:57
+#: src\card.ts:59
 msgctxt "spell-trap-property"
 msgid "Quick-Play Spell"
 msgstr "速攻魔法"
 
-#: src\card.ts:58
+#: src\card.ts:60
 msgctxt "spell-trap-property"
 msgid "Field Spell"
 msgstr "场地魔法"
 
-#: src\card.ts:59
+#: src\card.ts:61
 msgctxt "spell-trap-property"
 msgid "Ritual Spell"
 msgstr "仪式魔法"
 
-#: src\card.ts:60
+#: src\card.ts:62
 msgctxt "spell-trap-property"
 msgid "Normal Trap"
 msgstr "通常陷阱"
 
-#: src\card.ts:61
+#: src\card.ts:63
 msgctxt "spell-trap-property"
 msgid "Continuous Trap"
 msgstr "永续陷阱"
 
-#: src\card.ts:62
+#: src\card.ts:64
 msgctxt "spell-trap-property"
 msgid "Counter Trap"
 msgstr "反击陷阱"
 
-#: src\card.ts:64
+#: src\card.ts:66
 #. SpeedLimitRegulation is not converted to a number for display
 msgctxt "limit-regulation"
 msgid "Forbidden"
 msgstr ""
 
-#: src\card.ts:65
+#: src\card.ts:67
 msgctxt "limit-regulation"
 msgid "Limited 1"
 msgstr ""
 
-#: src\card.ts:66
+#: src\card.ts:68
 msgctxt "limit-regulation"
 msgid "Limited 2"
 msgstr ""
 
-#: src\card.ts:67
+#: src\card.ts:69
 msgctxt "limit-regulation"
 msgid "Limited 3"
 msgstr ""
 
-#: src\card.ts:68
+#: src\card.ts:70
 msgctxt "limit-regulation"
 msgid "Unlimited"
 msgstr ""
 
-#: src\card.ts:113
+#: src\card.ts:115
 msgctxt "attribute"
 msgid "EARTH"
 msgstr "地"
 
-#: src\card.ts:114
+#: src\card.ts:116
 msgctxt "attribute"
 msgid "WATER"
 msgstr "水"
 
-#: src\card.ts:115
+#: src\card.ts:117
 msgctxt "attribute"
 msgid "FIRE"
 msgstr "炎"
 
-#: src\card.ts:116
+#: src\card.ts:118
 msgctxt "attribute"
 msgid "WIND"
 msgstr "风"
 
-#: src\card.ts:117
+#: src\card.ts:119
 msgctxt "attribute"
 msgid "LIGHT"
 msgstr "光"
 
-#: src\card.ts:118
+#: src\card.ts:120
 msgctxt "attribute"
 msgid "DARK"
 msgstr "暗"
 
-#: src\card.ts:119
+#: src\card.ts:121
 msgctxt "attribute"
 msgid "DIVINE"
 msgstr "神"
 
-#: src\card.ts:150
+#: src\card.ts:152
 msgctxt "master-duel-rarity"
 msgid "Common (N)"
 msgstr "普（Ｎ）"
 
-#: src\card.ts:151
+#: src\card.ts:153
 msgctxt "master-duel-rarity"
 msgid "Rare (R)"
 msgstr "稀有（Ｒ）"
 
-#: src\card.ts:152
+#: src\card.ts:154
 msgctxt "master-duel-rarity"
 msgid "Super Rare (SR)"
 msgstr "面闪稀有（ＳＲ）"
 
-#: src\card.ts:153
+#: src\card.ts:155
 msgctxt "master-duel-rarity"
 msgid "Ultra Rare (UR)"
 msgstr "金闪稀有（ＵＲ）"
 
-#: src\card.ts:460
-#: src\card.ts:471
-#: src\commands\rush-duel.ts:142
+#: src\card.ts:513
+#: src\card.ts:524
+#: src\rush-duel.ts:127
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "卡片文本"
 
-#: src\card.ts:465
+#: src\card.ts:518
 msgctxt "card-embed"
 msgid "Pendulum Effect"
 msgstr "灵摆效果"
 
-#: src\card.ts:486
+#: src\card.ts:539
 msgctxt "card-embed"
 msgid "Card Effect"
 msgstr "卡片效果"
 
-#: src\commands\rush-duel.ts:133
-#: src\commands\rush-duel.ts:154
+#: src\rush-duel.ts:118
+#: src\rush-duel.ts:139
 msgctxt "card-embed"
 msgid "[REQUIREMENT]"
 msgstr "【条件】"
 
-#: src\commands\rush-duel.ts:134
-#: src\commands\rush-duel.ts:155
+#: src\rush-duel.ts:119
+#: src\rush-duel.ts:140
 msgctxt "card-embed"
 msgid "[EFFECT]"
 msgstr "【效果】"
 
-#: src\commands\rush-duel.ts:136
+#: src\rush-duel.ts:121
 msgctxt "card-embed"
 msgid "[CONTINUOUS EFFECT]"
 msgstr "【永续效果】"
 
-#: src\commands\rush-duel.ts:138
+#: src\rush-duel.ts:123
 msgctxt "card-embed"
 msgid "[MULTI-CHOICE EFFECT]"
 msgstr "【选择效果】"
@@ -866,8 +879,8 @@ msgctxt "command-option"
 msgid "input-language"
 msgstr "输入语言"
 
-#: src\commands\rush-duel.ts:194
-#: src\commands\rush-duel.ts:206
+#: src\commands\rush-duel.ts:68
+#: src\commands\rush-duel.ts:80
 #: src\locale.ts:147
 #: src\locale.ts:165
 #: src\locale.ts:181
@@ -926,7 +939,8 @@ msgctxt "command-option"
 msgid "password"
 msgstr ""
 
-#: src\commands\rush-duel.ts:199
+#: src\commands\rush-duel.ts:73
+#: src\events\message-search.ts:293
 #: src\locale.ts:176
 msgctxt "command-option"
 msgid "konami-id"
@@ -952,22 +966,22 @@ msgctxt "command-option"
 msgid "locale"
 msgstr ""
 
-#: src\commands\price.ts:65
+#: src\commands\price.ts:94
 msgctxt "command-option"
 msgid "vendor"
 msgstr ""
 
-#: src\commands\rush-duel.ts:189
+#: src\commands\rush-duel.ts:63
 msgctxt "command-option"
 msgid "search"
 msgstr ""
 
-#: src\commands\rush-duel.ts:211
+#: src\commands\rush-duel.ts:85
 msgctxt "command-option"
 msgid "random"
 msgstr ""
 
-#: src\commands\rush-duel.ts:216
+#: src\commands\rush-duel.ts:90
 msgctxt "command-option"
 msgid "art"
 msgstr ""
@@ -1027,18 +1041,18 @@ msgctxt "command-option-description"
 msgid "Whether to display the deck sections as one stacked column. This is false (side-by-side) by default."
 msgstr ""
 
-#: src\commands\art.ts:41
+#: src\commands\art.ts:40
 msgctxt "command-option-description"
 msgid "Display the art for the card with this name."
 msgstr ""
 
-#: src\commands\rush-duel.ts:195
+#: src\commands\rush-duel.ts:69
 #: src\locale.ts:148
 msgctxt "command-option-description"
 msgid "Card name, fuzzy matching supported."
 msgstr ""
 
-#: src\commands\art.ts:44
+#: src\commands\art.ts:43
 msgctxt "command-option-description"
 msgid "Display the art for the card with this password."
 msgstr ""
@@ -1048,28 +1062,28 @@ msgctxt "command-option-description"
 msgid "Card password, the eight-digit number printed on the bottom left corner."
 msgstr ""
 
-#: src\commands\art.ts:47
+#: src\commands\art.ts:46
 msgctxt "command-option-description"
 msgid "Display the art for the card with this official database ID."
 msgstr ""
 
-#: src\commands\rush-duel.ts:207
+#: src\commands\rush-duel.ts:81
 #: src\locale.ts:182
 msgctxt "command-option-description"
 msgid "Konami's official card database identifier."
 msgstr ""
 
-#: src\commands\search.ts:40
+#: src\commands\search.ts:42
 msgctxt "command-option-description"
 msgid "Find all information for the card with this name."
 msgstr ""
 
-#: src\commands\search.ts:43
+#: src\commands\search.ts:45
 msgctxt "command-option-description"
 msgid "Find all information for the card with this password."
 msgstr ""
 
-#: src\commands\search.ts:46
+#: src\commands\search.ts:48
 msgctxt "command-option-description"
 msgid "Find all information for the card with this official database ID."
 msgstr ""
@@ -1094,22 +1108,22 @@ msgctxt "command-option-description"
 msgid "The new default language to use in this channel or server."
 msgstr ""
 
-#: src\commands\price.ts:69
+#: src\commands\price.ts:98
 msgctxt "command-option-description"
 msgid "Display the price for the card with this name."
 msgstr ""
 
-#: src\commands\price.ts:73
+#: src\commands\price.ts:102
 msgctxt "command-option-description"
 msgid "Display the price for the card with this password."
 msgstr ""
 
-#: src\commands\price.ts:76
+#: src\commands\price.ts:105
 msgctxt "command-option-description"
 msgid "Display the price for the card with this official database ID."
 msgstr ""
 
-#: src\commands\price.ts:66
+#: src\commands\price.ts:95
 msgctxt "command-option-description"
 msgid "The vendor to fetch the price data from."
 msgstr ""
@@ -1119,22 +1133,22 @@ msgctxt "command-option-description"
 msgid "The English name of the card you're looking for."
 msgstr ""
 
-#: src\commands\rush-duel.ts:190
+#: src\commands\rush-duel.ts:64
 msgctxt "command-option-description"
 msgid "Find all information for the Rush Duel card with this name."
 msgstr ""
 
-#: src\commands\rush-duel.ts:201
+#: src\commands\rush-duel.ts:75
 msgctxt "command-option-description"
 msgid "Find all information for the Rush Duel card with this official database ID."
 msgstr ""
 
-#: src\commands\rush-duel.ts:212
+#: src\commands\rush-duel.ts:86
 msgctxt "command-option-description"
 msgid "Get a random Rush Duel card."
 msgstr ""
 
-#: src\commands\rush-duel.ts:217
+#: src\commands\rush-duel.ts:91
 msgctxt "command-option-description"
 msgid "Display just the art for the Rush Duel card with this name."
 msgstr ""
@@ -1144,7 +1158,7 @@ msgctxt "command-option-description"
 msgid "Lucene query on YAML Yugi"
 msgstr ""
 
-#: src\commands\art.ts:37
+#: src\commands\art.ts:36
 msgctxt "command-name"
 msgid "art"
 msgstr "卡图"
@@ -1174,7 +1188,7 @@ msgctxt "command-name"
 msgid "deck"
 msgstr ""
 
-#: src\commands\search.ts:36
+#: src\commands\search.ts:38
 msgctxt "command-name"
 msgid "search"
 msgstr ""
@@ -1184,17 +1198,17 @@ msgctxt "command-name"
 msgid "locale"
 msgstr ""
 
-#: src\commands\random.ts:42
+#: src\commands\random.ts:44
 msgctxt "command-name"
 msgid "random"
 msgstr ""
 
-#: src\commands\price.ts:60
+#: src\commands\price.ts:89
 msgctxt "command-name"
 msgid "price"
 msgstr ""
 
-#: src\commands\rush-duel.ts:184
+#: src\commands\rush-duel.ts:58
 msgctxt "command-name"
 msgid "rush-duel"
 msgstr ""
@@ -1204,7 +1218,7 @@ msgctxt "command-name"
 msgid "query"
 msgstr ""
 
-#: src\commands\art.ts:38
+#: src\commands\art.ts:37
 msgctxt "command-description"
 msgid "Display the art for a card!"
 msgstr "显示卡片图。"
@@ -1234,7 +1248,7 @@ msgctxt "command-description"
 msgid "Display a deck list from ydke:// or .ydk format, exported from a number of deck building programs."
 msgstr ""
 
-#: src\commands\search.ts:37
+#: src\commands\search.ts:39
 msgctxt "command-description"
 msgid "Find all information on a card!"
 msgstr ""
@@ -1244,17 +1258,17 @@ msgctxt "command-description"
 msgid "Check or set Bastion's locale for this channel or server."
 msgstr ""
 
-#: src\commands\random.ts:43
+#: src\commands\random.ts:45
 msgctxt "command-description"
 msgid "Get a random Yu-Gi-Oh! card."
 msgstr ""
 
-#: src\commands\price.ts:61
+#: src\commands\price.ts:90
 msgctxt "command-description"
 msgid "Display the price for a card!"
 msgstr ""
 
-#: src\commands\rush-duel.ts:185
+#: src\commands\rush-duel.ts:59
 msgctxt "command-description"
 msgid "Find information on Rush Duel cards."
 msgstr ""

@@ -1,4 +1,4 @@
-import { classes } from "../../src/commands";
+import { previewCommandClasses, productionCommandClasses } from "../../src/commands";
 import { COMMAND_LOCALIZATIONS, loadTranslations } from "../../src/locale";
 
 describe(".po files", () => {
@@ -15,7 +15,7 @@ describe(".po files", () => {
 		// Side effect: loads globally. Do it here anyway so this test is guaranteed to work regardless
 		// of execution order and stands independently.
 		loadTranslations();
-		const commands = classes.map(command => command.meta);
+		const commands = [...productionCommandClasses, ...previewCommandClasses].map(command => command.meta);
 		// If translations and command metadata are set up correctly, some of the localisations provided
 		// to Discord should be different and therefore not the default English values in the code.
 		let translationsLoaded = false;

@@ -9,3 +9,4 @@ export { InteractionListener } from "./interaction";
 export { MessageDeleteListener } from "./message-delete";
 export { PingMessageListener } from "./message-ping";
 export { SearchMessageListener } from "./message-search";
+export { CommandCacheReadyListener } from "./ready-commands";

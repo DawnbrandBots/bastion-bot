@@ -15,7 +15,8 @@ import { SearchCommand } from "./search";
 import { YGOPRODECKCommand } from "./ygoprodeck";
 import { YugiCommand } from "./yugipedia";
 
-const productionCommandClasses = [
+// Exported only for unit tests
+export const productionCommandClasses = [
 	DeckCommand,
 	PingCommand,
 	LinkCommand,
@@ -30,7 +31,7 @@ const productionCommandClasses = [
 	PriceCommand,
 	RushDuelCommand
 ];
-const previewCommandClasses = [QueryCommand];
+export const previewCommandClasses = [QueryCommand];
 
 export const classes = [
 	...productionCommandClasses,

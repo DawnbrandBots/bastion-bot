@@ -54,7 +54,9 @@ describe("ArtSwitcher", () => {
 		}
 	];
 	it.each(["reply", "editReply"] as const)("shows first of two illustrations using %s", async method => {
-		awaitMessageComponent.mockRejectedValue(new DiscordjsError(DiscordjsErrorCodes.InteractionCollectorError));
+		awaitMessageComponent.mockRejectedValue(
+			Reflect.construct(DiscordjsError, [DiscordjsErrorCodes.InteractionCollectorError])
+		);
 		const interaction = { ...mockInteraction, user: {} } as unknown as ChatInputCommandInteraction;
 		const switcher = new ArtSwitcher(CARTESIA_IMAGES, "test");
 		await switcher.send(interaction, method, "en");

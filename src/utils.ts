@@ -153,8 +153,6 @@ export function splitText(outString: string, cap = 1024): string[] {
 
 export function shouldIgnore(message: Message): boolean {
 	return (
-		// Ignore replies to prevent overtriggering as they are treated as pings
-		!!message.reference ||
 		// Ignore system messages as we cannot reply to them
 		message.system ||
 		// Ignore bots to prevent infinite loops and other potentially malicious abuse, except from our Singing Lanius
