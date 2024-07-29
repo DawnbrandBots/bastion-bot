@@ -18,8 +18,7 @@ conversations to have Bastion fetch the card information for you! Example:
 
 ![Search result for above message, part 1](./img/card-search-1.png)
 ![Search result for above message, part 2](./img/card-search-2.png)
-
-(Note: reference screenshots are outdated.)
+![Search result for above message, part 3](./img/card-search-3.png)
 
 This works in any type of channel, including forums, threads, and voice chats, as long as
 Bastion is in the channel. A maximum of THREE cards can be fetched per message, to avoid spamming.
@@ -48,7 +47,8 @@ If your search term is just a number, it will be treated as a password. Example:
 
 > The smallest password is \<00002511>, but it used to be <10000>
 
-![Search result for above message](./img/card-search-password.png)
+![Search result for above message, part 1](./img/card-search-password-1.png)
+![Search result for above message, part 2](./img/card-search-password-2.png)
 
 If your search term starts with `%` and is followed by a number, it will be treated as a Konami ID. Example:
 
@@ -87,18 +87,28 @@ instead of OCG/TCG cards. `러` can also be used for Korean. Example:
 
 > I Maximum Summon r\<Yggdrago the Sky Emperor>!
 
+![Search result for above message](./img/card-search-rush.png)
+
 You can freely mix search categories, but the maximum of three still applies. Example:
 
 > \<pot of greed>R \<pot of greed> \<aleister the invoker>
+
+![Search result for above message, part 1](./img/card-search-rush-mix-1.png)
+![Search result for above message, part 2](./img/card-search-rush-mix-2.png)
+![Search result for above message, part 3](./img/card-search-rush-mix-3.png)
 
 If your search term is just a number, it will be treated as a Konami ID because Rush Duel cards do
 not have passwords. Example:
 
 > R\<15150>
 
+![Search result for above message](./img/card-search-rush-konami-id.png)
+
 Cross-language search works the same way. Example:
 
 > 러\<푸른 눈의 백룡,ko> \<フュージョン,ja,ja>r
+
+![Search result for above message](./img/card-search-rush-intl.png)
 
 The `/rush-duel` command provides autocomplete on search and random selection.
 
