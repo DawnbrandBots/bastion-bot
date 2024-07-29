@@ -26,7 +26,7 @@
 		"@sinclair/typebox": "^0.32.34",
 		"basic-ftp": "^5.0.5",
 		"better-sqlite3": "^11.1.2",
-		"debug": "^4.3.5",
+		"debug": "^4.3.6",
 		"discord-markdown": "2.5.1",
 		"discord.js": "~14.15.3",
 		"dotenv": "^16.4.5",
