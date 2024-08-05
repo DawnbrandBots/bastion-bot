@@ -143,12 +143,18 @@ export class MetagameCommand extends Command {
 					.addChoices([
 						buildLocalisedChoice("TCG", () => c("command-option-choice").t`TCG`),
 						buildLocalisedChoice("OCG", () => c("command-option-choice").t`OCG`),
-						buildLocalisedChoice("OCG-AE", () => c("command-option-choice").t`OCG (Asian-English)`),
-						buildLocalisedChoice(
-							"MD-TL",
-							() => c("command-option-choice").t`Master Duel Diamond+ tier list`
-						)
+						buildLocalisedChoice("OCG-AE", () => c("command-option-choice").t`OCG (Asian-English)`)
 					])
+					.addChoices(
+						process.env.BOT_NO_DIRECT_MESSAGE_SEARCH
+							? [
+									buildLocalisedChoice(
+										"MD-TL",
+										() => c("command-option-choice").t`Master Duel Diamond+ tier list`
+									)
+								]
+							: []
+					)
 					.setRequired(true),
 				() => c("command-option").t`format`,
 				() => c("command-option-description").t`Game region or Master Duel.`
