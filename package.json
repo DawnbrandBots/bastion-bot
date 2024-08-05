@@ -62,7 +62,19 @@
 	"resolutions": {
 		"@types/node": "^20.14.11",
 		"http2-wrapper": "^2.2.1",
-		"semver": "^7.6.3"
+		"semver": "^7.6.3",
+		"deep-equal": "npm:@nolyfill/deep-equal@^1",
+		"function-bind": "npm:@nolyfill/function-bind@^1",
+		"gopd": "npm:@nolyfill/gopd@^1",
+		"has-property-descriptors": "npm:@nolyfill/has-property-descriptors@^1",
+		"has-proto": "npm:@nolyfill/has-proto@^1",
+		"has-symbols": "npm:@nolyfill/has-symbols@^1",
+		"has-tostringtag": "npm:@nolyfill/has-tostringtag@^1",
+		"hasown": "npm:@nolyfill/hasown@^1",
+		"is-core-module": "npm:@nolyfill/is-core-module@^1",
+		"is-generator-function": "npm:@nolyfill/is-generator-function@^1",
+		"set-function-length": "npm:@nolyfill/set-function-length@^1",
+		"side-channel": "npm:@nolyfill/side-channel@^1"
 	},
 	"jest": {
 		"clearMocks": true,
