@@ -165,14 +165,43 @@ export async function searchRushCard(
 export async function getRushCardByKonamiId(
 	got: Got,
 	konamiId: string | number
-): Promise<Static<typeof RushCardSchema> | null> {
+): Promise<Static<typeof RushCardSchema> | undefined> {
 	const response = await got(`${process.env.API_URL}/rush/${konamiId}`);
 	switch (response.statusCode) {
 		case 200:
 			return JSON.parse(response.body);
 		case 404:
-			return null;
+			return undefined;
 		default:
 			throw new got.HTTPError(response);
 	}
+}
+
+// Only used by /rush-duel
+export function suggestSearchTrigger(input: string, korean: boolean): string {
+	if (korean) {
+		if (input.charCodeAt(0) % 2 === 0) {
+			return `러<${input}>`;
+		} else {
+			return `<${input}>러`;
+		}
+	} else {
+		switch (input.charCodeAt(0) % 4) {
+			case 0:
+				return `r<${input}>`;
+			case 1:
+				return `<${input}>r`;
+			case 2:
+				return `R<${input}>`;
+			case 3:
+			default:
+				return `<${input}>R`;
+		}
+	}
+}
+
+// Only used by /rush-duel
+export function addTip(embed: EmbedBuilder, searchTrigger: string): EmbedBuilder {
+	const tip = t`Using ${searchTrigger}, you can search for Rush Duel cards directly in messages without autocomplete`;
+	return embed.setFooter({ text: `${embed.data.footer?.text}\n${tip}` });
 }

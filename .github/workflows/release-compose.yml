@@ -46,15 +46,15 @@ jobs:
           DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
           API_URL: ${{ secrets.API_URL_INTERNAL }}
           FTP_URL: ${{ secrets.FTP_URL }}
-          HEALTHCHECK_BOT_SNOWFLAKE: "1031374366426009753"  # Singing Lanius#9842
+          HEALTHCHECK_BOT_SNOWFLAKE: "1031374366426009753" # Singing Lanius#9842
           BOT_LOGGER_WEBHOOK: ${{ secrets.PRODUCTION_LOGGER_WEBHOOK }}
           BOT_PRESENCE: ${{ github.event.inputs.presence }}
           BOT_MOTD: ${{ github.event.inputs.motd }}
           BOT_BIND_MOUNT: ${{ secrets.PRODUCTION_BIND_MOUNT }}
           LOG_ALL_MESSAGE_CHANNEL: ${{ secrets.LOG_ALL_MESSAGE_CHANNEL }}
         run: |
-          docker-compose pull
-          docker-compose up -d
+          docker compose pull
+          docker compose up -d
       - name: Deploy Slash Commands globally
         env:
           DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}

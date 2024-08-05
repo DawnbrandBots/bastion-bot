@@ -1,4 +1,15 @@
-# New `<>` card search experience
+# How to use Bastion's card search
+
+## Table of contents
+
+1. [Getting started](#getting-started)
+1. [Cleaning up](#cleaning-up)
+1. [Other languages](#searching-in-other-languages)
+1. [Searching by password and Konami ID](#searching-by-password-and-konami-id)
+1. [Rush Duel](#rush-duel)
+1. [Appendix](#appendix)
+
+## Getting started
 
 Simply enclose the name of the cards to search for in angle brackets `<>` as part of your
 conversations to have Bastion fetch the card information for you! Example:
@@ -7,16 +18,19 @@ conversations to have Bastion fetch the card information for you! Example:
 
 ![Search result for above message, part 1](./img/card-search-1.png)
 ![Search result for above message, part 2](./img/card-search-2.png)
+![Search result for above message, part 3](./img/card-search-3.png)
 
-Unlike old card search, this now works in threads and voice chats!
-There are also new hyperlinks to external websites, up-to-date non-English card text,
-and improved Pendulum Monster display.
-The card information is presented in the same Discord embeds as [`/search`](/docs/commands/search.md).
-
-A maximum of THREE cards can be fetched per message, to avoid spamming.
+This works in any type of channel, including forums, threads, and voice chats, as long as
+Bastion is in the channel. A maximum of THREE cards can be fetched per message, to avoid spamming.
 
 Bastion _must_ have all of its [permissions](/README.md#discord-permissions) to work properly.
 If you do not want `<>` card search to be used in a channel, deny it the View Channel permission.
+
+The card information is presented in the same Discord embeds as [`/search`](/docs/commands/search.md).
+The embeds are localized to every official Yu-Gi-Oh! language. The default search and result language
+for community servers is the server primary language in Discord settings, falling back to English if
+the setting is not a Yu-Gi-Oh! language or it is not a community server. For more information, see
+[Other languages](#searching-in-other-languages) below.
 
 ## Cleaning up
 
@@ -33,7 +47,8 @@ If your search term is just a number, it will be treated as a password. Example:
 
 > The smallest password is \<00002511>, but it used to be <10000>
 
-![Search result for above message](./img/card-search-password.png)
+![Search result for above message, part 1](./img/card-search-password-1.png)
+![Search result for above message, part 2](./img/card-search-password-2.png)
 
 If your search term starts with `%` and is followed by a number, it will be treated as a Konami ID. Example:
 
@@ -65,7 +80,47 @@ the order `<search term,input language,result language>`. Example:
 
 For a full list of supported languages, see the above locale setting link.
 
-## When does the old bot still get triggered?
+## Rush Duel
+
+Prefix or postfix the angle brackets with an `R` (case-insensitive) to search for Rush Duel cards
+instead of OCG/TCG cards. `러` can also be used for Korean. Example:
+
+> I Maximum Summon r\<Yggdrago the Sky Emperor>!
+
+![Search result for above message](./img/card-search-rush.png)
+
+You can freely mix search categories, but the maximum of three still applies. Example:
+
+> \<pot of greed>R \<pot of greed> \<aleister the invoker>
+
+![Search result for above message, part 1](./img/card-search-rush-mix-1.png)
+![Search result for above message, part 2](./img/card-search-rush-mix-2.png)
+![Search result for above message, part 3](./img/card-search-rush-mix-3.png)
+
+If your search term is just a number, it will be treated as a Konami ID because Rush Duel cards do
+not have passwords. Example:
+
+> R\<15150>
+
+![Search result for above message](./img/card-search-rush-konami-id.png)
+
+Cross-language search works the same way. Example:
+
+> 러\<푸른 눈의 백룡,ko> \<フュージョン,ja,ja>r
+
+![Search result for above message](./img/card-search-rush-intl.png)
+
+The `/rush-duel` command provides autocomplete on search and random selection.
+
+## Appendix
+
+### Where are TCG Speed Duel skills?
+
+These were included in the old `<>` search somewhat by accident.
+A Slash Command for skills is planned in [#446](https://github.com/DawnbrandBots/bastion-bot/issues/446).
+If you have feedback, please [join the support server](https://discord.gg/4aFuPyuE96).
+
+### When does the old bot still get triggered?
 
 New `<>` card search runs on the new instance that also handles Slash Commands.
 The old instance still handles some `<>` searches and legacy `.` chat commands.
@@ -74,25 +129,17 @@ The old instance still handles some `<>` searches and legacy `.` chat commands.
 search term contains `(` or `anime`. This is to redirect searches for unofficial cards to
 the old bot, since they are not currently included in new Bastion's data.
 
-Certain servers temporarily do not have new `<>` card search at all due to frequent
+Certain servers do not have new `<>` card search at all due to frequent
 searching for unofficial cards.
 
-## Where are Rush Duel cards and TCG Speed Duel skills?
-
-These were included in the old `<>` search somewhat by accident. Please use `/rush-duel` instead.
-Extending `<>` to include Rush Duel is planned in [#341](https://github.com/DawnbrandBots/bastion-bot/issues/341).
-A Slash Command for skills is planned in [#446](https://github.com/DawnbrandBots/bastion-bot/issues/446).
-If you have feedback, please [join the support server](https://discord.gg/4aFuPyuE96).
-
-## Custom brackets
+### Custom brackets
 
 Old Bastion had a niche feature for server administrators to change the brackets used for card search.
-This was meant for conflict resolution with other bots and was very rarely used.
-Changing this setting yourself is disabled while we work on porting all `<>` card search functionality
-to the new bot instance. If you are an administrator and wish to change your server's setting,
-contact us in the [support server](https://discord.gg/4aFuPyuE96).
+This was meant for conflict resolution with other bots and was very rarely used, and thus it is no
+longer supported. A few legacy servers have their setting baked in, to be deprecated.
 
-## Appendix
+### Links
 
 - [Old Bastion card search documentation](https://github.com/AlphaKretin/bastion-bot/wiki/Commands-for-users)
 - [Main GitHub issue where the new search experience was worked on](https://github.com/DawnbrandBots/bastion-bot/issues/152)
+- GitHub issues for the Rush Duel search experience: [#341](https://github.com/DawnbrandBots/bastion-bot/issues/341) [#468](https://github.com/DawnbrandBots/bastion-bot/issues/468)

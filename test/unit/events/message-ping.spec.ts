@@ -1,4 +1,4 @@
-import { Message } from "discord.js";
+import { Collection, Message } from "discord.js";
 import { PingMessageListener } from "../../../src/events";
 import { Locale, LocaleProvider } from "../../../src/locale";
 
@@ -32,7 +32,7 @@ describe("Message event listener", () => {
 	const listener = new PingMessageListener(new MockLocaleProvider(), eventLocks);
 
 	let message: Message;
-	const user = {};
+	const user = { id: "383854640694820865" };
 	beforeEach(() => {
 		message = new MockMessage();
 		Object.defineProperty(message, "channel", { value: { id: "0" } });
@@ -44,7 +44,9 @@ describe("Message event listener", () => {
 			}
 		});
 		message.mentions = new MessageMentions();
-		message.mentions.has = jest.fn(thing => thing === user);
+		Object.defineProperty(message.mentions, "parsedUsers", {
+			value: new Collection([["383854640694820865", user]])
+		});
 		message.createdTimestamp = 0;
 		message.reply = jest.fn(async () => message);
 		message.edit = jest.fn();
@@ -52,17 +54,6 @@ describe("Message event listener", () => {
 
 	test("ignores bots", async () => {
 		message.author.bot = true;
-
-		await listener.run(message);
-		expect(message.reply).not.toHaveBeenCalled();
-	});
-
-	test("ignores replies", async () => {
-		message.reference = {
-			guildId: "0",
-			channelId: "1",
-			messageId: "0"
-		};
 
 		await listener.run(message);
 		expect(message.reply).not.toHaveBeenCalled();
@@ -76,7 +67,7 @@ describe("Message event listener", () => {
 	});
 
 	test("only responds to mentions", async () => {
-		message.mentions.has = jest.fn(() => false);
+		message.mentions.parsedUsers.clear();
 
 		await listener.run(message);
 		expect(message.reply).not.toHaveBeenCalled();

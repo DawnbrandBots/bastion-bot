@@ -96,7 +96,7 @@ function getDelimiter(message: Message) {
 	}
 }
 
-class SearchSummon implements ValueObject {
+export class SearchSummon implements ValueObject {
 	readonly summon: string;
 	readonly type: "ocg" | "rush";
 	readonly original: string;
@@ -223,11 +223,17 @@ export function inputToGetCardArguments(input: string, defaultLanguage: Locale) 
 	}
 }
 
-interface CardSearcher {
-	search(
-		input: string,
-		language: Locale
-	): Promise<[Static<typeof CardSchema | typeof RushCardSchema> | null | undefined, MessageReplyOptions]>;
+export interface SearchResult<T> {
+	card?: T;
+	replyOptions: MessageReplyOptions;
+	resultLanguage: Locale;
+	type: ReturnType<typeof inputToGetCardArguments>[1];
+	inputLanguage?: Locale;
+	reply?: Message;
+}
+
+interface CardSearcher<T> {
+	search(input: string, language: Locale): Promise<SearchResult<T>>;
 }
 
 function searchLanguageHint(inputLanguage: Locale, commandCache: CommandCache): string {
@@ -236,13 +242,14 @@ function searchLanguageHint(inputLanguage: Locale, commandCache: CommandCache): 
 	return t`Search language: **${localisedInputLanguage}** (${inputLanguage}). Check defaults with </locale get:${id}> and configure with </locale set:${id}>`;
 }
 
-class OCGCardSearcher implements CardSearcher {
+class OCGCardSearcher implements CardSearcher<Static<typeof CardSchema>> {
 	constructor(
 		private got: Got,
 		private commandCache: CommandCache,
 		private masterDuelLimitRegulation: UpdatingLimitRegulationVector
 	) {}
-	async search(input: string, language: Locale): ReturnType<CardSearcher["search"]> {
+	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+	async search(input: string, language: Locale) {
 		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
 		const card = await getCard(this.got, type, searchTerm, inputLanguage);
 		useLocale(resultLanguage);
@@ -267,17 +274,18 @@ class OCGCardSearcher implements CardSearcher {
 			}
 			replyOptions = { embeds };
 		}
-		return [card, replyOptions];
+		return { card, replyOptions, resultLanguage, type, inputLanguage };
 	}
 }
 
-class RushCardSearcher implements CardSearcher {
+class RushCardSearcher implements CardSearcher<Static<typeof RushCardSchema>> {
 	constructor(
 		private got: Got,
 		private commandCache: CommandCache,
 		private limitRegulation: UpdatingLimitRegulationVector
 	) {}
-	async search(input: string, language: Locale): ReturnType<CardSearcher["search"]> {
+	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+	async search(input: string, language: Locale) {
 		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
 		const card =
 			type === "name"
@@ -298,11 +306,11 @@ class RushCardSearcher implements CardSearcher {
 			const embed = createRushCardEmbed(card, resultLanguage, this.limitRegulation);
 			replyOptions = { embeds: [embed] };
 		}
-		return [card, replyOptions];
+		return { card, replyOptions, resultLanguage, type, inputLanguage };
 	}
 }
 
-type CardSearcherMap = Record<SearchSummon["type"], CardSearcher>;
+type CardSearcherMap = Record<SearchSummon["type"], CardSearcher<Static<typeof CardSchema | typeof RushCardSchema>>>;
 export const cardSearcherProvider = instanceCachingFactory<CardSearcherMap>(container => {
 	const logger = getLogger("events:message:search");
 	const got = container.resolve<Got>("got").extend({
@@ -361,15 +369,23 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		private eventLocks: EventLocker
 	) {}
 
-	protected log(level: keyof Logger, message: Message, ...args: Parameters<Logger[keyof Logger]>): void {
-		const context = {
-			channel: message.channelId,
-			message: message.id,
-			guild: message.guildId,
-			author: message.author.id,
-			ping: message.client.ws.ping
-		};
-		this.#logger[level](JSON.stringify(context), ...args);
+	protected log(level: keyof Logger, context: Message, msg: string | Record<string, unknown>, error?: Error): void {
+		this.#logger[level](
+			JSON.stringify({
+				context: {
+					channel: context.channelId,
+					message: context.id,
+					guild: context.guildId,
+					author: context.author.id,
+					ping: context.client.ws.ping
+				},
+				...(typeof msg === "string" ? { msg } : msg),
+				...(error && {
+					error,
+					stack: error.stack
+				})
+			})
+		);
 	}
 
 	async run(message: Message): Promise<void> {
@@ -405,16 +421,16 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		if (inputs.length === 0) {
 			return;
 		}
-		this.log("info", message, JSON.stringify(inputs));
+		this.log("info", message, { inputs });
 		const uniqueInputs = OrderedSet(inputs).slice(0, 3); // remove duplicates, then select first three
-		message.channel.sendTyping().catch(error => this.log("info", message, error));
+		message.channel.sendTyping().catch(error => this.log("info", message, "Error sending typing indicator", error));
 		this.addReaction(message, "🕙");
 		const language = await this.locales.getM(message);
 		const promises = uniqueInputs.map(async hit => {
-			const [card, replyOptions] = await this.cardSearchers[hit.type].search(hit.summon, language);
+			const searchResult = await this.cardSearchers[hit.type].search(hit.summon, language);
 			try {
-				const reply = await message.reply(replyOptions);
-				return [card, reply] as const;
+				const reply = await message.reply(searchResult.replyOptions);
+				return { ...searchResult, reply };
 			} catch (error) {
 				const userConfigurationErrors: unknown[] = [
 					RESTJSONErrorCodes.MissingPermissions,
@@ -422,29 +438,27 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 					RESTJSONErrorCodes.MissingAccess // missing Send Messages in Threads
 				];
 				if (error instanceof DiscordAPIError && userConfigurationErrors.includes(error.code)) {
-					this.log("info", message, hit.summon, error);
+					this.log("info", message, { hit }, error);
 					message.author
-						.send(prependEmbed(replyOptions, createMisconfigurationEmbed(error, message)))
-						.catch(e => this.log("info", message, hit.summon, e));
+						.send(prependEmbed(searchResult.replyOptions, createMisconfigurationEmbed(error, message)))
+						.catch(e => this.log("info", message, { hit, msg: "Error sending misconfig DM" }, e));
 				} else {
-					this.log("error", message, error);
+					this.log("error", message, { hit }, error as Error);
 				}
-				return [card] as const;
+				return searchResult;
 			}
 		});
 		const results = await Promise.allSettled(promises);
 		const replies = [];
 		for (const [i, result] of results.entries()) {
 			if (result.status === "fulfilled") {
-				const [card, reply] = result.value;
-				this.metrics.writeSearch(message, JSON.stringify(inputs[i]), card, reply);
-				if (reply) {
-					replies.push(reply.id);
+				this.metrics.writeSearch(message, inputs[i], result.value);
+				if (result.value.reply) {
+					replies.push(result.value.reply.id);
 				}
 			} else {
-				// Exception from getCard
-				this.metrics.writeSearch(message, JSON.stringify(inputs[i]));
-				this.log("error", message, inputs[i], result.reason);
+				this.metrics.writeSearch(message, inputs[i]);
+				this.log("error", message, { hit: inputs[i], msg: "Error getting card" }, result.reason);
 			}
 		}
 		this.recentCache.set(message, replies);
@@ -467,9 +481,9 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 				RESTJSONErrorCodes.MissingAccess // must have Read Message History to react to messages
 			];
 			if (error instanceof DiscordAPIError && userConfigurationErrors.includes(error.code)) {
-				this.log("info", message, error);
+				this.log("info", message, "Missing permissions to add reactions", error);
 			} else {
-				this.log("warn", message, error);
+				this.log("warn", message, "Could not add reaction", error as Error);
 			}
 		}
 	}
@@ -481,7 +495,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 			if (error instanceof DiscordAPIError && error.code === RESTJSONErrorCodes.UnknownMessage) {
 				this.log("info", message, "Message deleted before removing reaction");
 			} else {
-				this.log("warn", message, error);
+				this.log("warn", message, "Could not remove reaction", error as Error);
 			}
 		}
 	}
