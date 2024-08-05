@@ -81,8 +81,8 @@ jobs:
         # Pinned to the latest version at the time of creation so we can manually verify new versions
         # More on this in the final workflow step
         run: |
-          curl -fsSL --remote-name https://raw.githubusercontent.com/sudo-bmitch/docker-stack-wait/16fe400d8bba5b739bc1f28af4f96dd7fa86ac41/docker-stack-wait.sh
-          echo "bbe07ff176af01d402fcc042aa76105f05f1c593feb903e73b7e033021afac3f  docker-stack-wait.sh" | sha256sum --check
+          curl -fsSL --remote-name https://raw.githubusercontent.com/sudo-bmitch/docker-stack-wait/2b3808ed5622e3a2b9f84326d6fd29129497290c/docker-stack-wait.sh
+          echo "7e80f5ff9e4e378e5d88738fbc21f19d26f48a95e8aff58115c44701a304fd02  docker-stack-wait.sh" | sha256sum --check
           chmod +x docker-stack-wait.sh
       - name: Configure SSH
         # https://docs.docker.com/engine/context/working-with-contexts/
