@@ -105,7 +105,7 @@ jobs:
           LOG_ALL_MESSAGE_CHANNEL: ${{ secrets.LOG_ALL_MESSAGE_CHANNEL }}
         run: |
           docker kill --signal=SIGTTIN $(docker ps --filter label=com.docker.swarm.service.name=discord-bot_bot --quiet) || echo No existing container!
-          docker stack deploy discord-bot -c <(docker compose -f docker-staging.yaml config) --prune --with-registry-auth
+          docker stack config -c docker-staging.yaml | docker stack deploy discord-bot -c - --prune --with-registry-auth
       - name: Wait for Swarm to converge
         # docker stack deploy does not wait for the service to converge. Issuu's sure-deploy doesn't
         # seem to verify if all replicas are actually running and not preparing, but the previously
