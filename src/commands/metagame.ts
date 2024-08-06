@@ -176,6 +176,18 @@ export function createCardUsageEmbed(usage: TopCardsResponse): EmbedBuilder {
 	);
 }
 
+export function createMasterDuelCardUsageEmbed(usage: MasterDuelCardUsage[]): APIEmbed {
+	return {
+		title: "Master Duel ranked card usage",
+		url: "https://ygoprodeck.com/master-duel/card-usage/?utm_source=bastion",
+		fields: usage.map(card => ({
+			name: card.name,
+			value: `${(card.win_ratio * 100).toFixed(2)}% wins in ${card.duel_count} duels`
+		})),
+		footer: { text: `YGOPRODECK data for season ${usage[0].season}` }
+	};
+}
+
 @injectable()
 export class MetagameCommand extends Command {
 	#logger = getLogger("command:metagame");
@@ -311,20 +323,8 @@ export class MetagameCommand extends Command {
 
 	private async masterDuelCardUsage(interaction: ChatInputCommandInteraction): Promise<number> {
 		const usage = await this.api.getMasterDuelCardUsage();
-		const reply = await interaction.reply({
-			embeds: [
-				{
-					title: "Master Duel Diamond+ ranked card usage",
-					url: "https://ygoprodeck.com/master-duel/card-usage/?utm_source=bastion",
-					fields: usage.map(card => ({
-						name: card.name,
-						value: `${(card.win_ratio * 100).toFixed(2)}% wins in ${card.duel_count} duels`
-					})),
-					footer: { text: `YGOPRODECK data for season ${usage[0].season}` }
-				}
-			],
-			fetchReply: true
-		});
+		const embed = createMasterDuelCardUsageEmbed(usage);
+		const reply = await interaction.reply({ embeds: [embed], fetchReply: true });
 		return replyLatency(reply, interaction);
 	}
 
@@ -381,7 +381,6 @@ export class MetagameCommand extends Command {
 			// subcommand cards
 			const format = interaction.options.getString("format", true);
 			if (format === "MD") {
-				// Option only available in preview
 				return await this.masterDuelCardUsage(interaction);
 			} else {
 				const dateStart = interaction.options.getString("date-range") ?? "format";

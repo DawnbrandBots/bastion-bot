@@ -53,6 +53,58 @@ exports[`/metagame cards createCardUsageEmbed 1`] = `
 }
 `;
 
+exports[`/metagame cards createMasterDuelCardUsageEmbed 1`] = `
+{
+  "fields": [
+    {
+      "name": "Maxx "C"",
+      "value": "54.82% wins in 1835 duels",
+    },
+    {
+      "name": "Ash Blossom & Joyous Spring",
+      "value": "54.80% wins in 1772 duels",
+    },
+    {
+      "name": "Infinite Impermanence",
+      "value": "53.88% wins in 1392 duels",
+    },
+    {
+      "name": "Called by the Grave",
+      "value": "54.45% wins in 955 duels",
+    },
+    {
+      "name": "Effect Veiler",
+      "value": "56.62% wins in 853 duels",
+    },
+    {
+      "name": "Nightmare Throne",
+      "value": "54.42% wins in 825 duels",
+    },
+    {
+      "name": "Dark Beckoning Beast",
+      "value": "54.44% wins in 788 duels",
+    },
+    {
+      "name": "S:P Little Knight",
+      "value": "52.71% wins in 700 duels",
+    },
+    {
+      "name": "Phantom of Yubel",
+      "value": "53.51% wins in 684 duels",
+    },
+    {
+      "name": "Opening of the Spirit Gates",
+      "value": "52.99% wins in 670 duels",
+    },
+  ],
+  "footer": {
+    "text": "YGOPRODECK data for season 32",
+  },
+  "title": "Master Duel ranked card usage",
+  "url": "https://ygoprodeck.com/master-duel/card-usage/?utm_source=bastion",
+}
+`;
+
 exports[`/metagame cards createTopStrategiesEmbed OCG 1`] = `
 {
   "description": "26.25% [Snake-Eye](https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#OCG/All/Format/NA/Snake-Eye)

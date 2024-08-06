@@ -1,4 +1,10 @@
-import { createCardUsageEmbed, createTopStrategiesEmbed, TopCardsResponse } from "../../../src/commands/metagame";
+import {
+	createCardUsageEmbed,
+	createMasterDuelCardUsageEmbed,
+	createTopStrategiesEmbed,
+	TopCardsResponse
+} from "../../../src/commands/metagame";
+import masterDuelCardUsage from "./metagame.card-usage.md.json";
 import tcgCardUsage from "./metagame.card-usage.tcg.json";
 import emptyStrategies from "./metagame.strategies.empty.json";
 import ocgStrategies from "./metagame.strategies.ocg.json";
@@ -16,5 +22,8 @@ describe("/metagame cards", () => {
 	});
 	test("createCardUsageEmbed", () => {
 		expect(createCardUsageEmbed(tcgCardUsage as TopCardsResponse).toJSON()).toMatchSnapshot();
+	});
+	test("createMasterDuelCardUsageEmbed", () => {
+		expect(createMasterDuelCardUsageEmbed(masterDuelCardUsage)).toMatchSnapshot();
 	});
 });
