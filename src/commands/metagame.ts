@@ -1,4 +1,5 @@
 import {
+	APIEmbed,
 	ChatInputCommandInteraction,
 	EmbedBuilder,
 	RESTPostAPIApplicationCommandsJSONBody,
@@ -121,6 +122,34 @@ const mapTopCardsFormatToTitle: Record<TopCardsFormat, string> = {
 	"Tournament Meta Decks OCG (Asian-English)": "Top OCG-AE cards",
 	"Master Duel Decks": "Top Master Duel cards"
 };
+
+function link(path: string): URL {
+	const url = new URL(`https://ygoprodeck.com${path}`);
+	url.searchParams.set("utm_source", "bastion");
+	return url;
+}
+
+export function createTopStrategiesEmbed(tops: TopStrategiesResponse): APIEmbed {
+	let description = "";
+	let otherQuantity = 0;
+	for (const strategy of tops.archetypes) {
+		if (strategy.quantity * 32 < tops.total) {
+			otherQuantity += strategy.quantity;
+		} else {
+			description += `${((strategy.quantity / tops.total) * 100).toFixed(2)}% [${strategy.arch_1}](${link(strategy.archetypeTierPage)})\n`;
+		}
+	}
+	description += `${((otherQuantity / tops.total) * 100).toFixed(2)}% Other`;
+	return {
+		title: `Top ${tops.format} strategies`,
+		description,
+		url: `https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#${tops.format}/All/Format/NA/`,
+		footer: { text: `YGOPRODECK data ${tops.dateCutoffStart} to ${tops.dateCutoffEnd}` },
+		image: {
+			url: `https://dawnbrandbots.github.io/ygoprodeck-e2e-test/top-chart-${tops.format.toLowerCase()}.png`
+		}
+	};
+}
 
 export function createCardUsageEmbed(usage: TopCardsResponse): EmbedBuilder {
 	return (
@@ -323,38 +352,10 @@ export class MetagameCommand extends Command {
 		return replyLatency(reply, interaction);
 	}
 
-	private link(path: string): URL {
-		const url = new URL(`https://ygoprodeck.com${path}`);
-		url.searchParams.set("utm_source", "bastion");
-		return url;
-	}
-
 	private async tournamentTops(interaction: ChatInputCommandInteraction, region: string): Promise<number> {
 		const tops = await this.api.getTops(region);
-		let description = "";
-		let otherQuantity = 0;
-		for (const strategy of tops.archetypes) {
-			if (strategy.quantity * 32 < tops.total) {
-				otherQuantity += strategy.quantity;
-			} else {
-				description += `${((strategy.quantity / tops.total) * 100).toFixed(2)}% [${strategy.arch_1}](${this.link(strategy.archetypeTierPage)})\n`;
-			}
-		}
-		description += `${((otherQuantity / tops.total) * 100).toFixed(2)}% Other`;
-		const reply = await interaction.reply({
-			embeds: [
-				{
-					title: `Top ${tops.format} strategies`,
-					description,
-					url: `https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#${region}/All/Format/NA/`,
-					footer: { text: `YGOPRODECK data ${tops.dateCutoffStart} to ${tops.dateCutoffEnd}` },
-					image: {
-						url: `https://dawnbrandbots.github.io/ygoprodeck-e2e-test/top-chart-${region.toLowerCase()}.png`
-					}
-				}
-			],
-			fetchReply: true
-		});
+		const embed = createTopStrategiesEmbed(tops);
+		const reply = await interaction.reply({ embeds: [embed], fetchReply: true });
 		return replyLatency(reply, interaction);
 	}
 
@@ -362,6 +363,7 @@ export class MetagameCommand extends Command {
 		if (interaction.options.getSubcommand() === "strategies") {
 			const format = interaction.options.getString("format", true);
 			if (format === "MD-TL") {
+				// Option only available in preview
 				return await this.masterDuelTierList(interaction);
 			} else {
 				return await this.tournamentTops(interaction, format);
@@ -370,6 +372,7 @@ export class MetagameCommand extends Command {
 			// subcommand cards
 			const format = interaction.options.getString("format", true);
 			if (format === "MD") {
+				// Option only available in preview
 				return await this.masterDuelCardUsage(interaction);
 			} else {
 				const dateStart = interaction.options.getString("date-range") ?? "format";
