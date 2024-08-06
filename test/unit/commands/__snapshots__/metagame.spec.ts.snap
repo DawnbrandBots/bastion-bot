@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/metagame cards createCardUsageEmbed 1`] = `
+{
+  "fields": [
+    {
+      "name": "S:P Little Knight",
+      "value": "87.22% of decks, average copies: 1.0",
+    },
+    {
+      "name": "Ash Blossom & Joyous Spring",
+      "value": "86.11% of decks, average copies: 2.9",
+    },
+    {
+      "name": "Infinite Impermanence",
+      "value": "83.89% of decks, average copies: 3.0",
+    },
+    {
+      "name": "Nibiru, the Primal Being",
+      "value": "72.78% of decks, average copies: 2.8",
+    },
+    {
+      "name": "Bystial Magnamhut",
+      "value": "67.78% of decks, average copies: 1.0",
+    },
+    {
+      "name": "Apollousa, Bow of the Goddess",
+      "value": "65.00% of decks, average copies: 1.0",
+    },
+    {
+      "name": "Effect Veiler",
+      "value": "60.56% of decks, average copies: 2.8",
+    },
+    {
+      "name": "Hiita the Fire Charmer, Ablaze",
+      "value": "59.44% of decks, average copies: 1.0",
+    },
+    {
+      "name": "Bystial Druiswurm",
+      "value": "58.33% of decks, average copies: 1.5",
+    },
+    {
+      "name": "Triple Tactics Talent",
+      "value": "56.67% of decks, average copies: 2.2",
+    },
+  ],
+  "footer": {
+    "icon_url": undefined,
+    "text": "YGOPRODECK data 2024-07-18 to 2024-08-06",
+  },
+  "title": "Top TCG cards",
+  "url": "https://ygoprodeck.com/top/?utm_source=bastion",
+}
+`;
+
+exports[`/metagame cards createMasterDuelCardUsageEmbed 1`] = `
+{
+  "fields": [
+    {
+      "name": "Maxx "C"",
+      "value": "54.82% wins in 1835 duels",
+    },
+    {
+      "name": "Ash Blossom & Joyous Spring",
+      "value": "54.80% wins in 1772 duels",
+    },
+    {
+      "name": "Infinite Impermanence",
+      "value": "53.88% wins in 1392 duels",
+    },
+    {
+      "name": "Called by the Grave",
+      "value": "54.45% wins in 955 duels",
+    },
+    {
+      "name": "Effect Veiler",
+      "value": "56.62% wins in 853 duels",
+    },
+    {
+      "name": "Nightmare Throne",
+      "value": "54.42% wins in 825 duels",
+    },
+    {
+      "name": "Dark Beckoning Beast",
+      "value": "54.44% wins in 788 duels",
+    },
+    {
+      "name": "S:P Little Knight",
+      "value": "52.71% wins in 700 duels",
+    },
+    {
+      "name": "Phantom of Yubel",
+      "value": "53.51% wins in 684 duels",
+    },
+    {
+      "name": "Opening of the Spirit Gates",
+      "value": "52.99% wins in 670 duels",
+    },
+  ],
+  "footer": {
+    "text": "YGOPRODECK data for season 32",
+  },
+  "title": "Master Duel ranked card usage",
+  "url": "https://ygoprodeck.com/master-duel/card-usage/?utm_source=bastion",
+}
+`;
+
+exports[`/metagame cards createTopStrategiesEmbed OCG 1`] = `
+{
+  "description": "26.25% [Snake-Eye](https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#OCG/All/Format/NA/Snake-Eye)
+15.00% [Tenpai Dragon](https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#OCG/All/Format/NA/Tenpai%20Dragon)
+8.75% [Yubel](https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#OCG/All/Format/NA/Yubel)
+6.25% [Centur-Ion](https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#OCG/All/Format/NA/Centur-Ion)
+5.00% [Ritual Beast](https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#OCG/All/Format/NA/Ritual%20Beast)
+5.00% [Memento](https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#OCG/All/Format/NA/Memento)
+3.75% [Unchained](https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#OCG/All/Format/NA/Unchained)
+3.75% [Atlantean](https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#OCG/All/Format/NA/Atlantean)
+26.25% Other",
+  "footer": {
+    "text": "YGOPRODECK data 2024-07-27 to now",
+  },
+  "image": {
+    "url": "https://dawnbrandbots.github.io/ygoprodeck-e2e-test/top-chart-ocg.png",
+  },
+  "title": "Top OCG strategies",
+  "url": "https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#OCG/All/Format/NA/",
+}
+`;
+
+exports[`/metagame cards createTopStrategiesEmbed TCG 1`] = `
+{
+  "description": "46.64% [Snake-Eye](https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#TCG/All/Format/NA/Snake-Eye)
+17.04% [Tenpai Dragon](https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#TCG/All/Format/NA/Tenpai%20Dragon)
+11.66% [Yubel](https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#TCG/All/Format/NA/Yubel)
+4.48% [Runick](https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#TCG/All/Format/NA/Runick)
+4.48% [Ritual Beast](https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#TCG/All/Format/NA/Ritual%20Beast)
+15.70% Other",
+  "footer": {
+    "text": "YGOPRODECK data 2024-07-18 to now",
+  },
+  "image": {
+    "url": "https://dawnbrandbots.github.io/ygoprodeck-e2e-test/top-chart-tcg.png",
+  },
+  "title": "Top TCG strategies",
+  "url": "https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#TCG/All/Format/NA/",
+}
+`;
+
+exports[`/metagame cards createTopStrategiesEmbed no data 1`] = `
+{
+  "description": "No data available",
+  "footer": {
+    "text": "YGOPRODECK data 2024-07-01 to now",
+  },
+  "title": "Top OCG strategies",
+  "url": "https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#OCG/All/Format/NA/",
+}
+`;

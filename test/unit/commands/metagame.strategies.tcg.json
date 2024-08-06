@@ -1,0 +1,142 @@
+{
+  "archetypes": [
+    {
+      "arch_1": "Snake-Eye",
+      "quantity": 104,
+      "arch_1_img": 9674034,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Snake-Eye"
+    },
+    {
+      "arch_1": "Tenpai Dragon",
+      "quantity": 38,
+      "arch_1_img": 18969888,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Tenpai%20Dragon"
+    },
+    {
+      "arch_1": "Yubel",
+      "quantity": 26,
+      "arch_1_img": 80453041,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Yubel"
+    },
+    {
+      "arch_1": "Runick",
+      "quantity": 10,
+      "arch_1_img": 55990317,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Runick"
+    },
+    {
+      "arch_1": "Ritual Beast",
+      "quantity": 10,
+      "arch_1_img": 49885567,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Ritual%20Beast"
+    },
+    {
+      "arch_1": "Memento",
+      "quantity": 4,
+      "arch_1_img": 18165869,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Memento"
+    },
+    {
+      "arch_1": "Labrynth",
+      "quantity": 4,
+      "arch_1_img": 2347656,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Labrynth"
+    },
+    {
+      "arch_1": "Gimmick Puppet",
+      "quantity": 4,
+      "arch_1_img": 76290637,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Gimmick%20Puppet"
+    },
+    {
+      "arch_1": "Despia",
+      "quantity": 4,
+      "arch_1_img": 72272462,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Despia"
+    },
+    {
+      "arch_1": "White Forest",
+      "quantity": 3,
+      "arch_1_img": 25592142,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/White%20Forest"
+    },
+    {
+      "arch_1": "Rescue-ACE",
+      "quantity": 3,
+      "arch_1_img": 37495766,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Rescue-ACE"
+    },
+    {
+      "arch_1": "Melodious",
+      "quantity": 2,
+      "arch_1_img": 83793721,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Melodious"
+    },
+    {
+      "arch_1": "Kashtira",
+      "quantity": 2,
+      "arch_1_img": 32909498,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Kashtira"
+    },
+    {
+      "arch_1": "Voiceless Voice",
+      "quantity": 1,
+      "arch_1_img": 25801745,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Voiceless%20Voice"
+    },
+    {
+      "arch_1": "Tri-Brigade",
+      "quantity": 1,
+      "arch_1_img": 99726621,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Tri-Brigade"
+    },
+    {
+      "arch_1": "Mannadium",
+      "quantity": 1,
+      "arch_1_img": 71277255,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Mannadium"
+    },
+    {
+      "arch_1": "Salamangreat",
+      "quantity": 1,
+      "arch_1_img": 26889158,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Salamangreat"
+    },
+    {
+      "arch_1": "Mimighoul",
+      "quantity": 1,
+      "arch_1_img": 59293853,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Mimighoul"
+    },
+    {
+      "arch_1": "Purrely",
+      "quantity": 1,
+      "arch_1_img": 83827392,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Purrely"
+    },
+    {
+      "arch_1": "Magical Musketeer",
+      "quantity": 1,
+      "arch_1_img": 71791814,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Magical%20Musketeer"
+    },
+    {
+      "arch_1": "Vanquish Soul",
+      "quantity": 1,
+      "arch_1_img": 29302858,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Vanquish%20Soul"
+    },
+    {
+      "arch_1": "Tearlaments",
+      "quantity": 1,
+      "arch_1_img": 74078255,
+      "archetypeTierPage": "\/tournaments\/top-archetypes\/#TCG\/All\/Format\/NA\/Tearlaments"
+    }
+  ],
+  "format": "TCG",
+  "dateCutoffStart": "2024-07-18",
+  "dateCutoffEnd": "now",
+  "tierMin": 2,
+  "tierMax": 3,
+  "total": 223
+}

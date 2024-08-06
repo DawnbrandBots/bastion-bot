@@ -6,6 +6,7 @@ import { HelpCommand } from "./help";
 import { IdCommand } from "./id";
 import { LinkCommand } from "./link";
 import { LocaleCommand } from "./locale";
+import { MetagameCommand } from "./metagame";
 import { PingCommand } from "./ping";
 import { PriceCommand } from "./price";
 import { QueryCommand } from "./query";
@@ -31,7 +32,7 @@ export const productionCommandClasses = [
 	PriceCommand,
 	RushDuelCommand
 ];
-export const previewCommandClasses = [QueryCommand];
+export const previewCommandClasses = [QueryCommand, MetagameCommand];
 
 export const classes = [
 	...productionCommandClasses,
@@ -45,6 +46,7 @@ export {
 	IdCommand,
 	LinkCommand,
 	LocaleCommand,
+	MetagameCommand,
 	PingCommand,
 	PriceCommand,
 	QueryCommand,
