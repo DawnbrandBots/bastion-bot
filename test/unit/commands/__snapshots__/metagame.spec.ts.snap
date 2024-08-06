@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/metagame cards createCardUsageEmbed 1`] = `
+{
+  "fields": [
+    {
+      "name": "S:P Little Knight",
+      "value": "87.22% of decks, average copies: 1.0",
+    },
+    {
+      "name": "Ash Blossom & Joyous Spring",
+      "value": "86.11% of decks, average copies: 2.9",
+    },
+    {
+      "name": "Infinite Impermanence",
+      "value": "83.89% of decks, average copies: 3.0",
+    },
+    {
+      "name": "Nibiru, the Primal Being",
+      "value": "72.78% of decks, average copies: 2.8",
+    },
+    {
+      "name": "Bystial Magnamhut",
+      "value": "67.78% of decks, average copies: 1.0",
+    },
+    {
+      "name": "Apollousa, Bow of the Goddess",
+      "value": "65.00% of decks, average copies: 1.0",
+    },
+    {
+      "name": "Effect Veiler",
+      "value": "60.56% of decks, average copies: 2.8",
+    },
+    {
+      "name": "Hiita the Fire Charmer, Ablaze",
+      "value": "59.44% of decks, average copies: 1.0",
+    },
+    {
+      "name": "Bystial Druiswurm",
+      "value": "58.33% of decks, average copies: 1.5",
+    },
+    {
+      "name": "Triple Tactics Talent",
+      "value": "56.67% of decks, average copies: 2.2",
+    },
+  ],
+  "footer": {
+    "icon_url": undefined,
+    "text": "YGOPRODECK data 2024-07-18 to 2024-08-06",
+  },
+  "title": "Top TCG cards",
+  "url": "https://ygoprodeck.com/top/?utm_source=bastion",
+}
+`;

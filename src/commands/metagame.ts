@@ -1,5 +1,6 @@
 import {
 	ChatInputCommandInteraction,
+	EmbedBuilder,
 	RESTPostAPIApplicationCommandsJSONBody,
 	SlashCommandBuilder,
 	SlashCommandStringOption,
@@ -34,7 +35,7 @@ export type TopCardsDateStart = "format" | "banlist" | `${number} day`;
 
 export interface TopCardsResponse {
 	keys: {
-		format: string;
+		format: TopCardsFormat;
 		dateStart: string;
 		dateEnd: string;
 	};
@@ -100,8 +101,8 @@ export class MetagameClient {
 
 	async getCardUsage(format: TopCardsFormat, dateStart: TopCardsDateStart): Promise<TopCardsResponse> {
 		const url = new URL("https://ygoprodeck.com/api/top/getFormat.php");
-		url.searchParams.set("format", format);
-		url.searchParams.set("dateStart", dateStart);
+		url.searchParams.set("format", format); // required
+		url.searchParams.set("dateStart", dateStart); // can be omitted to retrieve all-time statistics
 		return await this.got(url).json();
 	}
 
@@ -112,6 +113,29 @@ export class MetagameClient {
 	async getMasterDuelTierList(): Promise<MasterDuelTier[]> {
 		return await this.got("https://ygoprodeck.com/api/master-duel/tier-list.php").json();
 	}
+}
+
+const mapTopCardsFormatToTitle: Record<TopCardsFormat, string> = {
+	"Tournament Meta Decks": "Top TCG cards",
+	"Tournament Meta Decks OCG": "Top OCG cards",
+	"Tournament Meta Decks OCG (Asian-English)": "Top OCG-AE cards",
+	"Master Duel Decks": "Top Master Duel cards"
+};
+
+export function createCardUsageEmbed(usage: TopCardsResponse): EmbedBuilder {
+	return (
+		new EmbedBuilder()
+			.setTitle(mapTopCardsFormatToTitle[usage.keys.format] ?? `Top ${usage.keys.format} cards`)
+			// TODO: no deeplink
+			.setURL("https://ygoprodeck.com/top/?utm_source=bastion")
+			.setFields(
+				usage.results.slice(0, 10).map(card => ({
+					name: card.name,
+					value: `${card.percentage}% of decks, average copies: ${card.avg_card_per_deck}`
+				}))
+			)
+			.setFooter({ text: `YGOPRODECK data ${usage.keys.dateStart} to ${usage.keys.dateEnd}` })
+	);
 }
 
 @injectable()
@@ -135,8 +159,10 @@ export class MetagameCommand extends Command {
 			new SlashCommandSubcommandBuilder(),
 			() => c("command-option").t`strategies`,
 			() =>
-				c("command-option-description")
-					.t`Show the top competitive strategies in tournaments and the Master Duel ranked ladder.`
+				process.env.BOT_NO_DIRECT_MESSAGE_SEARCH
+					? c("command-option-description")
+							.t`Show the top competitive strategies in tournaments and the Master Duel ranked ladder.`
+					: c("command-option-description").t`Show the top competitive strategies in tournaments.`
 		).addStringOption(
 			buildLocalisedCommand(
 				new SlashCommandStringOption()
@@ -157,7 +183,7 @@ export class MetagameCommand extends Command {
 					)
 					.setRequired(true),
 				() => c("command-option").t`format`,
-				() => c("command-option-description").t`Game region or Master Duel.`
+				() => c("command-option-description").t`Game region.`
 			)
 		);
 		const cardsSubcommand = buildLocalisedCommand(
@@ -183,14 +209,21 @@ export class MetagameCommand extends Command {
 								"Tournament Meta Decks OCG (Asian-English)",
 								() => c("command-option-choice").t`OCG (Asian-English)`
 							),
-							buildLocalisedChoice<TopCardsFormat>(
-								"Master Duel Decks",
-								() => c("command-option-choice").t`Master Duel Diamond+ ladder`
-							)
+							buildLocalisedChoice("MD", () => c("command-option-choice").t`Master Duel ranked ladder`)
 						])
+						.addChoices(
+							process.env.BOT_NO_DIRECT_MESSAGE_SEARCH
+								? [
+										buildLocalisedChoice<TopCardsFormat>(
+											"Master Duel Decks",
+											() => "Master Duel Decks from common API (unclear differentiator)"
+										)
+									]
+								: []
+						)
 						.setRequired(true),
 					() => c("command-option").t`format`,
-					() => c("command-option-description").t`Game region or Master Duel.`
+					() => c("command-option-description").t`Game region.`
 				)
 			)
 			.addStringOption(
@@ -226,7 +259,9 @@ export class MetagameCommand extends Command {
 						)
 					]),
 					() => c("command-option").t`date-range`,
-					() => c("command-option-description").t`Limit card usage statistics to this date range.`
+					() =>
+						c("command-option-description")
+							.t`Limit card usage statistics to this date range. Has no effect for Master Duel.`
 				)
 			);
 		builder.addSubcommand(strategiesSubcommand).addSubcommand(cardsSubcommand);
@@ -333,7 +368,16 @@ export class MetagameCommand extends Command {
 			}
 		} else {
 			// subcommand cards
-			return await this.masterDuelCardUsage(interaction);
+			const format = interaction.options.getString("format", true);
+			if (format === "MD") {
+				return await this.masterDuelCardUsage(interaction);
+			} else {
+				const dateStart = interaction.options.getString("date-range") ?? "format";
+				const usage = await this.api.getCardUsage(format as TopCardsFormat, dateStart as TopCardsDateStart);
+				const embed = createCardUsageEmbed(usage);
+				const reply = await interaction.reply({ embeds: [embed], fetchReply: true });
+				return replyLatency(reply, interaction);
+			}
 		}
 	}
 }
