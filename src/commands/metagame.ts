@@ -130,6 +130,15 @@ function link(path: string): URL {
 }
 
 export function createTopStrategiesEmbed(tops: TopStrategiesResponse): APIEmbed {
+	if (!tops.archetypes.length) {
+		// Typically at the start of a new format
+		return {
+			title: `Top ${tops.format} strategies`,
+			description: `No data available`,
+			url: `https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#${tops.format}/All/Format/NA/`,
+			footer: { text: `YGOPRODECK data ${tops.dateCutoffStart} to ${tops.dateCutoffEnd}` }
+		};
+	}
 	let description = "";
 	let otherQuantity = 0;
 	for (const strategy of tops.archetypes) {

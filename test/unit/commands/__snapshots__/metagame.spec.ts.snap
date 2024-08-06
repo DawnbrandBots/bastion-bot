@@ -93,3 +93,14 @@ exports[`/metagame cards createTopStrategiesEmbed TCG 1`] = `
   "url": "https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#TCG/All/Format/NA/",
 }
 `;
+
+exports[`/metagame cards createTopStrategiesEmbed no data 1`] = `
+{
+  "description": "No data available",
+  "footer": {
+    "text": "YGOPRODECK data 2024-07-01 to now",
+  },
+  "title": "Top OCG strategies",
+  "url": "https://ygoprodeck.com/tournaments/top-archetypes/?utm_source=bastion#OCG/All/Format/NA/",
+}
+`;
