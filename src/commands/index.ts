@@ -30,9 +30,10 @@ export const productionCommandClasses = [
 	RandomCommand,
 	HelpCommand,
 	PriceCommand,
-	RushDuelCommand
+	RushDuelCommand,
+	MetagameCommand
 ];
-export const previewCommandClasses = [QueryCommand, MetagameCommand];
+export const previewCommandClasses = [QueryCommand];
 
 export const classes = [
 	...productionCommandClasses,
