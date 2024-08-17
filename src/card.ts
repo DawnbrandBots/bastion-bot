@@ -297,7 +297,7 @@ export function formatCardName(card: Static<typeof CardSchema> | Static<typeof R
 	const name = card.name[lang]; // TypeScript cannot narrow typing on this without the variable
 	if ((lang === "ja" || lang === "ko") && name?.includes("<ruby>")) {
 		const [rubyless, rubyonly] = parseAndExpandRuby(name);
-		return `${rubyless}（${rubyonly}）`;
+		return `${rubyonly}\n${rubyless}`;
 	}
 	return name || `${card.name.en}`;
 }
