@@ -297,7 +297,7 @@ export function formatCardName(card: Static<typeof CardSchema> | Static<typeof R
 	const name = card.name[lang]; // TypeScript cannot narrow typing on this without the variable
 	if ((lang === "ja" || lang === "ko") && name?.includes("<ruby>")) {
 		const [rubyless, rubyonly] = parseAndExpandRuby(name);
-		return `${rubyonly}\n${rubyless}`;
+		return `${rubyless}（${rubyonly}）`;
 	}
 	return name || `${card.name.en}`;
 }
@@ -407,11 +407,6 @@ export function createCardEmbed(
 	const official = `https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&request_locale=${lang}&cid=${card.konami_id}`;
 	const rulings = `https://www.db.yugioh-card.com/yugiohdb/faq_search.action?ope=4&request_locale=ja&cid=${card.konami_id}`;
 
-	const embed = new EmbedBuilder()
-		.setTitle(formatCardName(card, lang))
-		.setURL(ygoprodeck)
-		.setThumbnail(thumbnail(card));
-
 	const links = {
 		name: t`🔗 Links`,
 		value: t`[Official Konami DB](${official}) | [OCG Rulings](${rulings}) | [Yugipedia](${yugipedia}) | [YGOPRODECK](${ygoprodeck})`
@@ -420,15 +415,19 @@ export function createCardEmbed(
 		links.value = t`[Yugipedia](${yugipedia}) | [YGOPRODECK](${ygoprodeck})`;
 	}
 
+	const embed = new EmbedBuilder().setURL(ygoprodeck).setThumbnail(thumbnail(card));
 	let description = "";
-	if (lang === "ja") {
-		if (card.name.ja_romaji) {
-			description = `**Rōmaji**: ${card.name.ja_romaji}\n`;
-		}
-	} else if (lang === "ko") {
-		if (card.name.ko_rr) {
-			description = `**RR**: ${card.name.ko_rr}\n`;
-		}
+
+	const name = card.name[lang]; // TypeScript cannot narrow typing on this without the variable
+	if ((lang === "ja" || lang === "ko") && name?.includes("<ruby>")) {
+		const [rubyless, rubyonly] = parseAndExpandRuby(name);
+		description += `-# ${rubyonly}\n**[${rubyless}](${ygoprodeck})**\n\n`;
+	} else {
+		embed.setTitle(name || `${card.name.en}`);
+	}
+
+	if (lang === "ja" && card.name.ja_romaji) {
+		description += `**Rōmaji**: ${card.name.ja_romaji}\n`;
 	}
 
 	const limitRegulations = [
