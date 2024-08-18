@@ -418,7 +418,7 @@ export function createCardEmbed(
 	const embed = new EmbedBuilder().setURL(ygoprodeck).setThumbnail(thumbnail(card));
 	let description = "";
 
-	const name = card.name[lang]; // TypeScript cannot narrow typing on this without the variable
+	const name = card.name[lang];
 	if ((lang === "ja" || lang === "ko") && name?.includes("<ruby>")) {
 		const [rubyless, rubyonly] = parseAndExpandRuby(name);
 		description += `-# ${rubyonly}\n**[${rubyless}](${ygoprodeck})**\n\n`;
