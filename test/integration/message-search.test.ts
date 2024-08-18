@@ -46,7 +46,8 @@ const SINGLE_CARD_SEARCH_CASES = [
 	},
 	{
 		query: "<론고미니언트,ko,ko>",
-		name: "No.86 H－C 론고미언트（No.86 히로익 챔피언 론고미언트）",
+		name: null,
+		descriptionStart: "-# No.86 히로익 챔피언 론고미언트\n**[No.86 H－C 론고미언트](",
 		footer: "패스워드: 63504681 | 코나미 ID #11296"
 	},
 	{
@@ -78,7 +79,12 @@ const SINGLE_CARD_SEARCH_CASES = [
 	{ query: "r<%16371>", name: "Dark Magician Girl", footer: "Konami ID #16371" },
 	{ query: "r<17980>", name: "Heavy Storm", footer: "Konami ID #17980" },
 	{ query: "<16372,de>r", name: "Topf der Gier", footer: "Konami ID #16372" },
-	{ query: "<19342,ja>r", name: "攻撃の無力化（こうげきのむりょくか）", footer: "Konami ID #19342" },
+	{
+		query: "<19342,ja>r",
+		name: null,
+		descriptionStart: "-# こうげきのむりょくか\n**[攻撃の無力化](",
+		footer: "Konami ID #19342"
+	},
 	{ query: "<16954>r", name: "Mirror Force", footer: "Konami ID #16954" },
 	{ query: "<푸른 눈의 백룡,ko>러", name: "Blue-Eyes White Dragon", footer: "Konami ID #15184" },
 	{ query: "러<낙오자 사역마,ko,ko>", name: "낙오자 사역마", footer: "코나미 ID #15159" },
@@ -96,7 +102,7 @@ describe("Message inline card search", () => {
 	afterAll(async () => await singingLanius.destroy());
 	test.each(SINGLE_CARD_SEARCH_CASES)(
 		"$name is returned for: $query",
-		async ({ query, name, embeds = 1, footer }) => {
+		async ({ query, name, descriptionStart, embeds = 1, footer }) => {
 			const channel = await singingLanius.channels.fetch(`${process.env.TARGET_CHANNEL}`);
 			expect(channel?.isTextBased()).toEqual(true);
 			if (channel?.isTextBased()) {
@@ -115,6 +121,7 @@ describe("Message inline card search", () => {
 				expect(message?.content).toBe("");
 				expect(message?.embeds.length).toEqual(embeds);
 				expect(message?.embeds[0].title).toEqual(name);
+				expect(message?.embeds[0].description?.startsWith(descriptionStart ?? "")).toBe(true);
 				expect(message?.embeds[message.embeds.length - 1].footer?.text).toEqual(footer);
 			}
 		},
