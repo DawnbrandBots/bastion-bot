@@ -2,7 +2,15 @@ import { Static } from "@sinclair/typebox";
 import { EmbedBuilder } from "discord.js";
 import { Got } from "got";
 import { c, t, useLocale } from "ttag";
-import { AttributeIcon, Colour, Icon, RaceIcon, formatCardName, formatCardText, yugipediaFileRedirect } from "./card";
+import {
+	AttributeIcon,
+	Colour,
+	Icon,
+	RaceIcon,
+	formatCardText,
+	parseAndExpandRuby,
+	yugipediaFileRedirect
+} from "./card";
 import { RushCardSchema } from "./definitions/rush";
 import { UpdatingLimitRegulationVector } from "./limit-regulation";
 import { Locale } from "./locale";
@@ -43,16 +51,21 @@ export function createRushCardEmbed(
 		links.value = t`[Yugipedia](${yugipedia}) | [RushCard](${rushcard})`;
 	}
 
+	const embed = new EmbedBuilder().setURL(rushcard).setThumbnail(videoGameIllustrationURL(card));
 	let description = "";
-	if (lang === "ja") {
-		if (card.name.ja_romaji) {
-			description = `**Rōmaji**: ${card.name.ja_romaji}\n`;
-		}
-	} else if (lang === "ko") {
-		if (card.name.ko_rr) {
-			description = `**RR**: ${card.name.ko_rr}\n`;
-		}
+
+	const name = card.name[lang];
+	if ((lang === "ja" || lang === "ko") && name?.includes("<ruby>")) {
+		const [rubyless, rubyonly] = parseAndExpandRuby(name);
+		description += `-# ${rubyonly}\n**[${rubyless}](${rushcard})**\n\n`;
+	} else {
+		embed.setTitle(name || `${card.name.en}`);
 	}
+
+	if (lang === "ja" && card.name.ja_romaji) {
+		description = `**Rōmaji**: ${card.name.ja_romaji}\n`;
+	}
+
 	if (card.legend) {
 		description += t`__**LEGEND**__`;
 		description += "\n";
@@ -61,11 +74,6 @@ export function createRushCardEmbed(
 		description += t`**Limit**: ${limitRegulationDisplay}`;
 		description += "\n";
 	}
-
-	const embed = new EmbedBuilder()
-		.setTitle(formatCardName(card, lang))
-		.setURL(rushcard)
-		.setThumbnail(videoGameIllustrationURL(card));
 
 	if (card.card_type === "Monster") {
 		embed.setColor(
