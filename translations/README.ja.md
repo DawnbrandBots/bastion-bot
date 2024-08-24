@@ -68,7 +68,7 @@ available in for it to work correctly.-->
 your server settings. Alternatively, you can blanket deny the Use Application Commands permission for the individuals
 or roles in question, but this will apply to all bots.-->
 スラッシュコマンドを特定のチャンネルで使いたくない場合は、サーバ設定の「連携サービス」タブから設定できます。
-<!-- I didn't understand the second sentence. So it's left untranslated.>
+あるいは、「アプリコマンドを使う」の権限をロールや個人に与えないことでもスラッシュコマンドの使用を阻止できますが、これはすべてのボットに対して適用されます。
 
 <!-- ## Support server-->
 ## サポートサーバー
