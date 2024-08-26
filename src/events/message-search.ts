@@ -358,8 +358,6 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 
 	#logger = getLogger("events:message:search");
 
-	readonly #debugChannels = new Set(process.env.LOG_ALL_MESSAGE_CHANNEL?.split(","));
-
 	constructor(
 		@inject("LocaleProvider") private locales: LocaleProvider,
 		@inject("cardSearchers") private cardSearchers: CardSearcherMap,
@@ -389,14 +387,6 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 	}
 
 	async run(message: Message): Promise<void> {
-		if (this.#debugChannels.has(message.channelId)) {
-			this.#logger.verbose(
-				JSON.stringify({
-					...(message.toJSON() as object),
-					channel: message.channel.toJSON()
-				})
-			);
-		}
 		if (shouldIgnore(message)) {
 			return;
 		}

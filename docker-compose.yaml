@@ -13,7 +13,6 @@ services:
       BOT_LOGGER_WEBHOOK: "${BOT_LOGGER_WEBHOOK:-}"
       BOT_PRESENCE: "${BOT_PRESENCE:-}"
       BOT_MOTD: "${BOT_MOTD:-}"
-      LOG_ALL_MESSAGE_CHANNEL:
     volumes:
       - ${BOT_BIND_MOUNT}:/var/local/bastion
     command: /var/local/bastion
