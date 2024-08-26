@@ -5,7 +5,7 @@
 
 [![English](https://img.shields.io/badge/English-blue)](/README.md)
 [![한국어](https://img.shields.io/badge/한국어-grey)](/translations/README.ko.md "WIPe")
-[![日本語](https://img.shields.io/badge/日本語-grey)](/translations/README.ja.md "WIP")
+[![日本語](https://img.shields.io/badge/日本語-blue)](/translations/README.ja.md)
 [![简体中文](https://img.shields.io/badge/简体中文-grey)](/translations/README.zh-CN.md "WIP")
 [![繁體中文](https://img.shields.io/badge/繁體中文-grey)](/translations/README.zh-TW.md "WIP")
 [![Português](https://img.shields.io/badge/Português-grey)](/translations/README.pt.md  "WIP")
