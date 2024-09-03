@@ -3,7 +3,6 @@ import {
 	AutocompleteInteraction,
 	ChatInputCommandInteraction,
 	RESTPostAPIApplicationCommandsJSONBody,
-	SlashCommandBuilder,
 	SlashCommandIntegerOption,
 	SlashCommandStringOption,
 	SlashCommandSubcommandBuilder
@@ -21,6 +20,7 @@ import {
 	Locale,
 	LocaleProvider,
 	buildLocalisedCommand,
+	everywhereCommand,
 	getInputLangStringOption,
 	getResultLangStringOption
 } from "../locale";
@@ -54,7 +54,7 @@ export class RushDuelCommand extends AutocompletableCommand {
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		const builder = buildLocalisedCommand(
-			new SlashCommandBuilder(),
+			everywhereCommand(),
 			() => c("command-name").t`rush-duel`,
 			() => c("command-description").t`Find information on Rush Duel cards.`
 		);

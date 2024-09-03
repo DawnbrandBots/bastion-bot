@@ -1,10 +1,11 @@
-import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
+import { SlashCommandStringOption } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { getCard, inferInputType } from "../card";
 import { Command } from "../Command";
+import { everywhereCommand } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { addNotice, searchQueryTypeStringOption } from "../utils";
@@ -13,12 +14,15 @@ import { addNotice, searchQueryTypeStringOption } from "../utils";
 export class IdCommand extends Command {
 	#logger = getLogger("command:id");
 
-	constructor(metrics: Metrics, @inject("got") private got: Got) {
+	constructor(
+		metrics: Metrics,
+		@inject("got") private got: Got
+	) {
 		super(metrics);
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
-		return new SlashCommandBuilder()
+		return everywhereCommand()
 			.setName("id")
 			.setDescription("Identify a card by password, Konami ID, or name.")
 			.addStringOption(

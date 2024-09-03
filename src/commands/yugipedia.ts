@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
+import { SlashCommandStringOption } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 import { Got } from "got";
@@ -6,7 +6,7 @@ import { LRUMap } from "mnemonist";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { AutocompletableCommand } from "../Command";
-import { buildLocalisedCommand, LocaleProvider } from "../locale";
+import { buildLocalisedCommand, everywhereCommand, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { replyLatency, serialiseInteraction } from "../utils";
@@ -29,7 +29,7 @@ export class YugiCommand extends AutocompletableCommand {
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		const builder = buildLocalisedCommand(
-			new SlashCommandBuilder(),
+			everywhereCommand(),
 			() => c("command-name").t`yugipedia`,
 			() => c("command-description").t`Search the Yugipedia wiki for a page and link to it.`
 		);

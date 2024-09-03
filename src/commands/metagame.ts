@@ -3,7 +3,6 @@ import {
 	ChatInputCommandInteraction,
 	EmbedBuilder,
 	RESTPostAPIApplicationCommandsJSONBody,
-	SlashCommandBuilder,
 	SlashCommandStringOption,
 	SlashCommandSubcommandBuilder
 } from "discord.js";
@@ -11,7 +10,7 @@ import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c } from "ttag";
 import { Command } from "../Command";
-import { buildLocalisedChoice, buildLocalisedCommand } from "../locale";
+import { buildLocalisedChoice, buildLocalisedCommand, everywhereCommand } from "../locale";
 import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
 import { replyLatency } from "../utils";
@@ -201,7 +200,7 @@ export class MetagameCommand extends Command {
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		const builder = buildLocalisedCommand(
-			new SlashCommandBuilder(),
+			everywhereCommand(),
 			() => c("command-name").t`metagame`,
 			() => c("command-description").t`Show statistics on the current competitive state of play.`
 		);

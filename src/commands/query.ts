@@ -1,4 +1,3 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
 import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction, SlashCommandStringOption } from "discord.js";
@@ -7,7 +6,7 @@ import { inject, injectable } from "tsyringe";
 import { c } from "ttag";
 import { Command } from "../Command";
 import { CardSchema } from "../definitions";
-import { LocaleProvider, buildLocalisedCommand } from "../locale";
+import { LocaleProvider, buildLocalisedCommand, everywhereCommand } from "../locale";
 import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
 
@@ -26,7 +25,7 @@ export class QueryCommand extends Command {
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		return buildLocalisedCommand(
-			new SlashCommandBuilder(),
+			everywhereCommand(),
 			() => c("command-name").t`query`,
 			() => c("command-description").t`Advanced search prototype`
 		)

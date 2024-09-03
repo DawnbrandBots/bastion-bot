@@ -1,7 +1,8 @@
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
-import { ApplicationCommandOptionType, ChatInputCommandInteraction } from "discord.js";
+import { ChatInputCommandInteraction } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { Command } from "../Command";
+import { everywhereCommand } from "../locale";
 import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
 import { replyLatency } from "../utils";
@@ -74,24 +75,22 @@ export class LinkCommand extends Command {
 	};
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
-		return {
-			name: "link",
-			description: "Display one of several links with useful information.",
-			options: [
-				{
-					type: ApplicationCommandOptionType.String.valueOf(),
-					name: "key",
-					description: "The name of the link you want to display.",
-					required: true,
-					choices: Object.keys(LinkCommand.links).map(k => {
-						return {
+		return everywhereCommand()
+			.setName("link")
+			.setDescription("Display one of several links with useful information.")
+			.addStringOption(option =>
+				option
+					.setName("key")
+					.setDescription("The name of the link you want to display.")
+					.setRequired(true)
+					.setChoices(
+						Object.keys(LinkCommand.links).map(k => ({
 							name: LinkCommand.links[k].name,
 							value: k
-						};
-					})
-				}
-			]
-		};
+						}))
+					)
+			)
+			.toJSON();
 	}
 
 	protected override get logger(): Logger {

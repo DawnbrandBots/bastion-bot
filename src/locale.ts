@@ -2,9 +2,12 @@ import { SharedNameAndDescription, SlashCommandIntegerOption, SlashCommandString
 import sqlite, { Database, Statement } from "better-sqlite3";
 import { APIApplicationCommandOptionChoice, Locale as DiscordLocale } from "discord-api-types/v10";
 import {
+	ApplicationIntegrationType,
 	AutocompleteInteraction,
 	ChatInputCommandInteraction,
+	InteractionContextType,
 	Message,
+	SlashCommandBuilder,
 	SlashCommandSubcommandBuilder,
 	Snowflake
 } from "discord.js";
@@ -76,6 +79,12 @@ export function getResultLangStringOption(): SlashCommandStringOption {
 	}
 
 	return option;
+}
+
+export function everywhereCommand(): SlashCommandBuilder {
+	return new SlashCommandBuilder()
+		.setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall)
+		.setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel);
 }
 
 /**

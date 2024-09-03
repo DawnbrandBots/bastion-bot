@@ -1,5 +1,6 @@
 import { REST } from "@discordjs/rest";
 import { APIUser, Routes } from "discord-api-types/v10";
+import { ApplicationIntegrationType } from "discord.js";
 import { ArtCommand } from "./art";
 import { DeckCommand } from "./deck";
 import { HelpCommand } from "./help";
@@ -61,9 +62,16 @@ export {
 // Register Slash Commands on CI
 // Specify the guild snowflake to instantly deploy commands on the specified server.
 // Otherwise, global commands can take up to an hour to roll out.
-export async function registerSlashCommands(guild?: `${bigint}`): Promise<void> {
-	// Duplicate command metadata if they register any aliases
-	const commands = classes.map(command => command.meta);
+export async function registerSlashCommands(guild?: `${bigint}` | "user-install"): Promise<void> {
+	const commands =
+		guild === "user-install"
+			? classes
+					.filter(command => command.meta.integration_types)
+					.map(command => ({
+						...command.meta,
+						integration_types: [ApplicationIntegrationType.UserInstall]
+					}))
+			: classes.map(command => command.meta);
 	console.log("Generated command metadata:");
 	console.log(JSON.stringify(commands, null, 4));
 
@@ -75,7 +83,7 @@ export async function registerSlashCommands(guild?: `${bigint}`): Promise<void> 
 	console.log(`${botUser.username}#${botUser.discriminator}`);
 
 	const created = await api.put(
-		guild === undefined
+		guild === undefined || guild === "user-install"
 			? Routes.applicationCommands(botUser.id)
 			: Routes.applicationGuildCommands(botUser.id, guild),
 		{ body: commands }

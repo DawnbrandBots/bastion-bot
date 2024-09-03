@@ -1,4 +1,3 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction } from "discord.js";
 import { Got } from "got";
@@ -10,6 +9,7 @@ import { UpdatingLimitRegulationVector } from "../limit-regulation";
 import {
 	LocaleProvider,
 	buildLocalisedCommand,
+	everywhereCommand,
 	getKonamiIdSubcommand,
 	getNameSubcommand,
 	getPasswordSubcommand,
@@ -34,7 +34,7 @@ export class SearchCommand extends Command {
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		const builder = buildLocalisedCommand(
-			new SlashCommandBuilder(),
+			everywhereCommand(),
 			() => c("command-name").t`search`,
 			() => c("command-description").t`Find all information on a card!`
 		);
