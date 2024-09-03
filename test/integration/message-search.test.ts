@@ -105,7 +105,8 @@ describe("Message inline card search", () => {
 		async ({ query, name, descriptionStart, embeds = 1, footer }) => {
 			const channel = await singingLanius.channels.fetch(`${process.env.TARGET_CHANNEL}`);
 			expect(channel?.isTextBased()).toEqual(true);
-			if (channel?.isTextBased()) {
+			expect(channel?.isDMBased()).toStrictEqual(false);
+			if (channel?.isTextBased() && !channel.isDMBased()) {
 				await new Promise(resolve => setTimeout(resolve, 1000));
 				const request = await channel.send(query);
 				const responses = await channel.awaitMessages({
