@@ -31,7 +31,8 @@ describe("Message event listener", () => {
 	jest.spyOn(eventLocks, "has").mockImplementation(() => true);
 	const listener = new PingMessageListener(new MockLocaleProvider(), eventLocks);
 
-	let message: Message;
+	// Excluding DMs for this typing because it includes PartialGroupDMChannel and screws up type inference for reply
+	let message: Message<true>;
 	const user = { id: "383854640694820865" };
 	beforeEach(() => {
 		message = new MockMessage();

@@ -23,12 +23,12 @@
 		"yarn": "1.22.x"
 	},
 	"dependencies": {
-		"@sinclair/typebox": "^0.33.7",
+		"@sinclair/typebox": "^0.33.9",
 		"basic-ftp": "^5.0.5",
 		"better-sqlite3": "^11.2.1",
-		"debug": "^4.3.5",
+		"debug": "^4.3.6",
 		"discord-markdown": "2.5.1",
-		"discord.js": "~14.15.3",
+		"discord.js": "~14.16.1",
 		"dotenv": "^16.4.5",
 		"gettext-parser": "^6.0.0",
 		"got": "^11.8.6",
@@ -60,7 +60,7 @@
 		"zlib-sync": "^0.1.9"
 	},
 	"resolutions": {
-		"@types/node": "^20.14.11",
+		"@types/node": "^20.16.3",
 		"http2-wrapper": "^2.2.1",
 		"semver": "^7.6.3"
 	},

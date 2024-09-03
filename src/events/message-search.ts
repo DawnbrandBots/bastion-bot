@@ -413,7 +413,11 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		}
 		this.log("info", message, { inputs });
 		const uniqueInputs = OrderedSet(inputs).slice(0, 3); // remove duplicates, then select first three
-		message.channel.sendTyping().catch(error => this.log("info", message, "Error sending typing indicator", error));
+		if ("sendTyping" in message.channel) {
+			message.channel
+				.sendTyping()
+				.catch(error => this.log("info", message, "Error sending typing indicator", error));
+		}
 		this.addReaction(message, "🕙");
 		const language = await this.locales.getM(message);
 		const promises = uniqueInputs.map(async hit => {

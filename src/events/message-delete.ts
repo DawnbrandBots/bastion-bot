@@ -1,4 +1,3 @@
-import { Message } from "discord.js";
 import { injectable } from "tsyringe";
 import { Listener } from ".";
 import { getLogger } from "../logger";
@@ -12,7 +11,7 @@ export class MessageDeleteListener implements Listener<"messageDelete"> {
 
 	constructor(private recentCache: RecentMessageCache) {}
 
-	async run(message: Message): Promise<void> {
+	async run(message: Parameters<Listener<"messageDelete">["run"]>[0]): Promise<void> {
 		const responses = this.recentCache.get(message.id);
 		if (responses) {
 			this.#logger.info(`${message.id}: ${responses}`);
