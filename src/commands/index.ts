@@ -63,7 +63,10 @@ export {
 // Otherwise, global commands can take up to an hour to roll out.
 export async function registerSlashCommands(guild?: `${bigint}`): Promise<void> {
 	// Duplicate command metadata if they register any aliases
-	const commands = classes.map(command => command.meta);
+	let commands = classes.map(command => command.meta);
+	if (process.env.BOT_NO_DIRECT_MESSAGE_SEARCH) {
+		commands = commands.filter(command => command.integration_types);
+	}
 	console.log("Generated command metadata:");
 	console.log(JSON.stringify(commands, null, 4));
 

@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
-import { ChatInputCommandInteraction } from "discord.js";
+import { ApplicationIntegrationType, ChatInputCommandInteraction, InteractionContextType } from "discord.js";
 import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
@@ -34,7 +34,13 @@ export class SearchCommand extends Command {
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		const builder = buildLocalisedCommand(
-			new SlashCommandBuilder(),
+			new SlashCommandBuilder()
+				.setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall)
+				.setContexts(
+					InteractionContextType.Guild,
+					InteractionContextType.BotDM,
+					InteractionContextType.PrivateChannel
+				),
 			() => c("command-name").t`search`,
 			() => c("command-description").t`Find all information on a card!`
 		);
