@@ -1,4 +1,3 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
 import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction } from "discord.js";
@@ -9,7 +8,7 @@ import { Command } from "../Command";
 import { createCardEmbed } from "../card";
 import { CardSchema } from "../definitions";
 import { UpdatingLimitRegulationVector } from "../limit-regulation";
-import { LocaleProvider, buildLocalisedCommand, getResultLangStringOption } from "../locale";
+import { LocaleProvider, buildLocalisedCommand, everywhereCommand, getResultLangStringOption } from "../locale";
 import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
 
@@ -40,7 +39,7 @@ export class RandomCommand extends Command {
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		return buildLocalisedCommand(
-			new SlashCommandBuilder(),
+			everywhereCommand(),
 			() => c("command-name").t`random`,
 			() => c("command-description").t`Get a random Yu-Gi-Oh! card.`
 		)

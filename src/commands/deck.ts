@@ -1,7 +1,6 @@
 import {
 	SlashCommandAttachmentOption,
 	SlashCommandBooleanOption,
-	SlashCommandBuilder,
 	SlashCommandStringOption,
 	SlashCommandSubcommandBuilder
 } from "@discordjs/builders";
@@ -30,7 +29,7 @@ import { TypedDeck, parseURL, toURL } from "ydke";
 import { Command } from "../Command";
 import { getRubylessCardName } from "../card";
 import { CardSchema } from "../definitions";
-import { COMMAND_LOCALIZATIONS, Locale, LocaleProvider } from "../locale";
+import { COMMAND_LOCALIZATIONS, Locale, LocaleProvider, everywhereCommand } from "../locale";
 import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
 import { addNotice, serialiseInteraction, splitText } from "../utils";
@@ -83,7 +82,7 @@ export class DeckCommand extends Command {
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
-		const builder = new SlashCommandBuilder()
+		const builder = everywhereCommand()
 			.setName("deck")
 			.setDescription(
 				"Display a deck list from ydke:// or .ydk format, exported from a number of deck building programs."

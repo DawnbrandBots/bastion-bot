@@ -1,5 +1,6 @@
 import { REST } from "@discordjs/rest";
 import { APIUser, Routes } from "discord-api-types/v10";
+import { ApplicationIntegrationType, RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
 import { ArtCommand } from "./art";
 import { DeckCommand } from "./deck";
 import { HelpCommand } from "./help";
@@ -58,15 +59,24 @@ export {
 	YugiCommand
 };
 
+function userInstallOnly(meta: RESTPostAPIApplicationCommandsJSONBody): RESTPostAPIApplicationCommandsJSONBody {
+	if (meta.integration_types) {
+		return {
+			...meta,
+			integration_types: [ApplicationIntegrationType.UserInstall]
+		};
+	}
+	return meta;
+}
+
 // Register Slash Commands on CI
 // Specify the guild snowflake to instantly deploy commands on the specified server.
 // Otherwise, global commands can take up to an hour to roll out.
-export async function registerSlashCommands(guild?: `${bigint}`): Promise<void> {
-	// Duplicate command metadata if they register any aliases
-	let commands = classes.map(command => command.meta);
-	if (process.env.BOT_NO_DIRECT_MESSAGE_SEARCH) {
-		commands = commands.filter(command => command.integration_types);
-	}
+export async function registerSlashCommands(guild?: `${bigint}` | "user-install"): Promise<void> {
+	const commands =
+		guild === "user-install"
+			? classes.map(command => userInstallOnly(command.meta))
+			: classes.map(command => command.meta);
 	console.log("Generated command metadata:");
 	console.log(JSON.stringify(commands, null, 4));
 
@@ -78,7 +88,7 @@ export async function registerSlashCommands(guild?: `${bigint}`): Promise<void> 
 	console.log(`${botUser.username}#${botUser.discriminator}`);
 
 	const created = await api.put(
-		guild === undefined
+		guild === undefined || guild === "user-install"
 			? Routes.applicationCommands(botUser.id)
 			: Routes.applicationGuildCommands(botUser.id, guild),
 		{ body: commands }

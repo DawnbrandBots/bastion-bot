@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
+import { SlashCommandStringOption } from "@discordjs/builders";
 import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
@@ -13,6 +13,7 @@ import {
 	LocaleProvider,
 	buildLocalisedChoice,
 	buildLocalisedCommand,
+	everywhereCommand,
 	getKonamiIdSubcommand,
 	getNameSubcommand,
 	getPasswordSubcommand
@@ -85,7 +86,7 @@ export class PriceCommand extends Command {
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		const builder = buildLocalisedCommand(
-			new SlashCommandBuilder(),
+			everywhereCommand(),
 			() => c("command-name").t`price`,
 			() => c("command-description").t`Display the price for a card!`
 		);

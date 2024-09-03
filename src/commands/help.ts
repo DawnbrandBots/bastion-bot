@@ -1,10 +1,10 @@
-import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
+import { SlashCommandStringOption } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { c, useLocale } from "ttag";
 import { Command } from "../Command";
-import { COMMAND_LOCALIZATIONS, LocaleProvider } from "../locale";
+import { COMMAND_LOCALIZATIONS, everywhereCommand, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { replyLatency } from "../utils";
@@ -13,12 +13,15 @@ import { replyLatency } from "../utils";
 export class HelpCommand extends Command {
 	#logger = getLogger("command:help");
 
-	constructor(metrics: Metrics, @inject("LocaleProvider") private locales: LocaleProvider) {
+	constructor(
+		metrics: Metrics,
+		@inject("LocaleProvider") private locales: LocaleProvider
+	) {
 		super(metrics);
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
-		const builder = new SlashCommandBuilder().setName("help").setDescription("Get help with a Slash Command.");
+		const builder = everywhereCommand().setName("help").setDescription("Get help with a Slash Command.");
 
 		// update this when documentation is added for new commands!
 		const documentedCommands = [

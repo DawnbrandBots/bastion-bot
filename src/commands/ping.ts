@@ -1,10 +1,9 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction } from "discord.js";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
 import { Command } from "../Command";
-import { buildLocalisedCommand, LocaleProvider } from "../locale";
+import { buildLocalisedCommand, everywhereCommand, LocaleProvider } from "../locale";
 import { getLogger, Logger } from "../logger";
 import { Metrics } from "../metrics";
 import { replyLatency } from "../utils";
@@ -13,13 +12,16 @@ import { replyLatency } from "../utils";
 export class PingCommand extends Command {
 	#logger = getLogger("command:ping");
 
-	constructor(metrics: Metrics, @inject("LocaleProvider") private locales: LocaleProvider) {
+	constructor(
+		metrics: Metrics,
+		@inject("LocaleProvider") private locales: LocaleProvider
+	) {
 		super(metrics);
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		return buildLocalisedCommand(
-			new SlashCommandBuilder(),
+			everywhereCommand(),
 			() => c("command-name").t`ping`,
 			() => c("command-description").t`Test latency to the new bot instance.`
 		).toJSON();

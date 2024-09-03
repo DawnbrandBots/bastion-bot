@@ -1,6 +1,5 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
-import { ApplicationIntegrationType, ChatInputCommandInteraction, InteractionContextType } from "discord.js";
+import { ChatInputCommandInteraction } from "discord.js";
 import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
@@ -10,6 +9,7 @@ import { UpdatingLimitRegulationVector } from "../limit-regulation";
 import {
 	LocaleProvider,
 	buildLocalisedCommand,
+	everywhereCommand,
 	getKonamiIdSubcommand,
 	getNameSubcommand,
 	getPasswordSubcommand,
@@ -34,13 +34,7 @@ export class SearchCommand extends Command {
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		const builder = buildLocalisedCommand(
-			new SlashCommandBuilder()
-				.setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall)
-				.setContexts(
-					InteractionContextType.Guild,
-					InteractionContextType.BotDM,
-					InteractionContextType.PrivateChannel
-				),
+			everywhereCommand(),
 			() => c("command-name").t`search`,
 			() => c("command-description").t`Find all information on a card!`
 		);

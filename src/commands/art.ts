@@ -1,4 +1,3 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { ChatInputCommandInteraction } from "discord.js";
 import { Got } from "got";
@@ -10,6 +9,7 @@ import { getCard, getCardSearchOptions, getRubylessCardName, masterDuelIllustrat
 import {
 	LocaleProvider,
 	buildLocalisedCommand,
+	everywhereCommand,
 	getKonamiIdSubcommand,
 	getNameSubcommand,
 	getPasswordSubcommand
@@ -32,7 +32,7 @@ export class ArtCommand extends Command {
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
 		const builder = buildLocalisedCommand(
-			new SlashCommandBuilder(),
+			everywhereCommand(),
 			() => c("command-name").t`art`,
 			() => c("command-description").t`Display the art for a card!`
 		);
