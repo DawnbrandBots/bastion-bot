@@ -12,6 +12,13 @@ updates:
       interval: weekly
       day: sunday
       time: "12:00"
+    allow:
+      - dependency-type: all
+    groups:
+      development:
+        dependency-type: development
+        patterns:
+          - "*"
   - package-ecosystem: docker
     directory: /
     schedule:
