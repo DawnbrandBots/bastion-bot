@@ -15,8 +15,15 @@ updates:
     allow:
       - dependency-type: all
     groups:
-      development:
-        dependency-type: development
+      discord.js:
+        patterns:
+          - discord.js
+          - discord-api-types
+          - "@discordjs/*"
+          - "@sapphire/*"
+      production:
+        dependency-type: production
+      all:
         patterns:
           - "*"
   - package-ecosystem: docker
