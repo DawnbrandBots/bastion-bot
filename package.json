@@ -23,14 +23,14 @@
 		"yarn": "1.22.x"
 	},
 	"dependencies": {
-		"@sinclair/typebox": "^0.33.11",
+		"@sinclair/typebox": "^0.33.12",
 		"basic-ftp": "^5.0.5",
 		"better-sqlite3": "^11.2.1",
 		"debug": "^4.3.7",
 		"discord-markdown": "2.5.1",
 		"discord.js": "~14.16.2",
 		"dotenv": "^16.4.5",
-		"gettext-parser": "^6.0.0",
+		"gettext-parser": "^7.0.1",
 		"got": "^11.8.6",
 		"htmlparser2": "^9.1.0",
 		"immutable": "^4.3.7",
