@@ -13,7 +13,7 @@ export class Metrics {
 	private readonly searchStatement: Statement;
 	constructor(@inject("metricsDb") metricsDb: string) {
 		this.db = this.getDB(metricsDb);
-		this.commandStatement = this.db.prepare("INSERT INTO commands VALUES(?,?,?,?,?,?,?)");
+		this.commandStatement = this.db.prepare("INSERT INTO commands2 VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
 		this.searchStatement = this.db.prepare("INSERT INTO searches2 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 	}
 
@@ -27,6 +27,21 @@ CREATE TABLE IF NOT EXISTS "commands" (
 	"channel"	TEXT NOT NULL,
 	"author"	TEXT NOT NULL,
 	"command"	TEXT NOT NULL,
+	"args"	TEXT NOT NULL,
+	"latency"	INTEGER NOT NULL,
+	PRIMARY KEY("id")
+);
+CREATE TABLE IF NOT EXISTS "commands2" (
+	"id"	TEXT NOT NULL,
+	"guild"	TEXT,
+	"channel"	TEXT NOT NULL,
+	"channel_type"	INTEGER NOT NULL,
+	"author"	TEXT NOT NULL,
+	"context"	INTEGER,
+	"authoriser"	TEXT,
+	"command"	TEXT NOT NULL,
+	"interaction_type"	INTEGER NOT NULL,
+	"command_type"	INTEGER NOT NULL,
 	"args"	TEXT NOT NULL,
 	"latency"	INTEGER NOT NULL,
 	PRIMARY KEY("id")
@@ -65,13 +80,22 @@ CREATE TABLE IF NOT EXISTS "searches2" (
 	}
 
 	public writeCommand(interaction: ChatInputCommandInteraction | AutocompleteInteraction, latency: number): void {
-		const id = interaction.id;
-		const guild = interaction.guildId;
-		const channel = interaction.channelId;
-		const author = interaction.user.id;
-		const command = interaction.commandName;
-		const args = JSON.stringify(interaction.options.data);
-		this.commandStatement.run(id, guild, channel, author, command, args, latency);
+		this.commandStatement.run(
+			interaction.id,
+			interaction.guildId,
+			interaction.channelId,
+			interaction.channel?.type,
+			interaction.user.id,
+			"context" in interaction ? interaction.context : null,
+			"authorizingIntegrationOwners" in interaction
+				? JSON.stringify(interaction.authorizingIntegrationOwners)
+				: null,
+			interaction.commandName,
+			interaction.type,
+			interaction.commandType,
+			JSON.stringify(interaction.options.data),
+			latency
+		);
 	}
 
 	writeSearch(

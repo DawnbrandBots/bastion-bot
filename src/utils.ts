@@ -27,6 +27,7 @@ export function serialiseInteraction(
 		author: interaction.user.id,
 		id: interaction.commandId,
 		command: interaction.commandName,
+		channelType: interaction.channel?.type,
 		...("context" in interaction && {
 			context: interaction.context,
 			authorizingIntegrationOwners: interaction.authorizingIntegrationOwners
