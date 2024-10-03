@@ -413,7 +413,7 @@ export class SearchMessageListener implements Listener<"messageCreate"> {
 		}
 		this.log("info", message, { inputs });
 		const uniqueInputs = OrderedSet(inputs).slice(0, 3); // remove duplicates, then select first three
-		if ("sendTyping" in message.channel) {
+		if (message.channel.isSendable()) {
 			message.channel
 				.sendTyping()
 				.catch(error => this.log("info", message, "Error sending typing indicator", error));
