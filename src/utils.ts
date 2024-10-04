@@ -28,10 +28,8 @@ export function serialiseInteraction(
 		id: interaction.commandId,
 		command: interaction.commandName,
 		channelType: interaction.channel?.type,
-		...("context" in interaction && {
-			context: interaction.context,
-			authorizingIntegrationOwners: interaction.authorizingIntegrationOwners
-		}),
+		context: interaction.context,
+		authorizingIntegrationOwners: interaction.authorizingIntegrationOwners,
 		...extras
 	});
 }

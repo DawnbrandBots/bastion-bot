@@ -86,10 +86,8 @@ CREATE TABLE IF NOT EXISTS "searches2" (
 			interaction.channelId,
 			interaction.channel?.type,
 			interaction.user.id,
-			"context" in interaction ? interaction.context : null,
-			"authorizingIntegrationOwners" in interaction
-				? JSON.stringify(interaction.authorizingIntegrationOwners)
-				: null,
+			interaction.context,
+			JSON.stringify(interaction.authorizingIntegrationOwners),
 			interaction.commandName,
 			interaction.type,
 			interaction.commandType,
