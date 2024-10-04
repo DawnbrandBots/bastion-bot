@@ -1,6 +1,6 @@
 import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
-import { ChatInputCommandInteraction } from "discord.js";
+import { ApplicationIntegrationType, ChatInputCommandInteraction } from "discord.js";
 import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c } from "ttag";
@@ -56,7 +56,8 @@ export class RandomCommand extends Command {
 		const url = `${process.env.API_URL}/ocg-tcg/random`;
 		const cards = await this.got(url).json<Static<typeof CardSchema>[]>();
 		const lang = await this.locales.get(interaction);
-		const embeds = createCardEmbed(cards[0], lang, this.masterDuelLimitRegulation);
+		const isUserInstall = !!interaction.authorizingIntegrationOwners?.[ApplicationIntegrationType.UserInstall];
+		const embeds = createCardEmbed(cards[0], lang, this.masterDuelLimitRegulation, isUserInstall);
 		const end = Date.now();
 		await interaction.editReply({ embeds }); // Actually returns void
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate

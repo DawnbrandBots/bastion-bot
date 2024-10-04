@@ -1,5 +1,5 @@
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
-import { ChatInputCommandInteraction } from "discord.js";
+import { ApplicationIntegrationType, ChatInputCommandInteraction } from "discord.js";
 import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
@@ -63,7 +63,8 @@ export class SearchCommand extends Command {
 			useLocale(resultLanguage);
 			replyOptions = { content: t`Could not find a card matching \`${input}\`!` };
 		} else {
-			const embeds = createCardEmbed(card, resultLanguage, this.masterDuelLimitRegulation);
+			const isUserInstall = !!interaction.authorizingIntegrationOwners?.[ApplicationIntegrationType.UserInstall];
+			const embeds = createCardEmbed(card, resultLanguage, this.masterDuelLimitRegulation, isUserInstall);
 			replyOptions = { embeds };
 		}
 		const reply = await interaction.reply({ ...replyOptions, fetchReply: true });

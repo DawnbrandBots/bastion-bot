@@ -395,7 +395,8 @@ export function thumbnail(card: Static<typeof CardSchema>): string | null {
 export function createCardEmbed(
 	card: Static<typeof CardSchema>,
 	lang: Locale,
-	masterDuelLimitRegulation?: UpdatingLimitRegulationVector
+	masterDuelLimitRegulation?: UpdatingLimitRegulationVector,
+	excludeIcons = false
 ): EmbedBuilder[] {
 	useLocale(lang);
 
@@ -456,9 +457,9 @@ export function createCardEmbed(
 	}
 
 	if (card.master_duel_rarity) {
-		const rarity_icon = MasterDuelRarityIcon[card.master_duel_rarity];
-		const localized_rarity = MasterDuelRarityLocalization[card.master_duel_rarity]();
-		description += t`**Master Duel rarity**: ${rarity_icon} ${localized_rarity}`;
+		const rarityIcon = excludeIcons ? "" : MasterDuelRarityIcon[card.master_duel_rarity];
+		const localizedRarity = MasterDuelRarityLocalization[card.master_duel_rarity]();
+		description += t`**Master Duel rarity**: ${rarityIcon} ${localizedRarity}`;
 		description += "\n";
 	}
 
@@ -479,29 +480,33 @@ export function createCardEmbed(
 		);
 
 		const race = card.monster_type_line.split(" /")[0];
-		const raceIcon = RaceIcon[race] || "";
+		const raceIcon = excludeIcons ? "" : RaceIcon[race] || "";
 		const localizedMonsterTypeLine = card.monster_type_line
 			.split(" / ")
 			.map(s => rc("monster-type-race").gettext(s))
 			.join(" / ");
+		const attributeIcon = excludeIcons ? "" : AttributeIcon[card.attribute];
 		const localizedAttribute = rc("attribute").gettext(card.attribute);
 		description += t`**Type**: ${raceIcon} ${localizedMonsterTypeLine}`;
 		description += "\n";
-		description += t`**Attribute**: ${AttributeIcon[card.attribute]} ${localizedAttribute}`;
+		description += t`**Attribute**: ${attributeIcon} ${localizedAttribute}`;
 		description += "\n";
 
 		if ("rank" in card) {
-			description += t`**Rank**: ${Icon.Rank} ${card.rank} **ATK**: ${card.atk} **DEF**: ${card.def}`;
+			const rankIcon = excludeIcons ? "" : Icon.Rank;
+			description += t`**Rank**: ${rankIcon} ${card.rank} **ATK**: ${card.atk} **DEF**: ${card.def}`;
 		} else if ("link_arrows" in card) {
-			const arrows = linkArrowsEmoji(card.link_arrows) + card.link_arrows.join("");
+			const arrows = (excludeIcons ? "" : linkArrowsEmoji(card.link_arrows)) + card.link_arrows.join("");
 			description += t`**Link Rating**: ${card.link_arrows.length} **ATK**: ${card.atk} **Link Arrows**: ${arrows}`;
 		} else {
-			description += t`**Level**: ${Icon.Level} ${card.level} **ATK**: ${card.atk} **DEF**: ${card.def}`;
+			const levelIcon = excludeIcons ? "" : Icon.Level;
+			description += t`**Level**: ${levelIcon} ${card.level} **ATK**: ${card.atk} **DEF**: ${card.def}`;
 		}
 
 		if (card.pendulum_scale !== undefined) {
-			// https://github.com/ttag-org/ttag/issues/249
-			const formattedScale = `${Icon.LeftScale}${card.pendulum_scale}/${card.pendulum_scale}${Icon.RightScale}`;
+			const formattedScale = excludeIcons
+				? card.pendulum_scale
+				: `${Icon.LeftScale}${card.pendulum_scale}/${card.pendulum_scale}${Icon.RightScale}`;
 			description += " ";
 			description += t`**Pendulum Scale**: ${formattedScale}`;
 		}
@@ -532,8 +537,10 @@ export function createCardEmbed(
 		embed.setColor(Colour[card.card_type]);
 
 		description += "\n"; // don't put \n in a gettext string
+		const cardTypeIcon = excludeIcons ? "" : Icon[card.card_type];
 		const localizedProperty = rc("spell-trap-property").gettext(`${card.property} ${card.card_type}`);
-		embed.setDescription(`${description}${Icon[card.card_type]} ${localizedProperty} ${Icon[card.property]}`);
+		const propertyIcon = excludeIcons ? "" : Icon[card.property];
+		embed.setDescription(`${description}${cardTypeIcon} ${localizedProperty} ${propertyIcon}`);
 
 		embed.addFields({ name: c("card-embed").t`Card Effect`, value: formatCardText(card.text, lang) });
 	}
