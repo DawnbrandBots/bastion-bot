@@ -1,5 +1,6 @@
 import { Static } from "@sinclair/typebox";
 import {
+	ApplicationIntegrationType,
 	AutocompleteInteraction,
 	ChatInputCommandInteraction,
 	RESTPostAPIApplicationCommandsJSONBody,
@@ -184,7 +185,8 @@ export class RushDuelCommand extends AutocompletableCommand {
 			return result;
 		}
 		const { resultLanguage, card } = result;
-		const embed = createRushCardEmbed(card, resultLanguage, this.limitRegulation);
+		const isUserInstall = !!interaction.authorizingIntegrationOwners[ApplicationIntegrationType.UserInstall];
+		const embed = createRushCardEmbed(card, resultLanguage, this.limitRegulation, isUserInstall);
 		const reply = await interaction.reply({ embeds: [embed], fetchReply: true });
 		return replyLatency(reply, interaction);
 	}
@@ -199,7 +201,8 @@ export class RushDuelCommand extends AutocompletableCommand {
 			useLocale(lang);
 			replyOptions = { content: t`Could not find a card matching \`${input}\`!` };
 		} else {
-			const embed = createRushCardEmbed(card, lang, this.limitRegulation);
+			const isUserInstall = !!interaction.authorizingIntegrationOwners[ApplicationIntegrationType.UserInstall];
+			const embed = createRushCardEmbed(card, lang, this.limitRegulation, isUserInstall);
 			replyOptions = { embeds: [embed] };
 		}
 		const reply = await interaction.reply({ ...replyOptions, fetchReply: true });
@@ -213,7 +216,8 @@ export class RushDuelCommand extends AutocompletableCommand {
 		}).json<Static<typeof RushCardSchema>[]>();
 		this.#logger.info(serialiseInteraction(interaction, { response: card.yugipedia_page_id }));
 		const lang = await this.locales.get(interaction);
-		const embed = createRushCardEmbed(card, lang, this.limitRegulation);
+		const isUserInstall = !!interaction.authorizingIntegrationOwners[ApplicationIntegrationType.UserInstall];
+		const embed = createRushCardEmbed(card, lang, this.limitRegulation, isUserInstall);
 		const reply = await interaction.reply({ embeds: [embed], fetchReply: true });
 		return replyLatency(reply, interaction);
 	}

@@ -56,7 +56,7 @@ export class RandomCommand extends Command {
 		const url = `${process.env.API_URL}/ocg-tcg/random`;
 		const cards = await this.got(url).json<Static<typeof CardSchema>[]>();
 		const lang = await this.locales.get(interaction);
-		const isUserInstall = !!interaction.authorizingIntegrationOwners?.[ApplicationIntegrationType.UserInstall];
+		const isUserInstall = !!interaction.authorizingIntegrationOwners[ApplicationIntegrationType.UserInstall];
 		const embeds = createCardEmbed(cards[0], lang, this.masterDuelLimitRegulation, isUserInstall);
 		const end = Date.now();
 		await interaction.editReply({ embeds }); // Actually returns void

@@ -31,7 +31,8 @@ export function videoGameIllustrationURL(card: Static<typeof RushCardSchema>): s
 export function createRushCardEmbed(
 	card: Static<typeof RushCardSchema>,
 	lang: Locale,
-	limitRegulation: UpdatingLimitRegulationVector
+	limitRegulation: UpdatingLimitRegulationVector,
+	excludeIcons = false
 ): EmbedBuilder {
 	useLocale(lang);
 
@@ -91,17 +92,19 @@ export function createRushCardEmbed(
 		);
 
 		const race = card.monster_type_line.split(" /")[0];
-		const raceIcon = RaceIcon[race] || "";
+		const raceIcon = excludeIcons ? "" : RaceIcon[race] || "";
 		const localizedMonsterTypeLine = card.monster_type_line
 			.split(" / ")
 			.map(s => rc("monster-type-race").gettext(s))
 			.join(" / ");
+		const attributeIcon = excludeIcons ? "" : AttributeIcon[card.attribute];
 		const localizedAttribute = rc("attribute").gettext(card.attribute);
+		const levelIcon = excludeIcons ? "" : Icon.Level;
 		description += t`**Type**: ${raceIcon} ${localizedMonsterTypeLine}`;
 		description += "\n";
-		description += t`**Attribute**: ${AttributeIcon[card.attribute]} ${localizedAttribute}`;
+		description += t`**Attribute**: ${attributeIcon} ${localizedAttribute}`;
 		description += "\n";
-		description += t`**Level**: ${Icon.Level} ${card.level} **ATK**: ${card.atk} **DEF**: ${card.def}`;
+		description += t`**Level**: ${levelIcon} ${card.level} **ATK**: ${card.atk} **DEF**: ${card.def}`;
 		if ("maximum_atk" in card) {
 			description += "\n";
 			description += t`**MAXIMUM ATK**: ${card.maximum_atk}`;
@@ -139,9 +142,10 @@ export function createRushCardEmbed(
 		embed.setColor(Colour[card.card_type]);
 
 		description += "\n"; // don't put \n in a gettext string
-
+		const cardTypeIcon = excludeIcons ? "" : Icon[card.card_type];
 		const localizedProperty = rc("spell-trap-property").gettext(`${card.property} ${card.card_type}`);
-		embed.setDescription(`${description}${Icon[card.card_type]} ${localizedProperty} ${Icon[card.property]}`);
+		const propertyIcon = excludeIcons ? "" : Icon[card.property];
+		embed.setDescription(`${description}${cardTypeIcon} ${localizedProperty} ${propertyIcon}`);
 
 		embed.addFields(
 			{ name: c("card-embed").t`[REQUIREMENT]`, value: formatCardText(card.requirement, lang) },

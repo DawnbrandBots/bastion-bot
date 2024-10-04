@@ -63,7 +63,7 @@ export class SearchCommand extends Command {
 			useLocale(resultLanguage);
 			replyOptions = { content: t`Could not find a card matching \`${input}\`!` };
 		} else {
-			const isUserInstall = !!interaction.authorizingIntegrationOwners?.[ApplicationIntegrationType.UserInstall];
+			const isUserInstall = !!interaction.authorizingIntegrationOwners[ApplicationIntegrationType.UserInstall];
 			const embeds = createCardEmbed(card, resultLanguage, this.masterDuelLimitRegulation, isUserInstall);
 			replyOptions = { embeds };
 		}
