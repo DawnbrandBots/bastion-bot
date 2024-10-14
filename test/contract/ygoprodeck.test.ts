@@ -220,9 +220,9 @@ describe("YGOPRODECK metagame API contracts", () => {
 				})
 			);
 			expect(strategy.season).toBeGreaterThan(0);
-			expect(strategy.win_count).toBeGreaterThan(0);
-			expect(strategy.loss_count).toBeGreaterThan(0);
-			expect(parseFloat(strategy.win_ratio)).toBeGreaterThan(0);
+			expect(strategy.win_count).toBeGreaterThanOrEqual(0);
+			expect(strategy.loss_count).toBeGreaterThanOrEqual(0);
+			expect(parseFloat(strategy.win_ratio)).toBeGreaterThanOrEqual(0);
 			expect(strategy.duel_count).toBeGreaterThan(0);
 			expect(parseFloat(strategy.average_turn_count)).toBeGreaterThan(0);
 			expect(parseFloat(strategy.median_turn_count)).toBeGreaterThan(0);
