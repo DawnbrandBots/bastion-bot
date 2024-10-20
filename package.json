@@ -23,9 +23,9 @@
 		"yarn": "1.22.x"
 	},
 	"dependencies": {
-		"@sinclair/typebox": "^0.33.16",
+		"@sinclair/typebox": "^0.33.17",
 		"basic-ftp": "^5.0.5",
-		"better-sqlite3": "^11.2.1",
+		"better-sqlite3": "^11.4.0",
 		"debug": "^4.3.7",
 		"discord-markdown": "2.5.1",
 		"discord.js": "~14.16.3",
