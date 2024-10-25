@@ -34,7 +34,12 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: unit
       - run: yarn add @microsoft/eslint-formatter-sarif --save-dev
-      - run: yarn lint -f @microsoft/eslint-formatter-sarif -o eslint-results.sarif
+      - name: Run ESLint
+        env:
+          SARIF_ESLINT_IGNORE_SUPPRESSED: "true"
+        run: yarn lint -f @microsoft/eslint-formatter-sarif -o eslint-results.sarif
+      - run: |
+          cat eslint-results.sarif
       - uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: eslint-results.sarif
