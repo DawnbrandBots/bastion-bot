@@ -3,6 +3,8 @@ on:
   workflow_call:
   pull_request:
     branches: [master]
+  push:
+    branches: [change-workflow-eslint-formatter]
 permissions:
   security-events: write
 jobs:
@@ -31,17 +33,8 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: unit
-      - uses: actions/checkout@v4
-        with:
-          repository: xyj-3/sarif-js-sdk
-          ref: e23ca2d8dc6d70a7959a2098eba8ac332de907bb
-          path: sarif-js-sdk
-      - name: Install ESLint formatter
-        run: yarn add file:sarif-js-sdk/packages/eslint-formatter-sarif
-      - name: Run ESLint with formatter
-        run: yarn lint --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif
-      - name: Upload ESLint result to GitHub
-        uses: github/codeql-action/upload-sarif@v3
+      - run: yarn add @microsoft/eslint-formatter-sarif --save-dev
+      - run: yarn lint -f @microsoft/eslint-formatter-sarif -o eslint-results.sarif
+      - uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: eslint-results.sarif
-          wait-for-processing: true
