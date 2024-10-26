@@ -3,8 +3,6 @@ on:
   workflow_call:
   pull_request:
     branches: [master]
-  push:
-    branches: [change-workflow-eslint-formatter]
 permissions:
   security-events: write
 jobs:
