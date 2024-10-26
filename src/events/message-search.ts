@@ -248,7 +248,7 @@ class OCGCardSearcher implements CardSearcher<Static<typeof CardSchema>> {
 		private commandCache: CommandCache,
 		private masterDuelLimitRegulation: UpdatingLimitRegulationVector
 	) {}
-	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+	
 	async search(input: string, language: Locale) {
 		const [resultLanguage, type, searchTerm, inputLanguage] = inputToGetCardArguments(input, language);
 		const card = await getCard(this.got, type, searchTerm, inputLanguage);

@@ -8,7 +8,7 @@ const { Message: MockMessage, MessageMentions } = jest.createMockFromModule<any>
 const { EventLocker: MockEventLocker } = jest.createMockFromModule<any>("../../../src/event-lock");
 
 class MockLocaleProvider extends LocaleProvider {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	
 	async guild(id: string): Promise<Locale | null> {
 		return "en";
 	}
