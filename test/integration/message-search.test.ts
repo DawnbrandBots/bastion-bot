@@ -73,7 +73,7 @@ const SINGLE_CARD_SEARCH_CASES = [
 		footer: "卡片密码: 62219643 | 官方编号17036"
 	},
 	{ query: "<sevens road magician>Rush Duel search!", name: "Sevens Road Magician", footer: "Konami ID #15150" },
-	{ query: "r<metalstrike asurastar>", name: "Metarion Ashurastar", footer: "Konami ID #16886" },
+	{ query: "r<metalrion asurastar>", name: "Metarion Ashurastar", footer: "Konami ID #16886" },
 	{ query: "<Fusion,en,ja>R", name: "フュージョン", footer: "Konami ID #16934" },
 	{ query: "R<15184,fr>", name: "Dragon Blanc aux Yeux Bleus", footer: "Konami ID #15184" },
 	{ query: "r<%16371>", name: "Dark Magician Girl", footer: "Konami ID #16371" },
