@@ -31,7 +31,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: unit
-      - run: yarn add @microsoft/eslint-formatter-sarif --save-dev
       - run: yarn lint -f @microsoft/eslint-formatter-sarif -o eslint-results.sarif
         env:
           SARIF_ESLINT_IGNORE_SUPPRESSED: "true"
