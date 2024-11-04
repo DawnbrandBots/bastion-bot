@@ -208,11 +208,11 @@ export abstract class LocaleProvider {
 	 * channel.parentId may refer to a category or a text channel. Return the parent text channel
 	 * for threads only, and the current channel otherwise.
 	 *
-	 * @param interaction
+	 * @param context
 	 * @returns The channel snowflake to use for setting locale
 	 */
-	getChannel(interaction: ChatInputCommandInteraction): Snowflake {
-		return (interaction.channel?.isThread() && interaction.channel.parentId) || interaction.channelId;
+	getChannel(context: ChatInputCommandInteraction | AutocompleteInteraction | Message): Snowflake {
+		return (context.channel?.isThread() && context.channel.parentId) || context.channelId;
 	}
 
 	async get(interaction: ChatInputCommandInteraction | AutocompleteInteraction): Promise<Locale> {
@@ -227,9 +227,7 @@ export abstract class LocaleProvider {
 			// Channel settings override server-wide settings override Discord-reported
 			// server locale. Threads are treated as an extension of their parent channel.
 			return (
-				(await this.channel(
-					(interaction.channel?.isThread() && interaction.channel.parentId) || interaction.channelId
-				)) ??
+				(await this.channel(this.getChannel(interaction))) ??
 				(await this.guild(interaction.guildId)) ??
 				this.filter(interaction.guildLocale)
 			);
@@ -245,7 +243,7 @@ export abstract class LocaleProvider {
 			// Channel settings override server-wide settings override Discord-reported
 			// server locale. Threads are treated as an extension of their parent channel.
 			return (
-				(await this.channel((context.channel?.isThread() && context.channel.parentId) || context.channelId)) ??
+				(await this.channel(this.getChannel(context))) ??
 				(await this.guild(context.guildId)) ??
 				this.filter(context.guild.preferredLocale)
 			);
