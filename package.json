@@ -24,7 +24,6 @@
 	},
 	"dependencies": {
 		"@sinclair/typebox": "^0.33.17",
-		"basic-ftp": "^5.0.5",
 		"better-sqlite3": "^11.5.0",
 		"debug": "^4.3.7",
 		"discord-markdown": "2.5.1",

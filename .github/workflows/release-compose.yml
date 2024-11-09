@@ -45,7 +45,6 @@ jobs:
           DOCKER_TAG: sha-${{ github.event.inputs.revision || github.sha }}
           DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
           API_URL: ${{ secrets.API_URL_INTERNAL }}
-          FTP_URL: ${{ secrets.FTP_URL }}
           HEALTHCHECK_BOT_SNOWFLAKE: "1031374366426009753" # Singing Lanius#9842
           BOT_LOGGER_WEBHOOK: ${{ secrets.PRODUCTION_LOGGER_WEBHOOK }}
           BOT_PRESENCE: ${{ github.event.inputs.presence }}

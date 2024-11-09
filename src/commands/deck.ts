@@ -5,23 +5,17 @@ import {
 	SlashCommandSubcommandBuilder
 } from "@discordjs/builders";
 import { Static } from "@sinclair/typebox";
-import { Client } from "basic-ftp";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import {
 	ActionRowBuilder,
 	Attachment,
 	AttachmentBuilder,
 	ButtonBuilder,
-	ButtonInteraction,
 	ButtonStyle,
 	ChatInputCommandInteraction,
-	ComponentType,
-	DiscordAPIError,
-	DiscordjsErrorCodes,
 	EmbedBuilder
 } from "discord.js";
 import { Got } from "got";
-import { Readable } from "stream";
 import { inject, injectable } from "tsyringe";
 import { c, msgid, ngettext, t, useLocale } from "ttag";
 import { typedDeckToYdk, ydkToTypedDeck } from "ydeck";
@@ -41,44 +35,12 @@ const rc = c;
 export class DeckCommand extends Command {
 	#logger = getLogger("command:deck");
 
-	// create one client for all ftp interactions
-	private ftp: Client;
-
-	// derived details for ftp authentication
-	private ftpHost: string | undefined;
-	private ftpPort: number | undefined;
-	private ftpUser: string | undefined;
-	private ftpPass: string | undefined;
-
 	constructor(
 		@inject(Metrics) metrics: Metrics,
 		@inject("LocaleProvider") private locales: LocaleProvider,
 		@inject("got") private got: Got
 	) {
 		super(metrics);
-		this.ftp = new Client();
-
-		if (!process.env.FTP_URL) {
-			// Internal error string doesn't need to be localised
-			this.logger.warn("FTP credentials are not defined!");
-		} else {
-			// FTP_URL format in .env is ftp://user:password@host:port
-			const ftpUrl = new URL(process.env.FTP_URL);
-
-			this.ftpHost = ftpUrl.hostname;
-
-			// if the specified port is the default for the protocol, i.e. 21,
-			// URL#port returns the empty string, so we need to step in manually
-			this.ftpPort = parseInt(ftpUrl.port);
-			if (isNaN(this.ftpPort)) {
-				this.ftpPort = 21;
-			}
-
-			// URL class percent-encodes stuff we don't want it to
-			this.ftpUser = decodeURIComponent(ftpUrl.username);
-
-			this.ftpPass = ftpUrl.password;
-		}
 	}
 
 	static override get meta(): RESTPostAPIApplicationCommandsJSONBody {
@@ -337,27 +299,6 @@ export class DeckCommand extends Command {
 		this.logger.info(serialiseInteraction(interaction), error);
 	}
 
-	protected async upload(filename: string, deck: Buffer): Promise<void> {
-		// one of these should prove the others, but it's good to explicitly typeguard
-		if (
-			this.ftpHost === undefined ||
-			this.ftpPort === undefined ||
-			this.ftpUser === undefined ||
-			this.ftpPass === undefined
-		) {
-			throw new Error("FTP credentials are undefined!");
-		}
-		await this.ftp.access({
-			host: this.ftpHost,
-			port: this.ftpPort,
-			user: this.ftpUser,
-			password: this.ftpPass,
-			secure: false // current FTP destination does not support SFTP
-		});
-		await this.ftp.uploadFrom(Readable.from(deck), filename);
-		this.ftp.close(); // will be reopened by access next time it's needed
-	}
-
 	protected override async execute(interaction: ChatInputCommandInteraction): Promise<number> {
 		const resultLanguage = await this.locales.get(interaction);
 		let deck: TypedDeck;
@@ -417,16 +358,16 @@ export class DeckCommand extends Command {
 		const content = await this.generateProfile(deck, resultLanguage, !isStacked, outUrl);
 
 		useLocale(resultLanguage);
-		// prepare interaction button for FTP upload
 		const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
-				.setCustomId("ftp")
 				.setLabel(t`Upload to YGOPRODECK`)
-				.setStyle(ButtonStyle.Primary)
+				.setStyle(ButtonStyle.Link)
+				.setURL(
+					`https://ygoprodeck.com/deckbuilder/?utm_source=bastion&y=${encodeURIComponent(outUrl.slice(7))}`
+				)
 		);
 
 		// a string is interpreted as a path, to upload it as a file we need a Buffer
-		// we might also want it again for the FTP upload
 		const deckBuffer = Buffer.from(outFile, "utf-8");
 
 		// save to re-use when we later edit the message
@@ -434,74 +375,11 @@ export class DeckCommand extends Command {
 		const attachment = new AttachmentBuilder(deckBuffer).setName("deck.ydk");
 
 		const end = Date.now();
-		const response = await interaction.editReply({
+		await interaction.editReply({
 			embeds,
 			files: [attachment],
 			components: [row]
 		});
-
-		const filter = (i: ButtonInteraction): boolean => {
-			this.logger.info(serialiseInteraction(interaction), `click: ${i.user.id}`);
-			if (i.user.id === interaction.user.id) {
-				return true;
-			}
-			useLocale(resultLanguage);
-			i.reply({
-				content: t`Buttons can only be used by the user who called Bastion.`,
-				ephemeral: true
-			}).catch(e => this.logger.error(serialiseInteraction(interaction), e));
-			return false;
-		};
-
-		// we don't await this promise, we set up the callback and then let the method complete
-		response
-			.awaitMessageComponent({ filter, componentType: ComponentType.Button, time: 60000 })
-			.then(async i => {
-				await i.deferReply({ ephemeral: !isPublic });
-
-				// upload deck with FTP
-				const filename = `${i.id}.ydk`; // use interaction ID for unique filename
-				try {
-					await this.upload(filename, deckBuffer);
-				} catch (error) {
-					// error must be from Discord.JS or basic-ftp, which we trust to only throw Errors
-					this.logger.error(serialiseInteraction(interaction), error);
-					await i.editReply({ content: t`Deck upload failed!` });
-					// Remove button
-					await interaction.editReply({ embeds, files: [attachment], components: [] });
-					return;
-				}
-
-				const url = `https://ygoprodeck.com/deckbuilder/?u=https://ygoprodeck.com/discord-decks/${filename}`;
-				this.logger.info(serialiseInteraction(interaction), url);
-				// disable original button
-				// prepare row to disable button on original message
-				const disabledRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
-					new ButtonBuilder()
-						.setCustomId("ftp-disabled")
-						.setLabel(t`Upload Complete`)
-						.setStyle(ButtonStyle.Success)
-						.setDisabled(true)
-				);
-				await interaction.editReply({ embeds, files: [attachment], components: [disabledRow] });
-
-				// reply in affirmation
-				await i.editReply({
-					content: t`Deck successfully uploaded to <${url}>!`,
-					components: []
-				});
-			})
-			.catch(async (err: DiscordAPIError) => {
-				// a rejection can just mean the timeout was reached without a response
-				// otherwise, though, we want to treat it as a normal error
-				if (err.code !== DiscordjsErrorCodes.InteractionCollectorError) {
-					this.logger.error(serialiseInteraction(interaction), err);
-				}
-				// remove original button, regardless of error source
-				interaction
-					.editReply({ embeds, files: [attachment], components: [] })
-					.catch(e => this.logger.error(serialiseInteraction(interaction), e));
-			});
 
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
 		const latency = end - interaction.createdTimestamp;
