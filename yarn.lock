@@ -1496,9 +1496,9 @@
     fastq "^1.6.0"
 
 "@sapphire/async-queue@^1.5.2", "@sapphire/async-queue@^1.5.3":
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/@sapphire/async-queue/-/async-queue-1.5.4.tgz#213e2a7a2df6313b9df791c04d8f5c32ebd3c413"
-  integrity sha512-id65RxAx34DCk8KAVTPWwcephJSkStiS9M15F87+zvK2gK47wf7yeRIo8WiuKeXQS6bsyo/uQ/t0QW1cLmSb+A==
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/@sapphire/async-queue/-/async-queue-1.5.5.tgz#2b18d402bb920b65b13ad4ed8dfb6c386300dd84"
+  integrity sha512-cvGzxbba6sav2zZkH8GPf2oGk9yYoD5qrNWdu9fRehifgnFZJMV+nuy2nON2roRO4yQQ+v7MK/Pktl/HgfsUXg==
 
 "@sapphire/shapeshift@^4.0.0":
   version "4.0.0"
@@ -2642,9 +2642,9 @@ dir-glob@^3.0.1:
     path-type "^4.0.0"
 
 discord-api-types@0.37.100, discord-api-types@0.37.83, discord-api-types@0.37.97, discord-api-types@^0.37.100:
-  version "0.37.103"
-  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.37.103.tgz#215423355c6bd9780f367453b9f01d7731cbfb95"
-  integrity sha512-r+qitxXKe2l6KFw5odPdZSSqdEou+7eNC7BfbZ7mny5Me/K06wCTeKUMVeH/YsI9+4QQudskeQ307kr/7ppQ1A==
+  version "0.37.104"
+  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.37.104.tgz#d6a0f0477f27c98a42b19208bfc0da30e72facd5"
+  integrity sha512-kIX9RXGekag1Yd/R/douqBTRyt5GY5mCoxntKLuyqfYpKQ1fl8XpHNFIMtnoDSD343TJWsah49XylrsNFfTu0Q==
 
 discord-markdown@2.5.1:
   version "2.5.1"
