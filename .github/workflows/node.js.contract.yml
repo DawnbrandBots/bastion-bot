@@ -28,6 +28,7 @@ jobs:
       - run: yarn
       - run: yarn test:contract --verbose
       - uses: codecov/codecov-action@v4
+        if: success() || failure()
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: contract

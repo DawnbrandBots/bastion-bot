@@ -28,6 +28,7 @@ jobs:
       - run: yarn build
       - run: yarn test --verbose
       - uses: codecov/codecov-action@v4
+        if: success() || failure()
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: unit
