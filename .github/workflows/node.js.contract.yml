@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2023 Kevin Lu
+# SPDX-FileCopyrightText: © 2023–2024 Kevin Lu
 # SPDX-Licence-Identifier: AGPL-3.0-or-later
 name: Contract tests
 on:
@@ -11,12 +11,12 @@ on:
     # Daily after 12:00 UTC, depending on Actions availability
     - cron: "0 12 * * *"
 permissions: {}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   contract-test:
     runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v4
         with:
@@ -32,3 +32,29 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: contract
+  install-count:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: bastion-bot
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ secrets.METRICS_REPOSITORY }}
+          path: metrics
+          token: ${{ secrets.METRICS_GH_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+      - working-directory: bastion-bot
+        run: yarn
+      - working-directory: bastion-bot
+        run: node -r dotenv/config test/install-count.mjs > ../metrics/bastion-bot-discord-application/$(date -u +"%Y-%m-%dT%H_%M_%SZ").json
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+      - uses: DawnbrandBots/.github/actions/commit-push@main
+        with:
+          message: "Transform: ${{ github.run_number }} (${{ github.run_id }})"
+          working-directory: metrics
