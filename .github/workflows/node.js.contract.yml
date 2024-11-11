@@ -48,6 +48,7 @@ jobs:
         with:
           node-version: 20
           cache: yarn
+          cache-dependency-path: bastion-bot/yarn.lock
       - working-directory: bastion-bot
         run: yarn
       - working-directory: bastion-bot
