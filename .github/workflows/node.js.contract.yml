@@ -54,7 +54,7 @@ jobs:
       - working-directory: bastion-bot
         run: node -r dotenv/config test/install-count.mjs > ../metrics/bastion-bot-discord-application/$(date -u +"%Y-%m-%dT%H_%M_%SZ").json
         env:
-          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
       - uses: DawnbrandBots/.github/actions/commit-push@main
         with:
           message: "Transform: ${{ github.run_number }} (${{ github.run_id }})"
