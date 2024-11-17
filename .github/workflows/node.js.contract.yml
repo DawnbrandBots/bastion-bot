@@ -27,7 +27,7 @@ jobs:
           cache: yarn
       - run: yarn
       - run: yarn test:contract --verbose
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         if: success() || failure()
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
