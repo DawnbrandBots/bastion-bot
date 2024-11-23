@@ -16,7 +16,6 @@ class MockLocaleProvider extends LocaleProvider {
 	async channel(id: string): Promise<Locale | null> {
 		return "en";
 	}
-
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	async user(id: string): Promise<Locale | null> {
 		return "en";
@@ -29,7 +28,6 @@ class MockLocaleProvider extends LocaleProvider {
 	setForChannel(id: string, set: Locale | null): Promise<void> {
 		throw new Error("Method not implemented.");
 	}
-
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	setForUser(id: string, set: Locale | null): Promise<void> {
 		throw new Error("Method not implemented.");
