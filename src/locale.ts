@@ -201,8 +201,10 @@ export function getKonamiIdSubcommand(getLocalisedDescription: () => string): Sl
 export abstract class LocaleProvider {
 	abstract guild(id: Snowflake): Promise<Locale | null>;
 	abstract channel(id: Snowflake): Promise<Locale | null>;
+	abstract user(id: Snowflake): Promise<Locale | null>;
 	abstract setForGuild(id: Snowflake, set: Locale | null): Promise<void>;
 	abstract setForChannel(id: Snowflake, set: Locale | null): Promise<void>;
+	abstract setForUser(id: Snowflake, set: Locale | null): Promise<void>;
 
 	/**
 	 * channel.parentId may refer to a category or a text channel. Return the parent text channel
@@ -223,7 +225,10 @@ export abstract class LocaleProvider {
 			// getResultLangStringOption if it has a lang option to a command.
 			return lang as Locale;
 		}
-		if (interaction.inGuild()) {
+		if (
+			interaction.inGuild() &&
+			ApplicationIntegrationType.GuildInstall in interaction.authorizingIntegrationOwners
+		) {
 			// Channel settings override server-wide settings override Discord-reported
 			// server locale. Threads are treated as an extension of their parent channel.
 			return (
@@ -293,6 +298,9 @@ export class SQLiteLocaleProvider extends LocaleProvider {
 	private readonly readChannel: Statement;
 	private readonly writeChannel: Statement;
 	private readonly deleteChannel: Statement;
+	private readonly readUser: Statement;
+	private readonly writeUser: Statement;
+	private readonly deleteUser: Statement;
 	constructor(@inject("localeDb") file: string) {
 		super();
 		this.db = this.getDB(file);
@@ -302,6 +310,9 @@ export class SQLiteLocaleProvider extends LocaleProvider {
 		this.readChannel = this.db.prepare("SELECT locale FROM channels WHERE id = ?");
 		this.writeChannel = this.db.prepare("REPLACE INTO channels VALUES(?,?)");
 		this.deleteChannel = this.db.prepare("DELETE FROM channels WHERE id = ?");
+		this.readUser = this.db.prepare("SELECT locale FROM users WHERE id = ?");
+		this.writeUser = this.db.prepare("REPLACE INTO users VALUES(?,?)");
+		this.deleteUser = this.db.prepare("DELETE FROM users WHERE id = ?");
 	}
 
 	private getDB(file: string): Database {
@@ -317,6 +328,11 @@ CREATE TABLE IF NOT EXISTS "channels" (
 	"id"	INTEGER NOT NULL,
 	"locale"	TEXT NOT NULL,
 	PRIMARY KEY("id")
+);
+CREATE TABLE IF NOT EXISTS "users" (
+	"id"	INTEGER NOT NULL,
+	"locale"	TEXT NOT NULL,
+	PRIMARY KEY("id")
 );`);
 		return db;
 	}
@@ -327,6 +343,10 @@ CREATE TABLE IF NOT EXISTS "channels" (
 
 	public async channel(id: Snowflake): Promise<Locale | null> {
 		return (this.readChannel.get(id) as SQLiteLocaleRow)?.locale || null;
+	}
+
+	public async user(id: Snowflake): Promise<Locale | null> {
+		return (this.readUser.get(id) as SQLiteLocaleRow)?.locale || null;
 	}
 
 	public async setForGuild(id: Snowflake, set: Locale): Promise<void> {
@@ -342,6 +362,14 @@ CREATE TABLE IF NOT EXISTS "channels" (
 			this.writeChannel.run(id, set);
 		} else {
 			this.deleteChannel.run(id);
+		}
+	}
+
+	public async setForUser(id: Snowflake, set: Locale): Promise<void> {
+		if (set !== null) {
+			this.writeUser.run(id, set);
+		} else {
+			this.deleteUser.run(id);
 		}
 	}
 
