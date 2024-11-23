@@ -284,93 +284,82 @@ export abstract class LocaleProvider {
 }
 
 type SQLiteLocaleRow = { locale: Locale };
+class LocaleScope {
+	private readonly read: Statement<Snowflake, SQLiteLocaleRow>;
+	private readonly write: Statement<[Snowflake, Locale]>;
+	private readonly delete: Statement<Snowflake>;
+	constructor(
+		private readonly db: Database,
+		public readonly table: string
+	) {
+		db.exec(`
+CREATE TABLE IF NOT EXISTS "${table}" (
+	"id"	INTEGER NOT NULL,
+	"locale"	TEXT NOT NULL,
+	PRIMARY KEY("id")
+);`);
+		this.read = this.db.prepare(`SELECT locale FROM "${table}" WHERE id = ?`);
+		this.write = this.db.prepare(`REPLACE INTO "${table}" VALUES(?,?)`);
+		this.delete = this.db.prepare(`DELETE FROM "${table}" WHERE id = ?`);
+	}
+
+	public get(id: Snowflake): Locale | null {
+		return this.read.get(id)?.locale || null;
+	}
+
+	public set(id: Snowflake, set: Locale): void {
+		if (set !== null) {
+			this.write.run(id, set);
+		} else {
+			this.delete.run(id);
+		}
+	}
+}
+
+const TABLES = ["guilds", "channels", "users"] as const;
 /**
  * Implementation in two SQLite tables in the same database. With sufficient
  * scale, this would need to be periodically cleaned as guilds and channels are
  * removed, especially with threads, if they are also stored here.
  */
 @singleton()
-export class SQLiteLocaleProvider extends LocaleProvider {
+export class SQLiteLocaleProvider extends LocaleProvider implements Record<ArrayElement<typeof TABLES>, LocaleScope> {
 	private readonly db: Database;
-	private readonly readGuild: Statement;
-	private readonly writeGuild: Statement;
-	private readonly deleteGuild: Statement;
-	private readonly readChannel: Statement;
-	private readonly writeChannel: Statement;
-	private readonly deleteChannel: Statement;
-	private readonly readUser: Statement;
-	private readonly writeUser: Statement;
-	private readonly deleteUser: Statement;
+	// Ideally we would not need to redeclare these here with an assertion
+	readonly guilds!: LocaleScope;
+	readonly channels!: LocaleScope;
+	readonly users!: LocaleScope;
 	constructor(@inject("localeDb") file: string) {
 		super();
-		this.db = this.getDB(file);
-		this.readGuild = this.db.prepare("SELECT locale FROM guilds WHERE id = ?");
-		this.writeGuild = this.db.prepare("REPLACE INTO guilds VALUES(?,?)");
-		this.deleteGuild = this.db.prepare("DELETE FROM guilds WHERE id = ?");
-		this.readChannel = this.db.prepare("SELECT locale FROM channels WHERE id = ?");
-		this.writeChannel = this.db.prepare("REPLACE INTO channels VALUES(?,?)");
-		this.deleteChannel = this.db.prepare("DELETE FROM channels WHERE id = ?");
-		this.readUser = this.db.prepare("SELECT locale FROM users WHERE id = ?");
-		this.writeUser = this.db.prepare("REPLACE INTO users VALUES(?,?)");
-		this.deleteUser = this.db.prepare("DELETE FROM users WHERE id = ?");
-	}
-
-	private getDB(file: string): Database {
-		const db = sqlite(file);
-		db.pragma("journal_mode = WAL");
-		db.exec(`
-CREATE TABLE IF NOT EXISTS "guilds" (
-	"id"	INTEGER NOT NULL,
-	"locale"	TEXT NOT NULL,
-	PRIMARY KEY("id")
-);
-CREATE TABLE IF NOT EXISTS "channels" (
-	"id"	INTEGER NOT NULL,
-	"locale"	TEXT NOT NULL,
-	PRIMARY KEY("id")
-);
-CREATE TABLE IF NOT EXISTS "users" (
-	"id"	INTEGER NOT NULL,
-	"locale"	TEXT NOT NULL,
-	PRIMARY KEY("id")
-);`);
-		return db;
+		this.db = sqlite(file);
+		this.db.pragma("journal_mode = WAL");
+		for (const scope of TABLES) {
+			this[scope] = new LocaleScope(this.db, scope);
+		}
 	}
 
 	public async guild(id: Snowflake): Promise<Locale | null> {
-		return (this.readGuild.get(id) as SQLiteLocaleRow)?.locale || null;
+		return this.guilds.get(id);
 	}
 
 	public async channel(id: Snowflake): Promise<Locale | null> {
-		return (this.readChannel.get(id) as SQLiteLocaleRow)?.locale || null;
+		return this.channels.get(id);
 	}
 
 	public async user(id: Snowflake): Promise<Locale | null> {
-		return (this.readUser.get(id) as SQLiteLocaleRow)?.locale || null;
+		return this.users.get(id);
 	}
 
 	public async setForGuild(id: Snowflake, set: Locale): Promise<void> {
-		if (set !== null) {
-			this.writeGuild.run(id, set);
-		} else {
-			this.deleteGuild.run(id);
-		}
+		this.guilds.set(id, set);
 	}
 
 	public async setForChannel(id: Snowflake, set: Locale): Promise<void> {
-		if (set !== null) {
-			this.writeChannel.run(id, set);
-		} else {
-			this.deleteChannel.run(id);
-		}
+		this.channels.set(id, set);
 	}
 
 	public async setForUser(id: Snowflake, set: Locale): Promise<void> {
-		if (set !== null) {
-			this.writeUser.run(id, set);
-		} else {
-			this.deleteUser.run(id);
-		}
+		this.users.set(id, set);
 	}
 
 	public destroy(): void {
