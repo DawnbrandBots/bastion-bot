@@ -237,9 +237,10 @@ export abstract class LocaleProvider {
 				this.filter(interaction.guildLocale)
 			);
 		} else {
-			// In direct messages, it is safe to use the user's Discord-reported locale
-			// without breaching privacy. Further support configuring the locale in the DM.
-			return (await this.channel(interaction.channelId)) ?? this.filter(interaction.locale);
+			// In direct messages, including group chats, and the user-installed version being
+			// invoked from a server, use the user's locale reported by Discord, which may be
+			// further configured for this bot specificcaly.
+			return (await this.user(interaction.user.id)) ?? this.filter(interaction.locale);
 		}
 	}
 
@@ -253,8 +254,8 @@ export abstract class LocaleProvider {
 				this.filter(context.guild.preferredLocale)
 			);
 		} else {
-			// Cannot retrieve the user's locale from a direct message.
-			return (await this.channel(context.channelId)) ?? "en";
+			// User locale is only provided for interactions, not messages.
+			return (await this.user(context.author.id)) ?? "en";
 		}
 	}
 
