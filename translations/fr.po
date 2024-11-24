@@ -30,13 +30,13 @@ msgstr "**Type**: ${ raceIcon } ${ localizedMonsterTypeLine }"
 #: src\card.ts:491
 #: src\rush-duel.ts:94
 #, javascript-format
-msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
-msgstr "**Attribut**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
+msgid "**Attribute**: ${ attributeIcon } ${ localizedAttribute }"
+msgstr "**Attribut**: ${ attributeIcon } ${ localizedAttribute }"
 
 #: src\card.ts:495
 #, javascript-format
-msgid "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
-msgstr "**Rang**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
+msgid "**Rank**: ${ rankIcon } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
+msgstr "**Rang**: ${ rankIcon } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 
 #: src\card.ts:498
 #, javascript-format
@@ -46,8 +46,8 @@ msgstr ""
 #: src\card.ts:500
 #: src\rush-duel.ts:96
 #, javascript-format
-msgid "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
-msgstr "**Niveau**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
+msgid "**Level**: ${ levelIcon } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
+msgstr "**Niveau**: ${ levelIcon } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 
 #: src\card.ts:507
 #, javascript-format
@@ -459,7 +459,7 @@ msgstr ""
 
 #: src\card.ts:462
 #, javascript-format
-msgid "**Master Duel rarity**: ${ rarity_icon } ${ localized_rarity }"
+msgid "**Master Duel rarity**: ${ rarityIcon } ${ localizedRarity }"
 msgstr ""
 
 #: src\rush-duel.ts:205

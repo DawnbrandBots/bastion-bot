@@ -30,13 +30,13 @@ msgstr "**种族**: ${ raceIcon } ${ localizedMonsterTypeLine }"
 #: src\card.ts:491
 #: src\rush-duel.ts:94
 #, javascript-format
-msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
-msgstr "**属性**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
+msgid "**Attribute**: ${ attributeIcon } ${ localizedAttribute }"
+msgstr "**属性**: ${ attributeIcon } ${ localizedAttribute }"
 
 #: src\card.ts:495
 #, javascript-format
-msgid "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
-msgstr "**阶级**: ${ Icon.Rank } ${ card.rank } **攻击力**: ${ card.atk } **守备力**: ${ card.def }"
+msgid "**Rank**: ${ rankIcon } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
+msgstr "**阶级**: ${ rankIcon } ${ card.rank } **攻击力**: ${ card.atk } **守备力**: ${ card.def }"
 
 #: src\card.ts:498
 #, javascript-format
@@ -46,8 +46,8 @@ msgstr "**连接数值**: ${ card.link_arrows.length } **攻击力**: ${ card.at
 #: src\card.ts:500
 #: src\rush-duel.ts:96
 #, javascript-format
-msgid "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
-msgstr "**等级**: ${ Icon.Level } ${ card.level } **攻击力**: ${ card.atk } **守备力**: ${ card.def }"
+msgid "**Level**: ${ levelIcon } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
+msgstr "**等级**: ${ levelIcon } ${ card.level } **攻击力**: ${ card.atk } **守备力**: ${ card.def }"
 
 #: src\card.ts:507
 #, javascript-format
@@ -453,8 +453,8 @@ msgstr ""
 
 #: src\card.ts:462
 #, javascript-format
-msgid "**Master Duel rarity**: ${ rarity_icon } ${ localized_rarity }"
-msgstr "**稀有度 (Master Duel)**: ${ rarity_icon } ${ localized_rarity }"
+msgid "**Master Duel rarity**: ${ rarityIcon } ${ localizedRarity }"
+msgstr "**稀有度 (Master Duel)**: ${ rarityIcon } ${ localizedRarity }"
 
 #: src\rush-duel.ts:205
 #, javascript-format

@@ -30,13 +30,13 @@ msgstr "**종족**: ${ raceIcon } ${ localizedMonsterTypeLine }"
 #: src\card.ts:491
 #: src\rush-duel.ts:94
 #, javascript-format
-msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
-msgstr "**속성**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
+msgid "**Attribute**: ${ attributeIcon } ${ localizedAttribute }"
+msgstr "**속성**: ${ attributeIcon } ${ localizedAttribute }"
 
 #: src\card.ts:495
 #, javascript-format
-msgid "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
-msgstr "**랭크**: ${ Icon.Rank } ${ card.rank } **공격력**: ${ card.atk } **수비력**: ${ card.def }"
+msgid "**Rank**: ${ rankIcon } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
+msgstr "**랭크**: ${ rankIcon } ${ card.rank } **공격력**: ${ card.atk } **수비력**: ${ card.def }"
 
 #: src\card.ts:498
 #, javascript-format
@@ -46,8 +46,8 @@ msgstr "**LINK**: ${ card.link_arrows.length } **공격력**: ${ card.atk } **�
 #: src\card.ts:500
 #: src\rush-duel.ts:96
 #, javascript-format
-msgid "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
-msgstr "**레벨**: ${ Icon.Level } ${ card.level } **공격력**: ${ card.atk } **수비력**: ${ card.def }"
+msgid "**Level**: ${ levelIcon } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
+msgstr "**레벨**: ${ levelIcon } ${ card.level } **공격력**: ${ card.atk } **수비력**: ${ card.def }"
 
 #: src\card.ts:507
 #, javascript-format
@@ -453,8 +453,8 @@ msgstr "Bastion은 호출한 사용자만 이용할 수 있습니다."
 
 #: src\card.ts:462
 #, javascript-format
-msgid "**Master Duel rarity**: ${ rarity_icon } ${ localized_rarity }"
-msgstr "**레어리티 (MD)**: ${ rarity_icon } ${ localized_rarity }"
+msgid "**Master Duel rarity**: ${ rarityIcon } ${ localizedRarity }"
+msgstr "**레어리티 (MD)**: ${ rarityIcon } ${ localizedRarity }"
 
 #: src\rush-duel.ts:205
 #, javascript-format
