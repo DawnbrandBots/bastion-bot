@@ -23,7 +23,7 @@
 		"yarn": "1.22.x"
 	},
 	"dependencies": {
-		"@sinclair/typebox": "^0.34.2",
+		"@sinclair/typebox": "^0.34.8",
 		"better-sqlite3": "^11.5.0",
 		"debug": "^4.3.7",
 		"discord-markdown": "2.5.1",
@@ -32,7 +32,7 @@
 		"gettext-parser": "^6.0.0",
 		"got": "^11.8.6",
 		"htmlparser2": "^9.1.0",
-		"immutable": "^5.0.2",
+		"immutable": "^5.0.3",
 		"mnemonist": "^0.39.8",
 		"reflect-metadata": "^0.2.2",
 		"supports-color": "^9.4.0",
@@ -44,7 +44,7 @@
 	"devDependencies": {
 		"@alphakretin/essentials": "^6.2.0",
 		"@microsoft/eslint-formatter-sarif": "^3.1.0",
-		"@types/better-sqlite3": "^7.6.11",
+		"@types/better-sqlite3": "^7.6.12",
 		"@types/debug": "^4.1.12",
 		"@types/gettext-parser": "^4.0.4",
 		"@types/jest": "^29.5.14",
