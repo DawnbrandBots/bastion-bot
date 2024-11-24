@@ -83,10 +83,10 @@ export class LocaleCommand extends Command {
 				}
 				content += t`Discord Community locale for this server: ${interaction.guildLocale}`;
 			} else {
-				const override = await this.#locales.channel(interaction.channelId);
+				const override = await this.#locales.user(interaction.user.id);
 				useLocale(effectiveLocale);
 				if (override) {
-					content += t`Locale override for this direct message: ${override}`;
+					content += t`Locale override for your direct messages: ${override}`;
 					content += "\n";
 				}
 				content += t`Your Discord locale: ${interaction.locale}`;
@@ -141,13 +141,13 @@ export class LocaleCommand extends Command {
 			} else {
 				// direct message, ignore scope
 				if (locale !== "default") {
-					await this.#locales.setForChannel(interaction.channelId, locale);
+					await this.#locales.setForUser(interaction.user.id, locale);
 					await this.useLocaleAfterWrite(interaction);
-					content = t`Locale for this direct message overridden with ${locale}. Your Discord setting is ${interaction.locale}.`;
+					content = t`Locale for your direct messages overridden with ${locale}. Your Discord setting is ${interaction.locale}.`;
 				} else {
-					await this.#locales.setForChannel(interaction.channelId, null);
+					await this.#locales.setForUser(interaction.user.id, null);
 					await this.useLocaleAfterWrite(interaction);
-					content = t`Locale for this direct message reset to Discord default. Your Discord setting is ${interaction.locale}.`;
+					content = t`Locale for your direct messages reset to Discord default. Your Discord setting is ${interaction.locale}.`;
 				}
 			}
 		}

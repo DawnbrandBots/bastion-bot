@@ -6,50 +6,50 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src\card.ts:416
-#: src\rush-duel.ts:39
+#: src\card.ts:412
+#: src\rush-duel.ts:48
 msgid "🔗 Links"
 msgstr "🔗 リンク集"
 
-#: src\card.ts:417
+#: src\card.ts:413
 #, javascript-format
 msgid "[Official Konami DB](${ official }) | [OCG Rulings](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr "[Konami公式カードDB](${ official }) | [OCG公式裁定](${ rulings }) | [Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
-#: src\card.ts:420
+#: src\card.ts:416
 #, javascript-format
 msgid "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
 
-#: src\card.ts:489
-#: src\rush-duel.ts:92
+#: src\card.ts:490
+#: src\rush-duel.ts:103
 #, javascript-format
 msgid "**Type**: ${ raceIcon } ${ localizedMonsterTypeLine }"
 msgstr "**種族**: ${ raceIcon } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:491
-#: src\rush-duel.ts:94
+#: src\card.ts:492
+#: src\rush-duel.ts:105
 #, javascript-format
-msgid "**Attribute**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
-msgstr "**属性**: ${ AttributeIcon[card.attribute] } ${ localizedAttribute }"
+msgid "**Attribute**: ${ attributeIcon } ${ localizedAttribute }"
+msgstr "**属性**: ${ attributeIcon } ${ localizedAttribute }"
 
-#: src\card.ts:495
+#: src\card.ts:497
 #, javascript-format
-msgid "**Rank**: ${ Icon.Rank } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
-msgstr "**ランク**: ${ Icon.Rank } ${ card.rank } **攻撃力**: ${ card.atk } **守備力**: ${ card.def }"
+msgid "**Rank**: ${ rankIcon } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
+msgstr "**ランク**: ${ rankIcon } ${ card.rank } **攻撃力**: ${ card.atk } **守備力**: ${ card.def }"
 
-#: src\card.ts:498
+#: src\card.ts:500
 #, javascript-format
 msgid "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link Arrows**: ${ arrows }"
 msgstr "**リンクの数字分**: ${ card.link_arrows.length } **攻撃力**: ${ card.atk } **リンクマーカー**: ${ arrows }"
 
-#: src\card.ts:500
-#: src\rush-duel.ts:96
+#: src\card.ts:503
+#: src\rush-duel.ts:107
 #, javascript-format
-msgid "**Level**: ${ Icon.Level } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
-msgstr "**レベル**: ${ Icon.Level } ${ card.level } **攻撃力**: ${ card.atk } **守備力**: ${ card.def }"
+msgid "**Level**: ${ levelIcon } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
+msgstr "**レベル**: ${ levelIcon } ${ card.level } **攻撃力**: ${ card.atk } **守備力**: ${ card.def }"
 
-#: src\card.ts:507
+#: src\card.ts:511
 #, javascript-format
 msgid "**Pendulum Scale**: ${ formattedScale }"
 msgstr "**ペンデュラムスケール**: ${ formattedScale }"
@@ -70,7 +70,7 @@ msgid "Password: ${ card.password } | Not yet released"
 msgstr "パスワード: ${ card.password } | 未発売"
 
 #: src\card.ts:351
-#: src\rush-duel.ts:146
+#: src\rush-duel.ts:158
 msgid "Not yet released"
 msgstr "未発売"
 
@@ -79,64 +79,64 @@ msgstr "未発売"
 msgid "Placeholder ID: ${ card.fake_password }"
 msgstr ""
 
-#: src\utils.ts:41
+#: src\utils.ts:44
 msgid "🛠️ This command is in development."
 msgstr "🛠️ このコマンドは作成中です。"
 
-#: src\utils.ts:42
+#: src\utils.ts:45
 msgid "📨 Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!"
 msgstr "📨 このボットへのご意見を[イシュートラッカー](https://github.com/DawnbrandBots/bastion-bot) か [ディスコードサーバ](https://discord.gg/4aFuPyuE96) に届けてもらえると嬉しいです！"
 
-#: src\utils.ts:53
+#: src\utils.ts:56
 msgid "Please consider supporting us!"
 msgstr "このボットの開発をサポートしてくれると嬉しいです！"
 
-#: src\utils.ts:54
+#: src\utils.ts:57
 msgid "Help keep Bastion online!"
 msgstr "Bastionが稼働し続けられるようにしましょう！"
 
-#: src\utils.ts:55
+#: src\utils.ts:58
 msgid "Please help keep Bastion online!"
 msgstr "Bastionが稼働し続けられるのはみなさんのおかけです！"
 
-#: src\utils.ts:56
+#: src\utils.ts:59
 msgid "Was Bastion helpful? Consider supporting us!"
 msgstr "Bastionがお好き？一緒に開発すればもっと好きになりますよ！"
 
-#: src\utils.ts:57
+#: src\utils.ts:60
 msgid "Was Bastion helpful? We need your support!"
 msgstr "Bastionがお好き？一緒に開発しませんか？"
 
-#: src\utils.ts:58
+#: src\utils.ts:61
 msgid "Did you find Bastion useful? Consider supporting us!"
 msgstr "Bastionがお役に立ちましたか？このボットの開発をサポートしてくれると嬉しいです！"
 
-#: src\utils.ts:59
+#: src\utils.ts:62
 msgid "Did you find Bastion useful? Help keep it online!"
 msgstr "Bastionがお役に立ちましたか？Bastionが稼働し続けられるようにしましょう！"
 
-#: src\utils.ts:60
+#: src\utils.ts:63
 msgid "Did you find Bastion useful? We need your support!"
 msgstr "Bastionがお役に立ちましたか？一緒に開発しませんか？"
 
-#: src\utils.ts:61
+#: src\utils.ts:64
 msgid "Enjoy Bastion? Help keep it online!"
 msgstr "Bastionがお好き？Bastionが稼働し続けられるようにしましょう！"
 
-#: src\utils.ts:62
+#: src\utils.ts:65
 msgid "Enjoy Bastion? Consider supporting us!"
 msgstr "Bastionがお好き？このボットの開発をサポートしてくれると嬉しいです！"
 
-#: src\utils.ts:63
+#: src\utils.ts:66
 msgid "Found what you were looking for? Consider supporting us!"
 msgstr "お探しの情報は見つかりましたか？このボットの開発をサポートしてくれると嬉しいです！"
 
 #: src\commands\art.ts:63
-#: src\commands\price.ts:131
-#: src\commands\rush-duel.ts:172
-#: src\commands\rush-duel.ts:203
+#: src\commands\price.ts:132
+#: src\commands\rush-duel.ts:171
+#: src\commands\rush-duel.ts:202
 #: src\commands\search.ts:64
-#: src\events\message-search.ts:258
+#: src\events\message-search.ts:265
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr "`${ input }`に一致するカードは見つかりませんでした！"
@@ -147,47 +147,47 @@ msgstr "`${ input }`に一致するカードは見つかりませんでした！
 msgid "Could not find art for `${ name }`!"
 msgstr "`${ name }`のカード画像は見つかりませんでした！"
 
-#: src\commands\deck.ts:244
+#: src\commands\deck.ts:205
 #, javascript-format
 msgid "${ counts.Monster } Monster"
 msgid_plural "${ counts.Monster } Monsters"
 msgstr[0] "モンスター ${ counts.Monster } 体"
 
-#: src\commands\deck.ts:247
+#: src\commands\deck.ts:208
 #, javascript-format
 msgid "${ counts.Spell } Spell"
 msgid_plural "${ counts.Spell } Spells"
 msgstr[0] "魔法 ${ counts.Spell } 枚"
 
-#: src\commands\deck.ts:250
+#: src\commands\deck.ts:211
 #, javascript-format
 msgid "${ counts.Trap } Trap"
 msgid_plural "${ counts.Trap } Traps"
 msgstr[0] "罠 ${ counts.Trap } 枚"
 
-#: src\commands\deck.ts:278
+#: src\commands\deck.ts:239
 msgid "Your Deck"
 msgstr "あなたのデッキ"
 
-#: src\commands\deck.ts:283
+#: src\commands\deck.ts:244
 #, javascript-format
 msgid "Main Deck (${ deck.main.length } card — ${ countDetail })"
 msgid_plural "Main Deck (${ deck.main.length } cards — ${ countDetail })"
 msgstr[0] "メインデッキ (${ deck.main.length } 枚 — ${ countDetail })"
 
-#: src\commands\deck.ts:290
+#: src\commands\deck.ts:251
 msgid "Main Deck (continued)"
 msgstr "メインデッキ（続き）"
 
-#: src\commands\deck.ts:304
+#: src\commands\deck.ts:265
 msgid "Extra Deck (continued)"
 msgstr "エクストラデッキ（続き）"
 
-#: src\commands\deck.ts:318
+#: src\commands\deck.ts:279
 msgid "Side Deck (continued)"
 msgstr "サイドデッキ（続き）"
 
-#: src\commands\deck.ts:407
+#: src\commands\deck.ts:347
 msgid "Error: Your deck is empty."
 msgstr "エラー: デッキが空です。"
 
@@ -207,11 +207,7 @@ msgstr "このサーバへの上書き言語設定: ${ guildOverride }"
 msgid "Discord Community locale for this server: ${ interaction.guildLocale }"
 msgstr "このサーバのディスコードコミュニティの言語設定: ${ interaction.guildLocale }"
 
-#: src\commands\locale.ts:89
-#, javascript-format
-msgid "Locale override for this direct message: ${ override }"
-msgstr "このダイレクトメッセージへの上書き言語設定: ${ override }"
-
+#: src\commands\locale-user.ts:76
 #: src\commands\locale.ts:92
 #, javascript-format
 msgid "Your Discord locale: ${ interaction.locale }"
@@ -249,24 +245,14 @@ msgstr "コミュニティサーバのサーバーでのデフォルト設定は
 msgid "Sorry, you must have the Manage Server permission to do this. If you think this is an error, contact your server admin or report a bug."
 msgstr "申し訳ありませんが、「サーバ管理」の権限が必要です。これがバグと考えられる場合は、サーバの管理者へ報告頂くか、バグ報告をして頂ければと思います。"
 
-#: src\commands\locale.ts:146
-#, javascript-format
-msgid "Locale for this direct message overridden with ${ locale }. Your Discord setting is ${ interaction.locale }."
-msgstr "このダイレクトメッセージの言語設定は ${ locale } にて上書きされました。あなたのディスコードの設定は ${ interaction.locale } です。"
-
-#: src\commands\locale.ts:150
-#, javascript-format
-msgid "Locale for this direct message reset to Discord default. Your Discord setting is ${ interaction.locale }."
-msgstr "このダイレクトメッセージの言語設定はあなたのディスコードのデフォルトへとリセットされました。あなたのディスコードの設定は ${ interaction.locale } です。"
-
-#: src\commands\ping.ts:36
-#: src\events\message-ping.ts:47
+#: src\commands\ping.ts:38
+#: src\events\message-ping.ts:45
 #, javascript-format
 msgid "Average WebSocket ping (new instance): ${ ping } ms"
 msgstr "平均 WebSocket ping（新インスタンス）: ${ ping } ms"
 
-#: src\commands\ping.ts:40
-#: src\events\message-ping.ts:112
+#: src\commands\ping.ts:42
+#: src\events\message-ping.ts:110
 #, javascript-format
 msgid "Total latency: ${ latency } ms"
 msgstr "総レイテンシー: ${ latency } ms"
@@ -276,86 +262,69 @@ msgstr "総レイテンシー: ${ latency } ms"
 msgid "Could not find a Yugipedia page named `${ page }`."
 msgstr "`${ page }` という名前のYugipediaのページが見つかりませんでした。"
 
-#: src\events\message-ping.ts:49
+#: src\events\message-ping.ts:47
 msgid "Free and open source _Yu-Gi-Oh!_ bot"
 msgstr "自由でオープンソースな _Yu-Gi-Oh!_ ボット"
 
-#: src\events\message-ping.ts:72
+#: src\events\message-ping.ts:70
 #, javascript-format
 msgid "Revision: ${ process.env.BOT_REVISION }."
 msgstr "リビジョン: ${ process.env.BOT_REVISION }."
 
-#: src\commands\deck.ts:328
+#: src\commands\deck.ts:289
 msgid ".ydk files must have the .ydk extension!"
 msgstr ".ydkファイルには.ydkの拡張子が必要です！"
 
-#: src\commands\deck.ts:331
+#: src\commands\deck.ts:292
 msgid ".ydk files should not be larger than 1 KB!"
 msgstr ".ydkファイルを 1 KB よりも大きくしないでください！"
 
-#: src\commands\deck.ts:321
+#: src\commands\deck.ts:282
 msgid "ydke URL"
 msgstr "ydkeのURL"
 
 #: src\card.ts:455
-#: src\rush-duel.ts:61
+#: src\rush-duel.ts:75
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 #, javascript-format
 msgid "**Limit**: ${ limitRegulationDisplay }"
 msgstr "**リミットレギュレーション**: ${ limitRegulationDisplay }"
 
-#: src\commands\price.ts:69
+#: src\commands\price.ts:70
 msgid "TCGPlayer"
 msgstr ""
 
-#: src\commands\price.ts:70
+#: src\commands\price.ts:71
 msgid "Cardmarket"
 msgstr ""
 
-#: src\commands\price.ts:147
+#: src\commands\price.ts:148
 msgid "No market price"
 msgstr "市場価格不明"
 
-#: src\commands\price.ts:155
+#: src\commands\price.ts:156
 #, javascript-format
 msgid "Prices for ${ card.name[resultLanguage] } - ${ vendorName }"
 msgstr "${ vendorName } の ${ card.name[resultLanguage] } の値段"
 
-#: src\commands\price.ts:169
+#: src\commands\price.ts:170
 #, javascript-format
 msgid "Could not find prices for `${ name }`!"
 msgstr "`${ name }` の値段を見つけられませんでした！"
 
-#: src\commands\deck.ts:425
-#. prepare interaction button for FTP upload
+#: src\commands\deck.ts:363
 msgid "Upload to YGOPRODECK"
 msgstr "YGOPRODECKにアップロード"
 
-#: src\commands\deck.ts:483
-#. disable original button
-#. prepare row to disable button on original message
-msgid "Upload Complete"
-msgstr "アップロード完了"
-
-#: src\commands\deck.ts:470
-msgid "Deck upload failed!"
-msgstr "デッキのアップロードに失敗しました！"
-
-#: src\commands\deck.ts:491
-#. reply in affirmation
-#, javascript-format
-msgid "Deck successfully uploaded to <${ url }>!"
-msgstr "<${ url }>にデッキのアップロードを完了しました！"
-
-#: src\events\message-search.ts:264
+#: src\events\message-search.ts:271
 msgid "💬 Translations missing?"
 msgstr "💬 翻訳が存在しませんか？"
 
-#: src\events\message-search.ts:265
+#: src\events\message-search.ts:272
 msgid "Help translate Bastion at the links above."
 msgstr "このボットの翻訳プロジェクトへは上のリンクから。"
 
-#: src\events\message-ping.ts:50
+#: src\events\message-ping.ts:48
 msgid ""
 "❓ Help documentation on [GitHub](https://github.com/DawnbrandBots/bastion-bot), or use `.commands` and `.help`.\n"
 "🟢 Licence: [GNU AGPL 3.0+](https://choosealicense.com/licenses/agpl-3.0/).\n"
@@ -383,37 +352,37 @@ msgstr ""
 "\n"
 "💬 翻訳がされていない場所がありますか? [GitHub](https://github.com/DawnbrandBots/bastion-bot)で翻訳を手伝ってくれると嬉しいです！"
 
-#: src\events\message-search.ts:256
-#: src\events\message-search.ts:294
+#: src\events\message-search.ts:263
+#: src\events\message-search.ts:302
 #, javascript-format
 msgid "Search type: ${ localisedType }"
 msgstr "検索タイプ: ${ localisedType }"
 
-#: src\events\message-search.ts:236
+#: src\events\message-search.ts:242
 #, javascript-format
 msgid "Search language: **${ localisedInputLanguage }** (${ inputLanguage }). Check defaults with </locale get:${ id }> and configure with </locale set:${ id }>"
 msgstr "検索言語: **${ localisedInputLanguage }** (${ inputLanguage })。</locale get:${ id }>で言語設定のデフォルトを確認し、</locale set:${ id }>で設定できます。"
 
-#: src\events\message-ping.ts:95
+#: src\events\message-ping.ts:93
 msgid "⚠️ You pinged me, but I am missing permissions in the channel!"
 msgstr "⚠️ Pingをもらいましたが、そのチャンネルにはこのボットに権限がありません！"
 
-#: src\events\message-ping.ts:98
-#: src\events\message-search.ts:332
+#: src\events\message-ping.ts:96
+#: src\events\message-search.ts:340
 msgid "Please have a server administrator [fix this](https://github.com/DawnbrandBots/bastion-bot#discord-permissions)."
 msgstr "サーバ管理者の方に[この問題](https://github.com/DawnbrandBots/bastion-bot#discord-permissions)の対応をお願いいたします。"
 
-#: src\events\message-search.ts:329
+#: src\events\message-search.ts:337
 msgid "⚠️ I am missing permissions in the channel!"
 msgstr "⚠️ そのチャンネルではこのボットに権限がありません！"
 
-#: src\commands\deck.ts:297
+#: src\commands\deck.ts:258
 #, javascript-format
 msgid "Extra Deck (${ deck.extra.length } card — ${ countDetail })"
 msgid_plural "Extra Deck (${ deck.extra.length } cards — ${ countDetail })"
 msgstr[0] "エクストラデッキ (${ deck.extra.length } 枚 — ${ countDetail })"
 
-#: src\commands\deck.ts:311
+#: src\commands\deck.ts:272
 #, javascript-format
 msgid "Side Deck (${ deck.side.length } card — ${ countDetail })"
 msgid_plural "Side Deck (${ deck.side.length } cards — ${ countDetail })"
@@ -434,48 +403,65 @@ msgstr "`${ searchTerm }`でYGOPRODECKを検索中に何かエラーが起こっ
 msgid "Something went wrong searching Yugipedia for `${ page }`."
 msgstr "`${ page }`でYugipediaを検索中に何かエラーが起こったようです。"
 
-#: src\rush-duel.ts:40
+#: src\rush-duel.ts:49
 #, javascript-format
 msgid "[Official Konami DB](${ official }) | [Rulings (Japanese)](${ rulings }) | [Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
 msgstr "[Konami公式カードDB](${ official }) | [公式裁定](${ rulings }) | [Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
 
-#: src\rush-duel.ts:43
+#: src\rush-duel.ts:52
 #, javascript-format
 msgid "[Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
 msgstr ""
 
-#: src\rush-duel.ts:57
+#: src\rush-duel.ts:71
 msgid "__**LEGEND**__"
 msgstr "__**レジェンド**__"
 
-#: src\rush-duel.ts:99
+#: src\rush-duel.ts:110
 #, javascript-format
 msgid "**MAXIMUM ATK**: ${ card.maximum_atk }"
 msgstr ""
 
-#: src\rush-duel.ts:146
+#: src\rush-duel.ts:158
 #, javascript-format
 msgid "Konami ID #${ card.konami_id }"
 msgstr ""
 
 #: src\art.ts:129
-#: src\commands\deck.ts:451
 msgid "Buttons can only be used by the user who called Bastion."
 msgstr "ボタンはBastionにコマンドを送ったユーザーのみに有効です。"
 
 #: src\card.ts:462
 #, javascript-format
-msgid "**Master Duel rarity**: ${ rarity_icon } ${ localized_rarity }"
-msgstr "**マスターデュエルレアリティ**: ${ rarity_icon } ${ localized_rarity }"
+msgid "**Master Duel rarity**: ${ rarityIcon } ${ localizedRarity }"
+msgstr "**マスターデュエルレアリティ**: ${ rarityIcon } ${ localizedRarity }"
 
-#: src\rush-duel.ts:205
+#: src\rush-duel.ts:217
 #, javascript-format
 msgid "Using ${ searchTrigger }, you can search for Rush Duel cards directly in messages without autocomplete"
 msgstr ""
 
-#: src\events\message-search.ts:296
+#: src\events\message-search.ts:304
 #, javascript-format
 msgid "Could not find a Rush Duel card matching `${ input }`!"
+msgstr ""
+
+#: src\commands\locale-user.ts:73
+#: src\commands\locale.ts:89
+#, javascript-format
+msgid "Locale override for your direct messages: ${ override }"
+msgstr ""
+
+#: src\commands\locale-user.ts:83
+#: src\commands\locale.ts:146
+#, javascript-format
+msgid "Locale for your direct messages overridden with ${ locale }. Your Discord setting is ${ interaction.locale }."
+msgstr ""
+
+#: src\commands\locale-user.ts:87
+#: src\commands\locale.ts:150
+#, javascript-format
+msgid "Locale for your direct messages reset to Discord default. Your Discord setting is ${ interaction.locale }."
 msgstr ""
 
 #: src\card.ts:40
@@ -842,65 +828,65 @@ msgctxt "master-duel-rarity"
 msgid "Ultra Rare (UR)"
 msgstr "ウルトラレア（ＵＲ）"
 
-#: src\card.ts:513
-#: src\card.ts:524
-#: src\rush-duel.ts:127
+#: src\card.ts:517
+#: src\card.ts:528
+#: src\rush-duel.ts:138
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "カードテキスト"
 
-#: src\card.ts:518
+#: src\card.ts:522
 msgctxt "card-embed"
 msgid "Pendulum Effect"
 msgstr "ペンデュラム効果"
 
-#: src\card.ts:539
+#: src\card.ts:545
 msgctxt "card-embed"
 msgid "Card Effect"
 msgstr "カード効果"
 
-#: src\rush-duel.ts:118
-#: src\rush-duel.ts:139
+#: src\rush-duel.ts:129
+#: src\rush-duel.ts:151
 msgctxt "card-embed"
 msgid "[REQUIREMENT]"
 msgstr "【条件】"
 
-#: src\rush-duel.ts:119
-#: src\rush-duel.ts:140
+#: src\rush-duel.ts:130
+#: src\rush-duel.ts:152
 msgctxt "card-embed"
 msgid "[EFFECT]"
 msgstr "【効果】"
 
-#: src\rush-duel.ts:121
+#: src\rush-duel.ts:132
 msgctxt "card-embed"
 msgid "[CONTINUOUS EFFECT]"
 msgstr "【永続効果】"
 
-#: src\rush-duel.ts:123
+#: src\rush-duel.ts:134
 msgctxt "card-embed"
 msgid "[MULTI-CHOICE EFFECT]"
 msgstr "【選択効果】"
 
-#: src\locale.ts:71
+#: src\locale.ts:74
 msgctxt "command-option"
 msgid "result-language"
 msgstr "出力用言語"
 
-#: src\locale.ts:131
+#: src\locale.ts:140
 msgctxt "command-option"
 msgid "input-language"
 msgstr "入力用言語"
 
-#: src\commands\rush-duel.ts:68
-#: src\commands\rush-duel.ts:80
-#: src\locale.ts:147
-#: src\locale.ts:165
-#: src\locale.ts:181
+#: src\commands\rush-duel.ts:67
+#: src\commands\rush-duel.ts:79
+#: src\locale.ts:156
+#: src\locale.ts:174
+#: src\locale.ts:190
 msgctxt "command-option"
 msgid "input"
 msgstr "入力"
 
-#: src\commands\help.ts:52
+#: src\commands\help.ts:55
 msgctxt "command-option"
 msgid "command"
 msgstr "コマンド"
@@ -915,54 +901,56 @@ msgctxt "command-option"
 msgid "page"
 msgstr "ページ"
 
-#: src\commands\deck.ts:126
+#: src\commands\deck.ts:87
 msgctxt "command-option"
 msgid "url"
 msgstr ""
 
-#: src\commands\deck.ts:132
+#: src\commands\deck.ts:93
 msgctxt "command-option"
 msgid "file"
 msgstr "ファイル"
 
-#: src\commands\deck.ts:138
-#: src\commands\deck.ts:144
+#: src\commands\deck.ts:99
+#: src\commands\deck.ts:105
 msgctxt "command-option"
 msgid "deck"
 msgstr "デッキ"
 
-#: src\commands\deck.ts:150
+#: src\commands\deck.ts:111
 msgctxt "command-option"
 msgid "public"
 msgstr "チャンネルに公開"
 
-#: src\commands\deck.ts:157
+#: src\commands\deck.ts:118
 msgctxt "command-option"
 msgid "stacked"
 msgstr "一行表示"
 
-#: src\locale.ts:142
+#: src\locale.ts:151
 msgctxt "command-option"
 msgid "name"
 msgstr "カード名"
 
-#: src\locale.ts:160
+#: src\locale.ts:169
 msgctxt "command-option"
 msgid "password"
 msgstr "パスワード"
 
-#: src\commands\rush-duel.ts:73
-#: src\events\message-search.ts:293
-#: src\locale.ts:176
+#: src\commands\rush-duel.ts:72
+#: src\events\message-search.ts:301
+#: src\locale.ts:185
 msgctxt "command-option"
 msgid "konami-id"
 msgstr "コナミid"
 
+#: src\commands\locale-user.ts:36
 #: src\commands\locale.ts:30
 msgctxt "command-option"
 msgid "get"
 msgstr "確認する"
 
+#: src\commands\locale-user.ts:41
 #: src\commands\locale.ts:35
 msgctxt "command-option"
 msgid "set"
@@ -973,47 +961,69 @@ msgctxt "command-option"
 msgid "scope"
 msgstr "適用範囲"
 
+#: src\commands\locale-user.ts:46
 #: src\commands\locale.ts:48
 msgctxt "command-option"
 msgid "locale"
 msgstr "使用言語"
 
-#: src\commands\price.ts:94
+#: src\commands\price.ts:95
 msgctxt "command-option"
 msgid "vendor"
 msgstr "販売店"
 
-#: src\commands\rush-duel.ts:63
+#: src\commands\rush-duel.ts:62
 msgctxt "command-option"
 msgid "search"
 msgstr "検索"
 
-#: src\commands\rush-duel.ts:85
+#: src\commands\rush-duel.ts:84
 msgctxt "command-option"
 msgid "random"
 msgstr "おみくじ"
 
-#: src\commands\rush-duel.ts:90
+#: src\commands\rush-duel.ts:89
 msgctxt "command-option"
 msgid "art"
 msgstr "イラスト"
 
-#: src\commands\query.ts:36
+#: src\commands\query.ts:35
 msgctxt "command-option"
 msgid "lucene"
 msgstr ""
 
-#: src\locale.ts:74
+#: src\commands\metagame.ts:209
+msgctxt "command-option"
+msgid "strategies"
+msgstr ""
+
+#: src\commands\metagame.ts:234
+#: src\commands\metagame.ts:274
+msgctxt "command-option"
+msgid "format"
+msgstr ""
+
+#: src\commands\metagame.ts:240
+msgctxt "command-option"
+msgid "cards"
+msgstr ""
+
+#: src\commands\metagame.ts:310
+msgctxt "command-option"
+msgid "date-range"
+msgstr ""
+
+#: src\locale.ts:77
 msgctxt "command-option-description"
 msgid "The output language for the card embed, overriding other settings."
 msgstr "カード情報の表示言語を設定します。デフォルトの設定より優先されます。"
 
-#: src\locale.ts:132
+#: src\locale.ts:141
 msgctxt "command-option-description"
 msgid "The language to search in, defaulting to the result language."
 msgstr "検索ワードが何語かを指定できます。デフォルトの設定は出力言語と同じです。"
 
-#: src\commands\help.ts:55
+#: src\commands\help.ts:58
 msgctxt "command-option-description"
 msgid "The name of a specific Slash Command."
 msgstr "使い方を表示したいスラッシュコマンドの名前"
@@ -1023,32 +1033,32 @@ msgctxt "command-option-description"
 msgid "The name of the Yugipedia page you want to search for."
 msgstr "検索したいYugipediaのページの名前"
 
-#: src\commands\deck.ts:129
+#: src\commands\deck.ts:90
 msgctxt "command-option-description"
 msgid "View a deck by entering a ydke:// URL."
 msgstr "ydke://形式のURLを入力すると、そのデッキ内容を表示します。"
 
-#: src\commands\deck.ts:135
+#: src\commands\deck.ts:96
 msgctxt "command-option-description"
 msgid "View a deck by uploading a .ydk file."
 msgstr ".ydk形式のファイルをアップロードすると、そのデッキ内容を表示します。"
 
-#: src\commands\deck.ts:141
+#: src\commands\deck.ts:102
 msgctxt "command-option-description"
 msgid "The ydke:// URL of the deck you want to view."
 msgstr "デッキ内容を表示したいydke://形式のURL"
 
-#: src\commands\deck.ts:147
+#: src\commands\deck.ts:108
 msgctxt "command-option-description"
 msgid "The .ydk file of the deck you want to view."
 msgstr "デッキ内容を表示したい.ydk形式のファイル"
 
-#: src\commands\deck.ts:153
+#: src\commands\deck.ts:114
 msgctxt "command-option-description"
 msgid "Whether to display the deck details publicly in chat. This is false by default."
 msgstr "デッキ内容を自分以外の人にも見せるか否かを設定できます。デフォルトでは他の人には非表示になっています。"
 
-#: src\commands\deck.ts:160
+#: src\commands\deck.ts:121
 msgctxt "command-option-description"
 msgid "Whether to display the deck sections as one stacked column. This is false (side-by-side) by default."
 msgstr "デッキ内容を一行で表示するか否かを設定できます。デフォルトでは左右の二行に分けて表示します。"
@@ -1058,8 +1068,8 @@ msgctxt "command-option-description"
 msgid "Display the art for the card with this name."
 msgstr "この名称のカードのイラストを表示します"
 
-#: src\commands\rush-duel.ts:69
-#: src\locale.ts:148
+#: src\commands\rush-duel.ts:68
+#: src\locale.ts:157
 msgctxt "command-option-description"
 msgid "Card name, fuzzy matching supported."
 msgstr "カード名（あいまい検索に対応しています）"
@@ -1069,7 +1079,7 @@ msgctxt "command-option-description"
 msgid "Display the art for the card with this password."
 msgstr "このパスワードのカードのイラストを表示します"
 
-#: src\locale.ts:167
+#: src\locale.ts:176
 msgctxt "command-option-description"
 msgid "Card password, the eight-digit number printed on the bottom left corner."
 msgstr "カードパスワード（カード左下の8桁の数字）"
@@ -1079,8 +1089,8 @@ msgctxt "command-option-description"
 msgid "Display the art for the card with this official database ID."
 msgstr "このパスワードのカードのイラストを表示します"
 
-#: src\commands\rush-duel.ts:81
-#: src\locale.ts:182
+#: src\commands\rush-duel.ts:80
+#: src\locale.ts:191
 msgctxt "command-option-description"
 msgid "Konami's official card database identifier."
 msgstr "Konami公式カードDBでのカードID"
@@ -1120,22 +1130,22 @@ msgctxt "command-option-description"
 msgid "The new default language to use in this channel or server."
 msgstr "このチャンネルあるいはサーバ全体で使う新しい言語設定"
 
-#: src\commands\price.ts:98
+#: src\commands\price.ts:99
 msgctxt "command-option-description"
 msgid "Display the price for the card with this name."
 msgstr "この名称のカードの価格を表示します"
 
-#: src\commands\price.ts:102
+#: src\commands\price.ts:103
 msgctxt "command-option-description"
 msgid "Display the price for the card with this password."
 msgstr "このパスワードのカードの価格を表示します"
 
-#: src\commands\price.ts:105
+#: src\commands\price.ts:106
 msgctxt "command-option-description"
 msgid "Display the price for the card with this official database ID."
 msgstr "この公式カードDBのIDを持つカードの価格を表示します"
 
-#: src\commands\price.ts:95
+#: src\commands\price.ts:96
 msgctxt "command-option-description"
 msgid "The vendor to fetch the price data from."
 msgstr "価格情報の参照先"
@@ -1145,29 +1155,70 @@ msgctxt "command-option-description"
 msgid "The English name of the card you're looking for."
 msgstr "カード名称の英語名"
 
-#: src\commands\rush-duel.ts:64
+#: src\commands\rush-duel.ts:63
 msgctxt "command-option-description"
 msgid "Find all information for the Rush Duel card with this name."
 msgstr "この名称のラッシュデュエルカードの情報を表示します"
 
-#: src\commands\rush-duel.ts:75
+#: src\commands\rush-duel.ts:74
 msgctxt "command-option-description"
 msgid "Find all information for the Rush Duel card with this official database ID."
 msgstr "この公式カードDBのIDを持つラッシュデュエルカードの情報を表示します"
 
-#: src\commands\rush-duel.ts:86
+#: src\commands\rush-duel.ts:85
 msgctxt "command-option-description"
 msgid "Get a random Rush Duel card."
 msgstr "ラッシュデュエル用カードのおみくじ"
 
-#: src\commands\rush-duel.ts:91
+#: src\commands\rush-duel.ts:90
 msgctxt "command-option-description"
 msgid "Display just the art for the Rush Duel card with this name."
 msgstr "ラッシュデュエル用カードのイラストを表示します"
 
-#: src\commands\query.ts:37
+#: src\commands\query.ts:36
 msgctxt "command-option-description"
 msgid "Lucene query on YAML Yugi"
+msgstr ""
+
+#: src\commands\locale-user.ts:37
+msgctxt "command-option-description"
+msgid "Check your user-installed Bastion's locale."
+msgstr ""
+
+#: src\commands\locale-user.ts:42
+msgctxt "command-option-description"
+msgid "Configure your user-installed Bastion's locale."
+msgstr ""
+
+#: src\commands\locale-user.ts:47
+msgctxt "command-option-description"
+msgid "The new default language to use for user-installed Bastion."
+msgstr ""
+
+#: src\commands\metagame.ts:212
+msgctxt "command-option-description"
+msgid "Show the top competitive strategies in tournaments and the Master Duel ranked ladder."
+msgstr ""
+
+#: src\commands\metagame.ts:214
+msgctxt "command-option-description"
+msgid "Show the top competitive strategies in tournaments."
+msgstr ""
+
+#: src\commands\metagame.ts:235
+#: src\commands\metagame.ts:275
+msgctxt "command-option-description"
+msgid "Game region."
+msgstr ""
+
+#: src\commands\metagame.ts:242
+msgctxt "command-option-description"
+msgid "Show the most popular cards in tournaments and the Master Duel ranked ladder."
+msgstr ""
+
+#: src\commands\metagame.ts:312
+msgctxt "command-option-description"
+msgid "Limit card usage statistics to this date range. Has no effect for Master Duel."
 msgstr ""
 
 #: src\commands\art.ts:36
@@ -1175,12 +1226,12 @@ msgctxt "command-name"
 msgid "art"
 msgstr "いらすと"
 
-#: src\commands\help.ts:49
+#: src\commands\help.ts:52
 msgctxt "command-name"
 msgid "help"
 msgstr "つかいかた"
 
-#: src\commands\ping.ts:23
+#: src\commands\ping.ts:25
 msgctxt "command-name"
 msgid "ping"
 msgstr ""
@@ -1195,7 +1246,7 @@ msgctxt "command-name"
 msgid "yugipedia"
 msgstr ""
 
-#: src\commands\deck.ts:119
+#: src\commands\deck.ts:80
 msgctxt "command-name"
 msgid "deck"
 msgstr "でっき"
@@ -1210,24 +1261,34 @@ msgctxt "command-name"
 msgid "locale"
 msgstr "げんごせってい"
 
-#: src\commands\random.ts:44
+#: src\commands\random.ts:43
 msgctxt "command-name"
 msgid "random"
 msgstr "おみくじ"
 
-#: src\commands\price.ts:89
+#: src\commands\price.ts:90
 msgctxt "command-name"
 msgid "price"
 msgstr "かかく"
 
-#: src\commands\rush-duel.ts:58
+#: src\commands\rush-duel.ts:57
 msgctxt "command-name"
 msgid "rush-duel"
 msgstr "らっしゅ"
 
-#: src\commands\query.ts:30
+#: src\commands\query.ts:29
 msgctxt "command-name"
 msgid "query"
+msgstr ""
+
+#: src\commands\locale-user.ts:31
+msgctxt "command-name"
+msgid "locale-user"
+msgstr ""
+
+#: src\commands\metagame.ts:204
+msgctxt "command-name"
+msgid "metagame"
 msgstr ""
 
 #: src\commands\art.ts:37
@@ -1235,12 +1296,12 @@ msgctxt "command-description"
 msgid "Display the art for a card!"
 msgstr "カードの画像（イラスト）を表示します。"
 
-#: src\commands\help.ts:50
+#: src\commands\help.ts:53
 msgctxt "command-description"
 msgid "Get help with a Slash Command."
 msgstr "コマンドの使い方を表示します。"
 
-#: src\commands\ping.ts:24
+#: src\commands\ping.ts:26
 msgctxt "command-description"
 msgid "Test latency to the new bot instance."
 msgstr "ボットが落ちていないかを確認できます（pingの反応を表示します。）"
@@ -1255,7 +1316,7 @@ msgctxt "command-description"
 msgid "Search the Yugipedia wiki for a page and link to it."
 msgstr "Yugipediaを検索します。"
 
-#: src\commands\deck.ts:122
+#: src\commands\deck.ts:83
 msgctxt "command-description"
 msgid "Display a deck list from ydke:// or .ydk format, exported from a number of deck building programs."
 msgstr "ydke:// か .ydk 形式のデッキ情報を表示します。（多くのデッキ構築アプリで使われている形式です。）"
@@ -1270,24 +1331,34 @@ msgctxt "command-description"
 msgid "Check or set Bastion's locale for this channel or server."
 msgstr "このチャンネル（あるいはサーバー）のBastionのロケールを確認（あるいは変更）します。"
 
-#: src\commands\random.ts:45
+#: src\commands\random.ts:44
 msgctxt "command-description"
 msgid "Get a random Yu-Gi-Oh! card."
 msgstr "遊戯王カードをランダムに表示します。"
 
-#: src\commands\price.ts:90
+#: src\commands\price.ts:91
 msgctxt "command-description"
 msgid "Display the price for a card!"
 msgstr "カードの値段を表示します！"
 
-#: src\commands\rush-duel.ts:59
+#: src\commands\rush-duel.ts:58
 msgctxt "command-description"
 msgid "Find information on Rush Duel cards."
 msgstr "ラッシュデュエルのカード情報を探します。"
 
-#: src\commands\query.ts:31
+#: src\commands\query.ts:30
 msgctxt "command-description"
 msgid "Advanced search prototype"
+msgstr ""
+
+#: src\commands\locale-user.ts:32
+msgctxt "command-description"
+msgid "Check or set user-installed Bastion's locale."
+msgstr ""
+
+#: src\commands\metagame.ts:205
+msgctxt "command-description"
+msgid "Show statistics on the current competitive state of play."
 msgstr ""
 
 #: src\commands\locale.ts:43
@@ -1300,7 +1371,71 @@ msgctxt "command-option-choice"
 msgid "server"
 msgstr "サーバー"
 
+#: src\commands\locale-user.ts:49
 #: src\commands\locale.ts:51
 msgctxt "command-option-choice"
 msgid "Discord default"
 msgstr "ディスコードのデフォルト"
+
+#: src\commands\metagame.ts:219
+#: src\commands\metagame.ts:251
+msgctxt "command-option-choice"
+msgid "TCG"
+msgstr ""
+
+#: src\commands\metagame.ts:220
+#: src\commands\metagame.ts:255
+msgctxt "command-option-choice"
+msgid "OCG"
+msgstr ""
+
+#: src\commands\metagame.ts:221
+#: src\commands\metagame.ts:259
+msgctxt "command-option-choice"
+msgid "OCG (Asian-English)"
+msgstr ""
+
+#: src\commands\metagame.ts:228
+msgctxt "command-option-choice"
+msgid "Master Duel Diamond+ tier list"
+msgstr ""
+
+#: src\commands\metagame.ts:261
+msgctxt "command-option-choice"
+msgid "Master Duel ranked ladder"
+msgstr ""
+
+#: src\commands\metagame.ts:283
+msgctxt "command-option-choice"
+msgid "Current format"
+msgstr ""
+
+#: src\commands\metagame.ts:287
+msgctxt "command-option-choice"
+msgid "Since last Forbidden/Limited List"
+msgstr ""
+
+#: src\commands\metagame.ts:291
+msgctxt "command-option-choice"
+msgid "Last 7 days"
+msgstr ""
+
+#: src\commands\metagame.ts:295
+msgctxt "command-option-choice"
+msgid "Last 14 days"
+msgstr ""
+
+#: src\commands\metagame.ts:299
+msgctxt "command-option-choice"
+msgid "Last 30 days"
+msgstr ""
+
+#: src\commands\metagame.ts:303
+msgctxt "command-option-choice"
+msgid "Last three months"
+msgstr ""
+
+#: src\commands\metagame.ts:307
+msgctxt "command-option-choice"
+msgid "Last six months"
+msgstr ""

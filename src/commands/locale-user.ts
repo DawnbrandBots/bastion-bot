@@ -67,10 +67,10 @@ export class LocaleUserCommand extends Command {
 		let content = "";
 		if (interaction.options.getSubcommand() === "get") {
 			const effectiveLocale = await this.#locales.get(interaction);
-			const override = await this.#locales.channel(interaction.channelId);
+			const override = await this.#locales.user(interaction.user.id);
 			useLocale(effectiveLocale);
 			if (override) {
-				content += t`Locale override for this direct message: ${override}`;
+				content += t`Locale override for your direct messages: ${override}`;
 				content += "\n";
 			}
 			content += t`Your Discord locale: ${interaction.locale}`;
@@ -78,13 +78,13 @@ export class LocaleUserCommand extends Command {
 			// subcommand set
 			const locale = interaction.options.getString("locale", true) as Locale | "default";
 			if (locale !== "default") {
-				await this.#locales.setForChannel(interaction.channelId, locale);
+				await this.#locales.setForUser(interaction.user.id, locale);
 				await this.useLocaleAfterWrite(interaction);
-				content = t`Locale for this direct message overridden with ${locale}. Your Discord setting is ${interaction.locale}.`;
+				content = t`Locale for your direct messages overridden with ${locale}. Your Discord setting is ${interaction.locale}.`;
 			} else {
-				await this.#locales.setForChannel(interaction.channelId, null);
+				await this.#locales.setForUser(interaction.user.id, null);
 				await this.useLocaleAfterWrite(interaction);
-				content = t`Locale for this direct message reset to Discord default. Your Discord setting is ${interaction.locale}.`;
+				content = t`Locale for your direct messages reset to Discord default. Your Discord setting is ${interaction.locale}.`;
 			}
 		}
 		const reply = await interaction.reply({ content, fetchReply: true });

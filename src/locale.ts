@@ -201,8 +201,10 @@ export function getKonamiIdSubcommand(getLocalisedDescription: () => string): Sl
 export abstract class LocaleProvider {
 	abstract guild(id: Snowflake): Promise<Locale | null>;
 	abstract channel(id: Snowflake): Promise<Locale | null>;
+	abstract user(id: Snowflake): Promise<Locale | null>;
 	abstract setForGuild(id: Snowflake, set: Locale | null): Promise<void>;
 	abstract setForChannel(id: Snowflake, set: Locale | null): Promise<void>;
+	abstract setForUser(id: Snowflake, set: Locale | null): Promise<void>;
 
 	/**
 	 * channel.parentId may refer to a category or a text channel. Return the parent text channel
@@ -223,7 +225,10 @@ export abstract class LocaleProvider {
 			// getResultLangStringOption if it has a lang option to a command.
 			return lang as Locale;
 		}
-		if (interaction.inGuild()) {
+		if (
+			interaction.inGuild() &&
+			ApplicationIntegrationType.GuildInstall in interaction.authorizingIntegrationOwners
+		) {
 			// Channel settings override server-wide settings override Discord-reported
 			// server locale. Threads are treated as an extension of their parent channel.
 			return (
@@ -232,9 +237,10 @@ export abstract class LocaleProvider {
 				this.filter(interaction.guildLocale)
 			);
 		} else {
-			// In direct messages, it is safe to use the user's Discord-reported locale
-			// without breaching privacy. Further support configuring the locale in the DM.
-			return (await this.channel(interaction.channelId)) ?? this.filter(interaction.locale);
+			// In direct messages, including group chats, and the user-installed version being
+			// invoked from a server, use the user's locale reported by Discord, which may be
+			// further configured for this bot specificcaly.
+			return (await this.user(interaction.user.id)) ?? this.filter(interaction.locale);
 		}
 	}
 
@@ -248,8 +254,8 @@ export abstract class LocaleProvider {
 				this.filter(context.guild.preferredLocale)
 			);
 		} else {
-			// Cannot retrieve the user's locale from a direct message.
-			return (await this.channel(context.channelId)) ?? "en";
+			// User locale is only provided for interactions, not messages.
+			return (await this.user(context.author.id)) ?? "en";
 		}
 	}
 
@@ -279,70 +285,82 @@ export abstract class LocaleProvider {
 }
 
 type SQLiteLocaleRow = { locale: Locale };
+class LocaleScope {
+	private readonly read: Statement<Snowflake, SQLiteLocaleRow>;
+	private readonly write: Statement<[Snowflake, Locale]>;
+	private readonly delete: Statement<Snowflake>;
+	constructor(
+		private readonly db: Database,
+		public readonly table: string
+	) {
+		db.exec(`
+CREATE TABLE IF NOT EXISTS "${table}" (
+	"id"	INTEGER NOT NULL,
+	"locale"	TEXT NOT NULL,
+	PRIMARY KEY("id")
+);`);
+		this.read = this.db.prepare(`SELECT locale FROM "${table}" WHERE id = ?`);
+		this.write = this.db.prepare(`REPLACE INTO "${table}" VALUES(?,?)`);
+		this.delete = this.db.prepare(`DELETE FROM "${table}" WHERE id = ?`);
+	}
+
+	public get(id: Snowflake): Locale | null {
+		return this.read.get(id)?.locale || null;
+	}
+
+	public set(id: Snowflake, set: Locale): void {
+		if (set !== null) {
+			this.write.run(id, set);
+		} else {
+			this.delete.run(id);
+		}
+	}
+}
+
+const TABLES = ["guilds", "channels", "users"] as const;
 /**
  * Implementation in two SQLite tables in the same database. With sufficient
  * scale, this would need to be periodically cleaned as guilds and channels are
  * removed, especially with threads, if they are also stored here.
  */
 @singleton()
-export class SQLiteLocaleProvider extends LocaleProvider {
+export class SQLiteLocaleProvider extends LocaleProvider implements Record<ArrayElement<typeof TABLES>, LocaleScope> {
 	private readonly db: Database;
-	private readonly readGuild: Statement;
-	private readonly writeGuild: Statement;
-	private readonly deleteGuild: Statement;
-	private readonly readChannel: Statement;
-	private readonly writeChannel: Statement;
-	private readonly deleteChannel: Statement;
+	// Ideally we would not need to redeclare these here with an assertion
+	readonly guilds!: LocaleScope;
+	readonly channels!: LocaleScope;
+	readonly users!: LocaleScope;
 	constructor(@inject("localeDb") file: string) {
 		super();
-		this.db = this.getDB(file);
-		this.readGuild = this.db.prepare("SELECT locale FROM guilds WHERE id = ?");
-		this.writeGuild = this.db.prepare("REPLACE INTO guilds VALUES(?,?)");
-		this.deleteGuild = this.db.prepare("DELETE FROM guilds WHERE id = ?");
-		this.readChannel = this.db.prepare("SELECT locale FROM channels WHERE id = ?");
-		this.writeChannel = this.db.prepare("REPLACE INTO channels VALUES(?,?)");
-		this.deleteChannel = this.db.prepare("DELETE FROM channels WHERE id = ?");
-	}
-
-	private getDB(file: string): Database {
-		const db = sqlite(file);
-		db.pragma("journal_mode = WAL");
-		db.exec(`
-CREATE TABLE IF NOT EXISTS "guilds" (
-	"id"	INTEGER NOT NULL,
-	"locale"	TEXT NOT NULL,
-	PRIMARY KEY("id")
-);
-CREATE TABLE IF NOT EXISTS "channels" (
-	"id"	INTEGER NOT NULL,
-	"locale"	TEXT NOT NULL,
-	PRIMARY KEY("id")
-);`);
-		return db;
+		this.db = sqlite(file);
+		this.db.pragma("journal_mode = WAL");
+		for (const scope of TABLES) {
+			this[scope] = new LocaleScope(this.db, scope);
+		}
 	}
 
 	public async guild(id: Snowflake): Promise<Locale | null> {
-		return (this.readGuild.get(id) as SQLiteLocaleRow)?.locale || null;
+		return this.guilds.get(id);
 	}
 
 	public async channel(id: Snowflake): Promise<Locale | null> {
-		return (this.readChannel.get(id) as SQLiteLocaleRow)?.locale || null;
+		return this.channels.get(id);
+	}
+
+	public async user(id: Snowflake): Promise<Locale | null> {
+		return this.users.get(id);
 	}
 
 	public async setForGuild(id: Snowflake, set: Locale): Promise<void> {
-		if (set !== null) {
-			this.writeGuild.run(id, set);
-		} else {
-			this.deleteGuild.run(id);
-		}
+		this.guilds.set(id, set);
 	}
 
 	public async setForChannel(id: Snowflake, set: Locale): Promise<void> {
-		if (set !== null) {
-			this.writeChannel.run(id, set);
-		} else {
-			this.deleteChannel.run(id);
-		}
+		this.channels.set(id, set);
+	}
+
+	public async setForUser(id: Snowflake, set: Locale): Promise<void> {
+		this.users.set(id, set);
 	}
 
 	public destroy(): void {
