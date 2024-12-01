@@ -69,7 +69,12 @@
 		"koa-body": "link:./test/package-stub",
 		"open": "link:./test/package-stub",
 		"semver": "^7.6.3",
-		"svelte": "link:./test/package-stub"
+		"svelte": "link:./test/package-stub",
+		"function-bind": "npm:@nolyfill/function-bind@^1",
+		"hasown": "npm:@nolyfill/hasown@^1",
+		"is-core-module": "npm:@nolyfill/is-core-module@^1",
+		"safe-buffer": "npm:@nolyfill/safe-buffer@^1",
+		"safer-buffer": "npm:@nolyfill/safer-buffer@^1"
 	},
 	"jest": {
 		"clearMocks": true,
