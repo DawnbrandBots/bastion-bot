@@ -23,8 +23,8 @@
 		"yarn": "1.22.x"
 	},
 	"dependencies": {
-		"@sinclair/typebox": "^0.34.8",
-		"better-sqlite3": "^11.5.0",
+		"@sinclair/typebox": "^0.34.9",
+		"better-sqlite3": "^11.6.0",
 		"debug": "^4.3.7",
 		"discord-markdown": "2.5.1",
 		"discord.js": "~14.16.3",
