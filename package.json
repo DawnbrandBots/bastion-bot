@@ -63,6 +63,9 @@
 		"@types/node": "^20.16.10",
 		"discord-api-types": "^0.37.100",
 		"http2-wrapper": "^2.2.1",
+		"koa": "link:./node_modules/.NULL",
+		"koa-router": "link:./node_modules/.NULL",
+		"koa-body": "link:./node_modules/.NULL",
 		"semver": "^7.6.3"
 	},
 	"jest": {
