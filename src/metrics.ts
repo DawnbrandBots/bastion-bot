@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS "searches2" (
 			interaction.id,
 			interaction.guildId,
 			interaction.channelId,
-			interaction.channel?.type,
+			interaction.channel?.type ?? -1,
 			interaction.user.id,
 			interaction.context,
 			JSON.stringify(interaction.authorizingIntegrationOwners),
