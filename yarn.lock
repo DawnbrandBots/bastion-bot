@@ -4815,10 +4815,10 @@ tsyringe@^4.8.0:
   dependencies:
     tslib "^1.9.3"
 
-ttag-cli@^1.10.12:
-  version "1.10.12"
-  resolved "https://registry.yarnpkg.com/ttag-cli/-/ttag-cli-1.10.12.tgz#559fc1bb09bcd1b2350f91e54b7605b42a02239e"
-  integrity sha512-BXDbncFRz84+ejUf2Mu4AeVuNDFDguQAaLIr7nGwWThKvkOoe3jE7C4rRpi5eynL7HSUMaIGys6w1pkYYPm5PQ==
+ttag-cli@^1.10.14:
+  version "1.10.14"
+  resolved "https://registry.yarnpkg.com/ttag-cli/-/ttag-cli-1.10.14.tgz#c25e6f56f17bd22c5d1ca3ea08ba3f7d99be356d"
+  integrity sha512-J7WgxtHuH2ko5xj0/qBsiWXDe5xjniikT2yaMeJhfv+I7Vd5YKzIPjMOGDL58Dp6eZI7Db+4Tfzga5bUHLSeUQ==
   dependencies:
     "@babel/core" "^7.12.3"
     "@babel/generator" "^7.12.5"
