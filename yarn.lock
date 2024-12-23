@@ -2510,10 +2510,10 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-discord-api-types@0.37.100, discord-api-types@0.37.106, discord-api-types@0.37.83, discord-api-types@0.37.97:
-  version "0.37.106"
-  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.37.106.tgz#cdb863f29a6b7cf8bc5c7d807a7b8baafcc4adf3"
-  integrity sha512-yuBujntynx44/OFCeT2oPhjXakvvav8ugUXBFaTDt2vgSa7l04TenEV2b8HleoDZdKHjtBxwaP8nAQbIcPhuOQ==
+discord-api-types@0.37.100, discord-api-types@0.37.83, discord-api-types@0.37.97, discord-api-types@^0.37.114:
+  version "0.37.114"
+  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.37.114.tgz#50ad3d436e0c80a93fcc59a6eb140eb0a8673b19"
+  integrity sha512-9b9oOpktWSmE6ooToc46wfw151SHC/+idmnZvtwpEzW85BijUspQxj4W2uOmo+nZVTdEyb3fku58k+4rHKpdSQ==
 
 discord-markdown@2.5.1:
   version "2.5.1"

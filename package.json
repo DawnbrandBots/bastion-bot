@@ -62,7 +62,7 @@
 	"resolutions": {
 		"@types/node": "^20.16.10",
 		"cross-spawn": "^7.0.6",
-		"discord-api-types": "0.37.106",
+		"discord-api-types": "^0.37.114",
 		"http2-wrapper": "^2.2.1",
 		"koa": "link:./test/package-stub",
 		"koa-router": "link:./test/package-stub",
