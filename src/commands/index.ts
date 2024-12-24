@@ -28,6 +28,7 @@ export const productionCommandClasses = [
 	SearchCommand,
 	YGOPRODECKCommand,
 	LocaleCommand,
+	LocaleUserCommand,
 	ArtCommand,
 	RandomCommand,
 	HelpCommand,
@@ -35,7 +36,7 @@ export const productionCommandClasses = [
 	RushDuelCommand,
 	MetagameCommand
 ];
-export const previewCommandClasses = [QueryCommand, LocaleUserCommand];
+export const previewCommandClasses = [QueryCommand];
 
 export const classes = [
 	...productionCommandClasses,
