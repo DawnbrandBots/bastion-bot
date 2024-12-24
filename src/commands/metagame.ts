@@ -208,28 +208,20 @@ export class MetagameCommand extends Command {
 			new SlashCommandSubcommandBuilder(),
 			() => c("command-option").t`strategies`,
 			() =>
-				process.env.BOT_NO_DIRECT_MESSAGE_SEARCH
-					? c("command-option-description")
-							.t`Show the top competitive strategies in tournaments and the Master Duel ranked ladder.`
-					: c("command-option-description").t`Show the top competitive strategies in tournaments.`
+				c("command-option-description")
+					.t`Show the top competitive strategies in tournaments and the Master Duel ranked ladder.`
 		).addStringOption(
 			buildLocalisedCommand(
 				new SlashCommandStringOption()
 					.addChoices([
 						buildLocalisedChoice("TCG", () => c("command-option-choice").t`TCG`),
 						buildLocalisedChoice("OCG", () => c("command-option-choice").t`OCG`),
-						buildLocalisedChoice("OCG-AE", () => c("command-option-choice").t`OCG (Asian-English)`)
+						buildLocalisedChoice("OCG-AE", () => c("command-option-choice").t`OCG (Asian-English)`),
+						buildLocalisedChoice(
+							"MD-TL",
+							() => c("command-option-choice").t`Master Duel Diamond+ tier list`
+						)
 					])
-					.addChoices(
-						process.env.BOT_NO_DIRECT_MESSAGE_SEARCH
-							? [
-									buildLocalisedChoice(
-										"MD-TL",
-										() => c("command-option-choice").t`Master Duel Diamond+ tier list`
-									)
-								]
-							: []
-					)
 					.setRequired(true),
 				() => c("command-option").t`format`,
 				() => c("command-option-description").t`Game region.`
