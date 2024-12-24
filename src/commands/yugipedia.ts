@@ -53,10 +53,14 @@ export class YugiCommand extends AutocompletableCommand {
 
 	private async search(query: string): Promise<YugipediaResponse> {
 		const url = YugiCommand.YUGI_SEARCH + encodeURIComponent(query);
-		return await this.got(url, {
+		const response = await this.got(url, {
 			headers: { Accept: "application/json" },
 			throwHttpErrors: true
 		}).json<YugipediaResponse>();
+		if (Array.isArray(response)) {
+			return response;
+		}
+		throw new Error(`Unexpected MediaWiki response from [${url}]: ${response}`);
 	}
 
 	override async autocomplete(interaction: AutocompleteInteraction): Promise<void> {
