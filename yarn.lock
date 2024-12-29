@@ -2569,10 +2569,10 @@ domhandler@^5.0.2, domhandler@^5.0.3:
   dependencies:
     domelementtype "^2.3.0"
 
-domutils@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/domutils/-/domutils-3.1.0.tgz#c47f551278d3dc4b0b1ab8cbb42d751a6f0d824e"
-  integrity sha512-H78uMmQtI2AhgDJjWeQmHwJJ2bLPD3GMmO7Zja/ZZh84wkm+4ut+IUnUdRa8uCGX88DiVx1j6FRe1XfxEgjEZA==
+domutils@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/domutils/-/domutils-3.2.1.tgz#b39f4c390a1ae6f6a2c56a5f5a16d6438b6bce28"
+  integrity sha512-xWXmuRnN9OMP6ptPd2+H0cCbcYBULa5YDTbMm/2lvkWvNA3O4wcW+GvzooqBuNM8yy6pl3VIAeJTUUWUbfI5Fw==
   dependencies:
     dom-serializer "^2.0.0"
     domelementtype "^2.3.0"
@@ -2598,9 +2598,9 @@ ejs@^3.1.10:
     jake "^10.8.5"
 
 electron-to-chromium@^1.5.73:
-  version "1.5.75"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.75.tgz#bba96eabf0e8ca36324679caa38b982800acc87d"
-  integrity sha512-Lf3++DumRE/QmweGjU+ZcKqQ+3bKkU/qjaKYhIJKEOhgIO9Xs6IiAQFkfFoj+RhgDk4LUeNsLo6plExHqSyu6Q==
+  version "1.5.76"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.76.tgz#db20295c5061b68f07c8ea4dfcbd701485d94a3d"
+  integrity sha512-CjVQyG7n7Sr+eBXE86HIulnL5N8xZY1sgmOPGuq/F0Rr0FJq63lg0kEtOIDfZBk44FnDLf6FUJ+dsJcuiUDdDQ==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -2626,10 +2626,15 @@ end-of-stream@^1.1.0, end-of-stream@^1.4.1:
   dependencies:
     once "^1.4.0"
 
-entities@^4.2.0, entities@^4.5.0:
+entities@^4.2.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/entities/-/entities-4.5.0.tgz#5d268ea5e7113ec74c4d033b79ea5a35a488fb48"
   integrity sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==
+
+entities@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/entities/-/entities-6.0.0.tgz#09c9e29cb79b0a6459a9b9db9efb418ac5bb8e51"
+  integrity sha512-aKstq2TDOndCn4diEyp9Uq/Flu2i1GlLkc6XIDQSDMuaFE3OPW5OphLCyQ5SpSJZTb4reN+kTcYru5yIfXoRPw==
 
 error-ex@^1.3.1:
   version "1.3.2"
@@ -2836,9 +2841,9 @@ fast-levenshtein@^2.0.6:
   integrity sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==
 
 fastq@^1.6.0:
-  version "1.17.1"
-  resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.17.1.tgz#2a523f07a4e7b1e81a42b91b8bf2254107753b47"
-  integrity sha512-sRVD3lWVIXWg6By68ZN7vho9a1pQcN/WBFaAAsDDFzlJjvoGx0P8z7V1t72grFJfJhu3YPZBuu25f7Kaw2jN1w==
+  version "1.18.0"
+  resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.18.0.tgz#d631d7e25faffea81887fe5ea8c9010e1b36fee0"
+  integrity sha512-QKHXPW0hD8g4UET03SdOdunzSouc9N4AuHdsX8XNcTsuz+yYFILVNIX4l9yHABMhiEI9Db0JTTIpu0wB+Y1QQw==
   dependencies:
     reusify "^1.0.4"
 
@@ -3074,24 +3079,24 @@ hasown@^2.0.2:
     function-bind "^1.1.2"
 
 highlight.js@^11.2.0:
-  version "11.11.0"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.11.0.tgz#91b15082ca8cdbe22424e0a000449d7d8a5c74c6"
-  integrity sha512-6ErL7JlGu2CNFHyRQEuDogOyGPNiqcuWdt4iSSFUPyferNTGlNTPFqeV36Y/XwA4V/TJ8l0sxp6FTnxud/mf8g==
+  version "11.11.1"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.11.1.tgz#fca06fa0e5aeecf6c4d437239135fabc15213585"
+  integrity sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w==
 
 html-escaper@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/html-escaper/-/html-escaper-2.0.2.tgz#dfd60027da36a36dfcbe236262c00a5822681453"
   integrity sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==
 
-htmlparser2@^9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-9.1.0.tgz#cdb498d8a75a51f739b61d3f718136c369bc8c23"
-  integrity sha512-5zfg6mHUoaer/97TxnGpxmbR7zJtPwIYFMZ/H5ucTlPZhKvtum05yiPK3Mgai3a0DyVxv7qYqoweaEd2nrYQzQ==
+htmlparser2@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-10.0.0.tgz#77ad249037b66bf8cc99c6e286ef73b83aeb621d"
+  integrity sha512-TwAZM+zE5Tq3lrEHvOlvwgj1XLWQCtaaibSN11Q+gGBAS7Y1uZSWwXXRe4iF6OXnaq1riyQAPFOBtYc77Mxq0g==
   dependencies:
     domelementtype "^2.3.0"
     domhandler "^5.0.3"
-    domutils "^3.1.0"
-    entities "^4.5.0"
+    domutils "^3.2.1"
+    entities "^6.0.0"
 
 http-cache-semantics@^4.0.0:
   version "4.1.1"
@@ -3728,27 +3733,21 @@ kleur@^3.0.3:
 
 koa-body@^4.2.0:
   version "0.0.0"
-  uid ""
 
 "koa-body@link:./test/package-stub":
   version "0.0.0"
-  uid ""
 
 koa-router@^9.1.0:
   version "0.0.0"
-  uid ""
 
 "koa-router@link:./test/package-stub":
   version "0.0.0"
-  uid ""
 
 koa@^2.13.0:
   version "0.0.0"
-  uid ""
 
 "koa@link:./test/package-stub":
   version "0.0.0"
-  uid ""
 
 leven@^3.1.0:
   version "3.1.0"
@@ -4037,11 +4036,9 @@ onetime@^5.1.2:
 
 open@^6.4.0:
   version "0.0.0"
-  uid ""
 
 "open@link:./test/package-stub":
   version "0.0.0"
-  uid ""
 
 optionator@^0.9.3:
   version "0.9.4"
@@ -4668,11 +4665,9 @@ supports-preserve-symlinks-flag@^1.0.0:
 
 svelte@^3.20.1:
   version "0.0.0"
-  uid ""
 
 "svelte@link:./test/package-stub":
   version "0.0.0"
-  uid ""
 
 tar-fs@^2.0.0:
   version "2.1.1"
