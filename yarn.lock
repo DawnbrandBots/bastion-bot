@@ -3733,21 +3733,27 @@ kleur@^3.0.3:
 
 koa-body@^4.2.0:
   version "0.0.0"
+  uid ""
 
 "koa-body@link:./test/package-stub":
   version "0.0.0"
+  uid ""
 
 koa-router@^9.1.0:
   version "0.0.0"
+  uid ""
 
 "koa-router@link:./test/package-stub":
   version "0.0.0"
+  uid ""
 
 koa@^2.13.0:
   version "0.0.0"
+  uid ""
 
 "koa@link:./test/package-stub":
   version "0.0.0"
+  uid ""
 
 leven@^3.1.0:
   version "3.1.0"
@@ -4036,9 +4042,11 @@ onetime@^5.1.2:
 
 open@^6.4.0:
   version "0.0.0"
+  uid ""
 
 "open@link:./test/package-stub":
   version "0.0.0"
+  uid ""
 
 optionator@^0.9.3:
   version "0.9.4"
@@ -4665,9 +4673,11 @@ supports-preserve-symlinks-flag@^1.0.0:
 
 svelte@^3.20.1:
   version "0.0.0"
+  uid ""
 
 "svelte@link:./test/package-stub":
   version "0.0.0"
+  uid ""
 
 tar-fs@^2.0.0:
   version "2.1.1"
@@ -4952,13 +4962,6 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
-
-utf-8-validate@^6.0.5:
-  version "6.0.5"
-  resolved "https://registry.yarnpkg.com/utf-8-validate/-/utf-8-validate-6.0.5.tgz#8087d39902be2cc15bdb21a426697ff256d65aab"
-  integrity sha512-EYZR+OpIXp9Y1eG1iueg8KRsY8TuT8VNgnanZ0uA3STqhHQTLwbl+WX76/9X5OY12yQubymBpaBSmMPkSTQcKA==
-  dependencies:
-    node-gyp-build "^4.3.0"
 
 utf8@^3.0.0:
   version "3.0.0"
