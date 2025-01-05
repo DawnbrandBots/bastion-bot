@@ -1673,9 +1673,9 @@
   integrity sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==
 
 "@types/node@*", "@types/node@^20.14.9", "@types/node@^20.16.10":
-  version "20.17.10"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.17.10.tgz#3f7166190aece19a0d1d364d75c8b0b5778c1e18"
-  integrity sha512-/jrvh5h6NXhEauFFexRin69nA0uHJ5gwk4iDivp/DeoEua3uwCUto6PC86IpRITBOs4+6i2I56K5x5b6WYGXHA==
+  version "20.17.11"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.17.11.tgz#2c05215fc37316b1596df7fbdba52151eaf83c50"
+  integrity sha512-Ept5glCK35R8yeyIeYlRIZtX6SLRyqMhOFTgj5SOkMpLTdw3SEHI9fHx60xaUZ+V1aJxQJODE+7/j5ocZydYTg==
   dependencies:
     undici-types "~6.19.2"
 
@@ -2094,10 +2094,10 @@ base64-js@^1.3.1:
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.5.1.tgz#1b1b440160a5bf7ad40b650f095963481903930a"
   integrity sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==
 
-better-sqlite3@^11.7.0:
-  version "11.7.0"
-  resolved "https://registry.yarnpkg.com/better-sqlite3/-/better-sqlite3-11.7.0.tgz#3eaa0f54f9e57d0a100d980e42320f8b9a4cd676"
-  integrity sha512-mXpa5jnIKKHeoGzBrUJrc65cXFKcILGZpU3FXR0pradUEm9MA7UZz02qfEejaMcm9iXrSOCenwwYMJ/tZ1y5Ig==
+better-sqlite3@^11.7.2:
+  version "11.7.2"
+  resolved "https://registry.yarnpkg.com/better-sqlite3/-/better-sqlite3-11.7.2.tgz#66b738894a6f51b87e26d76d8fbca60b75568660"
+  integrity sha512-10a57cHVDmfNQS4jrZ9AH2t+2ekzYh5Rhbcnb4ytpmYweoLdogDmyTt5D+hLiY9b44Mx9foowb/4iXBTO2yP3Q==
   dependencies:
     bindings "^1.5.0"
     prebuild-install "^7.1.1"
@@ -2820,15 +2820,15 @@ fast-deep-equal@3.1.3, fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
 
 fast-glob@^3.2.9:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.3.2.tgz#a904501e57cfdd2ffcded45e99a54fef55e46129"
-  integrity sha512-oX2ruAFQwf/Orj8m737Y5adxDQO0LAB7/S5MnxCdTNDd4p6BsyIVsv9JQsATbTSq8KHRpLwIHbVlUNatxd+1Ow==
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.3.3.tgz#d06d585ce8dba90a16b0505c543c3ccfb3aeb818"
+  integrity sha512-7MptL8U0cqcFdzIzwOTHoilX9x5BrNqye7Z/LuC7kCMRio1EMSyqRK3BEAUD7sXRq4iT4AzTVuZdhgQ2TCvYLg==
   dependencies:
     "@nodelib/fs.stat" "^2.0.2"
     "@nodelib/fs.walk" "^1.2.3"
     glob-parent "^5.1.2"
     merge2 "^1.3.0"
-    micromatch "^4.0.4"
+    micromatch "^4.0.8"
 
 fast-json-stable-stringify@2.x, fast-json-stable-stringify@^2.0.0, fast-json-stable-stringify@^2.1.0:
   version "2.1.0"
@@ -3733,27 +3733,21 @@ kleur@^3.0.3:
 
 koa-body@^4.2.0:
   version "0.0.0"
-  uid ""
 
 "koa-body@link:./test/package-stub":
   version "0.0.0"
-  uid ""
 
 koa-router@^9.1.0:
   version "0.0.0"
-  uid ""
 
 "koa-router@link:./test/package-stub":
   version "0.0.0"
-  uid ""
 
 koa@^2.13.0:
   version "0.0.0"
-  uid ""
 
 "koa@link:./test/package-stub":
   version "0.0.0"
-  uid ""
 
 leven@^3.1.0:
   version "3.1.0"
@@ -3870,7 +3864,7 @@ merge2@^1.3.0, merge2@^1.4.1:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
 
-micromatch@^4.0.4:
+micromatch@^4.0.4, micromatch@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.8.tgz#d66fa18f3a47076789320b9b1af32bd86d9fa202"
   integrity sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==
@@ -4042,11 +4036,9 @@ onetime@^5.1.2:
 
 open@^6.4.0:
   version "0.0.0"
-  uid ""
 
 "open@link:./test/package-stub":
   version "0.0.0"
-  uid ""
 
 optionator@^0.9.3:
   version "0.9.4"
@@ -4673,11 +4665,9 @@ supports-preserve-symlinks-flag@^1.0.0:
 
 svelte@^3.20.1:
   version "0.0.0"
-  uid ""
 
 "svelte@link:./test/package-stub":
   version "0.0.0"
-  uid ""
 
 tar-fs@^2.0.0:
   version "2.1.1"
