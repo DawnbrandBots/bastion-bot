@@ -2511,9 +2511,9 @@ dir-glob@^3.0.1:
     path-type "^4.0.0"
 
 discord-api-types@^0.37.114:
-  version "0.37.116"
-  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.37.116.tgz#2f28ffd3b5749768bd94dfc055d0f0001293ef59"
-  integrity sha512-g+BH/m0hyS/JzL+e0aM+z2o9UtwfyUZ0hqeyc+6sNwdMx+NtQkqULRV/oj9ynAefpRb+cpOjmWaYec4B1I0Hqg==
+  version "0.37.117"
+  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.37.117.tgz#ac4bccf3e025678eb2fc55b911e470504489cda0"
+  integrity sha512-d+Z6RKd7v3q22lsil7yASucqMfVVV0s0XSqu3cw7kyHVXiDO/mAnqMzqma26IYnIm2mk3TlupYJDGrdL908ZKA==
 
 discord-markdown@2.5.1:
   version "2.5.1"
