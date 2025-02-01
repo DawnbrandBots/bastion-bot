@@ -49,14 +49,21 @@ const parser = parserFor(ourRules);
 
 // https://discord.com/developers/docs/reference#message-formatting-formats
 const mentionPatterns = (
-	["UserWithOptionalNickname", "Channel", "Role", "SlashCommand", "Emoji", "Timestamp"] as const
+	[
+		"UserWithOptionalNickname",
+		"Channel",
+		"Role",
+		"SlashCommand",
+		"Emoji",
+		"Timestamp",
+		"GuildNavigation",
+		"LinkedRole"
+	] as const
 ).map(key => new RegExp(FormattingPatterns[key], `${FormattingPatterns[key].flags}g`));
 
 const undocumentedPatterns = [
-	"<id:browse>", // "Browse Channels"
-	"<id:customize>", // "Customise Community"
-	"<id:home>", // links to community rules channel
-	"<id:guide>" // "Server Guide"
+	"<id:home>", // links to community rules channel, alias of Server Guide
+	/<sound:\d+:\d+>/g // Soundmoji https://github.com/discord/discord-api-docs/pull/7357
 ];
 
 export function cleanMessageMarkup(message: string): string {

@@ -65,6 +65,34 @@ describe("clean markup", () => {
 		const message = cleanMessageMarkup("<t:1618953630:d>");
 		expect(message.trim()).toBe("");
 	});
+	test("prunes Browse Channels guild navigation", () => {
+		const message = cleanMessageMarkup("<id:browse>");
+		expect(message.trim()).toBe("");
+	});
+	test("prunes Customise Community guild navigation", () => {
+		const message = cleanMessageMarkup("<id:customize>");
+		expect(message.trim()).toBe("");
+	});
+	test("prunes community rules channel guild navigation", () => {
+		const message = cleanMessageMarkup("<id:home>");
+		expect(message.trim()).toBe("");
+	});
+	test("prunes Server Guide guild navigation", () => {
+		const message = cleanMessageMarkup("<id:guide>");
+		expect(message.trim()).toBe("");
+	});
+	test("prunes Linked Roles guild navigation", () => {
+		const message = cleanMessageMarkup("<id:linked-roles>");
+		expect(message.trim()).toBe("");
+	});
+	test("prunes Linked Role connection guild navigation", () => {
+		const message = cleanMessageMarkup("<id:linked-roles:12345678901234567890>");
+		expect(message.trim()).toBe("");
+	});
+	test("prunes soundmoji", () => {
+		const message = cleanMessageMarkup("<sound:1207219133914288179:1311935506866770011>");
+		expect(message.trim()).toBe("");
+	});
 });
 
 describe("preprocess message to get inputs", () => {
