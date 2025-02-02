@@ -1,6 +1,6 @@
 import { Static } from "@sinclair/typebox";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
-import { ApplicationIntegrationType, ChatInputCommandInteraction } from "discord.js";
+import { ChatInputCommandInteraction } from "discord.js";
 import { Got } from "got";
 import { inject, injectable } from "tsyringe";
 import { c } from "ttag";
@@ -11,6 +11,7 @@ import { UpdatingLimitRegulationVector } from "../limit-regulation";
 import { LocaleProvider, buildLocalisedCommand, everywhereCommand, getResultLangStringOption } from "../locale";
 import { Logger, getLogger } from "../logger";
 import { Metrics } from "../metrics";
+import { shouldExcludeIcons } from "../utils";
 
 @injectable()
 export class RandomCommand extends Command {
@@ -56,8 +57,7 @@ export class RandomCommand extends Command {
 		const url = `${process.env.API_URL}/ocg-tcg/random`;
 		const cards = await this.got(url).json<Static<typeof CardSchema>[]>();
 		const lang = await this.locales.get(interaction);
-		const isUserInstall = !!interaction.authorizingIntegrationOwners[ApplicationIntegrationType.UserInstall];
-		const embeds = createCardEmbed(cards[0], lang, this.masterDuelLimitRegulation, isUserInstall);
+		const embeds = createCardEmbed(cards[0], lang, this.masterDuelLimitRegulation, shouldExcludeIcons(interaction));
 		const end = Date.now();
 		await interaction.editReply({ embeds }); // Actually returns void
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate

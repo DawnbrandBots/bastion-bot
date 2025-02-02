@@ -1,5 +1,6 @@
 import { SlashCommandStringOption } from "@discordjs/builders";
 import {
+	ApplicationIntegrationType,
 	AutocompleteInteraction,
 	CacheType,
 	ChatInputCommandInteraction,
@@ -161,4 +162,13 @@ export function shouldIgnore(message: Message): boolean {
 		// Ignore bots to prevent infinite loops and other potentially malicious abuse, except from our Singing Lanius
 		(message.author.bot && message.author.id !== process.env.HEALTHCHECK_BOT_SNOWFLAKE)
 	);
+}
+
+// If the user has user-installed Bastion, then authorizingIntegrationOwners.1 will be present.
+// If Bastion is invoked in direct messages, authorizingIntegrationOwners.0 = "0".
+// If Bastion is invoked in an installed server, authorizingIntegrationOwners.0 = "SERVER_ID".
+// Therefore, the only case where we are directly invoking the user-installed version, whether in
+// a direct message or server without Bastion, is when authorizingIntegrationOwners.0 is not present.
+export function shouldExcludeIcons(interaction: ChatInputCommandInteraction): boolean {
+	return !interaction.authorizingIntegrationOwners[ApplicationIntegrationType.GuildInstall];
 }
