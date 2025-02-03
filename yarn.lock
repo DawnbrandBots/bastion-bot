@@ -3733,21 +3733,27 @@ kleur@^3.0.3:
 
 koa-body@^4.2.0:
   version "0.0.0"
+  uid ""
 
 "koa-body@link:./test/package-stub":
   version "0.0.0"
+  uid ""
 
 koa-router@^9.1.0:
   version "0.0.0"
+  uid ""
 
 "koa-router@link:./test/package-stub":
   version "0.0.0"
+  uid ""
 
 koa@^2.13.0:
   version "0.0.0"
+  uid ""
 
 "koa@link:./test/package-stub":
   version "0.0.0"
+  uid ""
 
 leven@^3.1.0:
   version "3.1.0"
@@ -4036,9 +4042,11 @@ onetime@^5.1.2:
 
 open@^6.4.0:
   version "0.0.0"
+  uid ""
 
 "open@link:./test/package-stub":
   version "0.0.0"
+  uid ""
 
 optionator@^0.9.3:
   version "0.9.4"
@@ -4665,9 +4673,11 @@ supports-preserve-symlinks-flag@^1.0.0:
 
 svelte@^3.20.1:
   version "0.0.0"
+  uid ""
 
 "svelte@link:./test/package-stub":
   version "0.0.0"
+  uid ""
 
 tar-fs@^2.0.0:
   version "2.1.2"
@@ -4820,10 +4830,10 @@ tsyringe@^4.8.0:
   dependencies:
     tslib "^1.9.3"
 
-ttag-cli@^1.10.14:
-  version "1.10.14"
-  resolved "https://registry.yarnpkg.com/ttag-cli/-/ttag-cli-1.10.14.tgz#c25e6f56f17bd22c5d1ca3ea08ba3f7d99be356d"
-  integrity sha512-J7WgxtHuH2ko5xj0/qBsiWXDe5xjniikT2yaMeJhfv+I7Vd5YKzIPjMOGDL58Dp6eZI7Db+4Tfzga5bUHLSeUQ==
+ttag-cli@^1.10.18:
+  version "1.10.18"
+  resolved "https://registry.yarnpkg.com/ttag-cli/-/ttag-cli-1.10.18.tgz#fdfccae550d96ea47924c6e846c0d5d3f59539c7"
+  integrity sha512-VSS59YPUP5jGTHVzqOQC1Hxt/02y8hc/O0lsBnLoPSACcyGg7e/wDT7DEFvoSEfgQ8JCov4ZjcGVXTPxC8d2Hg==
   dependencies:
     "@babel/core" "^7.12.3"
     "@babel/generator" "^7.12.5"
