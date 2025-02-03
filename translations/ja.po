@@ -462,7 +462,7 @@ msgstr "[`${ page }` という名前のYugipediaのページ](${ searchURL })が
 #: src\commands\yugipedia.ts:116
 #, javascript-format
 msgid "Took too long [searching Yugipedia for `${ page }`](${ searchURL }). Is the site up?"
-msgstr "[`${ page }` でのYugipediaの検索](${ searchURL })に時間がかかりすぎました。サイトは稼働していますか？"
+msgstr "[`${ page }` でYugipediaを検索](${ searchURL })しましたが時間がかかりすぎました。サイトは稼働していますか？"
 
 #: src\commands\yugipedia.ts:118
 #, javascript-format
