@@ -82,7 +82,7 @@ See [PRIVACY.md](https://github.com/DawnbrandBots/bastion-bot/blob/master/PRIVAC
 
 ## Licence
 
-Copyright © 2021–2024 Luna Brand, Kevin Lu.
+Copyright © 2021–2025 Luna Brand, Kevin Lu.
 See [COPYING](https://github.com/DawnbrandBots/bastion-bot/blob/master/COPYING) for more details.
 
 ```
