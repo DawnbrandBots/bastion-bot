@@ -1,7 +1,7 @@
 import { SlashCommandStringOption } from "@discordjs/builders";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
-import { Got } from "got";
+import { Got, TimeoutError } from "got";
 import { LRUMap } from "mnemonist";
 import { inject, injectable } from "tsyringe";
 import { c, t, useLocale } from "ttag";
@@ -100,6 +100,7 @@ export class YugiCommand extends AutocompletableCommand {
 			content = cached;
 			this.#logger.info(serialiseInteraction(interaction, { page, cached }));
 		} else {
+			const searchURL = `<https://yugipedia.com/index.php?search=${encodeURIComponent(page)}>`;
 			try {
 				const start = Date.now();
 				const response = await this.search(page);
@@ -107,11 +108,15 @@ export class YugiCommand extends AutocompletableCommand {
 				this.#logger.info(serialiseInteraction(interaction, { page, latency, response }));
 				useLocale(lang);
 				const link = response[3][0];
-				content = link || t`Could not find a Yugipedia page named \`${page}\`.`;
+				content = link || t`Could not find a [Yugipedia page named \`${page}\`](${searchURL}).`;
 			} catch (error) {
 				this.#logger.warn(serialiseInteraction(interaction, { page }), error);
 				useLocale(lang);
-				content = t`Something went wrong searching Yugipedia for \`${page}\`.`;
+				if (error instanceof TimeoutError) {
+					content = t`Took too long [searching Yugipedia for \`${page}\`](${searchURL}). Is the site up?`;
+				} else {
+					content = t`Something went wrong [searching Yugipedia for \`${page}\`](${searchURL}). Is the site up?`;
+				}
 			}
 		}
 		const reply = await interaction.reply({ content, fetchReply: true });

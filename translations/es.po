@@ -79,70 +79,70 @@ msgstr ""
 msgid "Placeholder ID: ${ card.fake_password }"
 msgstr ""
 
-#: src\utils.ts:44
+#: src\utils.ts:45
 msgid "🛠️ This command is in development."
 msgstr ""
 
-#: src\utils.ts:45
+#: src\utils.ts:46
 msgid "📨 Please send feedback to [our issue tracker](https://github.com/DawnbrandBots/bastion-bot) or the [support server](https://discord.gg/4aFuPyuE96)!"
 msgstr ""
 
-#: src\utils.ts:56
+#: src\utils.ts:57
 msgid "Please consider supporting us!"
 msgstr ""
 
-#: src\utils.ts:57
+#: src\utils.ts:58
 msgid "Help keep Bastion online!"
 msgstr ""
 
-#: src\utils.ts:58
+#: src\utils.ts:59
 msgid "Please help keep Bastion online!"
 msgstr ""
 
-#: src\utils.ts:59
+#: src\utils.ts:60
 msgid "Was Bastion helpful? Consider supporting us!"
 msgstr ""
 
-#: src\utils.ts:60
+#: src\utils.ts:61
 msgid "Was Bastion helpful? We need your support!"
 msgstr ""
 
-#: src\utils.ts:61
+#: src\utils.ts:62
 msgid "Did you find Bastion useful? Consider supporting us!"
 msgstr ""
 
-#: src\utils.ts:62
+#: src\utils.ts:63
 msgid "Did you find Bastion useful? Help keep it online!"
 msgstr ""
 
-#: src\utils.ts:63
+#: src\utils.ts:64
 msgid "Did you find Bastion useful? We need your support!"
 msgstr ""
 
-#: src\utils.ts:64
+#: src\utils.ts:65
 msgid "Enjoy Bastion? Help keep it online!"
 msgstr ""
 
-#: src\utils.ts:65
+#: src\utils.ts:66
 msgid "Enjoy Bastion? Consider supporting us!"
 msgstr ""
 
-#: src\utils.ts:66
+#: src\utils.ts:67
 msgid "Found what you were looking for? Consider supporting us!"
 msgstr ""
 
 #: src\commands\art.ts:63
 #: src\commands\price.ts:132
-#: src\commands\rush-duel.ts:171
-#: src\commands\rush-duel.ts:202
+#: src\commands\rush-duel.ts:170
+#: src\commands\rush-duel.ts:200
 #: src\commands\search.ts:64
-#: src\events\message-search.ts:265
+#: src\events\message-search.ts:272
 #, javascript-format
 msgid "Could not find a card matching `${ input }`!"
 msgstr ""
 
 #: src\commands\art.ts:70
-#: src\commands\rush-duel.ts:235
+#: src\commands\rush-duel.ts:231
 #, javascript-format
 msgid "Could not find art for `${ name }`!"
 msgstr ""
@@ -261,11 +261,6 @@ msgstr ""
 msgid "Total latency: ${ latency } ms"
 msgstr ""
 
-#: src\commands\yugipedia.ts:106
-#, javascript-format
-msgid "Could not find a Yugipedia page named `${ page }`."
-msgstr ""
-
 #: src\events\message-ping.ts:47
 msgid "Free and open source _Yu-Gi-Oh!_ bot"
 msgstr ""
@@ -320,11 +315,11 @@ msgstr ""
 msgid "Upload to YGOPRODECK"
 msgstr ""
 
-#: src\events\message-search.ts:271
+#: src\events\message-search.ts:278
 msgid "💬 Translations missing?"
 msgstr ""
 
-#: src\events\message-search.ts:272
+#: src\events\message-search.ts:279
 msgid "Help translate Bastion at the links above."
 msgstr ""
 
@@ -344,13 +339,13 @@ msgid ""
 "💬 Translations missing? Help translate Bastion on [GitHub](https://github.com/DawnbrandBots/bastion-bot)."
 msgstr ""
 
-#: src\events\message-search.ts:263
-#: src\events\message-search.ts:302
+#: src\events\message-search.ts:270
+#: src\events\message-search.ts:309
 #, javascript-format
 msgid "Search type: ${ localisedType }"
 msgstr ""
 
-#: src\events\message-search.ts:242
+#: src\events\message-search.ts:249
 #, javascript-format
 msgid "Search language: **${ localisedInputLanguage }** (${ inputLanguage }). Check defaults with </locale get:${ id }> and configure with </locale set:${ id }>"
 msgstr ""
@@ -360,11 +355,11 @@ msgid "⚠️ You pinged me, but I am missing permissions in the channel!"
 msgstr ""
 
 #: src\events\message-ping.ts:96
-#: src\events\message-search.ts:340
+#: src\events\message-search.ts:347
 msgid "Please have a server administrator [fix this](https://github.com/DawnbrandBots/bastion-bot#discord-permissions)."
 msgstr ""
 
-#: src\events\message-search.ts:337
+#: src\events\message-search.ts:344
 msgid "⚠️ I am missing permissions in the channel!"
 msgstr ""
 
@@ -390,11 +385,6 @@ msgstr ""
 #: src\commands\ygoprodeck.ts:102
 #, javascript-format
 msgid "Something went wrong searching YGOPRODECK for `${ searchTerm }`."
-msgstr ""
-
-#: src\commands\yugipedia.ts:110
-#, javascript-format
-msgid "Something went wrong searching Yugipedia for `${ page }`."
 msgstr ""
 
 #: src\rush-duel.ts:49
@@ -435,7 +425,7 @@ msgstr ""
 msgid "Using ${ searchTrigger }, you can search for Rush Duel cards directly in messages without autocomplete"
 msgstr ""
 
-#: src\events\message-search.ts:304
+#: src\events\message-search.ts:311
 #, javascript-format
 msgid "Could not find a Rush Duel card matching `${ input }`!"
 msgstr ""
@@ -456,6 +446,21 @@ msgstr ""
 #: src\commands\locale.ts:150
 #, javascript-format
 msgid "Locale for your direct messages reset to Discord default. Your Discord setting is ${ interaction.locale }."
+msgstr ""
+
+#: src\commands\yugipedia.ts:111
+#, javascript-format
+msgid "Could not find a [Yugipedia page named `${ page }`](${ searchURL })."
+msgstr ""
+
+#: src\commands\yugipedia.ts:116
+#, javascript-format
+msgid "Took too long [searching Yugipedia for `${ page }`](${ searchURL }). Is the site up?"
+msgstr ""
+
+#: src\commands\yugipedia.ts:118
+#, javascript-format
+msgid "Something went wrong [searching Yugipedia for `${ page }`](${ searchURL }). Is the site up?"
 msgstr ""
 
 #: src\card.ts:40
@@ -871,8 +876,8 @@ msgctxt "command-option"
 msgid "input-language"
 msgstr ""
 
-#: src\commands\rush-duel.ts:67
-#: src\commands\rush-duel.ts:79
+#: src\commands\rush-duel.ts:66
+#: src\commands\rush-duel.ts:78
 #: src\locale.ts:156
 #: src\locale.ts:174
 #: src\locale.ts:190
@@ -931,8 +936,8 @@ msgctxt "command-option"
 msgid "password"
 msgstr ""
 
-#: src\commands\rush-duel.ts:72
-#: src\events\message-search.ts:301
+#: src\commands\rush-duel.ts:71
+#: src\events\message-search.ts:308
 #: src\locale.ts:185
 msgctxt "command-option"
 msgid "konami-id"
@@ -966,17 +971,17 @@ msgctxt "command-option"
 msgid "vendor"
 msgstr ""
 
-#: src\commands\rush-duel.ts:62
+#: src\commands\rush-duel.ts:61
 msgctxt "command-option"
 msgid "search"
 msgstr ""
 
-#: src\commands\rush-duel.ts:84
+#: src\commands\rush-duel.ts:83
 msgctxt "command-option"
 msgid "random"
 msgstr ""
 
-#: src\commands\rush-duel.ts:89
+#: src\commands\rush-duel.ts:88
 msgctxt "command-option"
 msgid "art"
 msgstr ""
@@ -991,18 +996,18 @@ msgctxt "command-option"
 msgid "strategies"
 msgstr ""
 
-#: src\commands\metagame.ts:234
-#: src\commands\metagame.ts:274
+#: src\commands\metagame.ts:226
+#: src\commands\metagame.ts:266
 msgctxt "command-option"
 msgid "format"
 msgstr ""
 
-#: src\commands\metagame.ts:240
+#: src\commands\metagame.ts:232
 msgctxt "command-option"
 msgid "cards"
 msgstr ""
 
-#: src\commands\metagame.ts:310
+#: src\commands\metagame.ts:302
 msgctxt "command-option"
 msgid "date-range"
 msgstr ""
@@ -1062,7 +1067,7 @@ msgctxt "command-option-description"
 msgid "Display the art for the card with this name."
 msgstr ""
 
-#: src\commands\rush-duel.ts:68
+#: src\commands\rush-duel.ts:67
 #: src\locale.ts:157
 msgctxt "command-option-description"
 msgid "Card name, fuzzy matching supported."
@@ -1083,7 +1088,7 @@ msgctxt "command-option-description"
 msgid "Display the art for the card with this official database ID."
 msgstr ""
 
-#: src\commands\rush-duel.ts:80
+#: src\commands\rush-duel.ts:79
 #: src\locale.ts:191
 msgctxt "command-option-description"
 msgid "Konami's official card database identifier."
@@ -1149,22 +1154,22 @@ msgctxt "command-option-description"
 msgid "The English name of the card you're looking for."
 msgstr ""
 
-#: src\commands\rush-duel.ts:63
+#: src\commands\rush-duel.ts:62
 msgctxt "command-option-description"
 msgid "Find all information for the Rush Duel card with this name."
 msgstr ""
 
-#: src\commands\rush-duel.ts:74
+#: src\commands\rush-duel.ts:73
 msgctxt "command-option-description"
 msgid "Find all information for the Rush Duel card with this official database ID."
 msgstr ""
 
-#: src\commands\rush-duel.ts:85
+#: src\commands\rush-duel.ts:84
 msgctxt "command-option-description"
 msgid "Get a random Rush Duel card."
 msgstr ""
 
-#: src\commands\rush-duel.ts:90
+#: src\commands\rush-duel.ts:89
 msgctxt "command-option-description"
 msgid "Display just the art for the Rush Duel card with this name."
 msgstr ""
@@ -1189,28 +1194,23 @@ msgctxt "command-option-description"
 msgid "The new default language to use for user-installed Bastion."
 msgstr ""
 
-#: src\commands\metagame.ts:212
+#: src\commands\metagame.ts:211
 msgctxt "command-option-description"
 msgid "Show the top competitive strategies in tournaments and the Master Duel ranked ladder."
 msgstr ""
 
-#: src\commands\metagame.ts:214
-msgctxt "command-option-description"
-msgid "Show the top competitive strategies in tournaments."
-msgstr ""
-
-#: src\commands\metagame.ts:235
-#: src\commands\metagame.ts:275
+#: src\commands\metagame.ts:227
+#: src\commands\metagame.ts:267
 msgctxt "command-option-description"
 msgid "Game region."
 msgstr ""
 
-#: src\commands\metagame.ts:242
+#: src\commands\metagame.ts:234
 msgctxt "command-option-description"
 msgid "Show the most popular cards in tournaments and the Master Duel ranked ladder."
 msgstr ""
 
-#: src\commands\metagame.ts:312
+#: src\commands\metagame.ts:304
 msgctxt "command-option-description"
 msgid "Limit card usage statistics to this date range. Has no effect for Master Duel."
 msgstr ""
@@ -1255,7 +1255,7 @@ msgctxt "command-name"
 msgid "locale"
 msgstr ""
 
-#: src\commands\random.ts:43
+#: src\commands\random.ts:44
 msgctxt "command-name"
 msgid "random"
 msgstr ""
@@ -1265,7 +1265,7 @@ msgctxt "command-name"
 msgid "price"
 msgstr ""
 
-#: src\commands\rush-duel.ts:57
+#: src\commands\rush-duel.ts:56
 msgctxt "command-name"
 msgid "rush-duel"
 msgstr ""
@@ -1325,7 +1325,7 @@ msgctxt "command-description"
 msgid "Check or set Bastion's locale for this channel or server."
 msgstr ""
 
-#: src\commands\random.ts:44
+#: src\commands\random.ts:45
 msgctxt "command-description"
 msgid "Get a random Yu-Gi-Oh! card."
 msgstr ""
@@ -1335,7 +1335,7 @@ msgctxt "command-description"
 msgid "Display the price for a card!"
 msgstr ""
 
-#: src\commands\rush-duel.ts:58
+#: src\commands\rush-duel.ts:57
 msgctxt "command-description"
 msgid "Find information on Rush Duel cards."
 msgstr ""
@@ -1371,65 +1371,65 @@ msgctxt "command-option-choice"
 msgid "Discord default"
 msgstr ""
 
-#: src\commands\metagame.ts:219
-#: src\commands\metagame.ts:251
+#: src\commands\metagame.ts:217
+#: src\commands\metagame.ts:243
 msgctxt "command-option-choice"
 msgid "TCG"
 msgstr ""
 
-#: src\commands\metagame.ts:220
-#: src\commands\metagame.ts:255
+#: src\commands\metagame.ts:218
+#: src\commands\metagame.ts:247
 msgctxt "command-option-choice"
 msgid "OCG"
 msgstr ""
 
-#: src\commands\metagame.ts:221
-#: src\commands\metagame.ts:259
+#: src\commands\metagame.ts:219
+#: src\commands\metagame.ts:251
 msgctxt "command-option-choice"
 msgid "OCG (Asian-English)"
 msgstr ""
 
-#: src\commands\metagame.ts:228
+#: src\commands\metagame.ts:222
 msgctxt "command-option-choice"
 msgid "Master Duel Diamond+ tier list"
 msgstr ""
 
-#: src\commands\metagame.ts:261
+#: src\commands\metagame.ts:253
 msgctxt "command-option-choice"
 msgid "Master Duel ranked ladder"
 msgstr ""
 
-#: src\commands\metagame.ts:283
+#: src\commands\metagame.ts:275
 msgctxt "command-option-choice"
 msgid "Current format"
 msgstr ""
 
-#: src\commands\metagame.ts:287
+#: src\commands\metagame.ts:279
 msgctxt "command-option-choice"
 msgid "Since last Forbidden/Limited List"
 msgstr ""
 
-#: src\commands\metagame.ts:291
+#: src\commands\metagame.ts:283
 msgctxt "command-option-choice"
 msgid "Last 7 days"
 msgstr ""
 
-#: src\commands\metagame.ts:295
+#: src\commands\metagame.ts:287
 msgctxt "command-option-choice"
 msgid "Last 14 days"
 msgstr ""
 
-#: src\commands\metagame.ts:299
+#: src\commands\metagame.ts:291
 msgctxt "command-option-choice"
 msgid "Last 30 days"
 msgstr ""
 
-#: src\commands\metagame.ts:303
+#: src\commands\metagame.ts:295
 msgctxt "command-option-choice"
 msgid "Last three months"
 msgstr ""
 
-#: src\commands\metagame.ts:307
+#: src\commands\metagame.ts:299
 msgctxt "command-option-choice"
 msgid "Last six months"
 msgstr ""
