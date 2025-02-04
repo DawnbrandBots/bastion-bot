@@ -462,12 +462,12 @@ msgstr "[`${ page }` という名前のYugipediaのページ](${ searchURL })が
 #: src\commands\yugipedia.ts:116
 #, javascript-format
 msgid "Took too long [searching Yugipedia for `${ page }`](${ searchURL }). Is the site up?"
-msgstr ""
+msgstr "[`${ page }` でYugipediaを検索](${ searchURL })しましたが時間がかかりすぎました。サイトは稼働していますか？"
 
 #: src\commands\yugipedia.ts:118
 #, javascript-format
 msgid "Something went wrong [searching Yugipedia for `${ page }`](${ searchURL }). Is the site up?"
-msgstr "[`${ page }`でYugipediaを検索中](${ searchURL })に何かエラーが起こったようです。"
+msgstr "[`${ page }` でYugipediaを検索中](${ searchURL })に何かエラーが起こったようです。サイトは稼働していますか？"
 
 #: src\card.ts:40
 msgctxt "monster-type-race"
