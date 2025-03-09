@@ -376,10 +376,10 @@ msgstr[0] "사이드 덱 (${ deck.side.length } cards — ${ countDetail })"
 msgid "Server-wide locale override: ${ guildOverride }"
 msgstr "서버 전체 로케일 재정의 : ${ guildOverride }"
 
-#: src\commands\ygoprodeck.ts:102
+#: src\commands\ygoprodeck.ts:109
 #, javascript-format
-msgid "Something went wrong searching YGOPRODECK for `${ searchTerm }`."
-msgstr "YGOPRODECK을 위해 `${ searchTerm }`을(를) 검색하는 데 문제가 발생하였습니다."
+msgid "Something went wrong [searching YGOPRODECK for `${ searchTerm }`](${ searchURL }). Is the site up?"
+msgstr "[YGOPRODECK을 위해 `${ searchTerm }`을(를) 검색하는](${ searchURL }) 데 문제가 발생하였습니다."
 
 #: src\rush-duel.ts:49
 #, javascript-format
@@ -456,6 +456,11 @@ msgstr ""
 #, javascript-format
 msgid "Something went wrong [searching Yugipedia for `${ page }`](${ searchURL }). Is the site up?"
 msgstr "[Yugipedia를 위해 `${ page }`을(를) 검색하는](${ searchURL }) 데 문제가 발생하였습니다."
+
+#: src\commands\ygoprodeck.ts:107
+#, javascript-format
+msgid "Took too long [searching YGOPRODECK for `${ searchTerm }`](${ searchURL }). Is the site up?"
+msgstr ""
 
 #: src\card.ts:40
 msgctxt "monster-type-race"

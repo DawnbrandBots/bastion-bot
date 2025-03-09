@@ -382,11 +382,6 @@ msgstr[1] "Deck Auxiliar (${ deck.side.length } cartas — ${ countDetail })"
 msgid "Server-wide locale override: ${ guildOverride }"
 msgstr ""
 
-#: src\commands\ygoprodeck.ts:102
-#, javascript-format
-msgid "Something went wrong searching YGOPRODECK for `${ searchTerm }`."
-msgstr ""
-
 #: src\rush-duel.ts:49
 #, javascript-format
 msgid "[Official Konami DB](${ official }) | [Rulings (Japanese)](${ rulings }) | [Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
@@ -461,6 +456,16 @@ msgstr ""
 #: src\commands\yugipedia.ts:118
 #, javascript-format
 msgid "Something went wrong [searching Yugipedia for `${ page }`](${ searchURL }). Is the site up?"
+msgstr ""
+
+#: src\commands\ygoprodeck.ts:107
+#, javascript-format
+msgid "Took too long [searching YGOPRODECK for `${ searchTerm }`](${ searchURL }). Is the site up?"
+msgstr ""
+
+#: src\commands\ygoprodeck.ts:109
+#, javascript-format
+msgid "Something went wrong [searching YGOPRODECK for `${ searchTerm }`](${ searchURL }). Is the site up?"
 msgstr ""
 
 #: src\card.ts:40

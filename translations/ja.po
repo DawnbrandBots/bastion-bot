@@ -388,10 +388,10 @@ msgstr[0] "サイドデッキ (${ deck.side.length } 枚 — ${ countDetail })"
 msgid "Server-wide locale override: ${ guildOverride }"
 msgstr "サーバー全体への上書き言語設定: ${ guildOverride }"
 
-#: src\commands\ygoprodeck.ts:102
+#: src\commands\ygoprodeck.ts:109
 #, javascript-format
-msgid "Something went wrong searching YGOPRODECK for `${ searchTerm }`."
-msgstr "`${ searchTerm }`でYGOPRODECKを検索中に何かエラーが起こったようです。"
+msgid "Something went wrong [searching YGOPRODECK for `${ searchTerm }`](${ searchURL }). Is the site up?"
+msgstr "[`${ searchTerm }`でYGOPRODECKを検索中](${ searchURL })に何かエラーが起こったようです。サイトは稼働していますか？"
 
 #: src\rush-duel.ts:49
 #, javascript-format
@@ -468,6 +468,11 @@ msgstr "[`${ page }` でYugipediaを検索](${ searchURL })しましたが時間
 #, javascript-format
 msgid "Something went wrong [searching Yugipedia for `${ page }`](${ searchURL }). Is the site up?"
 msgstr "[`${ page }` でYugipediaを検索中](${ searchURL })に何かエラーが起こったようです。サイトは稼働していますか？"
+
+#: src\commands\ygoprodeck.ts:107
+#, javascript-format
+msgid "Took too long [searching YGOPRODECK for `${ searchTerm }`](${ searchURL }). Is the site up?"
+msgstr "[`${ page }` でYGOPRODECKを検索](${ searchURL })しましたが時間がかかりすぎました。サイトは稼働していますか？"
 
 #: src\card.ts:40
 msgctxt "monster-type-race"

@@ -376,11 +376,6 @@ msgstr ""
 msgid "Server-wide locale override: ${ guildOverride }"
 msgstr ""
 
-#: src\commands\ygoprodeck.ts:102
-#, javascript-format
-msgid "Something went wrong searching YGOPRODECK for `${ searchTerm }`."
-msgstr ""
-
 #: src\rush-duel.ts:49
 #, javascript-format
 msgid "[Official Konami DB](${ official }) | [Rulings (Japanese)](${ rulings }) | [Yugipedia](${ yugipedia }) | [RushCard](${ rushcard })"
@@ -456,6 +451,16 @@ msgstr "[Yugipedia上搜索`${ page }`](${ searchURL })太慢了，在線嗎？"
 #, javascript-format
 msgid "Something went wrong [searching Yugipedia for `${ page }`](${ searchURL }). Is the site up?"
 msgstr "[Yugipedia上搜索`${ page }`](${ searchURL })出錯了，在線嗎？"
+
+#: src\commands\ygoprodeck.ts:107
+#, javascript-format
+msgid "Took too long [searching YGOPRODECK for `${ searchTerm }`](${ searchURL }). Is the site up?"
+msgstr "[YGOPRODECK上搜索`${ searchTerm }`](${ searchURL })太慢了，在線嗎？"
+
+#: src\commands\ygoprodeck.ts:109
+#, javascript-format
+msgid "Something went wrong [searching YGOPRODECK for `${ searchTerm }`](${ searchURL }). Is the site up?"
+msgstr "[YGOPRODECK上搜索`${ searchTerm }`](${ searchURL })出錯了，在線嗎？"
 
 #: src\card.ts:40
 msgctxt "monster-type-race"
