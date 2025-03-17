@@ -21,35 +21,35 @@ msgstr "[K社官方数据库](${ official }) | [事务局FAQ](${ rulings }) | [Y
 msgid "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 
-#: src\card.ts:490
+#: src\card.ts:502
 #: src\rush-duel.ts:103
 #, javascript-format
 msgid "**Type**: ${ raceIcon } ${ localizedMonsterTypeLine }"
 msgstr "**种族**: ${ raceIcon } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:492
+#: src\card.ts:504
 #: src\rush-duel.ts:105
 #, javascript-format
 msgid "**Attribute**: ${ attributeIcon } ${ localizedAttribute }"
 msgstr "**属性**: ${ attributeIcon } ${ localizedAttribute }"
 
-#: src\card.ts:497
+#: src\card.ts:509
 #, javascript-format
 msgid "**Rank**: ${ rankIcon } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 msgstr "**阶级**: ${ rankIcon } ${ card.rank } **攻击力**: ${ card.atk } **守备力**: ${ card.def }"
 
-#: src\card.ts:500
+#: src\card.ts:512
 #, javascript-format
 msgid "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link Arrows**: ${ arrows }"
 msgstr "**连接数值**: ${ card.link_arrows.length } **攻击力**: ${ card.atk } **连接标记**: ${ arrows }"
 
-#: src\card.ts:503
+#: src\card.ts:515
 #: src\rush-duel.ts:107
 #, javascript-format
 msgid "**Level**: ${ levelIcon } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 msgstr "**等级**: ${ levelIcon } ${ card.level } **攻击力**: ${ card.atk } **守备力**: ${ card.def }"
 
-#: src\card.ts:511
+#: src\card.ts:523
 #, javascript-format
 msgid "**Pendulum Scale**: ${ formattedScale }"
 msgstr "**灵摆刻度**: ${ formattedScale }"
@@ -290,7 +290,7 @@ msgstr ""
 msgid "ydke URL"
 msgstr ""
 
-#: src\card.ts:455
+#: src\card.ts:467
 #: src\rush-duel.ts:75
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 #, javascript-format
@@ -404,7 +404,7 @@ msgstr "官方编号${ card.konami_id }"
 msgid "Buttons can only be used by the user who called Bastion."
 msgstr ""
 
-#: src\card.ts:462
+#: src\card.ts:474
 #, javascript-format
 msgid "**Master Duel rarity**: ${ rarityIcon } ${ localizedRarity }"
 msgstr "**稀有度 (Master Duel)**: ${ rarityIcon } ${ localizedRarity }"
@@ -461,6 +461,14 @@ msgstr "[YGOPRODECK上搜索`${ searchTerm }`](${ searchURL })太慢了，在线
 #, javascript-format
 msgid "Something went wrong [searching YGOPRODECK for `${ searchTerm }`](${ searchURL }). Is the site up?"
 msgstr "[YGOPRODECK上搜索`${ searchTerm }`](${ searchURL })出错了，在线吗？"
+
+#: src\card.ts:432
+msgid "_Unofficial name._ "
+msgstr "_非正式卡名。_ "
+
+#: src\card.ts:435
+msgid "_Unofficial text._"
+msgstr "_非正式文本。_"
 
 #: src\card.ts:40
 msgctxt "monster-type-race"
@@ -826,19 +834,19 @@ msgctxt "master-duel-rarity"
 msgid "Ultra Rare (UR)"
 msgstr "金闪稀有（ＵＲ）"
 
-#: src\card.ts:517
-#: src\card.ts:528
+#: src\card.ts:529
+#: src\card.ts:540
 #: src\rush-duel.ts:138
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "卡片文本"
 
-#: src\card.ts:522
+#: src\card.ts:534
 msgctxt "card-embed"
 msgid "Pendulum Effect"
 msgstr "灵摆效果"
 
-#: src\card.ts:545
+#: src\card.ts:557
 msgctxt "card-embed"
 msgid "Card Effect"
 msgstr "卡片效果"

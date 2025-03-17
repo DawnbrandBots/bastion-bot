@@ -21,35 +21,35 @@ msgstr "[Konami公式カードDB](${ official }) | [OCG公式裁定](${ rulings 
 msgid "[Yugipedia](${ yugipedia }) | [YGOPRODECK](${ ygoprodeck })"
 msgstr ""
 
-#: src\card.ts:490
+#: src\card.ts:502
 #: src\rush-duel.ts:103
 #, javascript-format
 msgid "**Type**: ${ raceIcon } ${ localizedMonsterTypeLine }"
 msgstr "**種族**: ${ raceIcon } ${ localizedMonsterTypeLine }"
 
-#: src\card.ts:492
+#: src\card.ts:504
 #: src\rush-duel.ts:105
 #, javascript-format
 msgid "**Attribute**: ${ attributeIcon } ${ localizedAttribute }"
 msgstr "**属性**: ${ attributeIcon } ${ localizedAttribute }"
 
-#: src\card.ts:497
+#: src\card.ts:509
 #, javascript-format
 msgid "**Rank**: ${ rankIcon } ${ card.rank } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 msgstr "**ランク**: ${ rankIcon } ${ card.rank } **攻撃力**: ${ card.atk } **守備力**: ${ card.def }"
 
-#: src\card.ts:500
+#: src\card.ts:512
 #, javascript-format
 msgid "**Link Rating**: ${ card.link_arrows.length } **ATK**: ${ card.atk } **Link Arrows**: ${ arrows }"
 msgstr "**リンクの数字分**: ${ card.link_arrows.length } **攻撃力**: ${ card.atk } **リンクマーカー**: ${ arrows }"
 
-#: src\card.ts:503
+#: src\card.ts:515
 #: src\rush-duel.ts:107
 #, javascript-format
 msgid "**Level**: ${ levelIcon } ${ card.level } **ATK**: ${ card.atk } **DEF**: ${ card.def }"
 msgstr "**レベル**: ${ levelIcon } ${ card.level } **攻撃力**: ${ card.atk } **守備力**: ${ card.def }"
 
-#: src\card.ts:511
+#: src\card.ts:523
 #, javascript-format
 msgid "**Pendulum Scale**: ${ formattedScale }"
 msgstr "**ペンデュラムスケール**: ${ formattedScale }"
@@ -278,7 +278,7 @@ msgstr ".ydkファイルを 1 KB よりも大きくしないでください！"
 msgid "ydke URL"
 msgstr "ydkeのURL"
 
-#: src\card.ts:455
+#: src\card.ts:467
 #: src\rush-duel.ts:75
 #. Forbidden/Limited Lists or Limit Regulations in the OCG
 #, javascript-format
@@ -421,7 +421,7 @@ msgstr ""
 msgid "Buttons can only be used by the user who called Bastion."
 msgstr "ボタンはBastionにコマンドを送ったユーザーのみに有効です。"
 
-#: src\card.ts:462
+#: src\card.ts:474
 #, javascript-format
 msgid "**Master Duel rarity**: ${ rarityIcon } ${ localizedRarity }"
 msgstr "**マスターデュエルレアリティ**: ${ rarityIcon } ${ localizedRarity }"
@@ -473,6 +473,14 @@ msgstr "[`${ page }` でYugipediaを検索中](${ searchURL })に何かエラー
 #, javascript-format
 msgid "Took too long [searching YGOPRODECK for `${ searchTerm }`](${ searchURL }). Is the site up?"
 msgstr "[`${ page }` でYGOPRODECKを検索](${ searchURL })しましたが時間がかかりすぎました。サイトは稼働していますか？"
+
+#: src\card.ts:432
+msgid "_Unofficial name._ "
+msgstr ""
+
+#: src\card.ts:435
+msgid "_Unofficial text._"
+msgstr ""
 
 #: src\card.ts:40
 msgctxt "monster-type-race"
@@ -838,19 +846,19 @@ msgctxt "master-duel-rarity"
 msgid "Ultra Rare (UR)"
 msgstr "ウルトラレア（ＵＲ）"
 
-#: src\card.ts:517
-#: src\card.ts:528
+#: src\card.ts:529
+#: src\card.ts:540
 #: src\rush-duel.ts:138
 msgctxt "card-embed"
 msgid "Card Text"
 msgstr "カードテキスト"
 
-#: src\card.ts:522
+#: src\card.ts:534
 msgctxt "card-embed"
 msgid "Pendulum Effect"
 msgstr "ペンデュラム効果"
 
-#: src\card.ts:545
+#: src\card.ts:557
 msgctxt "card-embed"
 msgid "Card Effect"
 msgstr "カード効果"

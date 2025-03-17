@@ -427,6 +427,18 @@ export function createCardEmbed(
 		embed.setTitle(name || `${card.name.en}`);
 	}
 
+	let unofficial_disclaimer = "";
+	if (card.is_translation_unofficial?.name?.[lang]) {
+		unofficial_disclaimer = t`_Unofficial name._ `;
+	}
+	if (card.is_translation_unofficial?.text?.[lang]) {
+		unofficial_disclaimer += t`_Unofficial text._`;
+	}
+	if (unofficial_disclaimer) {
+		description += unofficial_disclaimer;
+		description += "\n";
+	}
+
 	if (lang === "ja" && card.name.ja_romaji) {
 		description += `**Rōmaji**: ${card.name.ja_romaji}\n`;
 	}
