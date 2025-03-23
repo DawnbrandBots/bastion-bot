@@ -24,7 +24,7 @@
 	},
 	"dependencies": {
 		"@sinclair/typebox": "^0.34.30",
-		"better-sqlite3": "^11.9.0",
+		"better-sqlite3": "^11.9.1",
 		"debug": "^4.4.0",
 		"discord-markdown": "2.5.1",
 		"discord.js": "~14.18.0",
