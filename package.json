@@ -23,8 +23,8 @@
 		"yarn": "1.22.x"
 	},
 	"dependencies": {
-		"@sinclair/typebox": "^0.34.30",
-		"better-sqlite3": "^11.9.0",
+		"@sinclair/typebox": "^0.34.31",
+		"better-sqlite3": "^11.9.1",
 		"debug": "^4.4.0",
 		"discord-markdown": "2.5.1",
 		"discord.js": "~14.18.0",
@@ -32,7 +32,7 @@
 		"gettext-parser": "^6.0.0",
 		"got": "^11.8.6",
 		"htmlparser2": "^10.0.0",
-		"immutable": "^5.0.3",
+		"immutable": "^5.1.1",
 		"mnemonist": "^0.40.3",
 		"reflect-metadata": "^0.2.2",
 		"supports-color": "^10.0.0",
