@@ -43,7 +43,7 @@ export class PriceClient {
 		if (store) {
 			url.searchParams.set("store", store);
 		}
-		const response = await this.got(url, { throwHttpErrors: true });
+		const response = await this.got(url, { throwHttpErrors: true, timeout: 10000 });
 		if (response.statusCode === 200) {
 			return JSON.parse(response.body);
 		}
