@@ -24,7 +24,7 @@
 	},
 	"dependencies": {
 		"@sinclair/typebox": "^0.34.33",
-		"better-sqlite3": "^11.9.1",
+		"better-sqlite3": "^11.10.0",
 		"debug": "^4.4.0",
 		"discord-markdown": "2.5.1",
 		"discord.js": "~14.19.3",
@@ -32,7 +32,7 @@
 		"gettext-parser": "^6.0.0",
 		"got": "^11.8.6",
 		"htmlparser2": "^10.0.0",
-		"immutable": "^5.1.1",
+		"immutable": "^5.1.2",
 		"mnemonist": "^0.40.3",
 		"reflect-metadata": "^0.2.2",
 		"supports-color": "^10.0.0",
