@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           submodules: true
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 20
           cache: yarn
@@ -44,7 +44,7 @@ jobs:
           repository: ${{ secrets.METRICS_REPOSITORY }}
           path: metrics
           token: ${{ secrets.METRICS_GH_TOKEN }}
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 20
           cache: yarn
