@@ -22,11 +22,23 @@ export class LinkCommand extends Command {
 		},
 		lfocg: {
 			name: "OCG Banlist",
-			result: "https://www.yugioh-card.com/my/event/rules_guides/forbidden_cardlist.php?lang=en"
+			result: "https://www.yugioh-card.com/asia//play/forbidden-and-limited-list/"
 		},
 		lfko: {
 			name: "Korean Banlist",
 			result: "http://yugioh.co.kr/site/limit_regulation.php"
+		},
+		lfae: {
+			name: "Asian-English Banlist",
+			result: "https://www.yugioh-card.com/asia//play/forbidden-and-limited-card-list-ae/"
+		},
+		lfrush: {
+			name: "Rush Duel Banlist",
+			result: "https://www.konami.com/yugioh/rushduel/howto/limitregulation/"
+		},
+		genesys: {
+			name: "Genesys Rules and Points List",
+			result: "https://www.yugioh-card.com/en/genesys/"
 		},
 		dubsum: {
 			name: "Double Summon List",
