@@ -27,7 +27,8 @@ export class SearchCommand extends Command {
 		metrics: Metrics,
 		@inject("LocaleProvider") private locales: LocaleProvider,
 		@inject("got") private got: Got,
-		@inject("limitRegulationMasterDuel") private masterDuelLimitRegulation: UpdatingLimitRegulationVector
+		@inject("limitRegulationMasterDuel") private masterDuelLimitRegulation: UpdatingLimitRegulationVector,
+		@inject("genesysPoints") private genesysPoints: UpdatingLimitRegulationVector
 	) {
 		super(metrics);
 	}
@@ -67,6 +68,7 @@ export class SearchCommand extends Command {
 				card,
 				resultLanguage,
 				this.masterDuelLimitRegulation,
+				this.genesysPoints,
 				shouldExcludeIcons(interaction)
 			);
 			replyOptions = { embeds };

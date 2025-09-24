@@ -392,10 +392,15 @@ export function thumbnail(card: Static<typeof CardSchema>): string | null {
 	return null;
 }
 
+function isPendulumOrLink(card: Static<typeof CardSchema>): boolean {
+	return card.card_type === "Monster" && ("pendulum_scale" in card || "link_arrows" in card);
+}
+
 export function createCardEmbed(
 	card: Static<typeof CardSchema>,
 	lang: Locale,
 	masterDuelLimitRegulation?: UpdatingLimitRegulationVector,
+	genesysPoints?: UpdatingLimitRegulationVector,
 	excludeIcons = false
 ): EmbedBuilder[] {
 	useLocale(lang);
@@ -465,6 +470,19 @@ export function createCardEmbed(
 	if (limitRegulationDisplay) {
 		// Forbidden/Limited Lists or Limit Regulations in the OCG
 		description += t`**Limit**: ${limitRegulationDisplay}`;
+		description += "\n";
+	}
+
+	// Display Genesys points for TCG locales if this is a non-Link, non-Pendulum TCG card
+	if (
+		genesysPoints &&
+		card.konami_id &&
+		limitRegulations[0].value !== null &&
+		!isPendulumOrLink(card) &&
+		!["ja", "ko", "zh-CN", "zh-TW"].includes(lang)
+	) {
+		const points = genesysPoints.get(card.konami_id) ?? 0;
+		description += t`**[Genesys](https://www.yugioh-card.com/en/genesys/) points**: ${points}`;
 		description += "\n";
 	}
 
