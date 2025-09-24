@@ -68,3 +68,6 @@ export const limitRegulationRushProvider = new LimitRegulationProvider(
 export const limitRegulationMasterDuelProvider = new LimitRegulationProvider(
 	"https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/master-duel/current.vector.json"
 );
+export const genesysPointsProvider = new LimitRegulationProvider(
+	"https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/genesys/current.vector.json"
+);

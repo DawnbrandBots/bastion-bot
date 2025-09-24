@@ -15,7 +15,11 @@ import {
 import { cardSearcherProvider } from "./events/message-search";
 import { CommandCache } from "./events/ready-commands";
 import createGotClient from "./got";
-import { limitRegulationMasterDuelProvider, limitRegulationRushProvider } from "./limit-regulation";
+import {
+	genesysPointsProvider,
+	limitRegulationMasterDuelProvider,
+	limitRegulationRushProvider
+} from "./limit-regulation";
 import { LocaleProvider, SQLiteLocaleProvider, loadTranslations } from "./locale";
 import { getLogger } from "./logger";
 import { RecentMessageCache } from "./message-cache";
@@ -69,6 +73,7 @@ if (process.argv.length > 2 && process.argv[2] === "--deploy-slash") {
 
 	container.register("limitRegulationRush", limitRegulationRushProvider);
 	container.register("limitRegulationMasterDuel", limitRegulationMasterDuelProvider);
+	container.register("genesysPoints", genesysPointsProvider);
 	container.register("cardSearchers", { useFactory: cardSearcherProvider });
 
 	//container.registerSingleton<Metrics>(Metrics);

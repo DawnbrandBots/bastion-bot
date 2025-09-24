@@ -253,7 +253,8 @@ class OCGCardSearcher implements CardSearcher<Static<typeof CardSchema>> {
 	constructor(
 		private got: Got,
 		private commandCache: CommandCache,
-		private masterDuelLimitRegulation: UpdatingLimitRegulationVector
+		private masterDuelLimitRegulation: UpdatingLimitRegulationVector,
+		private genesysPoints: UpdatingLimitRegulationVector
 	) {}
 	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 	async search(input: string, language: Locale) {
@@ -271,7 +272,7 @@ class OCGCardSearcher implements CardSearcher<Static<typeof CardSchema>> {
 			}
 			replyOptions = { content: t`Could not find a card matching \`${input}\`!` + context };
 		} else {
-			const embeds = createCardEmbed(card, resultLanguage, this.masterDuelLimitRegulation);
+			const embeds = createCardEmbed(card, resultLanguage, this.masterDuelLimitRegulation, this.genesysPoints);
 			// eslint-disable-next-line no-constant-condition
 			if (false) {
 				embeds[embeds.length - 1].addFields({
@@ -333,7 +334,12 @@ export const cardSearcherProvider = instanceCachingFactory<CardSearcherMap>(cont
 	});
 	const commandCache = container.resolve<CommandCache>("commandCache");
 	return {
-		ocg: new OCGCardSearcher(got, commandCache, container.resolve("limitRegulationMasterDuel")),
+		ocg: new OCGCardSearcher(
+			got,
+			commandCache,
+			container.resolve("limitRegulationMasterDuel"),
+			container.resolve("genesysPoints")
+		),
 		rush: new RushCardSearcher(got, commandCache, container.resolve("limitRegulationRush"))
 	};
 });

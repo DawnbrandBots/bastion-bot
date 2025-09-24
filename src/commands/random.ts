@@ -21,7 +21,8 @@ export class RandomCommand extends Command {
 		metrics: Metrics,
 		@inject("LocaleProvider") private locales: LocaleProvider,
 		@inject("got") private got: Got,
-		@inject("limitRegulationMasterDuel") private masterDuelLimitRegulation: UpdatingLimitRegulationVector
+		@inject("limitRegulationMasterDuel") private masterDuelLimitRegulation: UpdatingLimitRegulationVector,
+		@inject("genesysPoints") private genesysPoints: UpdatingLimitRegulationVector
 	) {
 		super(metrics);
 		this.got = got.extend({
@@ -57,7 +58,13 @@ export class RandomCommand extends Command {
 		const url = `${process.env.API_URL}/ocg-tcg/random`;
 		const cards = await this.got(url).json<Static<typeof CardSchema>[]>();
 		const lang = await this.locales.get(interaction);
-		const embeds = createCardEmbed(cards[0], lang, this.masterDuelLimitRegulation, shouldExcludeIcons(interaction));
+		const embeds = createCardEmbed(
+			cards[0],
+			lang,
+			this.masterDuelLimitRegulation,
+			this.genesysPoints,
+			shouldExcludeIcons(interaction)
+		);
 		const end = Date.now();
 		await interaction.editReply({ embeds }); // Actually returns void
 		// When using deferReply, editedTimestamp is null, as if the reply was never edited, so provide a best estimate
