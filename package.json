@@ -49,9 +49,9 @@
 		"@types/gettext-parser": "^4.0.4",
 		"@types/jest": "^30.0.0",
 		"@types/whatwg-mimetype": "^3.0.2",
-		"jest": "^30.0.5",
-		"ts-jest": "^29.4.0",
-		"ttag-cli": "^1.10.18",
+		"jest": "^30.2.0",
+		"ts-jest": "^29.4.5",
+		"ttag-cli": "^1.11.2",
 		"whatwg-mimetype": "^4.0.0"
 	},
 	"optionalDependencies": {
