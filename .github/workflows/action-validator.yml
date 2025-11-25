@@ -15,7 +15,7 @@ jobs:
   action-validator:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: |
           curl -o action_validator -fsSL https://github.com/mpalmer/action-validator/releases/download/v0.5.3/action-validator_linux_amd64
           chmod +x action_validator
