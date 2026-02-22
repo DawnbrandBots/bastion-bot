@@ -23,15 +23,15 @@
 		"yarn": "1.22.x"
 	},
 	"dependencies": {
-		"@sinclair/typebox": "^0.34.41",
-		"better-sqlite3": "^12.4.1",
+		"@sinclair/typebox": "^0.34.48",
+		"better-sqlite3": "^12.6.2",
 		"debug": "^4.4.3",
 		"discord-markdown": "2.5.1",
-		"discord.js": "~14.24.2",
-		"dotenv": "^17.2.3",
-		"gettext-parser": "^6.0.0",
+		"discord.js": "~14.25.1",
+		"dotenv": "^17.3.1",
+		"gettext-parser": "^9.0.1",
 		"got": "^11.8.6",
-		"htmlparser2": "^10.0.0",
+		"htmlparser2": "^10.1.0",
 		"immutable": "^5.1.4",
 		"mnemonist": "^0.40.3",
 		"reflect-metadata": "^0.2.2",
@@ -46,7 +46,7 @@
 		"@microsoft/eslint-formatter-sarif": "^3.1.0",
 		"@types/better-sqlite3": "^7.6.13",
 		"@types/debug": "^4.1.12",
-		"@types/gettext-parser": "^4.0.4",
+		"@types/gettext-parser": "^9.0.0",
 		"@types/jest": "^30.0.0",
 		"@types/whatwg-mimetype": "^3.0.2",
 		"jest": "^30.2.0",
@@ -55,7 +55,7 @@
 		"whatwg-mimetype": "^4.0.0"
 	},
 	"optionalDependencies": {
-		"bufferutil": "^4.0.8",
+		"bufferutil": "^4.1.0",
 		"zlib-sync": "^0.1.10"
 	},
 	"resolutions": {
