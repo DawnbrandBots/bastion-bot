@@ -64,10 +64,44 @@ jobs:
           pull: true
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
-  deploy:
+  deploy-tailscale:
     runs-on: ubuntu-latest
     needs: build
     if: contains(needs.build.outputs.tags, 'latest')
+    environment: Daichi#3599 (preview)
+    steps:
+      - uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:github-actions
+          version: latest
+          ping: ${{ secrets.TS_DEPLOY_HOST}}
+      - uses: actions/checkout@v6
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy with Docker Compose
+        env:
+          DOCKER_HOST: tcp://${{ secrets.TS_DEPLOY_HOST }}:${{ secrets.TS_DEPLOY_PORT }}
+          API_URL: ${{ secrets.API_URL_EXTERNAL }}
+          HEALTHCHECK_BOT_SNOWFLAKE: "1031374366426009753" # Singing Lanius#9842
+        run: |
+          docker compose pull
+          docker compose up -d
+      - name: Deploy Slash Commands to Dawnbrand Bots and user install
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        run: |
+          docker context use default
+          docker run -e DISCORD_TOKEN -e BOT_NO_DIRECT_MESSAGE_SEARCH=1 ${{ fromJSON(needs.build.outputs.json).tags[0] }} --deploy-slash 381294999729340417
+          docker run -e DISCORD_TOKEN -e BOT_NO_DIRECT_MESSAGE_SEARCH=1 ${{ fromJSON(needs.build.outputs.json).tags[0] }} --deploy-slash user-install
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: contains(needs.build.outputs.tags, 'latest') && false
     environment: Daichi#3599 (preview)
     steps:
       - uses: actions/checkout@v6
