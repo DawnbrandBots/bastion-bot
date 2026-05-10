@@ -76,6 +76,7 @@ jobs:
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:github-actions
           version: latest
+          # ping doesn't seem to be working but does not impact connectivity
       - uses: actions/checkout@v6
       - uses: docker/login-action@v4
         with:
@@ -87,6 +88,7 @@ jobs:
           DOCKER_HOST: tcp://${{ secrets.TS_DEPLOY_HOST }}:${{ secrets.TS_DEPLOY_PORT }}
           API_URL: ${{ secrets.API_URL_EXTERNAL }}
           HEALTHCHECK_BOT_SNOWFLAKE: "1031374366426009753" # Singing Lanius#9842
+          BOT_BIND_MOUNT: /tmp/bastion
         run: |
           docker compose pull
           docker compose up -d
