@@ -86,6 +86,7 @@ jobs:
       - name: Deploy with Docker Compose
         env:
           DOCKER_HOST: tcp://${{ secrets.TS_DEPLOY_HOST }}:${{ secrets.TS_DEPLOY_PORT }}
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           API_URL: ${{ secrets.API_URL_EXTERNAL }}
           HEALTHCHECK_BOT_SNOWFLAKE: "1031374366426009753" # Singing Lanius#9842
           BOT_BIND_MOUNT: /tmp
