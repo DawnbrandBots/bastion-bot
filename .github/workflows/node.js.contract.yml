@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2023–2024 Kevin Lu
+# SPDX-FileCopyrightText: © 2023–2026 Kevin Lu
 # SPDX-Licence-Identifier: AGPL-3.0-or-later
 name: Contract tests
 on:
@@ -23,7 +23,7 @@ jobs:
           submodules: true
       - uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version-file: .node-version
           cache: yarn
       - run: yarn
       - run: yarn test:contract --verbose
@@ -46,7 +46,7 @@ jobs:
           token: ${{ secrets.METRICS_GH_TOKEN }}
       - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version-file: .node-version
           cache: yarn
           cache-dependency-path: bastion-bot/yarn.lock
       - working-directory: bastion-bot
