@@ -46,7 +46,7 @@ jobs:
           token: ${{ secrets.METRICS_GH_TOKEN }}
       - uses: actions/setup-node@v6
         with:
-          node-version-file: .node-version
+          node-version-file: bastion-bot/.node-version
           cache: yarn
           cache-dependency-path: bastion-bot/yarn.lock
       - working-directory: bastion-bot
